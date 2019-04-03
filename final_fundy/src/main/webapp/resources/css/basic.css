@@ -1,0 +1,261 @@
+:root
+{
+    --basic-color: rgb(18, 97, 149);
+}
+
+body
+{
+    margin: 0;
+    height: 100vh;
+    color: #444;
+}
+
+.whole-wrapper
+{
+	width: 100%;
+	min-width: 1005px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    font-family: 'Noto Sans KR';
+}
+
+.whole-wrapper input
+{
+    font-family: 'Noto Sans KR';
+    font-size: 14px;
+    line-height: 13px;
+    border-radius: 4px;
+}
+
+.whole-wrapper input::placeholder{font-size: 13px;}
+.whole-wrapper input:focus{outline: none;}
+.whole-wrapper input::placeholder{font-family: 'Noto Sans KR';}
+
+
+.whole-wrapper textarea
+{
+    font-size: 14px;
+    line-height: 13px;
+    font-family: 'Noto Sans KR';
+    padding: 6px;
+    border: 1px solid #ccc;
+}
+
+.whole-wrapper textarea::placeholder{font-family: 'Noto Sans KR'; font-size: 13px;}
+
+.whole-wrapper button{font-family: 'Noto Sans KR'; cursor: pointer;}
+.whole-wrapper button:focus{outline: none;}
+
+
+input.h31
+{
+    height: 31px;
+}
+
+.basic-btn-active
+{
+    color: white;
+    border: none;
+    background-color: var(--basic-color) !important;
+    transition: 150ms linear;
+}
+
+.basic-btn-active:hover
+{
+    background-color: rgb(38, 117, 169) !important;
+}
+
+.basic-btn
+{
+	font-size: 13px;
+    margin: 0 10px;
+    border: none;
+    background-color: rgb(238, 238, 238);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: 150ms linear;
+    padding: 8px 20px !important;
+}
+
+.basic-btn:hover
+{
+    background-color: rgb(226, 225, 225);
+}
+
+.basic-btn:not(.basic-btn-acitve):hover{background-color: rgb(226, 225, 225);}
+
+
+
+
+/* 버튼 클릭시 물결 이펙트 */
+
+.ripple 
+{
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple::after
+{
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-image: radial-gradient(circle, #ccc 10%, transparent 10.01%);
+    background-position: center;
+    transform: scale(10);
+    opacity: 0;
+    transition: transform .4s, opacity 2s;
+}
+
+.ripple:active::after
+{
+    transform: scale(0);
+    opacity: .3;
+    transition: 0s;
+}
+
+.nude-btn
+{
+    background-color: transparent;
+    border: none;
+    padding: 5px 10px;
+    color: #555;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.nude-btn::after{background-image: radial-gradient(circle, #777 10%, transparent 10.01%)!important}
+
+
+
+/* 체크박스 */
+
+.cb
+{
+    display: none;
+}
+
+.cb + label:hover
+{
+    background-color: rgb(38, 117, 169);
+
+}
+
+.cb + label
+{
+    display: inline-block;
+    position: relative;
+    width: 23px;
+    height: 23px;
+    background-color: var(--basic-color);
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+.cb + label span::after
+{
+    position: absolute;
+    content: '';
+    display: none;
+    width: 5px;
+    height: 13px;
+    border-right: 3px solid white;
+    border-bottom: 3px solid white;
+    transform: rotateZ(40deg);
+    left: 8px;
+    top: 2px;
+}
+
+.cb:checked + label span::after
+{
+    display: block;
+}
+
+
+
+/* 툴팁 출력 */
+
+.tooltip {
+    position: relative;
+}
+
+.tooltiptext{font-size: 13px;}
+
+.tooltip .tooltiptext {
+    opacity: 0;
+    width: 120px;
+    background-color: #666;
+    color: #eee;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    left: 300%;
+    margin-left: -60px;
+    transition: .2s linear;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 37%;
+    left: -4%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #666 transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    opacity: 1;
+}
+
+/* 페이지바 */
+
+.pagebar
+{
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.pagebar-unit
+{
+    height: 40px;
+    width: 40px;
+    margin: 0 5px;
+    padding: 5px;
+    border: none;
+    background-color: rgb(238, 238, 238);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #444;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 150ms linear;
+    box-sizing: border-box;
+}
+
+.pagebar-unit:not(.pagebar-unit-active):hover{background-color: #ccc;}
+
+.pagebar-unit-active
+{
+    background-color: #126196;
+    border: none;
+    color: white;
+    cursor: default !important;
+}
+
+.pagebar-nav
+{
+    height: 80%;
+    width: 80%;
+}
