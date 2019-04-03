@@ -10,7 +10,9 @@
 <link href="${path }/resources/css/projectWrite.css" rel="stylesheet">
 <script>
 	$(function() {
-		var loadFlag = false;
+		///////////////////////////////
+		/* 스마트에디터 로드*/
+		var loadFlag = false;	//스마트에디터 로드가 됐는지 판별하는 플래그변수
 		//전역변수
 	    var obj = [];
 		
@@ -35,77 +37,76 @@
 			}
 			
 		})
+		///////////////////////////////
 		
+		///////////////////////////////
 		/* 작성 완성률 */
 		//퍼센테이지를 계산하기위해 각 제이슨 멤버변수를 공백으로 초기화했음.
-		var percentage = Number($("#percentage").val());
+		var percentage = 0;
 		var writeData = new Object();
 		var contentCnt = 0;
-		writeData.subCtg = "";
-		writeData.projectTitle = "";
-		writeData.projectThumnail = "";
-		writeData.projectSummary = "";
-		writeData.memberNick = "";
-		writeData.memberProfile = "";
-		writeData.goalPrice = "";
-		writeData.endDate = "";
-		writeData.projectContent = "";
-		writeData.projectTel = "";
-		writeData.projectEmail = "";
-		writeData.bank = "";
-		writeData.accNum = "";
-		writeData.accType = "";
-		writeData.birthday = "";
+		fn_loadedWriteData();	//임시저장된 프로젝트신청서시 퍼센테이지 계산후 로드
+		
+		/* 이벤트연결 */
 		$("*").keyup(function () {
-			console.clear();
-			console.log("완성률: " + percentage);
-			
-			writeData.projectTitle = $(".projectTitle").val();
-			
-			writeData.projectSummary = $(".projectSummary").val();
-			writeData.memberNick = $(".memberNick").val();
-			
-			writeData.goalPrice = $(".goalPrice").val();
-			writeData.endDate = $(".endDate").val();
-			var tel = "";
-			for(var i=0; i<$(".projectTel").length; i++) {
-				tel = tel + $(".projectTel").eq(i).val();
-			}
-			writeData.projectTel = tel;
-			writeData.projectEmail = $(".projectEmail").val();
-			writeData.accNum = $(".accNum").val();
-			
-			writeData.birthday = $(".birthday").val();
-			
-			
+			fn_loadedWriteData();
+		});
+		$("article:not(iframe)").click(function() {
+			fn_loadedWriteData();
+		})
+		$("input").change(function () {
+			fn_loadedWriteData();
 		});
 		
-		$("article:not(iframe)").click(function() {
-			console.clear();
-			writeData.subCtg = $(".subCode").val();
-			writeData.projectThumnail = $(".projectThumnail").val();
-			writeData.memberProfile = $(".memberProfile").val();
-			writeData.bank = $("#bank_").val();
-			writeData.accType = $(".accType:checked").val();
+		/*폼데이터 값받아오고 퍼센테이지 계산하는 함수 페이지 전체로드시 실행된다. */
+		function fn_loadedWriteData() {
 			if(obj.length > 0) {
 				obj.getById["editor"].exec("UPDATE_CONTENTS_FIELD", []);
-				projectContent = $("#editor").val();
-				writeData.projectContent = $("#editor").val();
 			}
+			writeData.subCtg = $("#_subCode").val();
+			writeData.projectTitle = $("#_projectTitle").val();
+			writeData.projectThumnail = $("#_projectThumnail").val();
+			writeData.projectSummary = $("#_projectSummary").val();
+			writeData.memberNick = $("#_memberNick").val();
+			writeData.memberProfile = $("#_memberProfile").val();
+			writeData.goalPrice = $("#_goalPrice").val();
+			writeData.endDate = $("#_endDate").val();
+			writeData.projectContent = $("#editor").val();
+			writeData.projectTelF = $("#_projectTelF").val();
+			writeData.projectTelM = $("#_projectTelM").val();
+			writeData.projectTelE = $("#_projectTelE").val();
+			writeData.projectEmail = $("#_projectEmail").val();
+			writeData.bank = $("#_bank").val();
+			writeData.accNum = $("#_accNum").val();
+			writeData.accName = $("#_accName").val();
+			writeData.accType = $(".accType:checked").val();
+			writeData.birthday = $("#_birthday").val();
 			
+			console.clear();
 			$.each(writeData,function(key,value) {
-				console.log('key:'+key+', value:'+value);
-				if(value != null && value.length > 0) {
+				if(value != null && value.length > 0 && percentage < 100 && value != "<p>&nbsp;</p>") {
 					percentage = percentage + (1/Object.keys(writeData).length * 100);
+					console.log("key: " + key + ", value: " + value);
 				}
 			});
-			console.log(percentage);
+			
+			percentage = Math.round(percentage);
 			$("#progress-span").html(percentage + "%");
 			$(".progress-bar").css("width", percentage + "%");
 			percentage = 0;
-		})
+		}
+		///////////////////////////////////////////////////////
 		
-		
+		///////////////////////////////////////////////////////
+		/* 카테고리 중분류 선택시 그거에맞는 카테고리 출력 */
+		$("#_mainCtg").change(function() {
+			var mainCtg = $("#_mainCtg").val();
+			console.log(mainCtg);
+			mainCtg = "." + mainCtg;
+			$(".subCtgs").css("display", "none");
+			$(mainCtg).css("display", "block");
+		});
+		///////////////////////////////////////////////////////
 	});
 	
 	
@@ -114,9 +115,13 @@
 	function fn_uploadThumnail() {
 		$(".projectThumnail").click();
 	}
+	/* 프로필변경 */
+	function fn_uploadProfile() {
+		$("#_memberProfile").click();
+	}
 	
-	
-	/* 탭변환 */
+	///////////////////////////////////////////////////////
+	/* 탭변환 함수 */
 	function fn_changeTab(select) {
 		var currentTab = select;
 		$("#tabCnt").val(currentTab);
@@ -176,6 +181,7 @@
 	        }
 		}
 	}
+	///////////////////////////////////////////////////////
 </script>
 	<section class="projectWrite-section section">
 		<div class="projectWrite-header">프로젝트신청
@@ -234,7 +240,5 @@
 		</article>
 		<input type="hidden" id="tabCnt" value="0" />
 		
-		<form name="projectContent">
-		</form>
 	</section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
