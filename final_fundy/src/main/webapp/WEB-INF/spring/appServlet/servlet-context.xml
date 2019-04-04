@@ -28,12 +28,9 @@
 		</beans:bean>
 	<beans:bean id="jsonView" class="net.sf.json.spring.web.servlet.view.JsonView"/>
 	
-	<beans:bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
-		<beans:property name="messageConverters">
-			<beans:list>
-				<beans:bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
-			</beans:list>
-		</beans:property>
-	</beans:bean> 
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="10458600"/>
+	</beans:bean>
+	
 	
 </beans:beans>

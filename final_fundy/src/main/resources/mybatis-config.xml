@@ -6,4 +6,6 @@
 		<typeAlias type="com.kh.fundy.model.vo.Member" alias="member"/>
 	</typeAliases>
 
+
+
 </configuration>
