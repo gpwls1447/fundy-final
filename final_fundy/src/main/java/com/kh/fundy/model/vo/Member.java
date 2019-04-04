@@ -14,14 +14,14 @@ public class Member {
 	private String emailAuthKey;
 	private String phoneAuthKey;
 	private Timestamp lastLoggedIn;
-	private Timestamp enrollData;
+	private Timestamp enrollDate;
 	private Timestamp memberQuit;
 
 	public Member() {}
 
 	public Member(String memberEmail, String memberPw, String memberName, String memberNick, String memberProfile,
 			int shipAddrNo, String intro, String emailAuthKey, String phoneAuthKey, Timestamp lastLoggedIn,
-			Timestamp enrollData, Timestamp memberQuit) {
+			Timestamp enrollDate, Timestamp memberQuit) {
 		super();
 		this.memberEmail = memberEmail;
 		this.memberPw = memberPw;
@@ -33,7 +33,7 @@ public class Member {
 		this.emailAuthKey = emailAuthKey;
 		this.phoneAuthKey = phoneAuthKey;
 		this.lastLoggedIn = lastLoggedIn;
-		this.enrollData = enrollData;
+		this.enrollDate = enrollDate;
 		this.memberQuit = memberQuit;
 	}
 
@@ -117,12 +117,12 @@ public class Member {
 		this.lastLoggedIn = lastLoggedIn;
 	}
 
-	public Timestamp getEnrollData() {
-		return enrollData;
+	public Timestamp getEnrollDate() {
+		return enrollDate;
 	}
 
-	public void setEnrollData(Timestamp enrollData) {
-		this.enrollData = enrollData;
+	public void setEnrollDate(Timestamp enrollDate) {
+		this.enrollDate = enrollDate;
 	}
 
 	public Timestamp getMemberQuit() {
@@ -132,5 +132,18 @@ public class Member {
 	public void setMemberQuit(Timestamp memberQuit) {
 		this.memberQuit = memberQuit;
 	}
+
+	@Override
+	public String toString() {
+		return "Member [memberEmail=" + memberEmail + ", memberPw=" + memberPw + ", memberName=" + memberName
+				+ ", memberNick=" + memberNick + ", memberProfile=" + memberProfile + ", shipAddrNo=" + shipAddrNo
+				+ ", intro=" + intro + ", emailAuthKey=" + emailAuthKey + ", phoneAuthKey=" + phoneAuthKey
+				+ ", lastLoggedIn=" + lastLoggedIn + ", enrollDate=" + enrollDate + ", memberQuit=" + memberQuit + "]";
+	}
+
+	
+	
+	
+	
 	
 }

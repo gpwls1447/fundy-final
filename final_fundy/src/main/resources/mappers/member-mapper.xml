@@ -11,7 +11,11 @@
 	</select>
 	
 	<select id="insertOne" parameterType="member">
-		INSERT INTO MEMBER VALUES(#{memberEmail}, #{memberPw}, #{memberName}, #{memberNick}, #{memberProfile}, null, #{intro}, #{emailAuthKey}, #{phoneAuthKey}, #{lastLoggedIn}, #{enrollData}, null)
+		INSERT INTO MEMBER VALUES(#{memberEmail}, #{memberPw}, #{memberName}, #{memberNick}, #{memberProfile}, null, #{intro}, #{emailAuthKey}, #{phoneAuthKey}, #{lastLoggedIn}, #{enrollDate}, null)
+	</select>
+
+	<select id="login" parameterType="member" resultType="member">
+		select * from member where memberEmail=#{memberEmail}
 	</select>
 
 </mapper>
