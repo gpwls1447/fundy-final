@@ -451,7 +451,7 @@ input {
 							<input type="password" placeholder="password" name="memberPw" />
 						</div>
 						<div class="form-gruop">
-							<button id="goRight" class="off login-modal-btn">회원가입</button>
+							<button id="goRight" type="button" class="off login-modal-btn" onclick="">회원가입</button>
 							<button id="login" type="submit" class="off login-modal-btn">Login</button>
 								<!-- 카카오로그인 -->
 							<a id="kakao-login-btn"></a>
