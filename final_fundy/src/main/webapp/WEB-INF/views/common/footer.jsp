@@ -16,7 +16,10 @@
 
         .footer
         {
-            width: 1024px;
+            width: 1005px;
+            display: flex;
+            flex-flow: column nowrap;
+            align-items: center;
         }
 
         /* 유저 모달창 부분 */
@@ -357,6 +360,8 @@ input {
 
 
     <footer class="footer">
+    <br><br><br><br>
+    <button class="datagen-btn">멤버 생성</button>
     </footer>
     </div>
 
@@ -552,7 +557,7 @@ input {
     const nav = $('.nav');
     const categoryBtn = $('.category-btn');
     $(() => {
-        nav.hide();
+    	nav.hide();
         categoryBtn.on('click', () => {
             nav.slideToggle(300);
         });
@@ -654,5 +659,110 @@ input {
         userModalHeader.fadeToggle(time);
         userModalBody.fadeToggle(time);
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    const datagenBtn = $('.datagen-btn');
+    $(() => {
+    	datagenBtn.on('click', () => {
+    		$.ajax({
+    			url: '${pageContext.request.contextPath}/datagen.do',
+    			success: data => {
+    				alert('결과: ' + data);
+    			}
+    		});
+    	});
+    });
 </script>
 </html>
