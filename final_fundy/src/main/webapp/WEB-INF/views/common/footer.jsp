@@ -463,14 +463,16 @@ input {
 		</div>
 	</div>
 </div>
+<form id="kakaoLoginForm" method="post" action="${path }/member/kakaoLogin.do">
+	<input type="hidden" id="kakaoId" name="kakaoId" value="" >
+	<input type="hidden" id="kakaoNick" name="kakaoNick" value="" >
+</form>
     
     
 	
 <script>
 	//카카오 로그인 
-    // 사용할 앱의 JavaScript 키를 설정해 주세요.
     Kakao.init('3936fbb46415d0ad3589f5b20380fa77');
-    // 카카오 로그인 버튼을 생성합니다.
     Kakao.Auth.createLoginButton({
       container: '#kakao-login-btn',
       success: function(authObj){
@@ -480,7 +482,8 @@ input {
                console.log(res);
              //  console.log(profile);
                $('#kakaoId').val(res.id);
-               $('#kakaoNick').val(res.properties['memberNickname']);
+               $('#kakaoNick').val(res.properties['memberNick']);
+               $('#')
                $('#kakaoLoginForm').submit();     
             }
          })      
