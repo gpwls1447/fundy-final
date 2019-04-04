@@ -1,4 +1,4 @@
-package com.kh.fundy.datagen;
+package com.kh.fundy.controller;
 
 import java.sql.Timestamp;
 
@@ -12,7 +12,7 @@ import com.kh.fundy.model.vo.Member;
 import com.kh.fundy.service.MemberService;
 
 @Controller
-public class Datagen {
+public class DatagenController {
 	
 	
 	@Autowired
