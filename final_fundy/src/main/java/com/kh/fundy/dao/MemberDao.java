@@ -7,4 +7,5 @@ public interface MemberDao {
 	int memberCount();
 	int memberDeleteAll();
 	int insertOne(Member m);
+	Member login(Member m);
 }

@@ -40,11 +40,16 @@
                     <i class="material-icons search-btn">search</i>
                     <input type="text" name="search" class="search-bar" placeholder="프로젝트검색">
                 </div>
+                <c:if test="${loggedMember==null }">
                 <div class="login-btn">로그인</div>
                 <div class="header-last">회원가입</div>
+                </c:if>
+                <c:if test="${loggedMember!=null }">
+                	<div>${loggedMember.memberNick }</a>님 환영합니다 </div>
                 <div class="user-btn" >
 						<img src="${path }/resources/images/user_icon.png">
                 </div>
+                </c:if>
             </div>
         </div>
     </header>

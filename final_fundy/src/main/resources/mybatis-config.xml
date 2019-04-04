@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
+	<!-- null값이 들어와도 null로 인식 -->
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
 
 	<typeAliases>
 		<typeAlias type="com.kh.fundy.model.vo.Member" alias="member"/>

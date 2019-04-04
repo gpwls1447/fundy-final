@@ -414,12 +414,13 @@ input {
         <div class="user-modal-footer"></div>
     </div>
     
-    
     <div class="login-modal">
-	    <button id="logout" class="login-modal-btn login-close-btn">
-			<i id="logout" class="material-icons login-close-icon">close</i>
-		</button>
-    <div id="back">
+	
+	<button id="logout-btn" class="login-modal-btn login-close-btn">
+		<i  class="material-icons login-close-icon">close</i> 
+	</button>
+	
+	<div id="back">
 		<div class="backRight"></div>
 		<div class="backLeft"></div>
 	</div>
@@ -428,26 +429,26 @@ input {
 		<div class="topLayer">
 			<div class="left">
 				<div class="content">
-					<h2>Sign Up</h2>
-					<form method="post" action="${path }/member/memberEnrollEnd.do" onsubmit="return false;">
+					<h2>Sign Up</h2>				<!--  onsubmit="return false;" 정규식할때 활용-->
+					<form method="post" action="${path }/member/memberEnrollEnd.do" autocomplete="off">
 						<div class="form-group">
 							<input type="email" class="form-control temp" placeholder="이메일" id="memberEmail_" name="memberEmail" required /> 
-							<input type="password" class="form-control temp" placeholder="비밀번호" id="password_" name="password" required /> 
+							<input type="password" class="form-control temp" placeholder="비밀번호" id="password_" name="memberPw" required /> 
 							<input type="password" class="form-control temp" placeholder="비밀번호 확인" id="password2" required /> 
-							<input type="text" class="form-control temp" placeholder="닉네임" id="memberNick" required />
+							<input type="text" class="form-control temp" placeholder="닉네임" name="memberNick" required />
 						</div>
-					</form>
-					<button class="login-modal-btn">회원가입</button>
+					<input type="submit" class="login-modal-btn" value="회원가입">
 					<button id="goLeft" class="off login-modal-btn">Login</button>
+					</form>
 				</div>
 			</div>
 			<div class="right">
 				<div class="content">
-					<h2>Login</h2>
-					<form method="post" onsubmit="return false;">
+					<h2>Login</h2>						<!-- onsubmit="return false;" -->
+					<form method="post" action="${path }/member/memberlogin.do"  autocomplete="off">
 						<div class="form-group">
-							<input type="email" placeholder="email"  /> 
-							<input type="password" placeholder="password"  />
+							<input type="email" placeholder="email" name="memberEmail" /> 
+							<input type="password" placeholder="password" name="memberPw" />
 						</div>
 						<div class="form-gruop">
 							<button id="goRight" class="off login-modal-btn">회원가입</button>
@@ -487,7 +488,19 @@ input {
       fail:function(err){ alert(JSON.stringify(err));}
    });
     
-
+    //패스워드 일치 확인
+    $(function(){
+		$("#password2").blur(function(){
+			var pw=$("#password_").val();
+			var pwck=$("#password2").val();
+			if(pw!=pwck){
+				alert("password 불일치");
+				//패스워드 비워주기
+				$("#password2").val("");
+				$("#password_").focus();
+			}
+		});
+	});
 
 	
 
@@ -502,7 +515,7 @@ input {
 	});
 	
 	//x(취소) 버튼  아래 로그인함수 클릭시 생기는 이벤트 똑같이 달아주면됨
-	const logoutBtn = $('logout');
+	const logoutBtn = $('#logout-btn');
 	$(() => {
 		logoutBtn.on('click', () => {
 			loginModal.toggle();
@@ -659,97 +672,6 @@ input {
         userModalHeader.fadeToggle(time);
         userModalBody.fadeToggle(time);
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
