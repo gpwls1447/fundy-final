@@ -71,7 +71,7 @@ public class MemberController {
 	@RequestMapping("/member/memberEnrollEnd.do")
 	public String memberEnrollEnd(Member m, Model model) {
 		//현재시간으로 타임스탬프 
-		m.setEnrollData(new Timestamp(System.currentTimeMillis()));
+		m.setEnrollDate(new Timestamp(System.currentTimeMillis()));
 		//암호화
 		m.setMemberPw(bcEncoder.encode(m.getMemberPw()));
 		int result=service.insertOne(m);
