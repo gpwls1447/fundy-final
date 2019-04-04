@@ -21,7 +21,7 @@
 						막판에 후원을 취소하는 후원자들도 있는 점을 감안하여 10% 이상 초과달성을 목표로 하는게 안전합니다. <br>
 					</div>
 					<div>
-						<input type="number" step="10000" min="0" class="form-control inputMoney goalPrice" id="" name="" placeholder="내용을 입력해주세요." /> 원
+						<input type="number" step="10000" min="0" class="form-control inputMoney" id="_goalPrice" name="" placeholder="내용을 입력해주세요." /> 원
 						<span style="margin-left: 20px; color: orange; font-size:14px;">만원 이상인 금액을 입력해주세요.</span>
 					</div>
 					<div style="display: inline-block; padding: 20px; height: 300px; background-color: lightgray;">
@@ -61,7 +61,7 @@
 						<span>오늘로부터 </span>
 						<input type="text" class="form-control inputSu" id="seeEndDays" />
 						<span> 일 뒤인 </span>
-						<input type="date" class="form-control inputDay endDate" id="endDate_" min="" max="" />
+						<input type="date" class="form-control inputDay" id="_endDate" min="" max="" />
 						<span> 에 펀딩을 마감합니다.</span>
 					</div>
 					<div>
