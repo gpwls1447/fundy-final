@@ -17,7 +17,7 @@ public class AskBoardController {
 	@RequestMapping("/askBoardForm.do")
 	public String askBoardForm() {
 		
-		return "/askBoard/aksBoardForm";
+		return "askBoard/aksBoardForm";
 	}
 	
 	@RequestMapping("/askBoardMain.do")

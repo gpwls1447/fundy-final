@@ -5,9 +5,16 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <style>
-#bTitle{ text-align:center;  border-bottom: 1px solid #ccc; }
+/* #bTitle{ width: 100%; text-align:center;  border-bottom: 1px solid #ccc; } */
 #addBtn{float:right; margin:0 0 15px}
-#boardList{border-bottom: 1px solid #ccc;}
+#boardList{border-bottom: 1px solid #ccc; border-spacing: 0 10px;}
+#askBoardList-container{width: 100%; margin:auto; border:1px solid red; align:center;}
+table,th,td{text-align:center; margin:5px;}
+#bTitle{text-align:center; margin-top:10px; width: 100%; 
+		height: 70px; display: flex; justify-content: center; 
+		border-bottom: 1px solid #ccc;}
+
+
 </style>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <section class="section">
@@ -16,7 +23,7 @@
    <i class="material-icons search-btn">search</i>
    <input type="text" name="search" class="search-bar" placeholder="검색">
 </div>
-<div>
+<div id="askBoardList-container">
 <table>
    <tr>
       <th>번호</th>
