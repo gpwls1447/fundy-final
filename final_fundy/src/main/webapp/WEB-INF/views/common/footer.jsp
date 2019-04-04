@@ -3,6 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+
+
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <style>
         /* footer 부분 */
@@ -161,7 +168,194 @@
             height: 100%;
             background-color: rgb(70, 70, 85);
         }
+
+/* 로그인 회원가입 모달창 */
+
+.login-modal-btn{
+	background: #03A9F4;
+	padding: 10px 16px;
+	width: auto;
+	font-weight: 600;
+	text-transform: uppercase;
+	font-size: 14px;
+	color: #fff;
+	line-height: 16px;
+	letter-spacing: 0.5px;
+	border-radius: 2px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.1);
+	border: 0;
+	outline: 0;
+	margin: 15px 15px 15px 0;
+	transition: all 0.25s;
+}
+.login-modal-btn:hover{
+	background: #0288D1;
+	box-shadow: 0 4px 7px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.login-modal{
+	display: none;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 5;
+	width: 75%;
+	min-width: 700px;
+	height: 600px;
+}
+
+.backRight {
+	position: absolute;
+	right: 0;
+	width: 50%;
+	height: 100%;
+	background-image : url(${path}/resources/images/loginPicture1.jpg);
+	background-size: cover;
+	background-position: 50% 50%;
+}
+
+.backLeft {
+	position: absolute;
+	left: 0;
+	width: 50%;
+	height: 100%;
+	background-image : url(${path}/resources/images/loginPicture3.jpg);
+	background-size: cover;
+	background-position: 50% 50%;
+}
+
+#back {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	z-index: -999;
+}
+
+#slideBox {
+	width: 50%;
+	max-height: 100%;
+	height: 100%;
+	overflow: hidden;
+	margin-left: 50%;
+	position: absolute;
+	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px
+		rgba(0, 0, 0, 0.22);
+}
+
+.topLayer {
+	width: 200%;
+	height: 100%;
+	position: relative;
+	left: 0;
+	left: -100%;
+}
+
+.left {
+	border-bottom: 1px solid #ccc !important;
+	width: 50%;
+	height: 100%;
+	background: #2C3034;
+	left: 0;
+	position: absolute;
+}
+
+.right {
+	width: 50%;
+	height: 100%;
+	background: #f9f9f9;
+	right: 0;
+	position: absolute;
+}
+
+.content {
+	width: 250px;
+	margin: 0 auto;
+	top: 30%;
+	position: absolute;
+	left: 50%;
+	margin-left: -125px;
+}
+
+.content h2 {
+	color: #03A9F4;
+	font-weight: 300;
+	font-size: 35px;
+}
+
+.off {
+	background: none;
+	color: #03A9F4;
+	box-shadow: none;
+}
+
+.right .off:hover {
+	background: #eee;
+	color: #03A9F4;
+	box-shadow: none;
+}
+
+.left .off:hover {
+	box-shadow: none;
+	color: #03A9F4;
+	background: #363A3D;
+} 
+
+input {
+	width : 220px;
+	background: transparent;
+	border: 0 !important;
+	outline: 0 ;
+	
+	border-bottom: 1px solid #45494C !important;
+	font-size: 14px;
+	color: black;
+	padding: 8px 0;
+	margin-top: 20px;
+}
+
+.temp {
+	background-color: transparent;
+	border: 0;
+	outline: 0;
+	border-bottom: 1px solid #45494C;
+	border-radius:0;
+	font-size: 14px;
+	color: #eee;
+	padding: 4px 0;
+	margin-top: 15px;
+}
+
+.temp::placeholder{
+	font-size: 13px;
+	color : #ccc;
+	padding: 4px 0;
+	margin-top: 10px;
+}
+
+.temp:focus{
+	background-color : transparent;
+	color : #eee;
+}
+
+.login-close-btn{
+	position: absolute; right: 10px; top: 10px;
+	width : 30px;
+	height : 30px;
+	background-color: rgba(255, 255, 255, 0.3);
+	z-index: 5;
+}
+
+.login-close-icon{
+	font-size : 30px;
+	color: #444;
+}
+
+
+
 </style>
+
+
     <footer class="footer">
     </footer>
     </div>
@@ -214,7 +408,123 @@
         </div>
         <div class="user-modal-footer"></div>
     </div>
+    
+    
+    <div class="login-modal">
+	    <button id="logout" class="login-modal-btn login-close-btn">
+			<i id="logout" class="material-icons login-close-icon">close</i>
+		</button>
+    <div id="back">
+		<div class="backRight"></div>
+		<div class="backLeft"></div>
+	</div>
+
+	<div id="slideBox">
+		<div class="topLayer">
+			<div class="left">
+				<div class="content">
+					<h2>Sign Up</h2>
+					<form method="post" action="${path }/member/memberEnrollEnd.do" onsubmit="return false;">
+						<div class="form-group">
+							<input type="email" class="form-control temp" placeholder="이메일" id="memberEmail_" name="memberEmail" required /> 
+							<input type="password" class="form-control temp" placeholder="비밀번호" id="password_" name="password" required /> 
+							<input type="password" class="form-control temp" placeholder="비밀번호 확인" id="password2" required /> 
+							<input type="text" class="form-control temp" placeholder="닉네임" id="memberNick" required />
+						</div>
+					</form>
+					<button class="login-modal-btn">회원가입</button>
+					<button id="goLeft" class="off login-modal-btn">Login</button>
+				</div>
+			</div>
+			<div class="right">
+				<div class="content">
+					<h2>Login</h2>
+					<form method="post" onsubmit="return false;">
+						<div class="form-group">
+							<input type="email" placeholder="email"  /> 
+							<input type="password" placeholder="password"  />
+						</div>
+						<div class="form-gruop">
+							<button id="goRight" class="off login-modal-btn">회원가입</button>
+							<button id="login" type="submit" class="off login-modal-btn">Login</button>
+								<!-- 카카오로그인 -->
+							<a id="kakao-login-btn"></a>
+							<a href="http://developers.kakao.com/logout">kalogout</a>
+   					 	</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+    
+    
+	
 <script>
+	//카카오 로그인 
+    // 사용할 앱의 JavaScript 키를 설정해 주세요.
+    Kakao.init('3936fbb46415d0ad3589f5b20380fa77');
+    // 카카오 로그인 버튼을 생성합니다.
+    Kakao.Auth.createLoginButton({
+      container: '#kakao-login-btn',
+      success: function(authObj){
+         Kakao.API.request({
+            url: '/v1/user/me',
+            success:function(res){
+               console.log(res);
+             //  console.log(profile);
+               $('#kakaoId').val(res.id);
+               $('#kakaoNick').val(res.properties['memberNickname']);
+               $('#kakaoLoginForm').submit();     
+            }
+         })      
+      },
+      fail:function(err){ alert(JSON.stringify(err));}
+   });
+    
+
+
+	
+
+	//로그인 모달
+	const loginBtn = $('.login-btn');
+	const loginModal = $('.login-modal');
+	$(() => {
+		loginBtn.on('click', () => {
+			loginModal.toggle();
+			modalOverlay.toggle();
+		});
+	});
+	
+	//x(취소) 버튼  아래 로그인함수 클릭시 생기는 이벤트 똑같이 달아주면됨
+	const logoutBtn = $('logout');
+	$(() => {
+		logoutBtn.on('click', () => {
+			loginModal.toggle();
+			modalOverlay.toggle();
+		});
+	});
+	
+	
+	//로그인 회원가입 전환 기능
+	 $(document).ready(function() {
+			$('#goRight').on('click', function() {
+				$('#slideBox').animate({
+					'marginLeft' : '0'
+				});
+				$('.topLayer').animate({
+					'marginLeft' : '100%'
+				});
+			});
+			$('#goLeft').on('click', function() {
+				$('#slideBox').animate({
+					'marginLeft' : '50%'
+				});
+				$('.topLayer').animate({
+					'marginLeft' : '0'
+				});
+			});
+		});
 
     //검색창 토글
     const searchBtn = $('.search-btn');

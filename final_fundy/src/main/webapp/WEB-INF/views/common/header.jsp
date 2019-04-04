@@ -8,6 +8,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
 <title>Insert title here</title>
 <script src="${path }/resources/js/jquery-3.3.1.min.js"></script>
 <link href="${path }/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -16,6 +18,8 @@
 <link href="${path }/resources/css/bootstrap.min.css" rel="stylesheet">
 <link href="${path }/resources/css/basic.css" rel="stylesheet">
 <link href="${path }/resources/css/header.css" rel="stylesheet">
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+
 </head>
 <body>
     <div class="whole-wrapper">
@@ -36,10 +40,10 @@
                     <i class="material-icons search-btn">search</i>
                     <input type="text" name="search" class="search-bar" placeholder="프로젝트검색">
                 </div>
-                <div>로그인</div>
+                <div class="login-btn">로그인</div>
                 <div class="header-last">회원가입</div>
-                <div class="user-btn">
-                    <img src="${path }/resources/images/user_icon.png">
+                <div class="user-btn" >
+						<img src="${path }/resources/images/user_icon.png">
                 </div>
             </div>
         </div>
@@ -57,3 +61,4 @@
         <div><a href="#"><img src="${path }/resources/images/category-sample.jpg">게임·취미</a></div>
         <div><a href="#"><img src="${path }/resources/images/category-sample.jpg">출판</a></div>
     </nav>
+    
