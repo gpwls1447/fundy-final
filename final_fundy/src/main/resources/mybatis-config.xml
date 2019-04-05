@@ -2,10 +2,13 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
 
-	<typeAliases>
+   <settings>
+      <setting name="jdbcTypeForNull" value="NULL"/>
+   </settings>
+   
+   <typeAliases>
 		<typeAlias type="com.kh.fundy.model.vo.Member" alias="member"/>
-	</typeAliases>
-
-
-
+		<typeAlias type="com.kh.fundy.model.vo.AskBoard" alias="askBoard"/>
+   </typeAliases>
+   
 </configuration>
