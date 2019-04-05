@@ -55,6 +55,7 @@
                 ,minDate: 0 //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
                 ,maxDate: "+60D" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)                
 		});
+		
 		/* 리워드 삭제버튼 감추기 */
 		$(".reward-delete-button").eq(0).css("display", "none");
 		
@@ -67,13 +68,10 @@
 		fn_loadedWriteData();	//임시저장된 프로젝트신청서시 퍼센테이지 계산후 로드
 		
 		/* 작성완성률 퍼센테이지 갱신이벤트 연결 */
-		$("*").keyup(function () {
+		$("input").keyup(function () {
 			fn_loadedWriteData();
 		});
 		$("article:not(iframe)").click(function() {
-			fn_loadedWriteData();
-		})
-		$("input").change(function () {
 			fn_loadedWriteData();
 		});
 		
@@ -124,19 +122,12 @@
 		$("#_endDate").change(function() {
 			var today = formatDate(new Date());
 			$("#seeEndDays").val(dateDiff($("#_endDate").val(), today));
-			
+			$(".deliveryPicker").datepicker( "option", "minDate", payEndDate($("#_endDate").val()) );
 			//자동결제 종료일 출력
 			payEndDate($("#_endDate").val());
 		});
 		
 		
-		///////////////////////////////////////////////////////
-		/* 리워드 삭제 클릭 이벤트 */
-		/* $(".reward-delete-btn").click(function() {
-			var index = $(".reward-delete-btn").index(this);
-			console.log(index);
-			console.log("index@!");
-		}); */
 		
 		///////////////////////////////////////////////////////
 		//3자리 단위마다 콤마 생성 하고 삭제하는 함수
@@ -228,6 +219,9 @@
 			$(".progress-bar").css("width", percentage + "%");
 			percentage = 0;
 		}
+		
+		///////////////////////////////////////////////////////////
+		/* 배송일 변경 */
 	});
 	
 	
@@ -326,12 +320,19 @@
 				success: function(data) {
 					$("#reward-container").append(data);
 					$(function() {
-						for(var i=0; i<$(".reward_priority").length; i++) {
-							$(".reward_priority").eq(i).val(i);
-							$(".reward-delete-button").eq(i).attr("onclick", "fn_removeReward(" + i + ")");
-							$(".add-product").eq(i).attr("onclick", "fn_addProduct(" + i + ")");
-						}
+						
 					});
+					for(var i=0; i<$(".reward_priority").length; i++) {
+						$(".reward_priority").eq(i).val(i);
+						$(".reward-delete-button").eq(i).attr("onclick", "fn_removeReward(" + i + ")");
+						$(".add-product").eq(i).attr("onclick", "fn_addProduct(" + i + ")");
+						$(".deliveryPicker").eq(i).attr("onchange", "calDeliDays(" + i + ")");
+						
+						$(".isDeli").eq(i).attr("id", "isDeli"+i);
+						$(".isNotDeli").eq(i).attr("id", "isNotDeli"+i);
+						$(".isDeliLa").eq(i).attr("for", "isDeli"+i);
+						$(".isDeliNotLa").eq(i).attr("for", "isNotDeli"+i);
+					}
 				}
 			});
 		}
@@ -344,12 +345,69 @@
 			$(".reward_priority").eq(i).val(i);
 			$(".reward-delete-button").eq(i).attr("onclick", "fn_removeReward(" + i + ")");
 			$(".add-product").eq(i).attr("onclick", "fn_addProduct(" + i + ")");
+			$(".deliveryPicker").eq(i).attr("onchange", "calDeliDays(" + i + ")");
 		}
 		$(".reward-delete-button").eq(0).css("display", "none");
 	}
-	function fn_addProduct(rewardIndex) {
-		$(".rewardProduct-container").eq(rewardIndex).append("");
-		console.log(rewardIndex);
+	function fn_addProduct() {
+		var target = $(event.target).closest('.rewardProduct-container');
+		var length = $(event.target).closest('.rewardProduct-container').children('.product-col').length;
+		if(length < 5) {
+			$.ajax({
+				url: "${path }/addRewardProduct.do" ,
+				dataType: "html", 
+				success: function(data) {
+					target.append(data);
+				}
+			});
+		}
+	}
+	function fn_removeProduct() {
+		$(event.target).closest('.reward-col').remove();
+	}
+	function addCommas() {
+		var val = $(event.target).val();
+		val = val.replace(/[^0-9]/g,"").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		$(event.target).val(val);
+	}
+	
+	/* 리워드 배송일 날짜계산 함수 */
+	function caldeliDate() {
+		var val = $(event.target).val();
+		val = val.replace(/[^0-9]/g,"");
+		$(event.target).val(val);	//숫자만입력받게함
+		
+		var endDay = Number($("#seeEndDays").val());
+		
+		var today = new Date();
+		today.setDate(today.getDate() + endDay + Number(val));
+		$(event.target).siblings(".deliveryPicker").datepicker('setDate', today);
+	}
+	function calDeliDays(index) {
+		var endDay = $("#_endDate").val();
+		var deliEndDate = $(".deliveryPicker").eq(index).val();
+		if(endDay != "") {
+			var arrDate1 = deliEndDate.split("-");
+			var getDate1 = new Date(parseInt(arrDate1[0]),parseInt(arrDate1[1])-1,parseInt(arrDate1[2]));
+			var arrDate2 = endDay.split("-");
+			var getDate2 = new Date(parseInt(arrDate2[0]),parseInt(arrDate2[1])-1,parseInt(arrDate2[2]));
+			var getDiffTime = getDate1.getTime() - getDate2.getTime();
+
+			var result = Math.floor(getDiffTime / (1000 * 60 * 60 * 24)); 
+			
+			$(".deli-day").eq(index).val(result);
+		}
+	}
+	function changePayEndCalDeliDate() {
+		var payEndVal = $("#seeEndDays").val();
+		
+		for(var i=0; i<$(".deliveryPicker").length; i++) {
+			var endDay = Number($(".deli-day").eq(i).val());
+			
+			var today = new Date();
+			today.setDate(today.getDate() + endDay + Number(payEndVal));
+			$(".deli-day").eq(i).siblings(".deliveryPicker").datepicker('setDate', today);
+		}
 	}
 </script>
 	<section class="projectWrite-section section">

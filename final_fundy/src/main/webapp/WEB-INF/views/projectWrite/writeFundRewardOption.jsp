@@ -21,6 +21,7 @@
 				for(var i=0; i<$(".reward_priority").length; i++) {
 					$(".reward_priority").eq(i).val(i);
 					$(".reward-delete-button").eq(i).attr("onclick", "fn_removeReward(" + i + ")");
+					$(".deliveryPicker").eq(i).attr("onchange", "calDeliDays(" + i + ")");
 				}
 				$(".reward-delete-button").css("display", "inline-block");
 				$(".reward-delete-button").eq(0).css("display", "none");
@@ -80,9 +81,9 @@
 					</div>
 					<div style="padding-top: 10px; padding-bottom: 10px;">
 						<span>오늘로부터 </span>
-						<input type="text" maxlength="2" class="form-control inputSu" id="seeEndDays" />
+						<input type="text" maxlength="2" class="form-control inputSu" onchange="changePayEndCalDeliDate()" id="seeEndDays" />
 						<span> 일 뒤인 </span>
-						<input type="text" class="form-control inputDay datePicker" id="_endDate" />
+						<input type="text" class="form-control inputDay datePicker" id="_endDate" onchange="changePayEndCalDeliDate()" />
 						<span> 에 펀딩을 마감합니다.</span>
 					</div>
 					<div>

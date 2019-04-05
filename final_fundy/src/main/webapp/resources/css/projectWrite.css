@@ -35,6 +35,11 @@
 section.projectWrite-section {
 	flex-direction: row;
 }
+section.projectWrite-section input {
+	/* border: 1px solid #ced4da !important;
+	border-bottom: 1px solid #ced4da !important;
+	width: 18px; */
+}
 section.projectWrite-section > div.projectWrite-nav > div > button{
 	background-color: white;
 	border: none;

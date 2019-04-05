@@ -77,4 +77,8 @@ public class ProjectWriteController {
     public String addReward() {
     	return "projectWrite/rewardFrame";
     }
+    @RequestMapping("/addRewardProduct.do")
+    public String addRewardProduct() {
+    	return "projectWrite/rewardProductFrame";
+    }
 }
