@@ -99,7 +99,7 @@ select#_subCode option.subCtgs {
 						창작자 프로필 사진을 변경 할 수 있습니다. 차후에 변경 할 수 있습니다.
 					</div>
 					<div class="creator-profile-img">
-						<img alt="" src="resources/images/user_icon.png">
+						<img alt="" onclick="fn_uploadProfile()" src="resources/images/user_icon.png">
 						<div style="display:none">
 							<input type="file" name="memberProfile" id="_memberProfile" />
 						</div>

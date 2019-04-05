@@ -72,4 +72,9 @@ public class ProjectWriteController {
         }
         return sb.toString();
     }
+    
+    @RequestMapping("/addReward.do")
+    public String addReward() {
+    	return "projectWrite/rewardFrame";
+    }
 }
