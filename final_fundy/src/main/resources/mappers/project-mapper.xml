@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="project">
+
+	<insert id="insertOne" parameterType="project">
+		INSERT INTO PROJECT VALUES(PROJECT_SEQ.NEXTVAL, #{projectTitle}, #{projectContent}, #{beginDate}, #{endDate}, #{goalPrice}, #{recommended}, #{recImageName}, #{anchorCount}, #{projectStatCode}, #{projectSumary}, #{projectPhone}, #{projectEmail}, #{minorCode}, #{settled}, #{projectFormDate})
+		<selectKey keyProperty="project" resultType="int" order="AFTER" keyColumn="projectNo">
+			SELECT PROJECT_SEQ.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+	
+	<select id="selectCount">
+		SELECT COUNT(*) FROM PROJECT
+	</select>
+	
+	<select id="selectList">
+		SELECT * FROM PROJECT WHERE 1=1
+		<if test="searchKey != null and searchKey != ''">
+			AND ${searchKey} LIKE '%'||#{keyword}||'%' 
+		</if>
+		<if test="orderby != null and orderby != ''">
+			ORDER BY #{orderby} DESC
+		</if>
+	</select>
+</mapper>

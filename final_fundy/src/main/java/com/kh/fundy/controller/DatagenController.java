@@ -8,7 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.fundy.model.vo.FundingOption;
 import com.kh.fundy.model.vo.Member;
+import com.kh.fundy.model.vo.OptionDetail;
+import com.kh.fundy.model.vo.Project;
 import com.kh.fundy.service.MemberService;
 
 @Controller
@@ -21,12 +24,35 @@ public class DatagenController {
 	private BCryptPasswordEncoder pwEncoder;
 		
 	private final int targetMemberCount = 200;
+	private final int targetProjectCount = 200;
 
 	@RequestMapping("/datagen.do")
 	@ResponseBody
 	public int run()
 	{
 		return memberDatagen();
+	}
+	
+	
+	public int projectDatagen()
+	{
+		Project p = new Project();
+		FundingOption fo = new FundingOption();
+		OptionDetail od = new OptionDetail();
+		
+		String[] rndTitle = {"노인 돕기 프로젝트", "오지는 제품을 받아보시겠습니까?", "이것만 입으면 당신도 인싸", "댕댕이 사진전", "시집 \"존스노우 유노우낫띵\""};
+		
+		int result = 0;
+		while(result < targetProjectCount)
+		{
+			
+		}
+
+		
+		
+		
+		return 0;
+		
 	}
 	
 	
