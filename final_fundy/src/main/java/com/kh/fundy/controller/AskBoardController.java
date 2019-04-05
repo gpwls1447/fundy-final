@@ -20,12 +20,14 @@ public class AskBoardController {
 	@Autowired
 	private AskBoardService service;
 	
+	/*1대1게시판 작성화면 넘기기*/
 	@RequestMapping("/askBoardForm.do")
 	public String askBoardForm() {
 		
-		return "askBoard/aksBoardForm";
+		return "askBoard/askBoardForm";
 	}
 	
+	/*1대1게시판 리스트*/
 	@RequestMapping("/askBoardMain.do")
 	public ModelAndView askBoardMain(@RequestParam(value="cPage",required=false, defaultValue="1")int cPage)
 	{
@@ -33,6 +35,7 @@ public class AskBoardController {
 		ModelAndView mv=new ModelAndView();
 		
 		List<AskBoard> list=service.selectList(cPage,numPerPage);
+		System.out.println(list);
 		int totalList=service.selectCount();
 		
 		mv.addObject("list",list);
@@ -40,7 +43,7 @@ public class AskBoardController {
 		mv.addObject("pageBar",PageBarFactory.getPageBar(totalList,cPage,numPerPage,"/spring/askBoard/askBoardMain"));
 		mv.setViewName("askBoard/askBoardMain");
 		
-		
+		System.out.println(list);
 		return mv;
 	}
 }

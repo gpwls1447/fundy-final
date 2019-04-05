@@ -4,8 +4,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="path" value="${pageContext.request.contextPath }" />
-<style>
-  .notice-form-wrapper
+
+<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+    <style>
+
+        .notice-form-wrapper
         {
             width: 100%;
             font-family: 'Noto Sans KR';
@@ -256,10 +259,9 @@
         .order-seq-list-cols > div:nth-of-type(5){flex: 2 1 0;}        
         .order-seq-list-cols > div:nth-of-type(6){flex: 1 1 0;}        
 
-</style>
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+    </style>
 <section class="section">
- <div class="notice-form-wrapper">
+  <div class="notice-form-wrapper">
         <div class="notice-form-header">
             공지사항
         </div>

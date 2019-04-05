@@ -4,8 +4,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="path" value="${pageContext.request.contextPath }" />
-<style>
-       .support-board-title
+
+<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+    <style>
+        .support-board-title
         {
             display: flex;
         }
@@ -72,33 +74,79 @@
         .support-board-cols > div:nth-of-type(3){flex: 4 1 0;}
         .support-board-cols > div:nth-of-type(4){flex: 3 1 0;color: #aaa;}
         .support-board-cols > div:nth-of-type(5){flex: 1 1 0;color: #aaa;}
-
-</style>
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+    </style>
 <section class="section">
-      <div class="support-board-title">
+
+<div class="support-board-title">
             <p>공지사항</p>
             <p>더 푸드 포럼의 새로운 소식들을 확인하세요.</p>
         </div>
         <div class="support-board-rows">
             <div class="support-board-header">
                 <div>번호</div>
-                <div>작성자</div>
                 <div>제목</div>
+                <div>작성자</div>
                 <div>작성일</div>
-                <div>상태</div>
+                <div>조회</div>
             </div>
-             <c:forEach items="${list }" var="askB">
             <div class="support-board-cols">
-                <div>${askB.askNo}</div>
-                <div>${askB.askWriter }</div>
-                <div><a href="#">${askB.askTitle }</a></div>
-                <div><fmt:formatDate value="${askB.askDate }" pattern="yyyy/MM/dd"/></div>
-                <div>대기중</div><!-- 댓글 구현한 후 댓글 달릴시 대기중->완료로 전환되게 하려해요 -->
+                <div>8</div>
+                <div>공지 8</div>
+                <div>TheFoodForum</div>
+                <div>2019-02-13</div>
+                <div>95</div>
             </div>
-       		</c:forEach>
+            <div class="support-board-cols">
+                <div>7</div>
+                <div>공지 7</div>
+                <div>TheFoodForum</div>
+                <div>2019-02-13</div>
+                <div>95</div>
+            </div>
+            <div class="support-board-cols">
+                <div>6</div>
+                <div>공지 6</div>
+                <div>TheFoodForum</div>
+                <div>2019-02-13</div>
+                <div>95</div>
+            </div>
+            <div class="support-board-cols">
+                <div>5</div>
+                <div>공지 5</div>
+                <div>TheFoodForum</div>
+                <div>2019-02-13</div>
+                <div>95</div>
+            </div>
+            <div class="support-board-cols">
+                <div>4</div>
+                <div>공지 4</div>
+                <div>TheFoodForum</div>
+                <div>2019-02-13</div>
+                <div>95</div>
+            </div>
+            <div class="support-board-cols">
+                <div>3</div>
+                <div>공지 3</div>
+                <div>TheFoodForum</div>
+                <div>2019-02-13</div>
+                <div>95</div>
+            </div>
+            <div class="support-board-cols">
+                <div>2</div>
+                <div>공지 2</div>
+                <div>TheFoodForum</div>
+                <div>2019-02-13</div>
+                <div>95</div>
+            </div>
+            <div class="support-board-cols">
+                <div>1</div>
+                <div>공지 1</div>
+                <div>TheFoodForum</div>
+                <div>2019-02-13</div>
+                <div>95</div>
+            </div>
         </div>
-<input type="button" value="게시물 작성" id="addBtn" onclick="fn_askBoardForm();"/>
+
         <div class="pagebar">
             <div class="pagebar-unit">
                 <img class="pagebar-nav" src="images/sharp_navigate_prev_black.png">
@@ -113,11 +161,5 @@
             </div>
         </div>
 
-
-<script>
-   function fn_askBoardForm(){
-      location.href="${path}/askBoardForm.do";
-   }
-</script>
 </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
