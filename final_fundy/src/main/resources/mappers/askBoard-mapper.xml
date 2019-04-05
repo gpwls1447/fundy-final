@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper>
-  <cache-ref namespace=""/>
+<mapper  namespace="askBoard">
+  
+	<select id="selectCount" resultType="_int">
+		select count(*) from ask
+	</select>
+	
+	<select id="selectList" resultType="askBoard">
+		<!-- select A.*,(select count(*) from attachment where A.askno=askno) filecount from ask A order by askdate desc -->
+		select * from ask order by askdate desc
+	</select>
+	
 </mapper>
