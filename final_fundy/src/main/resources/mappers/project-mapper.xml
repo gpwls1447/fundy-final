@@ -3,10 +3,21 @@
 <mapper namespace="project">
 
 	<insert id="insertOne" parameterType="project">
-		INSERT INTO PROJECT VALUES(PROJECT_SEQ.NEXTVAL, #{projectTitle}, #{projectContent}, #{beginDate}, #{endDate}, #{goalPrice}, #{recommended}, #{recImageName}, #{anchorCount}, #{projectStatCode}, #{projectSumary}, #{projectPhone}, #{projectEmail}, #{minorCode}, #{settled}, #{projectFormDate})
-		<selectKey keyProperty="project" resultType="int" order="AFTER" keyColumn="projectNo">
+		INSERT INTO PROJECT VALUES(PROJECT_SEQ.NEXTVAL, #{memberNick}, #{projectThumnail}, #{projectTitle}, #{projectContent}, #{beginDate}, #{endDate}, #{goalPrice}, 'N', NULL, #{anchorCount}, #{projectStatCode}, #{projectSumary}, #{projectPhone}, #{memberEmail}, #{minorCode}, 'N', #{projectFormDate})
+		<selectKey keyProperty="projectNo" resultType="int" order="AFTER" keyColumn="projectNo">
 			SELECT PROJECT_SEQ.CURRVAL FROM DUAL
 		</selectKey>
+	</insert>
+	
+	<insert id="insertFundingOp" parameterType="fundingoption">
+		INSERT INTO FUNDINGOPTION VALUES(FUNDINGOPTION_SEQ.NEXTVAL, #{projectNo}, #{fundPrice}, #{deliveryDate})
+		<selectKey keyProperty="packageNo" resultType="int" order="AFTER" keyColumn="packageNo">
+			SELECT FUNDINGOPTION_SEQ.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+	
+	<insert id="insertOptionDetail" parameterType="optiondetail">
+		INSERT INTO OPTIONDETAIL VALUES(#{packageNo}, #{packageName}, #{packageAmount})
 	</insert>
 	
 	<select id="selectCount">

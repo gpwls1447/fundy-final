@@ -6,12 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
-import com.kh.fundy.model.vo.FundingOption;
 import com.kh.fundy.model.vo.Member;
-import com.kh.fundy.model.vo.OptionDetail;
 import com.kh.fundy.model.vo.Project;
+import com.kh.fundy.service.DatagenService;
 import com.kh.fundy.service.MemberService;
 
 @Controller
@@ -21,38 +20,75 @@ public class DatagenController {
 	@Autowired
 	private MemberService mService;
 	@Autowired
+	private DatagenService dService;
+	
+	@Autowired
 	private BCryptPasswordEncoder pwEncoder;
 		
+	private final int rndTimeMonthlyTerm = 2;
 	private final int targetMemberCount = 200;
 	private final int targetProjectCount = 200;
 
+	
 	@RequestMapping("/datagen.do")
-	@ResponseBody
-	public int run()
+	public ModelAndView run()
 	{
-		return memberDatagen();
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("result", memberDatagen());
+		mv.setViewName("jasonView");
+		return mv;
 	}
 	
-	
-	public int projectDatagen()
+	@RequestMapping("/projectgen.do")
+	public ModelAndView projectDatagen()
 	{
-		Project p = new Project();
-		FundingOption fo = new FundingOption();
-		OptionDetail od = new OptionDetail();
+		ModelAndView mv = new ModelAndView();
 		
-		String[] rndTitle = {"노인 돕기 프로젝트", "오지는 제품을 받아보시겠습니까?", "이것만 입으면 당신도 인싸", "댕댕이 사진전", "시집 \"존스노우 유노우낫띵\""};
+		Project p = new Project();
+		Member m;
+		
+		String[] rndTitle = {"노인 돕기 프로젝트", "오지는 제품을 만나보시겠습니까?", "필수 인싸옷, 갑옷 후드 ", "댕댕이 사진전", "시집 \"얼음과 불의 노래\""};
+		String[] rndSumary = {"사각지대에 놓인 노인분들을 돕고자 합니다.", "운동화에 스카이콩콩이 달렸다! X이젝스.", "갑옷 후드, 강력한 방한성에 어그로는 덤으로", "인간을 뛰어넘는 감성 표현력", "유노우낫띵 존스노우"};
+		
+		StringBuilder sb = new StringBuilder();
+		
+		int rndIndex;
+		int rndCodeNo;
 		
 		int result = 0;
 		while(result < targetProjectCount)
 		{
-			
-		}
+			rndIndex = (int)(Math.random()*5);
+			m = dService.selectRndMember((int)(Math.random()*targetMemberCount)+1);
+			Timestamp rndBeginDate = getRandomTime();
+			Timestamp endDate = new Timestamp(rndBeginDate.getTime() + 2629800000L);
 
-		
-		
-		
-		return 0;
-		
+			rndCodeNo = (int)(Math.random()*30)+1;
+			if(rndCodeNo < 10) sb.append("C0"+rndCodeNo);
+			else sb.append("C"+rndCodeNo);
+			
+			p.setMemberNick(m.getMemberNick());
+			p.setProjectThumnail("thumnail_sample_"+String.valueOf(rndIndex));
+			p.setProjectTitle(rndTitle[rndIndex]);
+			p.setProjectContent("냉무");
+			p.setBeginDate(rndBeginDate);
+			p.setEndDate(endDate);
+			p.setGoalPrice(10000*((int)(Math.random()*100)+1));
+			
+			if(endDate.getTime() > System.currentTimeMillis()){p.setProjectStatCode("PS03");}
+			else {p.setProjectStatCode("PS04");}
+			
+			p.setAnchorCount(0);
+			p.setProjectSumary(rndSumary[rndIndex]);
+			p.setProjectPhone("01050694404");
+			p.setMemberEmail(m.getMemberEmail());
+			p.setMinorCode(sb.toString()); sb.setLength(0);
+			p.setProjectFormDate(rndBeginDate);
+			result += dService.insertProject(p);
+		}
+		mv.addObject("result", result);
+		mv.setViewName("jasonView");
+		return mv;
 	}
 	
 	
@@ -97,6 +133,7 @@ public class DatagenController {
 			Timestamp tempTime = getRandomTime();
 			m.setEnrollDate(tempTime);
 			m.setLastLoggedIn(tempTime);
+			
 			result += mService.insertOne(m);
 		}
 
@@ -115,7 +152,7 @@ public class DatagenController {
 	public Timestamp getRandomTime()
 	{
 		long ctm = System.currentTimeMillis();
-		long rm = (long)(Math.random()*31250000001L);
+		long rm = (long)(Math.random()*2629800000L*rndTimeMonthlyTerm);
 		Timestamp timestamp = new Timestamp(ctm-rm);
 		return timestamp;
 	}

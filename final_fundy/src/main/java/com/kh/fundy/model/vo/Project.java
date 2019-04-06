@@ -6,7 +6,9 @@ import java.util.List;
 public class Project {
 	
 	private int projectNo;
+	private String memberNick;
 	private String projectTitle;
+	private String projectThumnail;
 	private String projectContent;
 	private Timestamp beginDate;
 	private Timestamp endDate;
@@ -17,7 +19,7 @@ public class Project {
 	private String projectStatCode;
 	private String projectSumary;
 	private String projectPhone;
-	private String projectEmail;
+	private String memberEmail;
 	private String minorCode;
 	private String settled;
 	private Timestamp projectFormDate;
@@ -25,13 +27,15 @@ public class Project {
 	
 	public Project() {}
 
-	public Project(int projectNo, String projectTitle, String projectContent, Timestamp beginDate, Timestamp endDate,
-			int goalPrice, String recommended, String recImageName, int anchorCount, String projectStatCode,
-			String projectSumary, String projectPhone, String projectEmail, String minorCode, String settled,
-			Timestamp projectFormDate, List<FundingOption> foList) {
+	public Project(int projectNo, String memberNick, String projectTitle, String projectThumnail, String projectContent,
+			Timestamp beginDate, Timestamp endDate, int goalPrice, String recommended, String recImageName,
+			int anchorCount, String projectStatCode, String projectSumary, String projectPhone, String memberEmail,
+			String minorCode, String settled, Timestamp projectFormDate, List<FundingOption> foList) {
 		super();
 		this.projectNo = projectNo;
+		this.memberNick = memberNick;
 		this.projectTitle = projectTitle;
+		this.projectThumnail = projectThumnail;
 		this.projectContent = projectContent;
 		this.beginDate = beginDate;
 		this.endDate = endDate;
@@ -42,7 +46,7 @@ public class Project {
 		this.projectStatCode = projectStatCode;
 		this.projectSumary = projectSumary;
 		this.projectPhone = projectPhone;
-		this.projectEmail = projectEmail;
+		this.memberEmail = memberEmail;
 		this.minorCode = minorCode;
 		this.settled = settled;
 		this.projectFormDate = projectFormDate;
@@ -57,12 +61,28 @@ public class Project {
 		this.projectNo = projectNo;
 	}
 
+	public String getMemberNick() {
+		return memberNick;
+	}
+
+	public void setMemberNick(String memberNick) {
+		this.memberNick = memberNick;
+	}
+
 	public String getProjectTitle() {
 		return projectTitle;
 	}
 
 	public void setProjectTitle(String projectTitle) {
 		this.projectTitle = projectTitle;
+	}
+
+	public String getProjectThumnail() {
+		return projectThumnail;
+	}
+
+	public void setProjectThumnail(String projectThumnail) {
+		this.projectThumnail = projectThumnail;
 	}
 
 	public String getProjectContent() {
@@ -145,12 +165,12 @@ public class Project {
 		this.projectPhone = projectPhone;
 	}
 
-	public String getProjectEmail() {
-		return projectEmail;
+	public String getMemberEmail() {
+		return memberEmail;
 	}
 
-	public void setProjectEmail(String projectEmail) {
-		this.projectEmail = projectEmail;
+	public void setMemberEmail(String memberEmail) {
+		this.memberEmail = memberEmail;
 	}
 
 	public String getMinorCode() {

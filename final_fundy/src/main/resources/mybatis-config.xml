@@ -9,5 +9,7 @@
 		<typeAlias type="com.kh.fundy.model.vo.Member" alias="member"/>
 		<typeAlias type="com.kh.fundy.model.vo.AskBoard" alias="askBoard"/>
 		<typeAlias type="com.kh.fundy.model.vo.Project" alias="project"/>
+		<typeAlias type="com.kh.fundy.model.vo.FundingOption" alias="fundingoption"/>
+		<typeAlias type="com.kh.fundy.model.vo.OptionDetail" alias="optiondetail"/>
    </typeAliases>
 </configuration>

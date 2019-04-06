@@ -8,5 +8,4 @@ public interface ProjectListService {
 
 	int selectCount();
 	List<Project> selectList(int cPage, int numPerPage);
-	int insertOne(Project p);
 }

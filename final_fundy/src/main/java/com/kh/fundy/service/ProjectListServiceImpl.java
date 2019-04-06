@@ -24,9 +24,4 @@ public class ProjectListServiceImpl implements ProjectListService {
 		return dao.selectList(cPage, numPerPage);
 	}
 
-	@Override
-	public int insertOne(Project p) {
-		return dao.insertOne(p);
-	}
-
 }

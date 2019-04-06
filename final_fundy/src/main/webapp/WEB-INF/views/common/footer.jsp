@@ -394,6 +394,7 @@
     <footer class="footer">
     <br><br><br><br>
     <button class="datagen-btn">멤버 생성</button>
+    <button class="projectgen-btn">프로젝트 생성</button>
     </footer>
     </div>
     
@@ -716,8 +717,9 @@
     }
     
     
-    
+
     const datagenBtn = $('.datagen-btn');
+    const projectgenBtn = $('.projectgen-btn');
     $(() => {
     	datagenBtn.on('click', () => {
     		$.ajax({
@@ -727,6 +729,18 @@
     			}
     		});
     	});
+    	
+    	projectgenBtn.on('click', () => {
+    		$.ajax({
+    			url: '${pageContext.request.contextPath}/projectgen.do',
+    			success: data => {
+    				alert('결과: ' + data);
+    			}
+    		});
+    	});
+    
     });
+    
+    
 </script>
 </html>
