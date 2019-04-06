@@ -110,26 +110,26 @@
         <div class="support-notice-view">
             <div class="support-notice-view-title">
                 <div>제목</div>
-                <div>[가격인상공지] 미니 드리퍼 5종</div>
+                <div>${ab.askTitle}</div>
             </div>
             <div class="support-notice-view-wrtier">
                 <div>작성자</div>
-                <div>TheFoodForum</div>
+                <div>${ab.askWriter}</div>
             </div>
             <div class="support-notice-view-date-hit">
                 <div>작성일</div>
-                <div>2019-02-19</div>
-                <div>조회수</div>
-                <div>338</div>
+                <div><fmt:formatDate value="${ab.askDate}" pattern="yyyy/MM/dd hh:mm:ss"/></div>
+                <!-- <div>조회수</div>
+                <div>338</div> -->
             </div>
             <div class="support-notice-view-content">
                 <div>
-                    dfasdfasdf
+                   ${ab.askContent}
                 </div>
             </div>
             <div class="support-notice-view-btns">
-                <input type="button" value="수정">
-                <input type="button" value="목록보기">
+                <input type="button" value="수정" onclick="fn_askBoardUpdate();">
+                <input type="button" value="삭제" onclick="fn_askBoardDelete();">
             </div>
             <div class="support-notice-prev">
                 <div><img src="arrow-up.png">이전글</div>
@@ -141,7 +141,23 @@
             </div>
         </div>
     </div>
-
+<script>
+   function fn_askBoardDelete(){
+	  if(confirm("삭제 하시겠습니까??")){
+      	location.href="${path}/askBoardDelete.do?askNo=${ab.askNo}";
+	  }
+	  else
+		  {
+		  	return;
+		  }
+	  }
+   
+   
+   function fn_askBoardUpdate()
+   {
+	   location.href="${path}/askBoardUpdate.do?askNo=${ab.askNo}";
+   }
+</script>
 
 
 </section>

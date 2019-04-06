@@ -92,12 +92,14 @@
             <div class="support-board-cols">
                 <div>${askB.askNo}</div>
                 <div>${askB.askWriter }</div>
-                <div><a href="#">${askB.askTitle }</a></div>
+                <div><a href="${path}//askBoardView.do?askNo=${askB.askNo}">${askB.askTitle }</a></div>
                 <div><fmt:formatDate value="${askB.askDate }" pattern="yyyy/MM/dd"/></div>
                 <div>대기중</div><!-- 댓글 구현한 후 댓글 달릴시 대기중->완료로 전환되게 하려해요 -->
             </div>
        		</c:forEach>
         </div>
+        
+        <%-- <div>${pageBar }</div> --%>
 <input type="button" value="게시물 작성" id="addBtn" onclick="fn_askBoardForm();"/>
         <div class="pagebar">
             <div class="pagebar-unit">

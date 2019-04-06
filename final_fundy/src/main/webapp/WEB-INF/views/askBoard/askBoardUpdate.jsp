@@ -265,14 +265,15 @@
         <div class="notice-form-header">
             공지사항
         </div>
-        <form action="#" method="post" class="notice-form">
+        <form name="updateForm"action="${path}/askBoardUpdateEnd.do" method="post" class="notice-form">
+            <input type="hidden" name="askNo" id="askNo" value="${ab.askNo }"/>
             <div class="notice-form-title">
                 <div>제목</div>
-                <div><input type="text" name="" id=""></div>
+               <div><input type="text" name="askTitle" id="title" value="${ab.askTitle }"></div>
             </div>
             <div class="notice-form-content">
                 <div>공지내용</div>
-                <div><textarea></textarea></div>
+                 <div><textarea name="askContent" id="content">${ab.askContent }</textarea></div>
             </div>
             <div class="notice-form-image-upload">
                 <div>이미지</div>
@@ -287,11 +288,34 @@
             </div>
             <div class="notice-frm-btn-set">
                 <input type="button" value="취소">
-                <input type="submit" value="저장">
+               <input type="submit" id="saveBtn" value="저장">
             </div>
         </form>
     </div>
 
+<script>
+$(document).ready(function(){
+	$("#btnSave").click(function(){
+		
+		var title = $("#title").val();
+		var content = $("#content").val();
+		if(title=="")
+			{
+				alert("제목을 입력하세요");
+				document.updateForm.title.focus();
+				return;
+			}
+		if(content=="")
+			{
+				alert("내용을 입력하세요");
+				document.updateForm.content.focus();
+				return;
+			}
+		document.updateForm.submit();
+	});
+});
+
+</script>
 
 </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

@@ -263,14 +263,14 @@
         <div class="notice-form-header">
             공지사항
         </div>
-        <form action="#" method="post" class="notice-form">
+        <form name="askForm"action="${path}/askBoardFormEnd.do" method="post" class="notice-form">
             <div class="notice-form-title">
                 <div>제목</div>
-                <div><input type="text" name="" id=""></div>
+                <div><input type="text" name="askTitle" id="title"></div>
             </div>
             <div class="notice-form-content">
                 <div>공지내용</div>
-                <div><textarea></textarea></div>
+                <div><textarea name="askContent" id="content"></textarea></div>
             </div>
             <div class="notice-form-image-upload">
                 <div>이미지</div>
@@ -285,9 +285,31 @@
             </div>
             <div class="notice-frm-btn-set">
                 <input type="button" value="취소">
-                <input type="submit" value="저장">
+                <input type="submit" id="saveBtn" value="저장">
             </div>
         </form>
     </div>
+<script>
+$(document).ready(function(){
+	$("#btnSave").click(function(){
+		var title = $("#title").val();
+		var content = $("#content").val();
+		if(title=="")
+			{
+				alert("제목을 입력하세요");
+				document.askForm.title.focus();
+				return;
+			}
+		if(content=="")
+			{
+				alert("내용을 입력하세요");
+				document.askForm.content.focus();
+				return;
+			}
+		document.askForm.submit();
+	});
+});
+
+</script>
 </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
