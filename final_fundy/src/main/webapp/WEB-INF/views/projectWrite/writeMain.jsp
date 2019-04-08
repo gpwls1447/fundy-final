@@ -55,6 +55,7 @@
                 ,minDate: 0 //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
                 ,maxDate: "+60D" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)                
 		});
+		
 		/* 리워드 삭제버튼 감추기 */
 		$(".reward-delete-button").eq(0).css("display", "none");
 		
@@ -67,13 +68,10 @@
 		fn_loadedWriteData();	//임시저장된 프로젝트신청서시 퍼센테이지 계산후 로드
 		
 		/* 작성완성률 퍼센테이지 갱신이벤트 연결 */
-		$("*").keyup(function () {
+		$("input").keyup(function () {
 			fn_loadedWriteData();
 		});
 		$("article:not(iframe)").click(function() {
-			fn_loadedWriteData();
-		})
-		$("input").change(function () {
 			fn_loadedWriteData();
 		});
 		
@@ -85,6 +83,7 @@
 			mainCtg = "." + mainCtg;	//중분류 카테고리 선택자로 초기화
 			$(".subCtgs").css("display", "none");	//소분류 카테고리 display 설정 none
 			$(mainCtg).css("display", "block");	//(중분류 카테고리 코드값을 클래스로가지는 소분류카테고리) display 설정
+			$("#subCtgs").prop("selected", true);
 		});
 		
 		///////////////////////////////////////////////////////
@@ -124,19 +123,12 @@
 		$("#_endDate").change(function() {
 			var today = formatDate(new Date());
 			$("#seeEndDays").val(dateDiff($("#_endDate").val(), today));
-			
+			$(".deliveryPicker").datepicker( "option", "minDate", payEndDate($("#_endDate").val()) );
 			//자동결제 종료일 출력
 			payEndDate($("#_endDate").val());
 		});
 		
 		
-		///////////////////////////////////////////////////////
-		/* 리워드 삭제 클릭 이벤트 */
-		/* $(".reward-delete-btn").click(function() {
-			var index = $(".reward-delete-btn").index(this);
-			console.log(index);
-			console.log("index@!");
-		}); */
 		
 		///////////////////////////////////////////////////////
 		//3자리 단위마다 콤마 생성 하고 삭제하는 함수
@@ -200,10 +192,10 @@
 			}
 			writeData.subCtg = $("#_subCode").val();
 			writeData.projectTitle = $("#_projectTitle").val();
-			writeData.projectThumnail = $("#_projectThumnail").val();
+			writeData.projectThumnail = $("#projectThumnailCk").val();	//프로젝트썸네일 밸류 확인
 			writeData.projectSummary = $("#_projectSummary").val();
 			writeData.memberNick = $("#_memberNick").val();
-			writeData.memberProfile = $("#_memberProfile").val();
+			//writeData.memberProfile = $("#memberProfileCk").val();	//창작자 프로필 확인
 			writeData.goalPrice = removeCommas($("#_goalPrice").val());	//콤마를 제거하여 데이터삽입
 			writeData.endDate = $("#_endDate").val();
 			writeData.projectContent = $("#editor").val();
@@ -228,6 +220,49 @@
 			$(".progress-bar").css("width", percentage + "%");
 			percentage = 0;
 		}
+		
+		///////////////////////////////////////////////////////////
+		/* 프로젝트 대표이미지 */
+		$("#_projectThumnail").change(function() {
+            var file = $("#_projectThumnail")[0].files[0];
+            var formData = new FormData();
+            formData.append("upFile", file);
+			
+			$.ajax({
+				url: '${path }/upload/projectThumnail.do',
+				data: formData,
+				processData: false,
+				contentType: false,
+				type: 'POST',
+				success: function(data) {
+					$("#projectThumnailCk").val(data);
+					$("#thumnail-img").attr("src", data);
+					fn_loadedWriteData();
+				}
+			});
+			
+		});
+		///////////////////////////////////////////////////////////
+		/* 프로필 이미지 */
+		$("#_memberProfile").change(function() {
+            var file = $("#_memberProfile")[0].files[0];
+            var formData = new FormData();
+            formData.append("upFile", file);
+			
+			$.ajax({
+				url: '${path }/upload/memberProfile.do',
+				data: formData,
+				processData: false,
+				contentType: false,
+				type: 'POST',
+				success: function(data) {
+					$("#memberProfileCk").val(data);
+					$("#profile-image").attr("src", data);
+					fn_loadedWriteData();
+				}
+			});
+			
+		});
 	});
 	
 	
@@ -326,12 +361,19 @@
 				success: function(data) {
 					$("#reward-container").append(data);
 					$(function() {
-						for(var i=0; i<$(".reward_priority").length; i++) {
-							$(".reward_priority").eq(i).val(i);
-							$(".reward-delete-button").eq(i).attr("onclick", "fn_removeReward(" + i + ")");
-							$(".add-product").eq(i).attr("onclick", "fn_addProduct(" + i + ")");
-						}
+						
 					});
+					for(var i=0; i<$(".reward_priority").length; i++) {
+						$(".reward_priority").eq(i).val(i);
+						$(".reward-delete-button").eq(i).attr("onclick", "fn_removeReward(" + i + ")");
+						$(".add-product").eq(i).attr("onclick", "fn_addProduct(" + i + ")");
+						$(".deliveryPicker").eq(i).attr("onchange", "calDeliDays(" + i + ")");
+						
+						$(".isDeli").eq(i).attr("id", "isDeli"+i);
+						$(".isNotDeli").eq(i).attr("id", "isNotDeli"+i);
+						$(".isDeliLa").eq(i).attr("for", "isDeli"+i);
+						$(".isDeliNotLa").eq(i).attr("for", "isNotDeli"+i);
+					}
 				}
 			});
 		}
@@ -344,12 +386,69 @@
 			$(".reward_priority").eq(i).val(i);
 			$(".reward-delete-button").eq(i).attr("onclick", "fn_removeReward(" + i + ")");
 			$(".add-product").eq(i).attr("onclick", "fn_addProduct(" + i + ")");
+			$(".deliveryPicker").eq(i).attr("onchange", "calDeliDays(" + i + ")");
 		}
 		$(".reward-delete-button").eq(0).css("display", "none");
 	}
-	function fn_addProduct(rewardIndex) {
-		$(".rewardProduct-container").eq(rewardIndex).append("");
-		console.log(rewardIndex);
+	function fn_addProduct() {
+		var target = $(event.target).closest('.rewardProduct-container');
+		var length = $(event.target).closest('.rewardProduct-container').children('.product-col').length;
+		if(length < 5) {
+			$.ajax({
+				url: "${path }/addRewardProduct.do" ,
+				dataType: "html", 
+				success: function(data) {
+					target.append(data);
+				}
+			});
+		}
+	}
+	function fn_removeProduct() {
+		$(event.target).closest('.reward-col').remove();
+	}
+	function addCommas() {
+		var val = $(event.target).val();
+		val = val.replace(/[^0-9]/g,"").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		$(event.target).val(val);
+	}
+	
+	/* 리워드 배송일 날짜계산 함수 */
+	function caldeliDate() {
+		var val = $(event.target).val();
+		val = val.replace(/[^0-9]/g,"");
+		$(event.target).val(val);	//숫자만입력받게함
+		
+		var endDay = Number($("#seeEndDays").val());
+		
+		var today = new Date();
+		today.setDate(today.getDate() + endDay + Number(val));
+		$(event.target).siblings(".deliveryPicker").datepicker('setDate', today);
+	}
+	function calDeliDays(index) {
+		var endDay = $("#_endDate").val();
+		var deliEndDate = $(".deliveryPicker").eq(index).val();
+		if(endDay != "") {
+			var arrDate1 = deliEndDate.split("-");
+			var getDate1 = new Date(parseInt(arrDate1[0]),parseInt(arrDate1[1])-1,parseInt(arrDate1[2]));
+			var arrDate2 = endDay.split("-");
+			var getDate2 = new Date(parseInt(arrDate2[0]),parseInt(arrDate2[1])-1,parseInt(arrDate2[2]));
+			var getDiffTime = getDate1.getTime() - getDate2.getTime();
+
+			var result = Math.floor(getDiffTime / (1000 * 60 * 60 * 24)); 
+			
+			$(".deli-day").eq(index).val(result);
+		}
+	}
+	function changePayEndCalDeliDate() {
+		var payEndVal = $("#seeEndDays").val();
+		
+		for(var i=0; i<$(".deliveryPicker").length; i++) {
+			var endDay = Number($(".deli-day").eq(i).val());
+			
+			var today = new Date();
+			today.setDate(today.getDate() + endDay + Number(payEndVal));
+			$(".deli-day").eq(i).siblings(".deliveryPicker").datepicker('setDate', today);
+		}
 	}
 </script>
 	<section class="projectWrite-section section">
@@ -373,7 +472,7 @@
 						<div class="progress" style="height: 10px;">
 							<div class="progress-bar" style="width:0%; background-color: #126196"></div>
 						</div> 
-						<sup>작성률이 100%가 되어야 다음페이지로 넘어갑니다.</sup>
+						<sup>작성률이 100%가 되어야 프로젝트 검토요청하기를 할수있습니다.</sup>
 					</div>
 					<div class="progress-percent">
 						<span id="progress-span">0%</span>

@@ -15,7 +15,7 @@ body
 	width: 100%;
 	min-width: 1005px;
     display: flex;
-    flex-flow: column nowrap;
+   	flex-flow: column nowrap;
     align-items: center;
     font-family: 'Noto Sans KR';
 }
