@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.fundy.model.vo.Member;
@@ -68,25 +69,30 @@ import com.kh.fundy.service.MemberService;
 
 	 // 카카오 로그인 후, 우리 사이트 가입 여부 후 분기처리 (Ajax로 리턴)
 	 @RequestMapping("/member/isKakao.do")
-	 @ResponseBody
-	 public Map isKakao(Member m, Model model, HttpSession session) {
-		 System.out.println("들어왔따~~");
-		 System.out.println(m.getKakaoId());
+	 /*@ResponseBody*/
+	 public ModelAndView isKakao(String id, String email, String profile, Model model, HttpSession session) {
+		 System.out.println(id);
+		 System.out.println(email);
+		 System.out.println(profile);
 		 String msg="";
 		 String loc="";
-		 Map map=new HashMap();
+		 Member m=new Member();
+		 m.setKakaoId(id);
+		 m.setMemberEmail(email);
+		 m.setMemberProfile(profile);
+		 service.insertOne(m);
 		 
-		 if(m.getKakaoId()!=null) {
+		 ModelAndView mv=new ModelAndView();
+		 if(id.length()>0) {
 			 msg="로그인 성공";
-			 Member result=service.login(m);
-			 model.addAttribute("loggedMember", result);
-			 map.put("val", "y");
+			 mv.addObject("val","y");
 		 }
 		 else {
-			 map.put("val", "n");
+			 mv.addObject("val","n");
 			 
 		 }
-		 return map;
+		 mv.setViewName("jsonView");
+		 return mv;
 		 
 	 }
 
@@ -116,6 +122,16 @@ import com.kh.fundy.service.MemberService;
 		 model.addAttribute("loc", loc);
 		 return "common/msg";
 	 }
+	 
+	 @RequestMapping("/member/LogOut.do")
+		public String logOut(SessionStatus session, HttpSession session1) {
+			session1.invalidate();
+			if(!session.isComplete()) {
+				session.setComplete();
+			}
+			return "redirect:/";
+		}
+
 
 
 	 //회원가입

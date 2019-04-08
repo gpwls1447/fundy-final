@@ -117,6 +117,7 @@
             position: relative;
             cursor: pointer;
         }
+        
 
         .user-menu-box > i
         {
@@ -407,7 +408,7 @@ div#slideBox input {
                 <i class="material-icons">fingerprint</i>
                 <span class="user-menu-text">정보수정</span>
             </div>
-            <div class="user-menu-box">
+            <div class="user-menu-box logout-btn">
                 <i class="material-icons">exit_to_app</i>
                 <span class="user-menu-text">로그아웃</span>
             </div>
@@ -473,6 +474,18 @@ div#slideBox input {
     
 	
 <script>
+	//로그아웃 기능
+	$(() => {
+		$('.logout-btn').on("click", () => {
+			location.href="${path}/member/LogOut.do";	
+		});
+	});
+	
+	/* $('.logout-btn').on("click", function({
+		location.href="${path}/member/LogOut.do";	
+		});
+	); */
+	
 	
     //패스워드 일치 확인
     $(function(){
@@ -709,17 +722,17 @@ div#slideBox input {
              url: '/v1/user/me',
              success: function(res) {
              	console.log("res : "+JSON.stringify(res));
-               console.log(JSON.stringify(res.kaccount_email));
-               console.log(JSON.stringify(res.id));
-               console.log(JSON.stringify(res.properties.profile_image));
-               console.log(JSON.stringify(res.properties.nickname));
-               
-               var id = res.id;
-               var email = res.kaccount_email;
-               var profile = res.properties.profile_image;
-               var nick = res.properties.nickname;
-             //  testajax(id, email, profile);
-               testajax(res);
+                console.log(JSON.stringify(res.kaccount_email));
+                console.log(JSON.stringify(res.id));
+                console.log(JSON.stringify(res.properties.profile_image));
+                console.log(JSON.stringify(res.properties.nickname));
+                            
+               	var id = res.id;
+               	var email = res.kaccount_email;
+               	var profile = res.properties.profile_image;
+               	var nick = res.properties.nickname;
+               	//testajax(id, email, profile, nick);
+              testajax(res);
                
              },
              fail: function(error) {
@@ -732,7 +745,7 @@ div#slideBox input {
          }
        });
      
-       function testajax(res){
+       /* function testajax(res){
     	   $.ajax({
     		url : "${pageContext.request.contextPath}/memeber/isKakao.do?="+res,
     		dataType:"json",
@@ -740,14 +753,16 @@ div#slideBox input {
     			console.log("res확인 중 : "+data);
     		}
     	   })
-       }
+       } */
        
-       function testajax(id, email, profile, nick)
+       function testajax(res)
        {
+    	   console.log(res);
            $.ajax({
-           	url : "${pageContext.request.contextPath }/member/isKakao.do?kakaoId="+id,
+           	url : "${pageContext.request.contextPath }/member/isKakao.do",
            	dataType:"json",
-           	/* data : res, */
+           	type:"post",
+            data : {id:res.id,"email":res.kaccount_email,profile:res.properties['profile_image']}, 
            	success : function(data){
            		console.log("돌려받은 값 : "+data.val);
            		if(data.val=="y"){

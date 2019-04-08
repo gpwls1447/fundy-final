@@ -11,7 +11,12 @@
 	</select>
 	
 	<select id="insertOne" parameterType="member">
-		INSERT INTO MEMBER VALUES(#{memberEmail}, #{memberPw}, #{memberName}, #{memberNick}, #{memberProfile}, null, #{intro}, #{emailAuthKey}, #{phoneAuthKey}, #{lastLoggedIn}, #{enrollDate}, null, #{kakaoId})
+		<if test="${kakaoId!=null or kakaoId=''}">
+			INSERT INTO MEMBER VALUES(#{memberEmail}, #{memberPw}, #{memberName}, #{memberNick}, #{memberProfile}, null, #{intro}, #{emailAuthKey}, #{phoneAuthKey}, #{lastLoggedIn}, #{enrollDate}, null, #{kakaoId})
+		</if>
+		<if test="">
+			INSERT INTO MEMBER VALUES(#{memberEmail}, #{memberPw}, #{memberName}, #{memberNick}, #{memberProfile}, null, #{intro}, #{emailAuthKey}, #{phoneAuthKey}, #{lastLoggedIn}, #{enrollDate}, null, #{kakaoId})
+		</if>
 	</select>
 
 	<select id="login" parameterType="member" resultType="member">
