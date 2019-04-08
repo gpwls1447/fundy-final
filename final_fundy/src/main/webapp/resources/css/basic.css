@@ -25,7 +25,6 @@ body
     font-family: 'Noto Sans KR';
     font-size: 14px;
     line-height: 13px;
-    border-radius: 4px;
 }
 
 .whole-wrapper input::placeholder{font-size: 13px;}
@@ -242,6 +241,22 @@ input.h31
     cursor: pointer;
     transition: 150ms linear;
     box-sizing: border-box;
+}
+
+.pagebar-unit > a
+{
+	display: block;
+	height: 100%;
+	width: 100%;
+	text-decoration: none;
+	color: #444;
+}
+
+.pagebar-unit > a
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .pagebar-unit:not(.pagebar-unit-active):hover{background-color: #ccc;}
