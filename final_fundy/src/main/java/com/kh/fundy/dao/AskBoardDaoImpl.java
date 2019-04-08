@@ -27,5 +27,35 @@ public class AskBoardDaoImpl implements AskBoardDao {
 		return session.selectOne("askBoard.selectCount");
 	}
 
+	@Override
+	public int insertAskBoard(AskBoard askBoard) {
+		
+		return session.insert("askBoard.insertAskBoard",askBoard);
+	}
+	
+	//삭제
+	@Override
+	public int askBoardDelete(int askNo) {
+		
+		return session.delete("askBoard.deleteAskBoard",askNo);
+	}
+
+	//상세보기
+	@Override
+	public AskBoard askBoardView(int askNo) {
+		return session.selectOne("askBoard.askBoardView",askNo);
+	}
+
+	//수정하기
+	@Override
+	public int askBoardUpdate(AskBoard askBoard) {
+		return session.update("askBoard.askBoardUpdate",askBoard);
+	}
+
+	
+
+	
+	
+	
 	
 }

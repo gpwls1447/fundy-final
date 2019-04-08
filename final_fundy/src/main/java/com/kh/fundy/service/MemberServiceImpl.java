@@ -18,6 +18,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	public Member login(Member m) {
+		return dao.login(m);
+	}
+
+	@Override
 	public int memberDeleteAll() {
 		return dao.memberDeleteAll();
 	}

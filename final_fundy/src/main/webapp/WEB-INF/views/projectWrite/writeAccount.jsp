@@ -13,11 +13,11 @@
 					</div>
 					<div style="display: flex">
 						<div style="width:35%; padding-right:10px;">
-							<input type="tel" class="form-control input25Per projectTel" min="000" max="111" maxlength="3" />
+							<input type="tel" class="form-control input25Per" id="_projectTelF" min="000" max="111" maxlength="3" oninput="maxLengthCheck(this)" />
 							<span style="color: #ccc">─</span>
-							<input type="tel" class="form-control input25Per projectTel" min="0000" max="9999" maxlength="4" />
+							<input type="tel" class="form-control input25Per" id="_projectTelM" min="0000" max="9999" maxlength="4" oninput="maxLengthCheck(this)" />
 							<span style="color: #ccc">─</span>
-							<input type="tel" class="form-control input25Per projectTel" min="0000" max="9999" maxlength="4" />
+							<input type="tel" class="form-control input25Per" id="_projectTelE" min="0000" max="9999" maxlength="4" oninput="maxLengthCheck(this)" />
 						</div>
 						<div>
 							<button class="btn btn-primary" style="background-color: #126196; border: 0px;">인증 문자 받기</button>
@@ -36,7 +36,7 @@
 					</div>
 					<div style="display: flex">
 						<div style="width: 50%; padding-right: 15px;">
-							<input type="email" id="" class="form-control inputLong projectEmail" placeholder="내용을 입력해주세요." />
+							<input type="email" class="form-control inputLong" id="_projectEmail" maxlength="40" placeholder="내용을 입력해주세요." />
 						</div>
 						<div>
 							<button class="btn btn-primary" style="background-color: #126196; border: 0px;">인증 메일 받기</button>
@@ -60,7 +60,7 @@
 									<span>거래은행</span>
 								</div>
 								<div class="content-row">
-									<select class="form-control inputShort" id="bank_">
+									<select class="form-control inputShort" id="_bank">
 										<option disabled="disabled" selected="selected" value="">은행</option>
 										<option class="" value="bankA">은행A</option>
 										<option class="" value="bankB">은행B</option>
@@ -73,7 +73,7 @@
 									<span>계좌번호</span>
 								</div>
 								<div class="content-row">
-									<input type="number" class="form-control inputLong accNum" placeholder="내용을 입력해주세요." />
+									<input type="number" class="form-control inputLong" id="_accNum" maxlength="25" oninput="maxLengthCheck(this)" placeholder="내용을 입력해주세요.(-제외)" />
 								</div>
 							</div>
 							<div class="acc-col">
@@ -81,7 +81,7 @@
 									<span>예금주명</span>
 								</div>
 								<div class="content-row">
-									<input type="number" class="form-control inputShort accName" placeholder="ex)홍길동" />
+									<input type="text" class="form-control inputShort" id="_accName" maxlength="8" placeholder="ex)홍길동" />
 								</div>
 							</div>
 							<div class="acc-col">
@@ -102,7 +102,7 @@
 									<span>생년월일</span>
 								</div>
 								<div class="content-row">
-									<input type="number" class="form-control inputLong birthday" min="000000" max="999999" maxlength="6"  placeholder="숫자로만 입력해주세요 예) 820125" />
+									<input type="number" class="form-control inputLong" id="_birthday" min="0" maxlength="6" oninput="maxLengthCheck(this)" placeholder="숫자로만 입력해주세요 예) 820125" />
 								</div>
 							</div>
 						</div>

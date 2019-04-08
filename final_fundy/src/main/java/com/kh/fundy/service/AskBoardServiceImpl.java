@@ -14,6 +14,7 @@ public class AskBoardServiceImpl implements AskBoardService {
 	@Autowired
 	private AskBoardDao dao;
 	
+	//전체보기
 	@Override
 	public List<AskBoard> selectList(int cPage, int numPerPage) {
 		
@@ -25,7 +26,39 @@ public class AskBoardServiceImpl implements AskBoardService {
 		
 		return dao.selectCount();
 	}
+	
+	//작성하기
+	@Override
+	public int insertAskBoard(AskBoard askBoard) {
+		
+		return dao.insertAskBoard(askBoard);
+	}
 
+	//삭제
+	@Override
+	public int askBoardDelete(int askNo) {
+		
+		return dao.askBoardDelete(askNo);
+	}
+	
+	//상세보기
+	@Override
+	public AskBoard askBoardView(int askNo) {
+		return dao.askBoardView(askNo);
+	}
+	
+	//수정하기
+	@Override
+	public int askBoardUpdate(AskBoard askBoard) {
+		return dao.askBoardUpdate(askBoard);
+	}
+
+	
+
+	
+	
+
+	
 	
 	
 }

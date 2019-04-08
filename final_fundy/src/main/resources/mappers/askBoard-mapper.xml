@@ -2,13 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper  namespace="askBoard">
   
+  	<!-- 전체 게시물 카운트 -->
 	<select id="selectCount" resultType="_int">
 		select count(*) from ask
 	</select>
 	
+	<!-- 전체리스트 불러오기 -->
 	<select id="selectList" resultType="askBoard">
 		<!-- select A.*,(select count(*) from attachment where A.askno=askno) filecount from ask A order by askdate desc -->
-		select * from ask order by askdate desc
+		select * from ask order by askno desc
 	</select>
 	
+	<!-- 게시물 작성하기 -->
+	<insert id="insertAskBoard" parameterType="askBoard">
+		insert into ask values(ask_seq.nextval,#{askTitle},'writer',#{askContent},sysdate,null,null)
+	</insert>
+	
+	<!-- 게시물 삭제 -->
+	<delete id="deleteAskBoard">
+		delete from ask where askno = #{askNo}
+	</delete>
+	
+	<!-- 게시물 상세보기 -->
+	<select id="askBoardView" parameterType="int" resultType="askBoard">
+		select * from ask where askno = #{askNo}
+	</select>
+	
+	<!-- 게시물 수정 -->
+	<update id="askBoardUpdate" parameterType="askBoard">
+		update ask set asktitle = #{askTitle},askcontent = #{askContent},askmod=sysdate where askno = #{askNo}
+	</update>
 </mapper>
