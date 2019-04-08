@@ -1,10 +1,13 @@
 package com.kh.fundy.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.fundy.model.vo.Member;
+import com.kh.fundy.model.vo.ShippingAddr;
 
 @Repository
 public class MemberDaoImpl implements MemberDao {
@@ -31,5 +34,17 @@ public class MemberDaoImpl implements MemberDao {
 	public int insertOne(Member m) {
 		return session.insert("member.insertOne", m);
 	}
+
+	@Override
+	public int memberAddress(ShippingAddr s) {
+		return session.update("shippingAddr.updateAddress", s);
+	}
+
+	@Override
+	public List<ShippingAddr> memberAddressView(ShippingAddr s) {
+		return session.selectList("shippingAddr.updateAddressView", s);
+	}
+
+
 	
 }

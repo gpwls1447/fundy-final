@@ -17,5 +17,7 @@
 	<select id="login" parameterType="member" resultType="member">
 		select * from member where memberEmail=#{memberEmail}
 	</select>
+	
+	
 
 </mapper>
