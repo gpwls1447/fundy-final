@@ -691,8 +691,8 @@ div#slideBox input {
                var email = res.kaccount_email;
                var profile = res.properties.profile_image;
                var nick = res.properties.nickname;
-               testajax(id, email, profile);
-               
+             //  testajax(id, email, profile);
+               testajax(res);
                
              },
              fail: function(error) {
@@ -705,6 +705,16 @@ div#slideBox input {
          }
        });
      
+       function testajax(res){
+    	   $.ajax({
+    		url : "${pageContext.request.contextPath}/memeber/isKakao.do?="+res,
+    		dataType:"json",
+    		success : function(data){
+    			console.log("res확인 중 : "+data);
+    		}
+    	   })
+       }
+       
        function testajax(id, email, profile, nick)
        {
            $.ajax({

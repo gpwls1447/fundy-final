@@ -67,7 +67,7 @@ import com.kh.fundy.service.MemberService;
 	 @RequestMapping("/member/isKakao.do")
 	 @ResponseBody
 	 public Map isKakao(Member m, Model model, HttpSession session) {
-		 
+		 System.out.println("들어왔따~~");
 		 System.out.println(m.getKakaoId());
 		 String msg="";
 		 String loc="";
@@ -75,7 +75,6 @@ import com.kh.fundy.service.MemberService;
 		 
 		 if(m.getKakaoId()!=null) {
 			 msg="로그인 성공";
-			 
 			 Member result=service.login(m);
 			 model.addAttribute("loggedMember", result);
 			 map.put("val", "y");
