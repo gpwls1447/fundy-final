@@ -263,7 +263,7 @@
 <section class="section">
   <div class="notice-form-wrapper">
         <div class="notice-form-header">
-            공지사항
+            1대1 게시판
         </div>
         <form name="updateForm"action="${path}/askBoardUpdateEnd.do" method="post" class="notice-form">
             <input type="hidden" name="askNo" id="askNo" value="${ab.askNo }"/>
@@ -272,10 +272,10 @@
                <div><input type="text" name="askTitle" id="title" value="${ab.askTitle }"></div>
             </div>
             <div class="notice-form-content">
-                <div>공지내용</div>
+                <div>내용</div>
                  <div><textarea name="askContent" id="content">${ab.askContent }</textarea></div>
             </div>
-            <div class="notice-form-image-upload">
+          <!--   <div class="notice-form-image-upload">
                 <div>이미지</div>
                 <div>
                     <div class="added-image-box">
@@ -285,7 +285,7 @@
                         <span>+</span><input type="file" name="originalFile" id="originalFile">
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="notice-frm-btn-set">
                 <input type="button" value="취소">
                <input type="submit" id="saveBtn" value="저장">

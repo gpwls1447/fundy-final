@@ -105,7 +105,7 @@
 <section class="section">
  <div class="support-notice-view-wrapper">
         <div class="support-notice-view-title">
-            <p>공지사항</p><span>더 푸드 포럼의 새로운 소식들을 확인하세요.</span>
+            <p>1대1 게시판</p>
         </div>
         <div class="support-notice-view">
             <div class="support-notice-view-title">
@@ -131,14 +131,14 @@
                 <input type="button" value="수정" onclick="fn_askBoardUpdate();">
                 <input type="button" value="삭제" onclick="fn_askBoardDelete();">
             </div>
-            <div class="support-notice-prev">
+           <!--  <div class="support-notice-prev">
                 <div><img src="arrow-up.png">이전글</div>
                 <div>[가격인상공지] 무농약</div>
             </div>
             <div class="support-notice-next">
                 <div><img src="arrow-down.png">다음글</div>
                 <div>[가격인상공지] 무농약</div>
-            </div>
+            </div> -->
         </div>
     </div>
 <script>

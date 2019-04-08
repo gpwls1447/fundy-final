@@ -261,7 +261,7 @@
 <section class="section">
  <div class="notice-form-wrapper">
         <div class="notice-form-header">
-            공지사항
+            1대1 게시판
         </div>
         <form name="askForm"action="${path}/askBoardFormEnd.do" method="post" class="notice-form">
             <div class="notice-form-title">
@@ -272,7 +272,7 @@
                 <div>공지내용</div>
                 <div><textarea name="askContent" id="content"></textarea></div>
             </div>
-            <div class="notice-form-image-upload">
+         <!--    <div class="notice-form-image-upload">
                 <div>이미지</div>
                 <div>
                     <div class="added-image-box">
@@ -282,7 +282,7 @@
                         <span>+</span><input type="file" name="originalFile" id="originalFile">
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="notice-frm-btn-set">
                 <input type="button" value="취소">
                 <input type="submit" id="saveBtn" value="저장">

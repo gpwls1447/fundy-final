@@ -77,8 +77,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <section class="section">
       <div class="support-board-title">
-            <p>공지사항</p>
-            <p>더 푸드 포럼의 새로운 소식들을 확인하세요.</p>
+            <p>1대1게시판</p>
         </div>
         <div class="support-board-rows">
             <div class="support-board-header">

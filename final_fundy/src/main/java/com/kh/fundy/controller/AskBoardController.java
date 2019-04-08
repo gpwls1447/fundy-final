@@ -53,7 +53,7 @@ public class AskBoardController {
 			mv.setViewName("common/msg");
 			
 		}
-		mv.setViewName("askBoard/askBoardMain");
+		/*mv.setViewName("askBoard/askBoardMain");*/
 		
 		return mv;
 		//로그인 아이디 값을 고정값으로 되는지 확인됨
@@ -61,11 +61,30 @@ public class AskBoardController {
 	
 	/*1대1게시판 삭제*/
 	@RequestMapping("/askBoardDelete.do")
-	public String askBoardDelete(int askNo) throws Exception
+	public ModelAndView askBoardDelete(int askNo) throws Exception
 	{
+		 ModelAndView mv=new ModelAndView();
 		int result=service.askBoardDelete(askNo);
+		if(result>0)
+		{
+			String msg="삭제 완료 하였습니다.";
+			String loc="/askBoardMain.do";
+			mv.addObject("msg",msg);
+			mv.addObject("loc",loc);
+			mv.setViewName("common/msg");
+			
+		}
+		else
+		{
+			String msg="삭제 실패 하였습니다.";
+			String loc="/askBoardMain.do";
+			mv.addObject("msg",msg);
+			mv.addObject("loc",loc);
+			mv.setViewName("common/msg");
+			
+		}
 		
-		return "/askBoard/askBoardMain";
+		return mv;
 	}
 	
 	/*1대1게시판 수정 화면으로 전환*/
@@ -119,7 +138,6 @@ public class AskBoardController {
 		ModelAndView mv=new ModelAndView();
 		
 		List<AskBoard> list=service.selectList(cPage,numPerPage);
-		System.out.println(list);
 		int totalList=service.selectCount();
 		
 		mv.addObject("list",list);
@@ -127,7 +145,6 @@ public class AskBoardController {
 		mv.addObject("pageBar",PageBarFactory.getPageBar(totalList,cPage,numPerPage,"/spring/askBoard/askBoardMain"));
 		mv.setViewName("askBoard/askBoardMain");
 		
-		System.out.println(list);
 		return mv;
 	}
 	
