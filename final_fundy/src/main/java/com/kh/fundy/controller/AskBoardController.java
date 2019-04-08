@@ -74,9 +74,11 @@ public class AskBoardController {
 		
 		ModelAndView mv=new ModelAndView();
 		int result=service.askBoardUpdate(askBoard);
+		
+		mv.setViewName("/askBoard/askBoardMain");
 		return mv;
 		
-		/*sql오류뜸 오류 잡아야됨*/
+	
 	}
 	
 	

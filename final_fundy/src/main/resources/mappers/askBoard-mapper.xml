@@ -10,7 +10,7 @@
 	<!-- 전체리스트 불러오기 -->
 	<select id="selectList" resultType="askBoard">
 		<!-- select A.*,(select count(*) from attachment where A.askno=askno) filecount from ask A order by askdate desc -->
-		select * from ask order by askdate desc
+		select * from ask order by askno desc
 	</select>
 	
 	<!-- 게시물 작성하기 -->
@@ -30,6 +30,6 @@
 	
 	<!-- 게시물 수정 -->
 	<update id="askBoardUpdate" parameterType="askBoard">
-		update ask set asktitle = #{askTitle},askcontent = #{askContent},askmod=sysdate where askno = #{askNo};
+		update ask set asktitle = #{askTitle},askcontent = #{askContent},askmod=sysdate where askno = #{askNo}
 	</update>
 </mapper>
