@@ -1,5 +1,7 @@
 package com.kh.fundy.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -31,5 +33,17 @@ public class MemberDaoImpl implements MemberDao {
 	public int insertOne(Member m) {
 		return session.insert("member.insertOne", m);
 	}
+
+	@Override
+	public List<Member> selectList() {
+		return session.selectList("member.kakao");
+	}
+
+	@Override
+	public Member selectOneKakao(Member m) {
+		return session.selectOne("member.selectOne", m);
+	}
+	
+	
 	
 }

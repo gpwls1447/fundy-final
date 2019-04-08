@@ -1,5 +1,7 @@
 package com.kh.fundy.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,5 +33,19 @@ public class MemberServiceImpl implements MemberService {
 	public int insertOne(Member m) {
 		return dao.insertOne(m);
 	}
+
+	@Override
+	public List<Member> selectList() {
+		// TODO Auto-generated method stub
+		return dao.selectList();
+	}
+
+	@Override
+	public Member selectOneKakao(Member m) {
+		return dao.selectOneKakao(m);
+	}
+	
+	
+	
 
 }

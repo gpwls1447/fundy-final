@@ -223,7 +223,7 @@
 	left: 0;
 	width: 50%;
 	height: 100%;
-	background-image : url(${path}/resources/images/loginPicture3.jpg);
+	background-image : url(${path}/resources/images/loginPicture4.jpg);
 	background-size: cover;
 	background-position: 50% 50%;
 }
@@ -304,12 +304,11 @@
 	background: #363A3D;
 } 
 
-input {
+div#slideBox input {
 	width : 220px;
 	background: transparent;
 	border: 0 !important;
 	outline: 0 ;
-	
 	border-bottom: 1px solid #45494C !important;
 	font-size: 14px;
 	color: black;
@@ -414,6 +413,8 @@ input {
         <div class="user-modal-footer"></div>
     </div>
     
+    
+    <!-- 로그인 / 회원가입 모달 -->
     <div class="login-modal">
 	
 	<button id="logout-btn" class="login-modal-btn login-close-btn">
@@ -468,29 +469,9 @@ input {
 	<input type="hidden" id="kakaoNick" name="kakaoNick" value="" >
 </form>
     
-    
 	
 <script>
-	//카카오 로그인 
-    Kakao.init('3936fbb46415d0ad3589f5b20380fa77');
-    Kakao.Auth.createLoginButton({
-      container: '#kakao-login-btn',
-      success: function(authObj){
-         Kakao.API.request({
-            url: '/v1/user/me',
-            success:function(res){
-               console.log(res);
-             //  console.log(profile);
-               $('#kakaoId').val(res.id);
-               $('#kakaoNick').val(res.properties['memberNick']);
-               $('#')
-               $('#kakaoLoginForm').submit();     
-            }
-         })      
-      },
-      fail:function(err){ alert(JSON.stringify(err));}
-   });
-    
+	
     //패스워드 일치 확인
     $(function(){
 		$("#password2").blur(function(){
@@ -689,5 +670,75 @@ input {
     		});
     	});
     });
+    
+  //카카오 로그인 
+    Kakao.init('3936fbb46415d0ad3589f5b20380fa77');
+       // 카카오 로그인 버튼을 생성합니다.
+       Kakao.Auth.createLoginButton({
+         container: '#kakao-login-btn',
+         success: function(authObj) {
+           // 로그인 성공시, API를 호출합니다.
+           Kakao.API.request({
+             url: '/v1/user/me',
+             success: function(res) {
+             	console.log("res : "+JSON.stringify(res));
+               console.log(JSON.stringify(res.kaccount_email));
+               console.log(JSON.stringify(res.id));
+               console.log(JSON.stringify(res.properties.profile_image));
+               console.log(JSON.stringify(res.properties.nickname));
+               
+               var id = res.id;
+               var email = res.kaccount_email;
+               var profile = res.properties.profile_image;
+               var nick = res.properties.nickname;
+               testajax(id, email, profile);
+               
+               
+             },
+             fail: function(error) {
+               alert(JSON.stringify(error));
+             }
+           });
+         },
+         fail: function(err) {
+           alert(JSON.stringify(err));
+         }
+       });
+     
+       function testajax(id, email, profile, nick)
+       {
+           $.ajax({
+           	url : "${pageContext.request.contextPath }/member/isKakao.do?kakaoId="+id,
+           	dataType:"json",
+           	/* data : res, */
+           	success : function(data){
+           		console.log("돌려받은 값 : "+data.val);
+           		if(data.val=="y"){
+           			console.log("y로 들어옴");
+           			loginModal.toggle();
+         			modalOverlay.toggle();
+           			
+           		}
+           		else{
+           			var confirm=confirm("가입하시겠습니까?") 
+           			//yes 회원가입 / no 그냥 메인페이지
+           			if(confirm){
+           				alert("회원가입 페이지로 이동합니다.");
+           			}
+           			else{
+           				alert("그럼 그냥 구경");
+           			}
+           		}
+           	},
+           	error:function(re,msg)
+           	{
+           		console.log(re);
+           		console.log(msg);
+           	}
+          })
+       }
+       
+    
+    
 </script>
 </html>

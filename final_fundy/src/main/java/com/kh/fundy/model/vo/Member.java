@@ -16,12 +16,14 @@ public class Member {
 	private Timestamp lastLoggedIn;
 	private Timestamp enrollDate;
 	private Timestamp memberQuit;
+	private String kakaoId;
+	
 
 	public Member() {}
 
 	public Member(String memberEmail, String memberPw, String memberName, String memberNick, String memberProfile,
 			int shipAddrNo, String intro, String emailAuthKey, String phoneAuthKey, Timestamp lastLoggedIn,
-			Timestamp enrollDate, Timestamp memberQuit) {
+			Timestamp enrollDate, Timestamp memberQuit, String kakaoId) {
 		super();
 		this.memberEmail = memberEmail;
 		this.memberPw = memberPw;
@@ -35,6 +37,7 @@ public class Member {
 		this.lastLoggedIn = lastLoggedIn;
 		this.enrollDate = enrollDate;
 		this.memberQuit = memberQuit;
+		this.kakaoId = kakaoId;
 	}
 
 	public String getMemberEmail() {
@@ -133,12 +136,21 @@ public class Member {
 		this.memberQuit = memberQuit;
 	}
 
+	public String getKakaoId() {
+		return kakaoId;
+	}
+
+	public void setKakaoId(String kakaoId) {
+		this.kakaoId = kakaoId;
+	}
+
 	@Override
 	public String toString() {
 		return "Member [memberEmail=" + memberEmail + ", memberPw=" + memberPw + ", memberName=" + memberName
 				+ ", memberNick=" + memberNick + ", memberProfile=" + memberProfile + ", shipAddrNo=" + shipAddrNo
 				+ ", intro=" + intro + ", emailAuthKey=" + emailAuthKey + ", phoneAuthKey=" + phoneAuthKey
-				+ ", lastLoggedIn=" + lastLoggedIn + ", enrollDate=" + enrollDate + ", memberQuit=" + memberQuit + "]";
+				+ ", lastLoggedIn=" + lastLoggedIn + ", enrollDate=" + enrollDate + ", memberQuit=" + memberQuit
+				+ ", kakaoId=" + kakaoId + "]";
 	}
 
 	
