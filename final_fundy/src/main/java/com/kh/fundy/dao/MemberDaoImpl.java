@@ -46,5 +46,14 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 
+	public List<Member> selectList() {
+		return session.selectList("member.kakao");
+	}
+
+	@Override
+	public Member selectOneKakao(Member m) {
+		return session.selectOne("member.selectOne", m);
+	}
+	
 	
 }

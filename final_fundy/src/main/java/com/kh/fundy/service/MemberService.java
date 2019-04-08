@@ -13,5 +13,8 @@ public interface MemberService {
 	Member login(Member m);
 	int memberAddress(ShippingAddr s);
 	List<ShippingAddr> memberAddressView(ShippingAddr s);
+	List<Member> selectList();
+	Member selectOneKakao(Member m);
+	
 	
 }

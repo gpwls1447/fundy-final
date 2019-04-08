@@ -143,4 +143,13 @@ public class Member {
 		this.kakaoId = kakaoId;
 	}
 
+	@Override
+	public String toString() {
+		return "Member [memberEmail=" + memberEmail + ", memberPw=" + memberPw + ", memberName=" + memberName
+				+ ", memberNick=" + memberNick + ", memberProfile=" + memberProfile + ", shipAddrNo=" + shipAddrNo
+				+ ", intro=" + intro + ", emailAuthKey=" + emailAuthKey + ", phoneAuthKey=" + phoneAuthKey
+				+ ", lastLoggedIn=" + lastLoggedIn + ", enrollDate=" + enrollDate + ", memberQuit=" + memberQuit
+				+ ", kakaoId=" + kakaoId + "]";
+	}
+
 }
