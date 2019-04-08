@@ -1,8 +1,7 @@
 package com.kh.fundy.service;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +11,7 @@ import com.kh.fundy.model.vo.FundingOption;
 import com.kh.fundy.model.vo.Member;
 import com.kh.fundy.model.vo.OptionDetail;
 import com.kh.fundy.model.vo.Project;
+import com.kh.fundy.model.vo.RndPackage;
 
 @Service
 public class DatagenServiceImpl implements DatagenService {
@@ -26,7 +26,7 @@ public class DatagenServiceImpl implements DatagenService {
 		FundingOption fo = new FundingOption();
 		OptionDetail od = new OptionDetail();
 		
-		for(int i = 0 ; i < (int)(Math.random()*5)+1 ; i++)
+		for(int i = 0 ; i < 5 ; i++)
 		{
 			fo.setProjectNo(p.getProjectNo());
 			fo.setFundPrice(1000*((int)(Math.random()*25)+1));
@@ -47,6 +47,11 @@ public class DatagenServiceImpl implements DatagenService {
 	@Override
 	public Member selectRndMember(int rndRnum) {
 		return dao.selectRndMember(rndRnum);
+	}
+
+	@Override
+	public RndPackage selectRndPackage(Map<String, Integer> map) {
+		return dao.selectRndPackage(map);
 	}
 	
 }

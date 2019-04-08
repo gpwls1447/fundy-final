@@ -1,11 +1,16 @@
 package com.kh.fundy.service;
 
 import java.util.List;
+import java.util.Map;
 
+import com.kh.fundy.model.vo.FundingLog;
+import com.kh.fundy.model.vo.FundingOption;
 import com.kh.fundy.model.vo.Project;
 
 public interface ProjectListService {
 
-	int selectCount();
-	List<Project> selectList(int cPage, int numPerPage);
+	int selectCount(Map map);
+	List<Project> selectList(int cPage, int numPerPage, Map map);
+	Project selectOne(int projectNo);
+	List<FundingLog> selectFunderList(int projectNo);
 }

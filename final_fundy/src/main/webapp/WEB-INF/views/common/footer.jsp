@@ -392,9 +392,10 @@
 </style>
 
     <footer class="footer">
-    <br><br><br><br>
-    <button class="datagen-btn">멤버 생성</button>
-    <button class="projectgen-btn">프로젝트 생성</button>
+    	<br><br><br><br>
+	    <button class="datagen-btn">멤버 생성</button>
+	    <button class="projectgen-btn">프로젝트 생성</button>
+	    <button class="fundingLogDatagen-btn">후원자로그 생성</button>
     </footer>
     </div>
     
@@ -613,9 +614,9 @@
     const nav = $('.nav');
     const categoryBtn = $('.category-btn');
     $(() => {
-    	nav.hide();
         categoryBtn.on('click', () => {
-            nav.slideToggle(300);
+            nav.fadeToggle(300);
+            nav.css('display', 'flex');
         });
     });
 
@@ -716,16 +717,15 @@
         userModalBody.fadeToggle(time);
     }
     
-    
-
     const datagenBtn = $('.datagen-btn');
     const projectgenBtn = $('.projectgen-btn');
+   	const fundinglogBtn = $('.fundingLogDatagen-btn');
     $(() => {
     	datagenBtn.on('click', () => {
     		$.ajax({
     			url: '${pageContext.request.contextPath}/datagen.do',
     			success: data => {
-    				alert('결과: ' + data);
+    				alert('결과: ' + data.result);
     			}
     		});
     	});
@@ -734,10 +734,20 @@
     		$.ajax({
     			url: '${pageContext.request.contextPath}/projectgen.do',
     			success: data => {
-    				alert('결과: ' + data);
+    				alert('결과: ' + data.result);
     			}
     		});
     	});
+    	
+    	fundinglogBtn.on('click', () => {
+    		$.ajax({
+    			url: '${pageContext.request.contextPath}/fundingLogDatagen.do',
+    			success: data => {
+    				alert('결과: ' + data.result);
+    			}
+    		});
+    	});
+    	
     
     });
     

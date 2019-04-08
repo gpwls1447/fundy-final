@@ -9,7 +9,10 @@
 		<typeAlias type="com.kh.fundy.model.vo.Member" alias="member"/>
 		<typeAlias type="com.kh.fundy.model.vo.AskBoard" alias="askBoard"/>
 		<typeAlias type="com.kh.fundy.model.vo.Project" alias="project"/>
-		<typeAlias type="com.kh.fundy.model.vo.FundingOption" alias="fundingoption"/>
-		<typeAlias type="com.kh.fundy.model.vo.OptionDetail" alias="optiondetail"/>
+		<typeAlias type="com.kh.fundy.model.vo.FundingOption" alias="fundingOption"/>
+		<typeAlias type="com.kh.fundy.model.vo.OptionDetail" alias="optionDetail"/>
+		<typeAlias type="com.kh.fundy.model.vo.Category" alias="category"/>
+		<typeAlias type="com.kh.fundy.model.vo.RndPackage" alias="rndPackage"/>
+		<typeAlias type="com.kh.fundy.model.vo.FundingLog" alias="fundingLog"/>
    </typeAliases>
 </configuration>

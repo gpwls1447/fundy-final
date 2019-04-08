@@ -25,12 +25,21 @@ public class Project {
 	private Timestamp projectFormDate;
 	private List<FundingOption> foList;
 	
+	private String minorName;
+	private String midCode;
+	private String midName;
+	private String majorCode;
+	private int reach;
+	private int reachRate;
+	private int funderNo;
+	
 	public Project() {}
 
 	public Project(int projectNo, String memberNick, String projectTitle, String projectThumnail, String projectContent,
 			Timestamp beginDate, Timestamp endDate, int goalPrice, String recommended, String recImageName,
 			int anchorCount, String projectStatCode, String projectSumary, String projectPhone, String memberEmail,
-			String minorCode, String settled, Timestamp projectFormDate, List<FundingOption> foList) {
+			String minorCode, String settled, Timestamp projectFormDate, List<FundingOption> foList, String minorName,
+			String midCode, String midName, String majorCode, int reach, int reachRate, int funderNo) {
 		super();
 		this.projectNo = projectNo;
 		this.memberNick = memberNick;
@@ -51,6 +60,13 @@ public class Project {
 		this.settled = settled;
 		this.projectFormDate = projectFormDate;
 		this.foList = foList;
+		this.minorName = minorName;
+		this.midCode = midCode;
+		this.midName = midName;
+		this.majorCode = majorCode;
+		this.reach = reach;
+		this.reachRate = reachRate;
+		this.funderNo = funderNo;
 	}
 
 	public int getProjectNo() {
@@ -203,6 +219,62 @@ public class Project {
 
 	public void setFoList(List<FundingOption> foList) {
 		this.foList = foList;
+	}
+
+	public String getMinorName() {
+		return minorName;
+	}
+
+	public void setMinorName(String minorName) {
+		this.minorName = minorName;
+	}
+
+	public String getMidCode() {
+		return midCode;
+	}
+
+	public void setMidCode(String midCode) {
+		this.midCode = midCode;
+	}
+
+	public String getMidName() {
+		return midName;
+	}
+
+	public void setMidName(String midName) {
+		this.midName = midName;
+	}
+
+	public String getMajorCode() {
+		return majorCode;
+	}
+
+	public void setMajorCode(String majorCode) {
+		this.majorCode = majorCode;
+	}
+
+	public int getReach() {
+		return reach;
+	}
+
+	public void setReach(int reach) {
+		this.reach = reach;
+	}
+
+	public int getReachRate() {
+		return reachRate;
+	}
+
+	public void setReachRate(int reachRate) {
+		this.reachRate = reachRate;
+	}
+
+	public int getFunderNo() {
+		return funderNo;
+	}
+
+	public void setFunderNo(int funderNo) {
+		this.funderNo = funderNo;
 	}
 
 }
