@@ -69,7 +69,7 @@ public class DatagenController {
 			m.setEmailAuthKey("");
 			m.setPhoneAuthKey("");
 			Timestamp tempTime = getRandomTime();
-			m.setEnrollData(tempTime);
+			m.setEnrollDate(tempTime);
 			m.setLastLoggedIn(tempTime);
 			result += mService.insertOne(m);
 		}

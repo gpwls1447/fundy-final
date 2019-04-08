@@ -13,6 +13,11 @@ public class MemberDaoImpl implements MemberDao {
 	SqlSessionTemplate session;
 	
 	@Override
+	public Member login(Member m) {
+		return session.selectOne("member.login", m);
+	}
+
+	@Override
 	public int memberCount() {
 		return session.selectOne("member.memberCount");
 	}
