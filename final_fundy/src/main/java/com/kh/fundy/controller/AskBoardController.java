@@ -35,10 +35,24 @@ public class AskBoardController {
 		
 		 ModelAndView mv=new ModelAndView();
 		int result=service.insertAskBoard(askBoard);
-		/*if(result>0)
+		if(result>0)
 		{
-			확인 완료시 메세지창 띄우려함
-		}*/
+			String msg="작성을 완료 하였습니다.";
+			String loc="/askBoardMain.do";
+			mv.addObject("msg",msg);
+			mv.addObject("loc",loc);
+			mv.setViewName("common/msg");
+			
+		}
+		else
+		{
+			String msg="작성을 실패 하였습니다.";
+			String loc="/askBoardMain.do";
+			mv.addObject("msg",msg);
+			mv.addObject("loc",loc);
+			mv.setViewName("common/msg");
+			
+		}
 		mv.setViewName("askBoard/askBoardMain");
 		
 		return mv;
@@ -69,13 +83,27 @@ public class AskBoardController {
 	
 	/*1대1게시판 수정*/
 	@RequestMapping("/askBoardUpdateEnd.do")
-	public ModelAndView askBoardUpdateEnd(AskBoard askBoard)
+	public ModelAndView askBoardUpdateEnd(AskBoard askBoard,int askNo)
 	{
 		
 		ModelAndView mv=new ModelAndView();
 		int result=service.askBoardUpdate(askBoard);
-		
-		mv.setViewName("/askBoard/askBoardMain");
+		if(result>0)
+		{
+			AskBoard ab=service.askBoardView(askNo);
+			mv.addObject("ab",ab);
+			mv.setViewName("askBoard/askBoardView");
+		}
+		else
+		{
+			AskBoard ab=service.askBoardView(askNo);
+			String msg="수정 실패하였습니다.";
+			String loc="/askBoardUpdate.do";
+			mv.addObject("ab",ab);
+			mv.addObject("msg",msg);
+			mv.addObject("loc",loc);
+			mv.setViewName("common/msg");
+		}
 		return mv;
 		
 	
