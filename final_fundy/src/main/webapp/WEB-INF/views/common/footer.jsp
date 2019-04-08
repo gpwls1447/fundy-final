@@ -304,7 +304,7 @@
 	background: #363A3D;
 } 
 
-input {
+div#slideBox input {
 	width : 220px;
 	background: transparent;
 	border: 0 !important;

@@ -5,11 +5,10 @@
 	<settings>
 		<setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
-
-	<typeAliases>
+	
+   <typeAliases>
 		<typeAlias type="com.kh.fundy.model.vo.Member" alias="member"/>
-	</typeAliases>
-
-
-
+		<typeAlias type="com.kh.fundy.model.vo.AskBoard" alias="askBoard"/>
+   </typeAliases>
+   
 </configuration>
