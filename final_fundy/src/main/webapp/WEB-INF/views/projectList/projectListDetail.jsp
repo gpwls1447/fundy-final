@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>   
-<%@ page import="static com.kh.fundy.common.DateFormatTemplate.getTillDate" %>
+    pageEncoding="UTF-8"%>   llDate" %>
 <%@ page import="java.sql.*" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>

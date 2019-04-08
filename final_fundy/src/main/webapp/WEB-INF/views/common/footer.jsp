@@ -360,7 +360,9 @@ div#slideBox input {
 
     <footer class="footer">
     <br><br><br><br>
-    <button class="datagen-btn">멤버 생성</button>
+	<button class="datagen-btn">멤버 생성</button>
+	<button class="projectgen-btn">프로젝트 생성</button>
+	<button class="fundingLogDatagen-btn">후원자로그 생성</button>
     </footer>
     </div>
 
@@ -659,17 +661,42 @@ div#slideBox input {
     
     
     
+//데이터생성 버튼
+    
     const datagenBtn = $('.datagen-btn');
+    const projectgenBtn = $('.projectgen-btn');
+   	const fundinglogBtn = $('.fundingLogDatagen-btn');
     $(() => {
     	datagenBtn.on('click', () => {
     		$.ajax({
     			url: '${pageContext.request.contextPath}/datagen.do',
     			success: data => {
-    				alert('결과: ' + data);
+    				alert('결과: ' + data.result);
     			}
     		});
     	});
+    	
+    	projectgenBtn.on('click', () => {
+    		$.ajax({
+    			url: '${pageContext.request.contextPath}/projectgen.do',
+    			success: data => {
+    				alert('결과: ' + data.result);
+    			}
+    		});
+    	});
+    	
+    	fundinglogBtn.on('click', () => {
+    		$.ajax({
+    			url: '${pageContext.request.contextPath}/fundingLogDatagen.do',
+    			success: data => {
+    				alert('결과: ' + data.result);
+    			}
+    		});
+    	});
+    	
+    
     });
+    
     
   //카카오 로그인 
     Kakao.init('3936fbb46415d0ad3589f5b20380fa77');
