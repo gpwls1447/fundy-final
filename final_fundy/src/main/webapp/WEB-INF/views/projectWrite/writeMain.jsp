@@ -83,6 +83,7 @@
 			mainCtg = "." + mainCtg;	//중분류 카테고리 선택자로 초기화
 			$(".subCtgs").css("display", "none");	//소분류 카테고리 display 설정 none
 			$(mainCtg).css("display", "block");	//(중분류 카테고리 코드값을 클래스로가지는 소분류카테고리) display 설정
+			$("#subCtgs").prop("selected", true);
 		});
 		
 		///////////////////////////////////////////////////////
@@ -191,10 +192,10 @@
 			}
 			writeData.subCtg = $("#_subCode").val();
 			writeData.projectTitle = $("#_projectTitle").val();
-			writeData.projectThumnail = $("#_projectThumnail").val();
+			writeData.projectThumnail = $("#projectThumnailCk").val();	//프로젝트썸네일 밸류 확인
 			writeData.projectSummary = $("#_projectSummary").val();
 			writeData.memberNick = $("#_memberNick").val();
-			writeData.memberProfile = $("#_memberProfile").val();
+			//writeData.memberProfile = $("#memberProfileCk").val();	//창작자 프로필 확인
 			writeData.goalPrice = removeCommas($("#_goalPrice").val());	//콤마를 제거하여 데이터삽입
 			writeData.endDate = $("#_endDate").val();
 			writeData.projectContent = $("#editor").val();
@@ -221,7 +222,47 @@
 		}
 		
 		///////////////////////////////////////////////////////////
-		/* 배송일 변경 */
+		/* 프로젝트 대표이미지 */
+		$("#_projectThumnail").change(function() {
+            var file = $("#_projectThumnail")[0].files[0];
+            var formData = new FormData();
+            formData.append("upFile", file);
+			
+			$.ajax({
+				url: '${path }/upload/projectThumnail.do',
+				data: formData,
+				processData: false,
+				contentType: false,
+				type: 'POST',
+				success: function(data) {
+					$("#projectThumnailCk").val(data);
+					$("#thumnail-img").attr("src", data);
+					fn_loadedWriteData();
+				}
+			});
+			
+		});
+		///////////////////////////////////////////////////////////
+		/* 프로필 이미지 */
+		$("#_memberProfile").change(function() {
+            var file = $("#_memberProfile")[0].files[0];
+            var formData = new FormData();
+            formData.append("upFile", file);
+			
+			$.ajax({
+				url: '${path }/upload/memberProfile.do',
+				data: formData,
+				processData: false,
+				contentType: false,
+				type: 'POST',
+				success: function(data) {
+					$("#memberProfileCk").val(data);
+					$("#profile-image").attr("src", data);
+					fn_loadedWriteData();
+				}
+			});
+			
+		});
 	});
 	
 	
@@ -431,7 +472,7 @@
 						<div class="progress" style="height: 10px;">
 							<div class="progress-bar" style="width:0%; background-color: #126196"></div>
 						</div> 
-						<sup>작성률이 100%가 되어야 다음페이지로 넘어갑니다.</sup>
+						<sup>작성률이 100%가 되어야 프로젝트 검토요청하기를 할수있습니다.</sup>
 					</div>
 					<div class="progress-percent">
 						<span id="progress-span">0%</span>

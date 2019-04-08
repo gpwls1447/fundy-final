@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<c:set var="path" value="${pageContext.request.contextPath }" />
 <style>
 select#_subCode option.subCtgs {
 	display: none;
@@ -20,7 +24,7 @@ select#_subCode option.subCtgs {
 						</select>
 						&nbsp;&nbsp;&nbsp;
 						<select class="form-control inputShort" id="_subCode">
-							<option disabled="disabled" selected="selected" value="">소분류 카테고리</option>
+							<option id="subCtgs" disabled="disabled" selected="selected" value="">소분류 카테고리</option>
 							<%for(int i=0; i<3; i++) {%>
 								<%for(int j=0; j<3; j++) {%>
 								<option class="subCtgs mainCtg0<%=i %>" value="m0<%=i %>, s0<%=j %>">중분류0<%=i %>, 소분류0<%=j %></option>
@@ -40,7 +44,7 @@ select#_subCode option.subCtgs {
 						프로젝트의 타이틀을 정해주세요. 띄어쓰기 포함 최대 20글자 내로 작성해주세요.
 					</div>
 					<div>
-						<input type="text" value="${write.title }" class="form-control inputLong" id="_projectTitle" maxlength="20" placeholder="내용을 입력해주세요." />
+						<input type="text" value="" class="form-control inputLong" id="_projectTitle" maxlength="20" placeholder="내용을 입력해주세요." />
 					</div>
 				</div>
 			</div>
@@ -53,10 +57,13 @@ select#_subCode option.subCtgs {
 					<div>
 						프로젝트 대표 이미지를 첨부해주세요.
 					</div>
-					<div id="thumnail-drag" style="width:500px; height:281.25px; background-color: black;">
-						<button onclick="fn_uploadThumnail()" style="width: 100%; height: 100%;">이미지</button>
+					<div id="thumnail-drag" style="width:500px; height:281.25px;">
+						<img id="thumnail-img" src="${path }/resources/images/upload-project-icon.png" onclick="fn_uploadThumnail()" width="100%" height="100%" />
 						<div style="display:none">
-							<input type="file" class="projectThumnail" id="_projectThumnail" name="projectThumnail" value="default" />
+							<form id="thumnailForm" method="post" action="${path }/upload/projectThumnail.do" enctype="multipart/form-data">
+								<input type="file" class="projectThumnail" id="_projectThumnail" name="projectThumnail" />
+							</form>
+							<input type="hidden" id="projectThumnailCk" value="" />
 						</div>
 					</div>
 				</div>
@@ -99,9 +106,12 @@ select#_subCode option.subCtgs {
 						창작자 프로필 사진을 변경 할 수 있습니다. 차후에 변경 할 수 있습니다.
 					</div>
 					<div class="creator-profile-img">
-						<img alt="" onclick="fn_uploadProfile()" src="resources/images/user_icon.png">
+						<img id="profile-image" alt="" onclick="fn_uploadProfile()" src="resources/images/user_icon.png" width="100%" height="100%">
 						<div style="display:none">
-							<input type="file" name="memberProfile" id="_memberProfile" />
+							<form id="FILE_FORM-PROFILE" method="post" enctype="multipart/form-data">
+								<input type="file" name="memberProfile" id="_memberProfile" />
+							</form>
+							<input type="hidden" id="memberProfileCk" value="" />
 						</div>
 					</div>
 				</div>
