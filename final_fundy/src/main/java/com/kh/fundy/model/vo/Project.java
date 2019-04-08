@@ -18,10 +18,10 @@ public class Project {
 	private int anchorCount;
 	private String projectStatCode;
 	private String projectSumary;
+	private String projectEmail;
 	private String projectPhone;
 	private String memberEmail;
 	private String minorCode;
-	private String settled;
 	private Timestamp projectFormDate;
 	private List<FundingOption> foList;
 	
@@ -37,9 +37,10 @@ public class Project {
 
 	public Project(int projectNo, String memberNick, String projectTitle, String projectThumnail, String projectContent,
 			Timestamp beginDate, Timestamp endDate, int goalPrice, String recommended, String recImageName,
-			int anchorCount, String projectStatCode, String projectSumary, String projectPhone, String memberEmail,
-			String minorCode, String settled, Timestamp projectFormDate, List<FundingOption> foList, String minorName,
-			String midCode, String midName, String majorCode, int reach, int reachRate, int funderNo) {
+			int anchorCount, String projectStatCode, String projectSumary, String projectEmail, String projectPhone,
+			String memberEmail, String minorCode, Timestamp projectFormDate, List<FundingOption> foList,
+			String minorName, String midCode, String midName, String majorCode, int reach, int reachRate,
+			int funderNo) {
 		super();
 		this.projectNo = projectNo;
 		this.memberNick = memberNick;
@@ -54,10 +55,10 @@ public class Project {
 		this.anchorCount = anchorCount;
 		this.projectStatCode = projectStatCode;
 		this.projectSumary = projectSumary;
+		this.projectEmail = projectEmail;
 		this.projectPhone = projectPhone;
 		this.memberEmail = memberEmail;
 		this.minorCode = minorCode;
-		this.settled = settled;
 		this.projectFormDate = projectFormDate;
 		this.foList = foList;
 		this.minorName = minorName;
@@ -173,6 +174,14 @@ public class Project {
 		this.projectSumary = projectSumary;
 	}
 
+	public String getProjectEmail() {
+		return projectEmail;
+	}
+
+	public void setProjectEmail(String projectEmail) {
+		this.projectEmail = projectEmail;
+	}
+
 	public String getProjectPhone() {
 		return projectPhone;
 	}
@@ -195,14 +204,6 @@ public class Project {
 
 	public void setMinorCode(String minorCode) {
 		this.minorCode = minorCode;
-	}
-
-	public String getSettled() {
-		return settled;
-	}
-
-	public void setSettled(String settled) {
-		this.settled = settled;
 	}
 
 	public Timestamp getProjectFormDate() {

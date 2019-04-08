@@ -22,5 +22,9 @@
 		select * from member where kakaoId=#{kakaoId}
 	</select>
 	
+	<select id="selectOne" parameterType="String" resultType="member">
+		select * from member where memberEmail = #{memberEmail}
+	</select> 
+	
 
 </mapper>

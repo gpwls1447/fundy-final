@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.fundy.model.vo.FundingLog;
 import com.kh.fundy.model.vo.Project;
 import com.kh.fundy.service.ProjectListService;
 
@@ -52,10 +53,28 @@ public class ProjectListController {
 	@RequestMapping("/projectList/projectListDetail.do")
 	public ModelAndView projectListDetail(int projectNo)
 	{
+		System.out.println(projectNo);
 		Project p = service.selectOne(projectNo);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("project", p);
 		mv.setViewName("projectList/projectListDetail");
+		return mv;
+	}
+	
+	@RequestMapping("/projectList/detail_community")
+	public String projectListDetailCommunity()
+	{
+		return "projectList/projectListDetail_community";
+	}
+	
+	@RequestMapping("/projectList/detail_funderList")
+	public ModelAndView projectListDetailFunderList(String projectNo)
+	{
+		System.out.println("호롤롤롤" + projectNo);
+		ModelAndView mv = new ModelAndView();
+		List<FundingLog> flList = service.selectFunderList(Integer.parseInt(projectNo));
+		mv.addObject("flList", flList);
+		mv.setViewName("projectList/projectListDetail_funderList");
 		return mv;
 	}
 	

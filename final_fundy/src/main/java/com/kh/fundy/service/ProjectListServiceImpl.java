@@ -1,5 +1,6 @@
 package com.kh.fundy.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +30,14 @@ public class ProjectListServiceImpl implements ProjectListService {
 
 	@Override
 	public Project selectOne(int projectNo) {
-		return dao.selectOne(projectNo);
+		Project p = dao.selectOne(projectNo);
+		List<FundingOption> foList = dao.selectFundingOptionList(p.getProjectNo());
+		for(FundingOption fo : foList)
+		{
+			fo.setOdList(dao.selectOptionDetailList(fo.getPackageNo()));
+		}
+		p.setFoList(foList);
+		return p;
 	}
 
 	@Override

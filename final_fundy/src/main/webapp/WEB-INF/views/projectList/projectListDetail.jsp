@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>   llDate" %>
+    pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -392,8 +392,8 @@
                 </div>
             </div>
             <div class="proj-main-right">
-                <div class="total-money">모인금액<span>50,000</span>원</div>
-                <div class="participants">후원자수<span>2</span>명</div>         
+                <div class="total-money">모인금액<span>${project.reach }</span>원</div>
+                <div class="participants">후원자수<span>${project.funderNo }</span>명</div>         
                 <div class="proj-period">펀딩기간<span class="divider-2">|</span><span><fmt:formatDate value="${project.beginDate }" pattern="yyyy.MM.dd"/> - <fmt:formatDate value="${project.endDate }" pattern="yyyy.MM.dd"/></span></div>
                 <div class="goal-money">목표금액<span class="divider-2">|</span><span>${project.goalPrice } 원</span></div>
                 <div class="proj-main-btn-box">
@@ -436,41 +436,28 @@
                     </div>
                 </div>
                 <div class="option-count">
-                    2개의 후원 옵션이 있습니다.
+                    ${fn:length(project.foList)}개의 옵션이 있습니다.
                 </div>
                 <div class="option-container">
+                    <c:forEach items="${project.foList }" var="foList">
                     <div class="option-box">
                         <div class="buyer-count">
-                            <i class="material-icons">people</i>5명이 선택
+                            <i class="material-icons">people</i>${foList.funderNo }명이 선택
                         </div>
                         <div class="option-price">
-                            38,000 원 +
+                        	${foList.fundPrice }
                         </div>
                         <div class="option-detail">
-                            <span>· 딩가딩디딩 X 1</span>
-                            <span>· 두둥두두둥 X 1</span>
+                        	<c:forEach items="${foList.odList }" var="odList">
+                            <span>· ${odList.packageName } X ${odList.packageAmount }EA</span>
+                            </c:forEach>
                         </div>
                         <div class="shipping-date">
-                            예상 발송일<span class="divider-3">|</span><span>2019년 4월 26일</span>
+                                	예상 발송일<span class="divider-3">|</span><span><fmt:formatDate value="${foList.deliveryDate }" pattern="yyyy년 MM월 dd일"/></span>
                         </div>
                         <button class="basic-btn-active ripple option-select-btn">선택하기</button>
                     </div>
-                    <div class="option-box">
-                        <div class="buyer-count">
-                            <i class="material-icons">people</i>5명이 선택
-                        </div>
-                        <div class="option-price">
-                            38,000 원 +
-                        </div>
-                        <div class="option-detail">
-                            <span>· 딩가딩디딩 X 1</span>
-                            <span>· 두둥두두둥 X 1</span>
-                        </div>
-                        <div class="shipping-date">
-                            예상 발송일<span class="divider-3">|</span><span>2019년 4월 26일</span>
-                        </div>
-                        <button class="basic-btn-active ripple option-select-btn">선택하기</button>
-                    </div>
+                    </c:forEach>
                 </div>
             </div>
         </div>
@@ -497,21 +484,23 @@
         indicator.css('width', $('.current-tab')[0].clientWidth + 10);
     };
     
+    
+    //탭 클릭시 ㅇ
     const projDetailTab = $('.proj-detail-tab');
     
     $(() => {
     	projDetailTab.on('click', e => {
     		$.ajax({
     			type: 'post',
-    			url: '${path}/views/projectList/projectListDetail'+$(e.currentTarget).data('targetName'),
-    			dataType: 'text',
+    			url: '${path}/projectList/detail'+$(e.currentTarget).data('targetName'),
+    			data: {'projectNo' : "${project.projectNo}"},
+    			dataType: 'html',
     			success: data => {
     				$('.proj-detail-bottom-left').html(data);
     			}
     		});
     	});
-    })
-    
+    });
     
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

@@ -3,7 +3,7 @@
 <mapper namespace="project">
 
 	<insert id="insertOne" parameterType="project">
-		INSERT INTO PROJECT VALUES(PROJECT_SEQ.NEXTVAL, #{memberNick}, #{projectThumnail}, #{projectTitle}, #{projectContent}, #{beginDate}, #{endDate}, #{goalPrice}, 'N', NULL, #{anchorCount}, #{projectStatCode}, #{projectSumary}, #{projectPhone}, #{memberEmail}, #{minorCode}, 'N', #{projectFormDate})
+		INSERT INTO PROJECT VALUES(PROJECT_SEQ.NEXTVAL, #{projectThumnail}, #{projectTitle}, #{projectContent}, #{beginDate}, #{endDate}, #{goalPrice}, 'N', NULL, #{anchorCount}, #{projectStatCode}, #{projectSumary}, #{projectEmail}, #{projectPhone}, #{memberEmail}, #{minorCode}, #{projectFormDate})
 		<selectKey keyProperty="projectNo" resultType="int" order="AFTER" keyColumn="projectNo">
 			SELECT PROJECT_SEQ.CURRVAL FROM DUAL
 		</selectKey>
@@ -42,12 +42,14 @@
 	
 	<select id="selectList" parameterType="map" resultType="project">
 		SELECT A.*, B.MINORNAME, C.*, 
+			F.MEMBERNICK,
 			nvl((select sum((e.fundPrice*d.packageamount)+d.extramoney) from fundinglog d join fundingoption e on d.packageNo = e.packageNo where d.projectNo = a.projectNo),0) as reach,
 			nvl((select sum((e.fundPrice*d.packageamount)+d.extramoney) from fundinglog d join fundingoption e on d.packageNo = e.packageNo where d.projectNo = a.projectNo)/goalprice*100,0) as reachRate,
 			nvl((select count(*) from fundinglog f where f.projectNo = a.projectNo),0) as funderNo
 			FROM PROJECT A 
 			JOIN MINORCATEGORY B ON A.MINORCODE = B.MINORCODE
 			JOIN MIDCATEGORY C ON B.MIDCODE = C.MIDCODE
+			JOIN MEMBER F ON A.MEMBEREMAIL = F.MEMBEREMAIL
 			WHERE 1=1
 		<if test="projectStatCode != null and projectStatCode != ''">
 			AND PROJECTSTATCODE = #{projectStatCode}
@@ -78,15 +80,21 @@
 		
 	</select>
 	
-	<select id="selectFunderList" parameterType="fundingLog">
-		SELECT * FROM FUNDINGLOG WHERE PROJECTNO = #{projectNo}
+	<select id="selectFunderList" parameterType="int" resultType="fundingLog">
+		SELECT A.*, 
+		(SELECT B.FUNDPRICE FROM FUNDINGOPTION B WHERE PACKAGENO = A.PACKAGENO),
+		C.MEMBERNICK
+		FROM FUNDINGLOG A
+		JOIN MEMBER C ON C.MEMBEREMAIL = A.MEMBEREMAIL
+		WHERE PROJECTNO = #{projectNo}
 	</select>
 	
-	<select id="selectFundingOptionList" parameterType="int">
-		SELECT * FROM FUNDINGOPTION WHERE PROJECTNO = #{projectNo}
+	<select id="selectFundingOptionList" parameterType="int" resultType="fundingOption">
+		SELECT A.*, (SELECT COUNT(*) FROM FUNDINGLOG B WHERE A.PACKAGENO = B.PACKAGENO) AS FUNDERNO FROM FUNDINGOPTION A WHERE PROJECTNO = #{projectNo} order by fundPrice ASC
 	</select>
 	
-	<select id="selectOptionDetailList" parameterType="int">
+	<select id="selectOptionDetailList" parameterType="int" resultType="optionDetail">
+		SELECT * FROM OPTIONDETAIL WHERE PACKAGENO = #{packageNo}
 	</select>
 	
 </mapper>

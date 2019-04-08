@@ -11,16 +11,19 @@ public class FundingOption {
 	private Timestamp deliveryDate;
 	private List<OptionDetail> odList;
 	
+	private int funderNo;
+	
 	public FundingOption () {}
 
-	public FundingOption(int projectNo, int packageNo, int fundPrice, Timestamp deliveryDate,
-			List<OptionDetail> odList) {
+	public FundingOption(int projectNo, int packageNo, int fundPrice, Timestamp deliveryDate, List<OptionDetail> odList,
+			int funderNo) {
 		super();
 		this.projectNo = projectNo;
 		this.packageNo = packageNo;
 		this.fundPrice = fundPrice;
 		this.deliveryDate = deliveryDate;
 		this.odList = odList;
+		this.funderNo = funderNo;
 	}
 
 	public int getProjectNo() {
@@ -61,6 +64,14 @@ public class FundingOption {
 
 	public void setOdList(List<OptionDetail> odList) {
 		this.odList = odList;
+	}
+
+	public int getFunderNo() {
+		return funderNo;
+	}
+
+	public void setFunderNo(int funderNo) {
+		this.funderNo = funderNo;
 	}
 	
 }

@@ -112,7 +112,6 @@ public class DatagenController {
 			if(rndCodeNo < 10) sb.append("C0"+rndCodeNo);
 			else sb.append("C"+rndCodeNo);
 			
-			p.setMemberNick(m.getMemberNick());
 			p.setProjectThumnail("thumnail_sample_"+String.valueOf(rndIndex)+".jpg");
 			p.setProjectTitle(rndTitle[rndIndex]);
 			p.setProjectContent("냉무");
@@ -125,6 +124,7 @@ public class DatagenController {
 			
 			p.setAnchorCount(0);
 			p.setProjectSumary(rndSumary[rndIndex]);
+			p.setProjectEmail(m.getMemberEmail());
 			p.setProjectPhone("01050694404");
 			p.setMemberEmail(m.getMemberEmail());
 			p.setMinorCode(sb.toString()); sb.setLength(0);
