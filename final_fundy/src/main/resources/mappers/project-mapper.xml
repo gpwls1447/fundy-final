@@ -82,11 +82,11 @@
 		SELECT * FROM FUNDINGLOG WHERE PROJECTNO = #{projectNo}
 	</select>
 	
-	<select id="selectFundingOptionList" parameterType="projectNo">
+	<select id="selectFundingOptionList" parameterType="int">
 		SELECT * FROM FUNDINGOPTION WHERE PROJECTNO = #{projectNo}
 	</select>
 	
-	<select id="selectOptionDetailList" parameterType="packageNo">
+	<select id="selectOptionDetailList" parameterType="int">
 	</select>
 	
 </mapper>
