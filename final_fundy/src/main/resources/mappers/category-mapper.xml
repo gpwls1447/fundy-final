@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="category">
+
+	<select id="selectAll" resultType="category">
+		SELECT * FROM MAJORCATEGORY order by majorcode
+	</select>
+	
+	<select id="selectAllMid" resultType="category">
+		select majorCode, majorname, midcode, midname from majorCategory join midCategory using (majorCode) order by midcode
+	</select>
+	
+	<select id="selectAllMinor" resultType="category">
+		select * from (select majorCode, majorname, midcode, midname from majorCategory join midCategory using (majorCode)) join minorCategory using (midCode) order by minorcode
+	</select>
+
+</mapper>

@@ -33,8 +33,12 @@
 /*===============*/
 
 section.projectWrite-section {
-	width: 100%;
 	flex-direction: row;
+}
+section.projectWrite-section input {
+	/* border: 1px solid #ced4da !important;
+	border-bottom: 1px solid #ced4da !important;
+	width: 18px; */
 }
 section.projectWrite-section > div.projectWrite-nav > div > button{
 	background-color: white;
@@ -136,7 +140,7 @@ div.write-section .inputLong {
 div.write-section .inputShort {
 	display: inline-block; width: 48%;
 }
-div.write-section .inputMoney {
+div.write-section .input38Per {
 	display: inline-block; width: 38%;
 }
 div.write-section .inputDay {
@@ -175,11 +179,11 @@ div.write-section div.add-btn-area > div:last-child {
 
 /* 리워드영역 */
 div.write-section div#reward-container {
-	min-height : 180px;
+	/* min-height : 80px; */
 }
 div.write-section div#reward-container div.reward {
 	width: 90%; margin-bottom: 15px; border: 1px solid #126196;
-	cursor: pointer; padding: 5px 15px 0 25px;
+	padding: 5px 15px 0 25px;
 }
 div.write-section div#reward-container div.reward input.inputShort{
 	margin-right: 10px;
@@ -229,7 +233,7 @@ div.write-section div#reward-container div.reward div.rewardProduct-container > 
 	width: 15%;
 }
 div.write-section div#reward-container div.reward div.rewardProduct-container > div.reward-col div.third-row {
-	padding-left: 10px;
+	padding-left: 1px;
 }
 div.write-section div#reward-container div.reward div.reward-deli-container {
 	margin: 20px 0 20px 0;
@@ -241,7 +245,22 @@ div.write-section div#reward-container div.reward div.reward-deli-container > di
 	border: 1px solid #ccc;
 }
 div.write-section div#reward-container div.reward div.reward-isdeli-container {
-	margin-bottom: 30px;
+	margin-bottom: 5px;
+}
+div.write-section div#reward-container div.reward div.reward-delete-container {
+	justify-content: flex-end; display: flex; justify-content: flex-end; margin-bottom: 5px;
+}
+div.write-section div.remove-btn-area {
+	display: flex; font-weight: bold; color: orange;
+}
+div.write-section div.remove-btn-area > div:first-child {
+	font-size: 30px;
+}
+div.write-section div.remove-btn-area > div:last-child {
+	font-size: 18px;
+}
+div.write-section button.remove-btn {
+	background-color: white; border: 0;
 }
 
 /* 입금계좌입력영역 */

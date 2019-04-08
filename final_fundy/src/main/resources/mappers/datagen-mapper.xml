@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="datagen">
+	<select id="selectRndMember" parameterType="int" resultType="member">
+		SELECT * FROM (SELECT ROWNUM AS RNUM, A.* FROM MEMBER A) WHERE RNUM = #{rndRnum}
+	</select>
+	<select id="selectRndPackage" parameterType="map" resultType="rndPackage">
+		SELECT * FROM (SELECT ROWNUM AS RNUM, A.PROJECTNO, A.PACKAGENO, (SELECT ENDDATE FROM PROJECT B WHERE B.PROJECTNO = A.PROJECTNO) AS ENDDATE FROM FUNDINGOPTION A WHERE A.PROJECTNO = #{projectNo}) C WHERE RNUM = #{rnum}
+	</select>
+</mapper>

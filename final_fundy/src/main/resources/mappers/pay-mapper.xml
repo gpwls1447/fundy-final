@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="pay">
+	
+	<insert id="insertFundingLog" parameterType="fundingLog">
+		INSERT INTO FUNDINGLOG VALUES(FUNDINGLOG_SEQ.NEXTVAL, #{memberEmail}, #{projectNo}, #{deliveryStatCode}, #{packageNo}, #{packageAmount}, #{extraMoney}, #{funderDate}, #{anonymous})
+	</insert>
+	
+</mapper>

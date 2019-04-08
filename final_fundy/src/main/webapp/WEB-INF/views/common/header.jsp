@@ -26,10 +26,12 @@
     <header class="header">
         <div class="header-wrapper">
             <div class="header-group">
-                <div class="logo"><a href="#">FUNDY</a></div>
-                <div><a href="#">후원</a></div>
+                <div class="logo"><a href="${path }/main.do">FUNDY</a></div>
                 <div>
-                    <a href="#" class="current-div">펀딩</a>
+                	<a href="${path }/main.do?majorCode='A02'" class="<c:if test="${majorCategory eq 'A02' }">current-div</c:if>">후원</a>
+                </div>
+                <div>
+                    <a href="${path }/main.do?majorCode='A01'" class="<c:if test="${majorCategory eq 'A01' }">current-div</c:if>">펀딩</a>
                 </div>
                 <div>
                     <i class="material-icons category-btn">more_horiz</i>
@@ -40,30 +42,31 @@
                     <i class="material-icons search-btn">search</i>
                     <input type="text" name="search" class="search-bar" placeholder="프로젝트검색">
                 </div>
+                
                 <c:if test="${loggedMember==null }">
-                <div class="login-btn">로그인</div>
-                <div class="header-last">회원가입</div>
+                <div class="header-last login-btn" >
+					<img src="${path }/resources/images/user_icon.png">
+                </div>
                 </c:if>
+                
                 <c:if test="${loggedMember!=null }">
-                	<div>${loggedMember.memberNick }</a>님 환영합니다 </div>
-                <div class="user-btn" >
+                <div>${loggedMember.memberNick }님 환영합니다 </div>
+                <div class="header-last user-btn" >
 						<img src="${path }/resources/images/user_icon.png">
                 </div>
                 </c:if>
+                
             </div>
         </div>
     </header>
     <nav class="nav">
-        <div><a href="#"><img class="current-category" src="${path }/resources/images/category-sample.jpg">전체보기</a></div>
-        <div><a href="#"><img src="${path }/resources/images/category-sample.jpg">테크·가전</a></div>
-        <div><a href="#"><img src="${path }/resources/images/category-sample.jpg">패션·잡화</a></div>
-        <div><a href="#"><img src="${path }/resources/images/category-sample.jpg">뷰티</a></div>
-        <div><a href="#"><img src="${path }/resources/images/category-sample.jpg">푸드</a></div>
-        <div><a href="#"><img src="${path }/resources/images/category-sample.jpg">홈리빙</a></div>
-        <div><a href="#"><img src="${path }/resources/images/category-sample.jpg">디자인소품</a></div>
-        <div><a href="#"><img src="${path }/resources/images/category-sample.jpg">여행·레저</a></div>
-        <div><a href="#"><img src="${path }/resources/images/category-sample.jpg">스포츠</a></div>
-        <div><a href="#"><img src="${path }/resources/images/category-sample.jpg">게임·취미</a></div>
-        <div><a href="#"><img src="${path }/resources/images/category-sample.jpg">출판</a></div>
+		<div class="nav-wrapper">
+			<div><a href="${path }/projectList/projectList.do?majorCode=${majorCategory}"><img class="current-category" src="${path }/resources/images/category-sample.jpg">전체보기</a></div>
+		    <c:forEach items="${midCList}" var="mc">
+				<c:if test="${mc.majorCode eq majorCategory }">
+					<div><a href="${path }/projectList/projectList.do?midCode=${mc.midCode}"><img src="${path }/resources/images/category-sample.jpg">${mc.midName }</a></div>
+		    	</c:if>
+		    </c:forEach>
+    	</div>
     </nav>
     

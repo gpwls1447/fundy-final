@@ -3,7 +3,7 @@
         .header
         {
             width: 100%;
-            height: 70px;
+            height: 65px;
             display: flex;
             justify-content: center;
             border-bottom: 1px solid #ccc;
@@ -73,7 +73,7 @@
             display: none;
         }
 
-        .user-btn > img
+        .user-btn > img, .login-btn > img
         {
             width: 35px;
             height: 35px;
@@ -85,25 +85,38 @@
 
         .nav
         {
-			width: 1005px;
-            display: flex;
+            position: absolute;
+            top: 65px;
+			width: 100%;
+            display: none;
             align-items: center;
+            justify-content: center;
+            height: 100px;
+            background-color: rgba(255,255,255,0.9);
+            z-index: 2;
+        }
+        
+        .nav-wrapper
+        {
+        	width: 1005px;
+        	height: 100%;
+        	display: flex;
+        	align-items: center;
             justify-content: space-between;
-            height: 150px;
         }
 
-        .nav > div
+        .nav-wrapper > div
         {
             margin: 10px;
             transition: 100ms ease;
         }
 
-        .nav > div:hover
+        .nav-wrapper > div:hover
         {
             transform: scale(1.1);
         }
 
-        .nav > div > a
+        .nav-wrapper > div > a
         {
             text-decoration: none;
             color: #444;
@@ -114,7 +127,7 @@
             flex-flow: column;
         }
 
-        .nav > div > a > img
+        .nav-wrapper > div > a > img
         {
             width: 60px;
             height: 60px;

@@ -24,4 +24,7 @@
 		<constructor-arg index="0" ref="sqlSessionFactoryBean"/>
 	</bean>
 	
+	<bean class="org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean">
+		<property name="maxBinaryMessageBufferSize" value="1020400"/>
+	</bean>
 </beans>

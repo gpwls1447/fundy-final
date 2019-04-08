@@ -22,7 +22,5 @@
 		select * from member where kakaoId=#{kakaoId}
 	</select>
 	
-	
-	
 
 </mapper>

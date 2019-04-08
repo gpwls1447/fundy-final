@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.fundy.dao.MemberDao;
 import com.kh.fundy.model.vo.Member;
+import com.kh.fundy.model.vo.ShippingAddr;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -35,6 +36,14 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	public int memberAddress(ShippingAddr s) {
+		return dao.memberAddress(s);
+	}
+
+	@Override
+	public List<ShippingAddr> memberAddressView(ShippingAddr s) {
+		return dao.memberAddressView(s);
+	}
 	public List<Member> selectList() {
 		// TODO Auto-generated method stub
 		return dao.selectList();
@@ -44,8 +53,6 @@ public class MemberServiceImpl implements MemberService {
 	public Member selectOneKakao(Member m) {
 		return dao.selectOneKakao(m);
 	}
-	
-	
 	
 
 }

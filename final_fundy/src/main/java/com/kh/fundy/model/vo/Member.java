@@ -18,7 +18,6 @@ public class Member {
 	private Timestamp memberQuit;
 	private String kakaoId;
 	
-
 	public Member() {}
 
 	public Member(String memberEmail, String memberPw, String memberName, String memberNick, String memberProfile,
@@ -153,9 +152,4 @@ public class Member {
 				+ ", kakaoId=" + kakaoId + "]";
 	}
 
-	
-	
-	
-	
-	
 }

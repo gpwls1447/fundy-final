@@ -243,16 +243,11 @@
         <div class="proj-section-wrapper popular-proj">
             <div class="proj-section-header">카테고리별 인기 프로젝트</div>
             <div class="popular-nav">
-                <button class="basic-btn basic-btn-active">패션</button>
-                <button class="basic-btn">패션</button>
-                <button class="basic-btn">패션</button>
-                <button class="basic-btn">패션</button>
-                <button class="basic-btn">패션</button>
-                <button class="basic-btn">패션</button>
-                <button class="basic-btn">패션</button>
-                <button class="basic-btn">패션</button>
-                <button class="basic-btn">패션</button>
-                <button class="basic-btn">패션</button>
+            	<c:forEach items="${midCList}" var="mc" varStatus="vs">
+                	<c:if test="${mc.majorCode eq majorCategory }">
+	                	<button class="basic-btn <c:if test="${vs.count eq 1 }">basic-btn-active</c:if>">${mc.midName }</button>                		
+					</c:if>
+				</c:forEach>
             </div>
             <div class="proj-container">
                 <div class="proj-box">

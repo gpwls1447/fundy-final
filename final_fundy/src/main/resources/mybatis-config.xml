@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
-	<!-- null값이 들어와도 null로 인식 -->
 	<settings>
 		<setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
-
-	<typeAliases>
+	
+   <typeAliases>
 		<typeAlias type="com.kh.fundy.model.vo.Member" alias="member"/>
-	</typeAliases>
-
+		<typeAlias type="com.kh.fundy.model.vo.AskBoard" alias="askBoard"/>
+		<typeAlias type="com.kh.fundy.model.vo.ShippingAddr" alias="shippingAddr"/>
+		<typeAlias type="com.kh.fundy.model.vo.Project" alias="project"/>
+		<typeAlias type="com.kh.fundy.model.vo.FundingOption" alias="fundingOption"/>
+		<typeAlias type="com.kh.fundy.model.vo.OptionDetail" alias="optionDetail"/>
+		<typeAlias type="com.kh.fundy.model.vo.Category" alias="category"/>
+		<typeAlias type="com.kh.fundy.model.vo.RndPackage" alias="rndPackage"/>
+		<typeAlias type="com.kh.fundy.model.vo.FundingLog" alias="fundingLog"/>
+   </typeAliases>
 </configuration>

@@ -15,8 +15,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.fundy.model.vo.Member;
+import com.kh.fundy.model.vo.ShippingAddr;
 import com.kh.fundy.service.MemberService;
 
  @SessionAttributes(value= {"loggedMember"})
@@ -25,6 +27,7 @@ import com.kh.fundy.service.MemberService;
 
 	 //log를 찍기위해 logger객체
 	 private Logger logger=Logger.getLogger(MemberController.class);
+
 
 	 @Autowired
 	 private MemberService service;
