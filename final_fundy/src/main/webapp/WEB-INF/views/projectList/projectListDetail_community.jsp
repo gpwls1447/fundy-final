@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>   
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -34,10 +33,10 @@
 	    width: 100%;
 	}
 	
-	
 	.textarea-bar
 	{
 	    align-self: center;
+		display: block;
 	    width: 0;
 	    height: 1px;
 	    background-color: #444;
@@ -231,7 +230,6 @@
 	    display: block;
 	    margin: 15px 0;
 	}
-
 </style>
 
 <div class="comment-count">댓글 2</div>
@@ -239,26 +237,27 @@
 <div class="textarea comment-textarea" contenteditable="true"></div>
 <span class="textarea-bar"></span>
 <div class="write-btn-set">
-    <button class="cancel-btn cancel-comment nude-btn ripple">취소</button>
-    <button class="write-btn basic-btn basic-btn-active ripple">등록</button>
+	<button class="cancel-btn cancel-comment nude-btn ripple">취소</button>
+	<button class="write-btn basic-btn basic-btn-active ripple">등록</button>
 </div>
 
 <span id="marginer"></span>
 
+<c:forEach items="${list }" var="list">
 <div class="comment-box">
 
     <div class="comment-header">
         <img class="comment-profile" src="images/default_profile_1.png">
         <div class="comment-nick-date">
-            <div class="comment-nick">21kyo<i class="material-icons comment-menu-btn">more_vert</i></div>
-            <div class="comment-date">19/03/24 19:20:54</div>
+            <div class="comment-nick">${list.memberEmail }<i class="material-icons comment-menu-btn">more_vert</i></div>
+            <div class="comment-date">${list.commentDate }</div>
             <div class="comment-menu">
 				<div class="edit-btn"><i class="material-icons">edit</i>수정</div>
 				<div class="delete-btn"><i class="material-icons">delete</i>삭제</div>
             </div>
         </div>
     </div>
-    <div class="comment-text">이거 언제쯤 배송 되나여?</div>
+    <div class="comment-text">${list.commentContent }</div>
     <span class="edit-bar"></span>
     <div class="write-btn-set">
         <button class="cancel-btn cancel-edit nude-btn ripple">취소</button>
@@ -307,10 +306,17 @@
           
     </div>
 </div>
+</c:forEach>
 <script>
+	
+	/* 페이지 바 함수 */
+	const fn_paging = cPage => {
+		location.href='${path}/projectList/projectListDetail_community?cPage='+cPage+'&projectNo='+${projectNo};
+	};
+
     //코멘트 메뉴 버튼 토글
 
-    const commentMenuBtn = $('.comment-menu-btn');
+    var commentMenuBtn = $('.comment-menu-btn');
     $(() => {
         commentMenuBtn.on('mousedown', e => {
             const commentMenu = $('.comment-menu');
@@ -333,7 +339,7 @@
     });
 
     //답글 토글 로직
-    const replyToggleBtn = $('.toggle-reply');
+    var replyToggleBtn = $('.toggle-reply');
     $(() => {
         replyToggleBtn.parent().next().hide();
         replyToggleBtn.on('click', e => {
@@ -344,7 +350,7 @@
     });
 
     //댓글작성 버튼 토글
-    const commentTextArea = $('.comment-textarea');
+    var commentTextArea = $('.comment-textarea');
     $(() => {
         commentTextArea.on('focus', e => {
             $(e.target).next().next().show();
@@ -373,7 +379,7 @@
     });
 
     //좋아요 클릭
-    const likeBtn = $('.like-btn');
+    var likeBtn = $('.like-btn');
     $(() => {
         likeBtn.on('click', e => {
             $(e.target).toggleClass('liked');
@@ -403,7 +409,7 @@
         });
     });
 
-    const editCommon = target => {
+    var editCommon = target => {
         target.prev().toggle();
         target.next().next().toggle();
         target.next().next().next().toggle();

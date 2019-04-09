@@ -9,7 +9,6 @@
 <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
-
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <style>
 	/* footer 부분 */
@@ -400,6 +399,7 @@
 	    <button class="datagen-btn">멤버 생성</button>
 	    <button class="projectgen-btn">프로젝트 생성</button>
 	    <button class="fundingLogDatagen-btn">후원자로그 생성</button>
+	    <button class="commentGen-btn">코멘트 생성</button>
     </footer>
     </div>
     
@@ -706,6 +706,7 @@
     const datagenBtn = $('.datagen-btn');
     const projectgenBtn = $('.projectgen-btn');
    	const fundinglogBtn = $('.fundingLogDatagen-btn');
+   	const commentGenBtn = $('.commentGen-btn');
     $(() => {
     	datagenBtn.on('click', () => {
     		$.ajax({
@@ -734,7 +735,14 @@
     		});
     	});
     	
-    
+    	commentGenBtn.on('click', () => {
+    		$.ajax({
+    			url: '${pageContext.request.contextPath}/commentGen.do',
+    			success: data => {
+    				alert('결과: ' + data.result);
+    			}
+    		});
+    	});
     });
     
     

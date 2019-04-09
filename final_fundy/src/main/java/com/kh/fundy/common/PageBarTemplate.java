@@ -2,7 +2,7 @@ package com.kh.fundy.common;
 
 public class PageBarTemplate {
 
-	public static String getPageBar(int totalCount, int cPage, int numPerPage, String url)
+	public static String getPageBar(int totalCount, int cPage, int numPerPage)
 	{
 		String pageBar = "";
 		int totalPage = (int)Math.ceil((double)totalCount / numPerPage);

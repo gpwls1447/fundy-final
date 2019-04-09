@@ -232,7 +232,7 @@
 	
 	.proj-detail-bottom{width: 100%; display: flex;}
 	
-	.proj-detail-bottom-left{flex: 7 1 0; margin-right: 25px;}
+	.proj-detail-bottom-left{flex: 7 1 0; margin-right: 25px; display: flex; flex-flow: column }
 	.proj-detail-bottom-right{flex: 4 1 0;}
 	
 	.creator-info-box

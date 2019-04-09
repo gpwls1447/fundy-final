@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.fundy.model.vo.Comment;
 import com.kh.fundy.model.vo.FundingLog;
 import com.kh.fundy.model.vo.Project;
+import com.kh.fundy.service.CommentService;
 import com.kh.fundy.service.ProjectListService;
 
 @Controller
@@ -21,6 +23,8 @@ public class ProjectListController {
 
 	@Autowired
 	private ProjectListService service;
+	@Autowired
+	private CommentService cService;
 	
 	@RequestMapping("/projectList/projectList.do")
 	public ModelAndView projectList(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, String majorCode, String midCode, String keyword, @RequestParam(value = "projectStatCode", required = false, defaultValue = "PS03") String projectStatCode, String orderby)
@@ -35,7 +39,7 @@ public class ProjectListController {
 		int numPerPage = 10;
 		int totalCount = service.selectCount(map);
 		List<Project> list = service.selectList(cPage, numPerPage, map);
-		String pageBar = getPageBar(totalCount, cPage, numPerPage, "/projectList/projectList.do");
+		String pageBar = getPageBar(totalCount, cPage, numPerPage);
 		
 		ModelAndView mv = new ModelAndView();
 		
@@ -62,9 +66,20 @@ public class ProjectListController {
 	}
 	
 	@RequestMapping("/projectList/detail_community")
-	public String projectListDetailCommunity()
+	public ModelAndView projectListDetailCommunity(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, int projectNo)
 	{
-		return "projectList/projectListDetail_community";
+		ModelAndView mv = new ModelAndView();
+		int numPerPage = 10;
+		int totalCount = cService.selectCommentCount(projectNo);
+		List<Comment> list = cService.selectCommentList(cPage, numPerPage, projectNo);
+		String pageBar = getPageBar(totalCount, cPage, numPerPage);
+		
+		mv.addObject("list", list);
+		mv.addObject("pageBar", pageBar);
+		mv.addObject("projectNo", projectNo);
+		mv.setViewName("projectList/projectListDetail_community");
+		
+		return mv;
 	}
 	
 	@RequestMapping("/projectList/detail_funderList")

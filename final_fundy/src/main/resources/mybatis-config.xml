@@ -15,5 +15,7 @@
 		<typeAlias type="com.kh.fundy.model.vo.Category" alias="category"/>
 		<typeAlias type="com.kh.fundy.model.vo.RndPackage" alias="rndPackage"/>
 		<typeAlias type="com.kh.fundy.model.vo.FundingLog" alias="fundingLog"/>
+   		<typeAlias type="com.kh.fundy.model.vo.Comment" alias="comment"/>
+   		<typeAlias type="com.kh.fundy.model.vo.CommentReply" alias="commentReply"/>
    </typeAliases>
 </configuration>

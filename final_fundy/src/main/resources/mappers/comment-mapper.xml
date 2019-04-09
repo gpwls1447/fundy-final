@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="comment">
+
+	<insert id="insertComment" parameterType="comment">
+		INSERT INTO COMMENTBOARD VALUES(COMMENTBOARD_SEQ.NEXTVAL, #{projectNo}, #{memberEmail}, #{commentContent}, #{commentDate}, #{commentMod}, #{commentDelete})
+		<selectKey resultType="int" keyProperty="commentNo" order="AFTER" keyColumn="commentNo">
+			SELECT COMMENTBOARD_SEQ.CURRVAL FROM DUAL			
+		</selectKey>
+	</insert>
+	
+	<insert id="insertCommentReply" parameterType="commentReply">
+		INSERT INTO COMMENTREPLY VALUES(COMMENTREPLY_SEQ.NEXTVAL, #{commentNo}, #{memberEmail}, #{commentReplyContent}, #{commentReplyDate}, #{commentReplyMod}, #{commentReplyDelete})
+	</insert>
+	
+	<select id="selectCommentCount" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM COMMENT WHERE PROJECTNO = #{projectNo}
+	</select>
+
+	<select id="selectCommentList" parameterType="int" resultType="comment">
+		SELECT * FROM COMMENT WHERE PROJECTNO = #{projectNo}
+	</select>
+	
+	<select id="selectCommentReply" parameterType="int" resultType="commentReply">
+		SELECT * FROM COMMENTREPLY WHERE PROJECTNO = #{projectNo}
+	</select>
+	
+</mapper>

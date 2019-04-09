@@ -10,6 +10,8 @@ body
     color: #444;
 }
 
+div:focus{outline: none;}
+
 .whole-wrapper
 {
 	width: 100%;

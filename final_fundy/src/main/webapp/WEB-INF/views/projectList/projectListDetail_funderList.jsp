@@ -67,17 +67,15 @@
             <fmt:parseNumber value="${fl.funderDate.time / (1000*60*60)}" integerOnly="true" var="fdHour"/>
             <fmt:parseNumber value="${fl.funderDate.time / (1000*60)}" integerOnly="true" var="fdMinute"/>            
             <div class="donor-date">
-            	<c:choose>
-					<c:when test="${nowDate - fdDate != 0}">
-	            		${nowDate - fdDate}일 전
-	            	</c:when>
-	            	<c:when test="${nowHour - fdHour != 0}">
-	            		${nowHour - fdHour}시간 전
-	            	</c:when>
-	            	<c:otherwise>
-	            		${nowMinute - fdMinute}분 전
-	            	</c:otherwise>
-            	</c:choose>
+				<c:if test="${nowDate - fdDate > 0}">
+	            	${nowDate - fdDate}일 전
+	            </c:if>
+	            <c:if test="${nowDate - fdDate < 0 && nowHour - fdHour > 0}">
+	            	${nowHour - fdHour}시간 전
+	            </c:if>
+	            <c:if test="${nowDate - fdDate < 0 && nowHour - fdHour < 0 }">
+	            	${nowMinute - fdMinute}분 전
+	            </c:if>
       		</div>
         </div>
 	</div>
