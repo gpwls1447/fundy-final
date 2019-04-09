@@ -12,7 +12,7 @@
  <style>       
 	.proj-list-wrapper
 	{
-	    width: 1024px;
+	    width: 1005px;
 	
 	    display: flex;
 	    flex-flow: column nowrap;
@@ -35,9 +35,11 @@
 	
 	.proj-list-order
 	{
+		margin-top: 100px;
 	    width: 100%;
 	    display: flex;
 	    justify-content: flex-end;
+	    box-sizing: border-box;
 	}
 	
 	.proj-list-order > select
@@ -136,20 +138,6 @@
 		<c:if test="${keyword != null && keyword eq ''}">
         	<div class="proj-search-result">[${keyword }] 에 대한 검색 결과</div>
 		</c:if>
-        <div class="proj-category">
-            <button class="basic-btn basic-btn-active" data-category="">전체보기</button>
-            <button class="basic-btn" data-category="a">패션</button>
-            <button class="basic-btn" data-category="b">패션</button>
-            <button class="basic-btn" data-category="c">패션</button>
-            <button class="basic-btn" data-category="d">패션</button>
-            <button class="basic-btn" data-category="e">패션</button>
-            <button class="basic-btn" data-category="f">패션</button>
-            <button class="basic-btn" data-category="g">패션</button>
-            <button class="basic-btn" data-category="h">패션</button>
-            <button class="basic-btn" data-category="i">패션</button>
-            <button class="basic-btn" data-category="j">패션</button>
-        </div>
-
         <div class="proj-list-order">
             <select name="projectStatCode" id="projectStatCode">
                 <option value="PS03" ${projectStatCode eq "PS03" ? "selected" : "" }>진행중</option>
@@ -183,7 +171,7 @@
 						<c:set var="endDate" value="${list.endDate }"/>
 						<fmt:formatDate var="endTime" value="${endDate }" pattern="yyyyMMdd"/>
 						<fmt:parseNumber value="${endDate.time / (1000*60*60*24)}" integerOnly="true" var="parsedEnd"/>
-                        <span>${parsedNow - parsedEnd + -2*(parsedNow - parsedEnd)}일 </span>
+                        <span>${parsedNow - parsedEnd + -2*(parsedNow - parsedEnd) > -1 ? parsedNow - parsedEnd + -2*(parsedNow - parsedEnd) : "0"}일 </span>
                     </div>
                 </div>
             </div>
@@ -220,5 +208,9 @@
 		});
 	});
 	
+	$(() => {
+		$('.nav').css('display', 'flex');
+	});
+
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

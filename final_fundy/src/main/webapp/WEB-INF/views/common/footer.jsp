@@ -12,362 +12,400 @@
 
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <style>
-        /* footer 부분 */
-
-        .footer
-        {
-            width: 1005px;
-            display: flex;
-            flex-flow: column nowrap;
-            align-items: center;
-        }
-
-        /* 유저 모달창 부분 */
-
-        .user-modal
-        {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 250px;
-            height: 100%;
-            background-color: white;
-            display: none;
-            font-family: 'Noto Sans KR';
-        }
-
-        .modal-overlay
-        {
-            position: fixed;
-            top: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: black;
-            opacity: 0.4;
-            display: none;
-        }
-
-        .close-btn
-        {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 32px;
-            height: 32px;
-            background-color: white;
-            overflow: hidden;
-        }
-
-        .close-btn > i
-        {
-            width: 100%;
-            height: 100%;
-            font-size: 35px;
-            opacity: .5;
-            color: black;
-            margin-top: 3px;
-            margin-left: 3px;
-            cursor: pointer;
-        }
-
-        .close-btn > i:hover
-        {
-            opacity: .9;
-        }
-
-        .user-modal-header
-        {
-            height: 250px;
-            display: flex;
-            flex-flow: column nowrap;
-            align-items: center;
-            padding-top: 90px;
-            padding-bottom: 10px;
-        }
-
-        .user-modal-header > img
-        {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            border: 1px solid #eee;
-        }
-
-        .user-nick
-        {
-            font-size: 25px;
-            font-weight: bold;
-        }
-
-        .user-modal-body
-        {
-            background-color: rgb(70, 70, 85);
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        .user-menu-box
-        {
-            width: 50%;
-            padding: 12.5% 0;
-            display: flex;
-            flex-flow: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            cursor: pointer;
-        }
-
-        .user-menu-box > i
-        {
-            font-size: 38px;
-            color: white;
-            opacity: .7;
-        }
-
-        .user-menu-box:hover > i
-        {
-            opacity: 1;
-            transform: scale(1.1);
-        }
-
-        .user-menu-box:hover .user-menu-text
-        {
-            opacity: 1;
-            transform: scale(1.1);
-        }
-
-        .user-menu-text
-        {
-            margin-top: 3px;
-            color: white;
-            opacity: .7;
-            font-size: 13px;
-        }
-
-        .bar
-        {
-            position: absolute;
-            display: block;
-            background-color: rgba(255, 255, 255, .2);
-        }
-
-        .vertical-bar
-        {
-            width: 1px;
-            height: 65%;
-            right: 0;
-        }
-
-        .horizontal-bar
-        {
-            width: 65%;
-            height: 1px;
-            bottom: 0;
-        }
-
-        .user-modal-footer
-        {
-            height: 100%;
-            background-color: rgb(70, 70, 85);
-        }
-
-/* 로그인 회원가입 모달창 */
-
-.login-modal-btn{
-	background: #03A9F4;
-	padding: 10px 16px;
-	width: auto;
-	font-weight: 600;
-	text-transform: uppercase;
-	font-size: 14px;
-	color: #fff;
-	line-height: 16px;
-	letter-spacing: 0.5px;
-	border-radius: 2px;
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.1);
-	border: 0;
-	outline: 0;
-	margin: 15px 15px 15px 0;
-	transition: all 0.25s;
-}
-.login-modal-btn:hover{
-	background: #0288D1;
-	box-shadow: 0 4px 7px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.1);
-}
-
-.login-modal{
-	display: none;
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	z-index: 5;
-	width: 75%;
-	min-width: 700px;
-	height: 600px;
-}
-
-.backRight {
-	position: absolute;
-	right: 0;
-	width: 50%;
-	height: 100%;
-	background-image : url(${path}/resources/images/loginPicture1.jpg);
-	background-size: cover;
-	background-position: 50% 50%;
-}
-
-.backLeft {
-	position: absolute;
-	left: 0;
-	width: 50%;
-	height: 100%;
-	background-image : url(${path}/resources/images/loginPicture4.jpg);
-	background-size: cover;
-	background-position: 50% 50%;
-}
-
-#back {
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	z-index: -999;
-}
-
-#slideBox {
-	width: 50%;
-	max-height: 100%;
-	height: 100%;
-	overflow: hidden;
-	margin-left: 50%;
-	position: absolute;
-	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px
-		rgba(0, 0, 0, 0.22);
-}
-
-.topLayer {
-	width: 200%;
-	height: 100%;
-	position: relative;
-	left: 0;
-	left: -100%;
-}
-
-.left {
-	border-bottom: 1px solid #ccc !important;
-	width: 50%;
-	height: 100%;
-	background: #2C3034;
-	left: 0;
-	position: absolute;
-}
-
-.right {
-	width: 50%;
-	height: 100%;
-	background: #f9f9f9;
-	right: 0;
-	position: absolute;
-}
-
-.content {
-	width: 250px;
-	margin: 0 auto;
-	top: 30%;
-	position: absolute;
-	left: 50%;
-	margin-left: -125px;
-}
-
-.content h2 {
-	color: #03A9F4;
-	font-weight: 300;
-	font-size: 35px;
-}
-
-.off {
-	background: none;
-	color: #03A9F4;
-	box-shadow: none;
-}
-
-.right .off:hover {
-	background: #eee;
-	color: #03A9F4;
-	box-shadow: none;
-}
-
-.left .off:hover {
-	box-shadow: none;
-	color: #03A9F4;
-	background: #363A3D;
-} 
-
-div#slideBox input {
-	width : 220px;
-	background: transparent;
-	border: 0 !important;
-	outline: 0 ;
-	border-bottom: 1px solid #45494C !important;
-	font-size: 14px;
-	color: black;
-	padding: 8px 0;
-	margin-top: 20px;
-}
-
-.temp {
-	background-color: transparent;
-	border: 0;
-	outline: 0;
-	border-bottom: 1px solid #45494C;
-	border-radius:0;
-	font-size: 14px;
-	color: #eee;
-	padding: 4px 0;
-	margin-top: 15px;
-}
-
-.temp::placeholder{
-	font-size: 13px;
-	color : #ccc;
-	padding: 4px 0;
-	margin-top: 10px;
-}
-
-.temp:focus{
-	background-color : transparent;
-	color : #eee;
-}
-
-.login-close-btn{
-	position: absolute; right: 10px; top: 10px;
-	width : 30px;
-	height : 30px;
-	background-color: rgba(255, 255, 255, 0.3);
-	z-index: 5;
-}
-
-.login-close-icon{
-	font-size : 30px;
-	color: #444;
-}
-
-
-
+	/* footer 부분 */
+	.footer
+	{
+	    width: 1005px;
+	    display: flex;
+	    flex-flow: column nowrap;
+	    align-items: center;
+	}
+	
+	/* 유저 모달창 부분 */
+	
+	.user-modal
+	{
+	    position: fixed;
+	    top: 0;
+	    right: 0;
+	    width: 250px;
+	    height: 100%;
+	    background-color: white;
+	    display: none;
+	    font-family: 'Noto Sans KR';
+	}
+	
+	.modal-overlay
+	{
+	    position: fixed;
+	    top: 0;
+	    width: 100vw;
+	    height: 100vh;
+	    background-color: black;
+	    opacity: 0.4;
+	    display: none;
+	}
+	
+	.close-btn
+	{
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	    width: 32px;
+	    height: 32px;
+	    background-color: white;
+	    overflow: hidden;
+	}
+	
+	.close-btn > i
+	{
+	    width: 100%;
+	    height: 100%;
+	    font-size: 35px;
+	    opacity: .5;
+	    color: black;
+	    margin-top: 3px;
+	    margin-left: 3px;
+	    cursor: pointer;
+	}
+	
+	.close-btn > i:hover
+	{
+	    opacity: .9;
+	}
+	
+	.user-modal-header
+	{
+	    height: 250px;
+	    display: flex;
+	    flex-flow: column nowrap;
+	    align-items: center;
+	    padding-top: 90px;
+	    padding-bottom: 10px;
+	}
+	
+	.user-modal-header > img
+	{
+	    width: 100px;
+	    height: 100px;
+	    border-radius: 50%;
+	    border: 1px solid #eee;
+	}
+	
+	.user-nick
+	{
+	    font-size: 25px;
+	    font-weight: bold;
+	}
+	
+	.user-modal-body
+	{
+	    background-color: rgb(70, 70, 85);
+	    display: flex;
+	    flex-wrap: wrap;
+	}
+	
+	.user-menu-box
+	{
+	    width: 50%;
+	    padding: 12.5% 0;
+	    display: flex;
+	    flex-flow: column;
+	    align-items: center;
+	    justify-content: center;
+	    position: relative;
+	    cursor: pointer;
+	}
+	
+	.user-menu-box > i
+	{
+	    font-size: 38px;
+	    color: white;
+	    opacity: .7;
+	}
+	
+	.user-menu-box:hover > i
+	{
+	    opacity: 1;
+	    transform: scale(1.1);
+	}
+	
+	.user-menu-box:hover .user-menu-text
+	{
+	    opacity: 1;
+	    transform: scale(1.1);
+	}
+	
+	.user-menu-text
+	{
+	    margin-top: 3px;
+	    color: white;
+	    opacity: .7;
+	    font-size: 13px;
+	}
+	
+	.bar
+	{
+	    position: absolute;
+	    display: block;
+	    background-color: rgba(255, 255, 255, .2);
+	}
+	
+	.vertical-bar
+	{
+	    width: 1px;
+	    height: 65%;
+	    right: 0;
+	}
+	
+	.horizontal-bar
+	{
+	    width: 65%;
+	    height: 1px;
+	    bottom: 0;
+	}
+	
+	.user-modal-footer
+	{
+	    height: 100%;
+	    background-color: rgb(70, 70, 85);
+	}
+	
+	/* 로그인 회원가입 모달창 */
+	
+	.login-trans-btn
+	{
+		
+	}
+	
+	.login-modal{
+		display: none;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 1;
+		width: 75%;
+		width: 700px;
+		height: 600px;
+	}
+	
+	.backRight {
+		position: absolute;
+		right: 0;
+		width: 50%;
+		height: 100%;
+		background-image : url(${path}/resources/images/loginPicture1.jpg);
+		background-size: cover;
+		background-position: 50% 50%;
+	}
+	
+	.backLeft {
+		position: absolute;
+		left: 0;
+		width: 50%;
+		height: 100%;
+		background-image : url(${path}/resources/images/loginPicture3.jpg);
+		background-size: cover;
+		background-position: 50% 50%;
+	}
+	
+	#back {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		z-index: -999;
+	}
+	
+	#slideBox {
+		width: 50%;
+		max-height: 100%;
+		height: 100%;
+		overflow: hidden;
+		margin-left: 50%;
+		position: absolute;
+		box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px
+			rgba(0, 0, 0, 0.22);
+	}
+	
+	.topLayer {
+		width: 200%;
+		height: 100%;
+		position: relative;
+		left: 0;
+		left: -100%;
+	}
+	
+	.left {
+		width: 50%;
+		height: 100%;
+		background: #2C3034;
+		left: 0;
+		position: absolute;
+	}
+	
+	.right {
+		width: 50%;
+		height: 100%;
+		background: #f9f9f9;
+		right: 0;
+		position: absolute;
+	}
+	
+	.content {
+		width: 250px;
+		margin: 0 auto;
+		top: 20%;
+		position: absolute;
+		left: 50%;
+		margin-left: -125px;
+	}
+	
+	.off {
+		background: none;
+		color: #999;
+		box-shadow: none;
+		border: 1px solid #999 !important;
+	}
+	
+	.right .off:hover {
+		background: #eee;
+		color: #444;
+		box-shadow: none;
+	}
+	
+	.left .off:hover {
+		box-shadow: none;
+		color: #03A9F4;
+		background: #363A3D;
+	} 
+		
+	.login-close-btn{
+		border: none;
+		outline: none;
+		position: absolute;
+		right: -40px;
+		top: 0;
+		width : 40px;
+		height : 40px;
+		background-color: rgba(255, 255, 255, 0.4);
+		z-index: 1;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	
+	.login-close-icon{
+		font-size : 30px;
+		color: #444;
+	}
+	
+	.signup-modal-input
+	{
+		width: 100%;
+		background-color: transparent;
+		border: 0;
+		outline: 0;
+		border-bottom: 1px solid #45494C;
+		font-size: 14px;
+		padding: 4px 0;
+		margin-top: 20px;
+		border-radius:0;
+		color: #eee;
+		transition: 0.3s linear;
+	}
+	
+	.login-modal-input
+	{
+		color: #444;
+	}
+	
+	.form-title
+	{
+		width: 100%;
+		font-weight: 300;
+/* 		color: #03A9F4; */
+		color: #888;
+		font-size: 20px;
+		margin-bottom: 50px;
+	}
+	
+	.signup-modal-input::placeholder
+	{
+		font-size: 13px;
+		color : #777;
+		padding: 4px 0;
+		margin-top: 10px;
+	}
+	
+	.signup-modal-input:focus
+	{
+		background-color : transparent;
+		color: #ccc;
+		border-color: #ccc;
+	}
+	
+	
+	.login-modal-input
+	{
+		color: #999;
+		border-bottom: 1px solid #999;
+	}
+	
+	.login-modal-input::placeholder{
+		color : #999;
+	}
+	
+	.login-modal-input:focus
+	{
+		border-bottom: 1px solid #444;
+		color: #444;
+	}
+	
+	.brand-title
+	{
+		font-weight: 600;
+		font-size: 40px;
+	}
+	.modal-btn-container
+	{
+		display: flex;
+		margin: 15px 0;
+	}
+	
+	.modal-btn-container > input:last-of-type{margin-right: 0;}
+	{
+	}
+	
+	.login-modal-btn
+	{
+		margin-right: 5px;
+		flex: 1 1 0;
+		border: none;
+		outline: none;
+		padding: 10px 0;
+		font-size: 13px;
+		cursor: pointer;
+	}
+	
+	#kakao-login-btn
+	{
+		margin-top: 15px;
+		width: 100%;
+	}
 </style>
 
-
     <footer class="footer">
-    <br><br><br><br>
-	<button class="datagen-btn">멤버 생성</button>
-	<button class="projectgen-btn">프로젝트 생성</button>
-	<button class="fundingLogDatagen-btn">후원자로그 생성</button>
+    	<br><br><br><br>
+	    <button class="datagen-btn">멤버 생성</button>
+	    <button class="projectgen-btn">프로젝트 생성</button>
+	    <button class="fundingLogDatagen-btn">후원자로그 생성</button>
     </footer>
     </div>
-
-    <!-- 로그인 모달 -->
+    
     <div class="modal-overlay"></div>
+    
+    <!-- 유저 모달 -->
     
     <div class="user-modal">
         <div class="user-modal-header">
@@ -416,10 +454,11 @@ div#slideBox input {
     </div>
     
     
-    <!-- 로그인 / 회원가입 모달 -->
+    <!-- 로그인 모달 -->
+    
     <div class="login-modal">
 	
-	<button id="logout-btn" class="login-modal-btn login-close-btn">
+	<button class="login-close-btn">
 		<i  class="material-icons login-close-icon">close</i> 
 	</button>
 	
@@ -432,34 +471,36 @@ div#slideBox input {
 		<div class="topLayer">
 			<div class="left">
 				<div class="content">
-					<h2>Sign Up</h2>				<!--  onsubmit="return false;" 정규식할때 활용-->
+					
+					<div class="signup-title form-title"><span class="brand-title">FUNDY</span>회원가입</div>
 					<form method="post" action="${path }/member/memberEnrollEnd.do" autocomplete="off">
 						<div class="form-group">
-							<input type="email" class="form-control temp" placeholder="이메일" id="memberEmail_" name="memberEmail" required /> 
-							<input type="password" class="form-control temp" placeholder="비밀번호" id="password_" name="memberPw" required /> 
-							<input type="password" class="form-control temp" placeholder="비밀번호 확인" id="password2" required /> 
-							<input type="text" class="form-control temp" placeholder="닉네임" name="memberNick" required />
+							<input type="email" class="signup-modal-input" placeholder="이메일" id="memberEmail" name="memberEmail" required /> 
+							<input type="password" class="signup-modal-input" placeholder="비밀번호" id="password" name="memberPw" required /> 
+							<input type="password" class="signup-modal-input" placeholder="비밀번호 확인" id="password-ck" required /> 
+							<input type="text" class="signup-modal-input" placeholder="닉네임" name="memberNick" required />
 						</div>
-					<input type="submit" class="login-modal-btn" value="회원가입">
-					<button id="goLeft" class="off login-modal-btn">Login</button>
-					</form>
+					<div class="modal-btn-container">
+						<input type="submit" class="login-modal-btn" value="회원가입">
+						<input type="button" id="goLeft" class="off login-modal-btn" onclick="return false;" value="로그인">
+					</div>
+						</form>
 				</div>
 			</div>
 			<div class="right">
 				<div class="content">
-					<h2>Login</h2>						<!-- onsubmit="return false;" -->
-					<form method="post" action="${path }/member/memberlogin.do"  autocomplete="off">
+					<div class="login-title form-title"><span class="brand-title">FUNDY</span>로그인</div>
+					<form method="post" action="${path }/member/memberlogin.do" autocomplete="off">
 						<div class="form-group">
-							<input type="email" placeholder="email" name="memberEmail" /> 
-							<input type="password" placeholder="password" name="memberPw" />
+							<input type="email" placeholder="email" name="memberEmail" class="signup-modal-input login-modal-input"/> 
+							<input type="password" placeholder="password" name="memberPw" class="signup-modal-input login-modal-input"/>
 						</div>
-						<div class="form-gruop">
-							<button id="goRight" type="button" class="off login-modal-btn" onclick="">회원가입</button>
-							<button id="login" type="submit" class="off login-modal-btn">Login</button>
-								<!-- 카카오로그인 -->
-							<a id="kakao-login-btn"></a>
-							<a href="http://developers.kakao.com/logout">kalogout</a>
+						<a id="kakao-login-btn"></a>
+						<div class="modal-btn-container">
+							<input type="button" id="goRight" class="off login-modal-btn" onclick="return false;" value="회원가입">
+							<input type="submit" class="off login-modal-btn" value="로그인">
    					 	</div>
+						<!-- 카카오로그인 -->
 					</form>
 				</div>
 			</div>
@@ -470,7 +511,6 @@ div#slideBox input {
 	<input type="hidden" id="kakaoId" name="kakaoId" value="" >
 	<input type="hidden" id="kakaoNick" name="kakaoNick" value="" >
 </form>
-    
 	
 <script>
 	
@@ -500,10 +540,10 @@ div#slideBox input {
 		});
 	});
 	
-	//x(취소) 버튼  아래 로그인함수 클릭시 생기는 이벤트 똑같이 달아주면됨
-	const logoutBtn = $('#logout-btn');
+	//로그인창 닫기 버튼 이벤트 바인드
+	const loginCloseBtn = $('.login-close-btn');
 	$(() => {
-		logoutBtn.on('click', () => {
+		loginCloseBtn.on('click', () => {
 			loginModal.toggle();
 			modalOverlay.toggle();
 		});
@@ -556,9 +596,9 @@ div#slideBox input {
     const nav = $('.nav');
     const categoryBtn = $('.category-btn');
     $(() => {
-    	nav.hide();
         categoryBtn.on('click', () => {
-            nav.slideToggle(300);
+        	nav.fadeToggle(300);
+            nav.css("display", "flex");
         });
     });
 

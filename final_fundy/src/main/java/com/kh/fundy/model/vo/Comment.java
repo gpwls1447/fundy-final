@@ -8,7 +8,7 @@ public class Comment {
 	private int commentNo;
 	private int projectNo;
 	private String memberEmail;
-	private String memberContent;
+	private String commentContent;
 	private Timestamp commentDate;
 	private Timestamp commentMod;
 	private Timestamp commentDelete;
@@ -16,13 +16,13 @@ public class Comment {
 	
 	public Comment() {}
 
-	public Comment(int commentNo, int projectNo, String memberEmail, String memberContent, Timestamp commentDate,
+	public Comment(int commentNo, int projectNo, String memberEmail, String commentContent, Timestamp commentDate,
 			Timestamp commentMod, Timestamp commentDelete, List<CommentReply> crList) {
 		super();
 		this.commentNo = commentNo;
 		this.projectNo = projectNo;
 		this.memberEmail = memberEmail;
-		this.memberContent = memberContent;
+		this.commentContent = commentContent;
 		this.commentDate = commentDate;
 		this.commentMod = commentMod;
 		this.commentDelete = commentDelete;
@@ -53,12 +53,12 @@ public class Comment {
 		this.memberEmail = memberEmail;
 	}
 
-	public String getMemberContent() {
-		return memberContent;
+	public String getCommentContent() {
+		return commentContent;
 	}
 
-	public void setMemberContent(String memberContent) {
-		this.memberContent = memberContent;
+	public void setCommentContent(String commentContent) {
+		this.commentContent = commentContent;
 	}
 
 	public Timestamp getCommentDate() {

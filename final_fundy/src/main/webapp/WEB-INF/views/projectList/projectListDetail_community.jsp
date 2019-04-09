@@ -1,0 +1,430 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>   
+<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<c:set var="path" value="${pageContext.request.contextPath }" />
+
+<style>
+	.comment-count
+	{
+	    width: 100%;
+	    font-size: 21px;
+	    font-weight: bold;
+	}
+	
+	.comment-warning
+	{
+	    font-size: 13px;
+	    margin: 10px 0 20px 0;
+	}
+	
+	.textarea
+	{
+	    width: 100%;
+	    height: auto;
+	    border-bottom: 1px solid #ccc;
+	    padding-bottom: 5px;
+	    font-size: 15px;
+	}
+	
+	.textarea:focus + .textarea-bar
+	{
+	    width: 100%;
+	}
+	
+	
+	.textarea-bar
+	{
+	    align-self: center;
+	    width: 0;
+	    height: 1px;
+	    background-color: #444;
+	    margin-top: -1px;
+	    transition: .4s ease;
+	}
+	
+	.write-btn-set
+	{
+	    display: flex;
+	    width: 100%;
+	    justify-content: flex-end;
+	}
+	
+	.cancel-btn{margin: 5px 15px 15px 0; padding: 8px 25px}
+	
+	.write-btn{margin: 5px 0 15px 0; padding: 8px 35px;}
+	
+	.comment-box
+	{
+	    width: 100%;
+	    margin: 10px 0 0 0;
+	    display: flex;
+	    flex-flow: column nowrap;
+	    align-items: center;
+	}
+	
+	.comment-header
+	{
+	    width: 100%;
+	    display: flex;
+	}
+	
+	.comment-profile
+	{
+	    width: 50px;
+	    height: 50px;
+	    border-radius: 50%;
+	    margin-right: 15px;
+	}
+	
+	.comment-nick-date
+	{
+	    width: 100%;
+	    display: flex;
+	    flex-flow: column nowrap;
+	    justify-content: center;
+	    transform: translateY(-5px);
+	    position: relative;
+	}
+	
+	.comment-nick
+	{
+	    width: 100%;
+	    font-size: 16px;
+	    font-weight: bold;
+	    display: flex;
+	    justify-content: space-between;
+	    align-items: center;
+	}
+	
+	.comment-date
+	{
+	    font-size: 13px;
+	    color: gray;
+	}
+	
+	.comment-menu-btn
+	{
+	    color: gray;
+	    cursor: pointer;
+	    margin-bottom: -10px;
+	}
+	
+	.comment-menu
+	{
+	    position: absolute;
+	    right: 0;
+	    top: 40px;
+	    box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, .4);
+	    color: gray;
+	    padding: 5px 0;
+	    border-radius: 3px;
+	    display: none;
+	    z-index: 5;
+	}
+	
+	.comment-menu i
+	{
+	    margin-right: 10px;
+	    transform: translateY(5px);
+	    color: gray;
+	    font-size: 21px;
+	}
+	
+	.comment-menu > div
+	{
+	    padding: 0 30px 5px 25px;
+	    font-size: 14px;
+	    cursor: pointer;
+	}
+	
+	.comment-menu > div:hover
+	{
+	    background-color: #eee;
+	}
+	
+	.comment-text
+	{
+	    width: 100%;
+	    padding-left: 65px;
+	    font-size: 14px;
+	    box-sizing: border-box;
+	    margin: 5px 0;
+	}
+	
+	.comment-footer
+	{
+	    width: 100%;
+	    padding-left: 65px;
+	    box-sizing: border-box;
+	    display: flex;
+	    flex-flow: column nowrap;
+	    align-items: flex-start;
+	    font-size: 15px;
+	    font-weight: bold;
+	}
+	
+	.comment-btn-container > button:active
+	{
+	    background-color: #ccc;
+	}
+	
+	.comment-btn-container
+	{
+	    color: #444;
+	    margin-top: -10px;
+	}
+	
+	.like-btn
+	{
+	    font-size: 18px;
+	    transform: translate(-6px, 9px);
+	    cursor: pointer;
+	    padding: 8px;
+	    border-radius: 50%;
+	}
+	
+	.like-btn:active{background-color: #ccc;}
+	
+	.reply-btn
+	{
+	    font-weight: bold;
+	    margin-left: -7px;
+	    font-size: 13px;
+	    transform: translateY(-2px);
+	}
+	
+	.toggle-reply
+	{
+	    cursor: pointer;
+	    font-size: 14px;
+	    margin-bottom: 5px;
+	}
+	
+	.reply-container
+	{
+	    width: 100%;
+	    margin-top: 5px;
+	    padding-left: 65px;
+	    box-sizing: border-box;
+	}
+	
+	.liked
+	{
+	    color: var(--basic-color);
+	}
+	
+	.edit-bar
+	{
+	    display: none;
+	    width: 100%;
+	    height: 1px;
+	    background-color: #444;
+	    margin-top: 10px;
+	}
+	
+	#marginer
+	{
+	    width: 100%;
+	    display: block;
+	    margin: 15px 0;
+	}
+
+</style>
+
+<div class="comment-count">댓글 2</div>
+<div class="comment-warning">본 프로젝트와 무관한 글, 광고성, 욕설, 비방, 도배 등의 글은 예고 없이 삭제 등 조치가 취해질 수 있으며. 해당 내용으로 인해 메이커, 후원자, 제3자에게 피해가 가지 않도록 유의하시기 바랍니다.</div>
+<div class="textarea comment-textarea" contenteditable="true"></div>
+<span class="textarea-bar"></span>
+<div class="write-btn-set">
+    <button class="cancel-btn cancel-comment nude-btn ripple">취소</button>
+    <button class="write-btn basic-btn basic-btn-active ripple">등록</button>
+</div>
+
+<span id="marginer"></span>
+
+<div class="comment-box">
+
+    <div class="comment-header">
+        <img class="comment-profile" src="images/default_profile_1.png">
+        <div class="comment-nick-date">
+            <div class="comment-nick">21kyo<i class="material-icons comment-menu-btn">more_vert</i></div>
+            <div class="comment-date">19/03/24 19:20:54</div>
+            <div class="comment-menu">
+				<div class="edit-btn"><i class="material-icons">edit</i>수정</div>
+				<div class="delete-btn"><i class="material-icons">delete</i>삭제</div>
+            </div>
+        </div>
+    </div>
+    <div class="comment-text">이거 언제쯤 배송 되나여?</div>
+    <span class="edit-bar"></span>
+    <div class="write-btn-set">
+        <button class="cancel-btn cancel-edit nude-btn ripple">취소</button>
+        <button class="write-btn save-edit nude-btn ripple">저장</button>
+    </div>
+    <div class="comment-footer">
+        <div class="comment-btn-container">
+            <i class="material-icons nude-btn like-btn ripple">thumb_up</i>
+            <button class="ripple nude-btn reply-btn">REPLY</button>
+        </div>
+        <div class="textarea reply-textarea" contenteditable="true"></div>
+        <span class="textarea-bar"></span>
+        <div class="write-btn-set">
+            <button class="cancel-btn nude-btn cancel-reply ripple">취소</button>
+            <button class="write-btn basic-btn basic-btn-active ripple">등록</button>
+        </div>
+        <div class="toggle-reply"><span>답글 2개 보기</span><span style="display:none">답글 숨기기</span></div>
+    </div>
+
+    <div class="reply-container">
+        
+        <div class="comment-box">
+            <div class="comment-header">
+				<img class="comment-profile" src="images/default_profile_1.png">
+				<div class="comment-nick-date">
+				    <div class="comment-nick">21kyo<i class="material-icons comment-menu-btn">more_vert</i></div>
+				    <div class="comment-date">19/03/24 19:20:54</div>
+				    <div class="comment-menu">
+				        <div class="edit-btn"><i class="material-icons">edit</i>수정</div>
+				        <div class="delete-btn"><i class="material-icons">delete</i>삭제</div>
+				    </div>
+				</div>
+            </div>
+            <div class="comment-text">이거 언제쯤 배송 되나여?</div>
+            <span class="edit-bar"></span>
+            <div class="write-btn-set">
+				<button class="cancel-btn cancel-edit nude-btn ripple">취소</button>
+				<button class="write-btn save-edit nude-btn ripple">저장</button>
+            </div>
+            <div class="comment-footer">
+				<div class="comment-btn-container">
+				    <i class="material-icons nude-btn like-btn ripple">thumb_up</i>
+				</div>
+            </div>
+        </div>
+          
+    </div>
+</div>
+<script>
+    //코멘트 메뉴 버튼 토글
+
+    const commentMenuBtn = $('.comment-menu-btn');
+    $(() => {
+        commentMenuBtn.on('mousedown', e => {
+            const commentMenu = $('.comment-menu');
+            const clickedMenu = $(e.target).parent().next().next();
+
+            if(commentMenuBtn.index(e.target) > -1 && commentMenu.has(':visible').index(clickedMenu) > -1)
+            {commentMenu.hide(); $('body').off('click'); return;}
+            if(commentMenu.has(':visible').length > 0)
+            {commentMenu.filter(':visible').hide();}
+            
+            clickedMenu.toggle();
+            $('body').off('click');
+
+            $('body').on('click', e => {
+                if(commentMenuBtn.index(e.target) > -1) return;
+                commentMenu.hide();
+                $('body').off('click');
+            });
+        });
+    });
+
+    //답글 토글 로직
+    const replyToggleBtn = $('.toggle-reply');
+    $(() => {
+        replyToggleBtn.parent().next().hide();
+        replyToggleBtn.on('click', e => {
+            $(e.target).toggle();
+            $(e.target).siblings().toggle();
+            $(e.currentTarget).parent().next().toggle();
+        });
+    });
+
+    //댓글작성 버튼 토글
+    const commentTextArea = $('.comment-textarea');
+    $(() => {
+        commentTextArea.on('focus', e => {
+            $(e.target).next().next().show();
+        });
+
+        $('.cancel-comment').on('click', e => {
+            $(e.target).parent().hide();
+            commentTextArea.text("");
+            commentTextArea.blur();
+        });
+    });
+
+    //답글 작성 버튼 토글 로직
+    $(() => {
+        $('.reply-textarea').hide();
+        $('.write-btn-set').hide();
+        $('.reply-btn').on('click', e => {
+            $(e.target).parent().next().show().focus();
+            $(e.target).parent().siblings('.write-btn-set').show();
+        });
+
+        $('.cancel-reply').on('click', e => {
+            $(e.target).parent().hide();
+            $(e.target).parent().prev().prev().hide();
+        });
+    });
+
+    //좋아요 클릭
+    const likeBtn = $('.like-btn');
+    $(() => {
+        likeBtn.on('click', e => {
+            $(e.target).toggleClass('liked');
+        });
+    });
+
+    //수정버튼 클릭 이벤트 바인드
+    $(() => {
+        $('.edit-btn').on('click', e => {
+            const target = $(e.currentTarget).parent().parent().parent().next();
+
+            target.data('tempText', target.text());
+            target.data('target', target);
+
+            target.attr('contenteditable', 'true').focus();
+            target.next().animate({width: 'toggle'}, 200);
+            editCommon(target);
+        });
+
+        $('.cancel-edit').on('click', e => {
+            const target = $(e.target).parent().prev().prev().data('target');
+
+            target.text(target.data('tempText'));
+            target.attr('contenteditable', 'false');
+            target.next().hide();
+            editCommon(target);
+        });
+    });
+
+    const editCommon = target => {
+        target.prev().toggle();
+        target.next().next().toggle();
+        target.next().next().next().toggle();
+    };
+
+    //삭제 버튼 바인드
+
+    $(() => {
+        $('.delete-btn').on('click', e => {
+            $(e.target).parent().parent().parent().parent().remove();
+        });
+    });
+
+    //수정 저장 버튼 바인드
+
+    $(() => {
+        $('.save-edit').on('click', e => {
+            const target = $(e.target).parent().prev().prev();
+            target.attr('contenteditable', 'false');
+            target.next().hide();
+            editCommon(target);
+        });
+    });
+</script>

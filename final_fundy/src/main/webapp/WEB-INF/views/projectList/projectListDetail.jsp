@@ -491,7 +491,7 @@
     $(() => {
     	projDetailTab.on('click', e => {
     		$.ajax({
-    			type: 'post',
+    			type: 'get',
     			url: '${path}/projectList/detail'+$(e.currentTarget).data('targetName'),
     			data: {'projectNo' : "${project.projectNo}"},
     			dataType: 'html',

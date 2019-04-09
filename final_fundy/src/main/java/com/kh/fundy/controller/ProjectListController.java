@@ -70,9 +70,12 @@ public class ProjectListController {
 	@RequestMapping("/projectList/detail_funderList")
 	public ModelAndView projectListDetailFunderList(String projectNo)
 	{
-		System.out.println("호롤롤롤" + projectNo);
 		ModelAndView mv = new ModelAndView();
 		List<FundingLog> flList = service.selectFunderList(Integer.parseInt(projectNo));
+		for(FundingLog l : flList)
+		{
+			System.out.println(l.getFundPrice());
+		}
 		mv.addObject("flList", flList);
 		mv.setViewName("projectList/projectListDetail_funderList");
 		return mv;

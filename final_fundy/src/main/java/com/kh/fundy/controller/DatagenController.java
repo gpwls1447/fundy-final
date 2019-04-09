@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.fundy.model.vo.Comment;
 import com.kh.fundy.model.vo.FundingLog;
 import com.kh.fundy.model.vo.Member;
 import com.kh.fundy.model.vo.Project;
@@ -35,7 +36,34 @@ public class DatagenController {
 	private final int targetMemberCount = 300;
 	private final int targetProjectCount = 400;
 	private final int targetFundingLogCount = 3500;
+	private final int targetCommentCount = 1000;
 
+	@RequestMapping("/commentGen.do")
+	public ModelAndView commentGen()
+	{
+		ModelAndView mv = new ModelAndView();
+		
+		String[] contents = {"물건 잘 받았습니다. 생각했던 것보다 좋네요.", "별로없입니다. 재구매는 없을 것 같네요.", "좋은 일에 동참할 수 있어 기쁩니다.", "조금이나마 도움이 되었으면 좋겠습니다.", "물건 정말 기대되네요." };
+		
+		Comment c = new Comment();
+		
+		int result = 0;
+		
+		while(result < targetCommentCount)
+		{
+			Member m = dService.selectRndMember((int)(Math.random()*targetMemberCount)+1);		
+			c.setProjectNo((int)(Math.random()*targetProjectCount)+1);
+			c.setMemberEmail(m.getMemberEmail());
+			c.setCommentContent(contents[(int)(Math.random()*6)]);
+			Timestamp rndCommentDate = getRandomTime();
+			c.setCommentDate(rndCommentDate);
+		}
+		
+		mv.addObject("result", result);
+		mv.setViewName("jasonView");
+		return mv;
+	}
+	
 	
 	@RequestMapping("/fundingLogDatagen.do")
 	public ModelAndView fundingLogDatagen()
@@ -171,11 +199,11 @@ public class DatagenController {
 			sb.setLength(0);
 			m.setMemberNick(sb.append(initF[fIndex]).append(initL[lIndex]).append(rnum).toString());
 			sb.setLength(0);
-			m.setMemberProfile("");
+			m.setMemberProfile("default_profile.png");
 			m.setIntro("");
 			m.setEmailAuthKey("");
 			m.setPhoneAuthKey("");
-			Timestamp tempTime = getRandomTime();
+			Timestamp tempTime = new Timestamp(System.currentTimeMillis()-7889400000L);
 			m.setEnrollDate(tempTime);
 			m.setLastLoggedIn(tempTime);
 			
