@@ -42,7 +42,7 @@ public class PageBarTemplate {
 		if(pageNo > totalPage)
 		{
 			pageBar += "<div class='pagebar-unit'>";
-			pageBar += "<img class='pagebar-nav' src='/fundy/resources/images/sharp_navigate_prev_black.png'>";
+			pageBar += "<img class='pagebar-nav' src='/fundy/resources/images/sharp_navigate_next_black.png'>";
 			pageBar += "</div>";
 		}
 		else

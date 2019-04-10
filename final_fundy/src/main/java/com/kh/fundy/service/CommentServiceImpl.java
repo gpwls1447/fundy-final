@@ -18,7 +18,6 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public int insertComment(Comment c) {
 		return dao.insertComment(c);
-		
 	}
 
 	@Override
@@ -40,6 +39,26 @@ public class CommentServiceImpl implements CommentService {
 			c.setCrList(dao.selectCommentReply(c.getCommentNo()));
 		}
 		return result;
+	}
+
+	@Override
+	public int updateComment(Comment c) {
+		return dao.updateComment(c);
+	}
+
+	@Override
+	public int updateCommentReply(CommentReply cr) {
+		return dao.updateCommentReply(cr);
+	}
+
+	@Override
+	public int deleteComment(Comment c) {
+		return dao.deleteComment(c);
+	}
+
+	@Override
+	public int deleteCommentReply(CommentReply cr) {
+		return dao.deleteCommentReply(cr);
 	}
 
 }

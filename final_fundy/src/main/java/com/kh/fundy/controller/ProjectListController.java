@@ -22,7 +22,7 @@ import com.kh.fundy.service.ProjectListService;
 public class ProjectListController {
 
 	@Autowired
-	private ProjectListService service;
+	private ProjectListService pService;
 	@Autowired
 	private CommentService cService;
 	
@@ -37,8 +37,8 @@ public class ProjectListController {
 		map.put("orderby", orderby);
 		
 		int numPerPage = 10;
-		int totalCount = service.selectCount(map);
-		List<Project> list = service.selectList(cPage, numPerPage, map);
+		int totalCount = pService.selectCount(map);
+		List<Project> list = pService.selectList(cPage, numPerPage, map);
 		String pageBar = getPageBar(totalCount, cPage, numPerPage);
 		
 		ModelAndView mv = new ModelAndView();
@@ -58,7 +58,7 @@ public class ProjectListController {
 	public ModelAndView projectListDetail(int projectNo)
 	{
 		System.out.println(projectNo);
-		Project p = service.selectOne(projectNo);
+		Project p = pService.selectOne(projectNo);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("project", p);
 		mv.setViewName("projectList/projectListDetail");
@@ -86,11 +86,7 @@ public class ProjectListController {
 	public ModelAndView projectListDetailFunderList(String projectNo)
 	{
 		ModelAndView mv = new ModelAndView();
-		List<FundingLog> flList = service.selectFunderList(Integer.parseInt(projectNo));
-		for(FundingLog l : flList)
-		{
-			System.out.println(l.getFundPrice());
-		}
+		List<FundingLog> flList = pService.selectFunderList(Integer.parseInt(projectNo));
 		mv.addObject("flList", flList);
 		mv.setViewName("projectList/projectListDetail_funderList");
 		return mv;

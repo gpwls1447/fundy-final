@@ -28,7 +28,7 @@ public class CommentDaoImpl implements CommentDao {
 
 	@Override
 	public List<Comment> selectCommentList(int cPage, int numPerPage, int projectNo) {
-		return session.selectList("comment.selectCommentList", new RowBounds((cPage-1)*numPerPage+1, numPerPage));
+		return session.selectList ("comment.selectCommentList", projectNo, new RowBounds((cPage-1)*numPerPage+1, numPerPage));
 	}
 
 	@Override
@@ -39,6 +39,26 @@ public class CommentDaoImpl implements CommentDao {
 	@Override
 	public int insertCommentReply(CommentReply cr) {
 		return session.insert("comment.insertCommentReply", cr);
+	}
+
+	@Override
+	public int updateComment(Comment c) {
+		return session.update("comment.updateComment", c);
+	}
+
+	@Override
+	public int updateCommentReply(CommentReply cr) {
+		return session.update("comment.updateCommentReply", cr);
+	}
+
+	@Override
+	public int deleteComment(Comment c) {
+		return session.delete("comment.deleteComment", c);
+	}
+
+	@Override
+	public int deleteCommentReply(CommentReply cr) {
+		return session.delete("comment.deleteCommentReply", cr);
 	}
 	
 }

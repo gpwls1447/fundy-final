@@ -14,15 +14,38 @@
 	</insert>
 	
 	<select id="selectCommentCount" parameterType="int" resultType="int">
-		SELECT COUNT(*) FROM COMMENT WHERE PROJECTNO = #{projectNo}
+		SELECT COUNT(*) FROM COMMENTBOARD WHERE PROJECTNO = #{projectNo} AND COMMENTDELETE IS NULL
 	</select>
 
 	<select id="selectCommentList" parameterType="int" resultType="comment">
-		SELECT * FROM COMMENT WHERE PROJECTNO = #{projectNo}
+		SELECT * FROM COMMENTBOARD 
+		JOIN MEMBER USING(MEMBEREMAIL)
+		WHERE PROJECTNO = #{projectNo}
+		AND COMMENTDELETE IS NULL
 	</select>
 	
 	<select id="selectCommentReply" parameterType="int" resultType="commentReply">
-		SELECT * FROM COMMENTREPLY WHERE PROJECTNO = #{projectNo}
+		SELECT * FROM COMMENTREPLY 
+		JOIN MEMBER USING(MEMBEREMAIL)
+		WHERE COMMENTNO = #{commentNo}
+		AND COMMENTREPLYDELETE IS NULL
 	</select>
+	
+	<update id="updateComment" parameterType="comment">
+		UPDATE COMMENTBOARD SET COMMENTCONTENT = #{commentContent}, COMMENTMOD = #{commentMod}
+		WHERE COMMENTNO = #{commentNo}
+	</update>
+	
+	<update id="updateCommentReply" parameterType="commentReply">
+		UPDATE COMMENTREPLY SET COMMENTREPLYCONTENT = #{commentReplyContent}, COMMENTREPLYMOD = #{commentReplyMod}
+		WHERE COMMENTREPLYNO = #{commentReplyNo}
+	</update>
+	
+	<update id="deleteComment" parameterType="comment">
+		UPDATE COMMENT SET COMMENTDELETE = #{commentDelete} WHERE COMMENTNO = #{commentNo}
+	</update>
+	
+	<update id="deleteCommentReply" parameterType="commentReply">
+	</update>
 	
 </mapper>

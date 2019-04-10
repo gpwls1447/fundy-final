@@ -11,4 +11,8 @@ public interface CommentService {
 	int insertCommentReply(CommentReply cr);
 	int selectCommentCount(int projectNo);
 	List<Comment> selectCommentList(int cPage, int numPerPage, int projectNo);
+	int updateComment(Comment c);
+	int updateCommentReply(CommentReply cr);
+	int deleteComment(Comment c);
+	int deleteCommentReply(CommentReply cr);
 }

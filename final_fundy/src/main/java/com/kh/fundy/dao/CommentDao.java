@@ -12,4 +12,9 @@ public interface CommentDao {
 	int selectCommentCount(int projectNo);
 	List<Comment> selectCommentList(int cPage, int numPerPage, int projectNo);
 	List<CommentReply> selectCommentReply(int commentNo);
+	int updateComment(Comment c);
+	int updateCommentReply(CommentReply cr);
+	int deleteComment(Comment c);
+	int deleteCommentReply(CommentReply cr);
+	
 }

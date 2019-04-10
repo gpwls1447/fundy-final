@@ -55,13 +55,18 @@
 	
 	.write-btn{margin: 5px 0 15px 0; padding: 8px 35px;}
 	
-	.comment-box
+	.comment-unit
 	{
 	    width: 100%;
-	    margin: 10px 0 0 0;
+	    margin: 25px 0 0 0;
 	    display: flex;
 	    flex-flow: column nowrap;
 	    align-items: center;
+	}
+	
+	.reply-unit
+	{
+		margin: 5px 0 0 0;
 	}
 	
 	.comment-header
@@ -92,7 +97,6 @@
 	{
 	    width: 100%;
 	    font-size: 16px;
-	    font-weight: bold;
 	    display: flex;
 	    justify-content: space-between;
 	    align-items: center;
@@ -183,6 +187,7 @@
 	    cursor: pointer;
 	    padding: 8px;
 	    border-radius: 50%;
+	    color: #777;
 	}
 	
 	.like-btn:active{background-color: #ccc;}
@@ -193,6 +198,7 @@
 	    margin-left: -7px;
 	    font-size: 13px;
 	    transform: translateY(-2px);
+	   	color: #777;
 	}
 	
 	.toggle-reply
@@ -200,6 +206,7 @@
 	    cursor: pointer;
 	    font-size: 14px;
 	    margin-bottom: 5px;
+	    color: #222;
 	}
 	
 	.reply-container
@@ -232,24 +239,24 @@
 	}
 </style>
 
-<div class="comment-count">댓글 2</div>
+<div class="comment-count">댓글 ${fn:length(list) }개</div>
 <div class="comment-warning">본 프로젝트와 무관한 글, 광고성, 욕설, 비방, 도배 등의 글은 예고 없이 삭제 등 조치가 취해질 수 있으며. 해당 내용으로 인해 메이커, 후원자, 제3자에게 피해가 가지 않도록 유의하시기 바랍니다.</div>
 <div class="textarea comment-textarea" contenteditable="true"></div>
 <span class="textarea-bar"></span>
 <div class="write-btn-set">
 	<button class="cancel-btn cancel-comment nude-btn ripple">취소</button>
-	<button class="write-btn basic-btn basic-btn-active ripple">등록</button>
+	<button class="write-btn write-comment basic-btn basic-btn-active ripple">등록</button>
 </div>
 
 <span id="marginer"></span>
 
 <c:forEach items="${list }" var="list">
-<div class="comment-box">
+<div class="comment-unit">
 
     <div class="comment-header">
         <img class="comment-profile" src="images/default_profile_1.png">
         <div class="comment-nick-date">
-            <div class="comment-nick">${list.memberEmail }<i class="material-icons comment-menu-btn">more_vert</i></div>
+            <div class="comment-nick">${list.memberNick }<i class="material-icons comment-menu-btn">more_vert</i></div>
             <div class="comment-date">${list.commentDate }</div>
             <div class="comment-menu">
 				<div class="edit-btn"><i class="material-icons">edit</i>수정</div>
@@ -274,24 +281,27 @@
             <button class="cancel-btn nude-btn cancel-reply ripple">취소</button>
             <button class="write-btn basic-btn basic-btn-active ripple">등록</button>
         </div>
-        <div class="toggle-reply"><span>답글 2개 보기</span><span style="display:none">답글 숨기기</span></div>
+        <c:if test="${fn:length(list.crList) != 0}">
+        	<div class="toggle-reply"><span>답글 ${fn:length(list.crList)} 보기</span><span style="display:none">답글 숨기기</span></div>
+        </c:if>
     </div>
-
+	<c:if test="${fn:length(list.crList) != 0}">
     <div class="reply-container">
-        
-        <div class="comment-box">
+        <c:forEach items="${list.crList }" var="crList">
+        <div class="comment-unit reply-unit">
             <div class="comment-header">
 				<img class="comment-profile" src="images/default_profile_1.png">
 				<div class="comment-nick-date">
-				    <div class="comment-nick">21kyo<i class="material-icons comment-menu-btn">more_vert</i></div>
-				    <div class="comment-date">19/03/24 19:20:54</div>
+				    <div class="comment-nick">${crList.memberNick }<i class="material-icons comment-menu-btn">more_vert</i></div>
+				    <fmt:formatDate value="${crList.commentReplyDate }" var="replyDate" pattern="yyyy.MM.dd hh:mm:ss"/>
+				    <div class="comment-date">${replyDate }</div>
 				    <div class="comment-menu">
 				        <div class="edit-btn"><i class="material-icons">edit</i>수정</div>
 				        <div class="delete-btn"><i class="material-icons">delete</i>삭제</div>
 				    </div>
 				</div>
             </div>
-            <div class="comment-text">이거 언제쯤 배송 되나여?</div>
+            <div class="comment-text">${crList.commentReplyContent }</div>
             <span class="edit-bar"></span>
             <div class="write-btn-set">
 				<button class="cancel-btn cancel-edit nude-btn ripple">취소</button>
@@ -303,19 +313,20 @@
 				</div>
             </div>
         </div>
-          
+        </c:forEach>
     </div>
+    </c:if>
 </div>
 </c:forEach>
+${pageBar }
 <script>
 	
 	/* 페이지 바 함수 */
-	const fn_paging = cPage => {
+	var fn_paging = cPage => {
 		location.href='${path}/projectList/projectListDetail_community?cPage='+cPage+'&projectNo='+${projectNo};
 	};
 
     //코멘트 메뉴 버튼 토글
-
     var commentMenuBtn = $('.comment-menu-btn');
     $(() => {
         commentMenuBtn.on('mousedown', e => {
@@ -337,8 +348,43 @@
             });
         });
     });
+    
+    $(() => {
+	    $('div[contenteditable="true"]').on('keydown', e => {
+	    	if(e.keyCode === 13)
+	    	{
+	    		document.execCommand('defaultParagraphSeparator', false, 'p');
+	    		return false;
+	    	}
+	    	
+	    });
+    	
+    });
+    
+    
+    //코멘트 작성
+    var commentWriteBtn = $('.write-comment');
+    $(() => {
+    	commentWriteBtn.on('click', e => {
+			var commentText+= $('.comment-textarea').text();
+    		$('.comment-text > div').each((index, item) => {
+    			commentText += $(item).text();
+    		});
+    		
+//     		$.ajax({
+//     			type: 'post',
+//     			url: 'comment/insertComment',
+//     			data: {"projectNo" : ${projectNo} , "commentContent" : },
+//     			success: data => {
+    					
+//     			}
+//     		});
+    	});
+    });
+    
+    
 
-    //답글 토글 로직
+    //답글 토글
     var replyToggleBtn = $('.toggle-reply');
     $(() => {
         replyToggleBtn.parent().next().hide();
@@ -363,7 +409,7 @@
         });
     });
 
-    //답글 작성 버튼 토글 로직
+    //답글 작성 버튼 토글
     $(() => {
         $('.reply-textarea').hide();
         $('.write-btn-set').hide();
@@ -386,9 +432,11 @@
         });
     });
 
-    //수정버튼 클릭 이벤트 바인드
+    //수정, 수정취소버튼 클릭 이벤트 바인드
+    var editBtn = $('.edit-btn');
+    var cancelBtn 
     $(() => {
-        $('.edit-btn').on('click', e => {
+        editBtn.on('click', e => {
             const target = $(e.currentTarget).parent().parent().parent().next();
 
             target.data('tempText', target.text());
@@ -399,7 +447,7 @@
             editCommon(target);
         });
 
-        $('.cancel-edit').on('click', e => {
+        cancelBtn.on('click', e => {
             const target = $(e.target).parent().prev().prev().data('target');
 
             target.text(target.data('tempText'));
@@ -416,17 +464,19 @@
     };
 
     //삭제 버튼 바인드
-
+	var deleteBtn = $('.delete-btn');
     $(() => {
-        $('.delete-btn').on('click', e => {
+        deleteBtn.on('click', e => {
+        	
+        	
             $(e.target).parent().parent().parent().parent().remove();
         });
     });
 
     //수정 저장 버튼 바인드
-
+	var saveBtn = $('.save-edit');
     $(() => {
-        $('.save-edit').on('click', e => {
+        saveBtn.on('click', e => {
             const target = $(e.target).parent().prev().prev();
             target.attr('contenteditable', 'false');
             target.next().hide();

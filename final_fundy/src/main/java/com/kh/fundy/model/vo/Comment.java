@@ -14,10 +14,12 @@ public class Comment {
 	private Timestamp commentDelete;
 	private List<CommentReply> crList;
 	
+	private String memberNick;
+	
 	public Comment() {}
 
 	public Comment(int commentNo, int projectNo, String memberEmail, String commentContent, Timestamp commentDate,
-			Timestamp commentMod, Timestamp commentDelete, List<CommentReply> crList) {
+			Timestamp commentMod, Timestamp commentDelete, List<CommentReply> crList, String memberNick) {
 		super();
 		this.commentNo = commentNo;
 		this.projectNo = projectNo;
@@ -27,6 +29,7 @@ public class Comment {
 		this.commentMod = commentMod;
 		this.commentDelete = commentDelete;
 		this.crList = crList;
+		this.memberNick = memberNick;
 	}
 
 	public int getCommentNo() {
@@ -91,6 +94,14 @@ public class Comment {
 
 	public void setCrList(List<CommentReply> crList) {
 		this.crList = crList;
+	}
+
+	public String getMemberNick() {
+		return memberNick;
+	}
+
+	public void setMemberNick(String memberNick) {
+		this.memberNick = memberNick;
 	}
 	
 }
