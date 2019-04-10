@@ -406,7 +406,7 @@ div#slideBox input {
             <div class="user-menu-box">
                 <span class="bar vertical-bar"></span>
                 <i class="material-icons">fingerprint</i>
-                <span class="user-menu-text">정보수정</span>
+                <span class="user-menu-text"><a href="${pageContext.request.contextPath}/member/memberUpdateView.do">정보수정</a></span>
             </div>
             <div class="user-menu-box logout-btn">
                 <i class="material-icons">exit_to_app</i>

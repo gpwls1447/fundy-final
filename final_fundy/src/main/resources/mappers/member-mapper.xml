@@ -11,7 +11,7 @@
 	</select>
 	
 	<select id="insertOne" parameterType="member">
-			INSERT INTO MEMBER VALUES(#{memberEmail}, #{memberPw}, #{memberName}, #{memberNick}, #{memberProfile}, null, #{intro}, #{emailAuthKey}, #{phoneAuthKey}, #{lastLoggedIn}, #{enrollDate}, null, #{kakaoId})
+		INSERT INTO MEMBER VALUES(#{memberEmail}, #{memberPw}, #{memberName}, #{memberNick}, #{memberProfile}, null, #{intro}, #{emailAuthKey}, #{phoneAuthKey}, #{lastLoggedIn}, #{enrollDate}, null, #{kakaoId})
 	</select>
 
 	<select id="login" parameterType="member" resultType="member">
@@ -25,6 +25,10 @@
 	<select id="selectOne" parameterType="member" resultType="member">
 		select * from member where kakaoId=#{kakaoId}
 	</select>
+	
+	 <update id="memberUpdate">
+    	update Member set memberNick=#{memberNick}, intro=#{intro}, memberProfile=#{memberProfile} where memberEmail=#{memberEmail}
+  	 </update>
 	
 
 </mapper>

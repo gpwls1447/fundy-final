@@ -14,7 +14,7 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Autowired
 	SqlSessionTemplate session;
-	
+
 	@Override
 	public Member login(Member m) {
 		return session.selectOne("member.login", m);
@@ -54,6 +54,21 @@ public class MemberDaoImpl implements MemberDao {
 	public Member selectOneKakao(Member m) {
 		return session.selectOne("member.selectOne", m);
 	}
-	
-	
+
+	@Override
+	public int memberAddressInsert(ShippingAddr s) {
+		return session.insert("shippingAddr.insertMemberAddress", s);
+	}
+
+	@Override
+	public int memberUpdate(Member m) {
+		return session.update("member.memberUpdate", m);
+	}
+
+	@Override
+	public List<Member> memberUpdateView(Member m) {
+		return session.selectList("member.memberUpdateView", m);
+	}
+
+
 }
