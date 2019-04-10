@@ -8,4 +8,8 @@
 	<select id="updateAddressView" resultType="shippingAddr">
 		select * from ShippingAddr where memberEmail=#{memberEmail}
 	</select>
+	
+	<insert id="insertMemberAddress">
+		insert into ShippingAddr values (shippingaddr_seq.nextval, #{memberEmail}, #{shipAddrTag}, #{shipAddrReceiver}, #{zipCode}, #{shipAddr}, #{shipAddrDetail}, #{phone})
+	</insert>
 </mapper>

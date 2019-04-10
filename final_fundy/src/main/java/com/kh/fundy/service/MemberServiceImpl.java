@@ -45,13 +45,27 @@ public class MemberServiceImpl implements MemberService {
 		return dao.memberAddressView(s);
 	}
 	public List<Member> selectList() {
-		// TODO Auto-generated method stub
 		return dao.selectList();
 	}
 
 	@Override
 	public Member selectOneKakao(Member m) {
 		return dao.selectOneKakao(m);
+	}
+
+	@Override
+	public int memberAddressInsert(ShippingAddr s) {
+		return dao.memberAddressInsert(s);
+	}
+
+	@Override
+	public int memberUpdate(Member m) {
+		return dao.memberUpdate(m);
+	}
+
+	@Override
+	public List<Member> memberUpdateView(Member m) {
+		return dao.memberUpdateView(m);
 	}
 	
 

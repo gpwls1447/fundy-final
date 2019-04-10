@@ -22,5 +22,9 @@
 		select * from member where kakaoId=#{kakaoId}
 	</select>
 	
+	<update id="memberUpdate">
+		update Member set memberNick=#{memberNick}, intro=#{intro}, memberProfile=#{memberProfile} where memberEmail=#{memberEmail}
+	</update>
+	
 
 </mapper>

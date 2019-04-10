@@ -15,4 +15,7 @@ public interface MemberDao {
 	List<ShippingAddr> memberAddressView(ShippingAddr s);
 	List<Member> selectList();
 	Member selectOneKakao(Member m);
+	int memberAddressInsert(ShippingAddr s);
+	int memberUpdate(Member m);
+	List<Member> memberUpdateView(Member m);
 }

@@ -9,11 +9,12 @@ public class ShippingAddr {
 	private String shipAddr;
 	private String shipAddrDetail;
 	private String phone;
+	private String memberEmail;
 	
 	public ShippingAddr() {}
 
 	public ShippingAddr(int shipAddrNo, String shipAddrTag, String shipAddrReceiver, int zipCode, String shipAddr,
-			String shipAddrDetail, String phone) {
+			String shipAddrDetail, String phone, String memberEmail) {
 		super();
 		this.shipAddrNo = shipAddrNo;
 		this.shipAddrTag = shipAddrTag;
@@ -22,6 +23,7 @@ public class ShippingAddr {
 		this.shipAddr = shipAddr;
 		this.shipAddrDetail = shipAddrDetail;
 		this.phone = phone;
+		this.memberEmail = memberEmail;
 	}
 
 	public int getShipAddrNo() {
@@ -80,10 +82,20 @@ public class ShippingAddr {
 		this.phone = phone;
 	}
 
+	public String getMemberEmail() {
+		return memberEmail;
+	}
+
+	public void setMemberEmail(String memberEmail) {
+		this.memberEmail = memberEmail;
+	}
+
 	@Override
 	public String toString() {
 		return "ShippingAddr [shipAddrNo=" + shipAddrNo + ", shipAddrTag=" + shipAddrTag + ", shipAddrReceiver="
 				+ shipAddrReceiver + ", zipCode=" + zipCode + ", shipAddr=" + shipAddr + ", shipAddrDetail="
-				+ shipAddrDetail + ", phone=" + phone + "]";
+				+ shipAddrDetail + ", phone=" + phone + ", memberEmail=" + memberEmail + "]";
 	}
+
+	
 }

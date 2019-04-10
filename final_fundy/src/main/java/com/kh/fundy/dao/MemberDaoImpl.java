@@ -45,7 +45,6 @@ public class MemberDaoImpl implements MemberDao {
 		return session.selectList("shippingAddr.updateAddressView", s);
 	}
 
-
 	public List<Member> selectList() {
 		return session.selectList("member.kakao");
 	}
@@ -54,6 +53,20 @@ public class MemberDaoImpl implements MemberDao {
 	public Member selectOneKakao(Member m) {
 		return session.selectOne("member.selectOne", m);
 	}
-	
-	
+
+	@Override
+	public int memberAddressInsert(ShippingAddr s) {
+		return session.insert("shippingAddr.insertMemberAddress", s);
+	}
+
+	@Override
+	public int memberUpdate(Member m) {
+		return session.update("member.memberUpdate", m);
+	}
+
+	@Override
+	public List<Member> memberUpdateView(Member m) {
+		return session.selectList("member.memberUpdateView", m);
+	}
+
 }
