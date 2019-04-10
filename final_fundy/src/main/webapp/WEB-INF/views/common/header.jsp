@@ -42,7 +42,7 @@
                     <i class="material-icons search-btn">search</i>
                     <input type="text" name="search" class="search-bar" placeholder="프로젝트검색">
                 </div>
-                
+        
                 <c:if test="${loggedMember==null }">
                 <div class="header-last login-btn" >
 					<img src="${path }/resources/images/user_icon.png">

@@ -1,8 +1,8 @@
 package com.kh.fundy.controller;
 
 import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,13 +13,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  */import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.fundy.model.vo.Member;
-import com.kh.fundy.model.vo.ShippingAddr;
 import com.kh.fundy.service.MemberService;
 
  @SessionAttributes(value= {"loggedMember"})
@@ -41,7 +39,6 @@ import com.kh.fundy.service.MemberService;
 	 @RequestMapping("/member/memberlogin.do")
 	 public String memberLogin(Member m, Model model, HttpSession session) {
 		 Member result=service.login(m);
-		 
 		 String msg="";
 		 String loc="";
 		 System.out.println("로그인 : "+result);
@@ -69,60 +66,43 @@ import com.kh.fundy.service.MemberService;
 
 	 // 카카오 로그인 후, 우리 사이트 가입 여부 후 분기처리 (Ajax로 리턴)
 	 @RequestMapping("/member/isKakao.do")
-	 /*@ResponseBody*/
-	 public ModelAndView isKakao(String id, String email, String profile, Model model, HttpSession session) {
-		 System.out.println(id);
-		 System.out.println(email);
-		 System.out.println(profile);
-		 String msg="";
-		 String loc="";
+	 public ModelAndView isKakao(String id, String email, String profile, String nick, Model model, HttpSession session) {
 		 Member m=new Member();
 		 m.setKakaoId(id);
-		 m.setMemberEmail(email);
-		 m.setMemberProfile(profile);
-		 service.insertOne(m);
-		 
+		 Member result = service.selectOneKakao(m);
+		 Date d = new Date();
 		 ModelAndView mv=new ModelAndView();
+		 if(result!=null) {
+			 mv.addObject("loggedMember", result);
+		 }
+		 else {
+			 String msg="";
+			 String loc="";
+			 m.setKakaoId(id);
+			 m.setMemberEmail(email);
+			 m.setMemberProfile(profile);
+			 //카카오 닉네임+날짜 넣어서 중복방지
+			 SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddsss");
+			 System.out.println(sdf.format(d));
+			 sdf.format(d);
+			 m.setMemberNick(nick+sdf.format(d));
+			 m.setEnrollDate(new Timestamp(System.currentTimeMillis()));
+			 int re=service.insertOne(m);
+			 if(re>0) {
+				 model.addAttribute("loggedMember", result);
+			 }
+		 }
 		 if(id.length()>0) {
-			 msg="로그인 성공";
 			 mv.addObject("val","y");
 		 }
 		 else {
 			 mv.addObject("val","n");
-			 
 		 }
 		 mv.setViewName("jsonView");
 		 return mv;
-		 
 	 }
 
-	 //카카오 로그인이 성공적이고, 우리사이트 회원이 아닐 때, 회원가입 페이지 이동
-	 @RequestMapping("/member/memberEnrollKakao.do")
-	 public String memberEnroll(Member m, Model model) {
-		 model.addAttribute("Member", m);
-		 return "member/memberEnrollForm";
-	 }
-
-	 // 카카오 로그인이 성공적이고, 우리사이트 회원일 때 로그인처리 세션부여 (로그인처리)
-	 @RequestMapping("/member/memberLoginKakao.do")
-	 public String memberLoginKakao(Member m, HttpSession session, Model model) {
-		 Member result = service.selectOneKakao(m);
-
-		 String msg = "";
-		 String loc = "/";
-
-		 if(result!=null) {
-			 msg = "카카오 로그인 성공";
-			 session.setAttribute("loginMember", result);
-		 } else {
-			 msg = "카카오 로그인 실패!";
-		 }
-
-		 model.addAttribute("msg", msg);
-		 model.addAttribute("loc", loc);
-		 return "common/msg";
-	 }
-	 
+	 //로그아웃
 	 @RequestMapping("/member/LogOut.do")
 		public String logOut(SessionStatus session, HttpSession session1) {
 			session1.invalidate();
@@ -131,7 +111,6 @@ import com.kh.fundy.service.MemberService;
 			}
 			return "redirect:/";
 		}
-
 
 
 	 //회원가입

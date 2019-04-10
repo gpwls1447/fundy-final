@@ -721,19 +721,9 @@ div#slideBox input {
            Kakao.API.request({
              url: '/v1/user/me',
              success: function(res) {
-             	console.log("res : "+JSON.stringify(res));
-                console.log(JSON.stringify(res.kaccount_email));
-                console.log(JSON.stringify(res.id));
-                console.log(JSON.stringify(res.properties.profile_image));
-                console.log(JSON.stringify(res.properties.nickname));
-                            
-               	var id = res.id;
-               	var email = res.kaccount_email;
-               	var profile = res.properties.profile_image;
-               	var nick = res.properties.nickname;
-               	//testajax(id, email, profile, nick);
-              testajax(res);
-               
+            	 testajax(res);
+            	 loginModal.toggle();
+            	 modalOverlay.toggle();
              },
              fail: function(error) {
                alert(JSON.stringify(error));
@@ -744,16 +734,6 @@ div#slideBox input {
            alert(JSON.stringify(err));
          }
        });
-     
-       /* function testajax(res){
-    	   $.ajax({
-    		url : "${pageContext.request.contextPath}/memeber/isKakao.do?="+res,
-    		dataType:"json",
-    		success : function(data){
-    			console.log("res확인 중 : "+data);
-    		}
-    	   })
-       } */
        
        function testajax(res)
        {
@@ -762,24 +742,14 @@ div#slideBox input {
            	url : "${pageContext.request.contextPath }/member/isKakao.do",
            	dataType:"json",
            	type:"post",
-            data : {id:res.id,"email":res.kaccount_email,profile:res.properties['profile_image']}, 
+            data : {id:res.id,"email":res.kaccount_email,profile:res.properties['profile_image'], nick:res.properties['nickname']}, 
            	success : function(data){
            		console.log("돌려받은 값 : "+data.val);
            		if(data.val=="y"){
-           			console.log("y로 들어옴");
-           			loginModal.toggle();
-         			modalOverlay.toggle();
-           			
+           			location.href="${path}/";
            		}
            		else{
-           			var confirm=confirm("가입하시겠습니까?") 
-           			//yes 회원가입 / no 그냥 메인페이지
-           			if(confirm){
-           				alert("회원가입 페이지로 이동합니다.");
-           			}
-           			else{
-           				alert("그럼 그냥 구경");
-           			}
+           			console.log("로그인실패");
            		}
            	},
            	error:function(re,msg)
