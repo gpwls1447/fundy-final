@@ -9,9 +9,10 @@
 <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
+
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <style>
-	/* footer 부분 */
+      /* footer 부분 */
 	.footer
 	{
 	    width: 1005px;
@@ -204,7 +205,7 @@
 		left: 0;
 		width: 50%;
 		height: 100%;
-		background-image : url(${path}/resources/images/loginPicture3.jpg);
+		background-image : url(${path}/resources/images/loginPicture4.jpg);
 		background-size: cover;
 		background-position: 50% 50%;
 	}
@@ -394,7 +395,7 @@
 	}
 </style>
 
-    <footer class="footer">
+<footer class="footer">
     	<br><br><br><br>
 	    <button class="datagen-btn">멤버 생성</button>
 	    <button class="projectgen-btn">프로젝트 생성</button>
@@ -440,12 +441,12 @@
                 <i class="material-icons">chat</i>
                 <span class="user-menu-text">메시지</span>
             </div>
-            <div class="user-menu-box">
+            <div class="user-menu-box memberUpdate-btn">
                 <span class="bar vertical-bar"></span>
                 <i class="material-icons">fingerprint</i>
                 <span class="user-menu-text">정보수정</span>
             </div>
-            <div class="user-menu-box">
+            <div class="user-menu-box logout-btn">
                 <i class="material-icons">exit_to_app</i>
                 <span class="user-menu-text">로그아웃</span>
             </div>
@@ -495,40 +496,51 @@
 							<input type="email" placeholder="email" name="memberEmail" class="signup-modal-input login-modal-input"/> 
 							<input type="password" placeholder="password" name="memberPw" class="signup-modal-input login-modal-input"/>
 						</div>
+						<!-- 카카오로그인 -->
 						<a id="kakao-login-btn"></a>
 						<div class="modal-btn-container">
 							<input type="button" id="goRight" class="off login-modal-btn" onclick="return false;" value="회원가입">
 							<input type="submit" class="off login-modal-btn" value="로그인">
    					 	</div>
-						<!-- 카카오로그인 -->
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<form id="kakaoLoginForm" method="post" action="${path }/member/kakaoLogin.do">
-	<input type="hidden" id="kakaoId" name="kakaoId" value="" >
-	<input type="hidden" id="kakaoNick" name="kakaoNick" value="" >
-</form>
 	
 <script>
+	//로그아웃 기능
+	$(() => {
+		$('.logout-btn').on("click", () => {
+			location.href="${path}/member/LogOut.do";	
+		});
+	});
 	
+	//정보수정 기능
+	$(() => {
+		$('.memberUpdate-btn').on("click", ()=> {
+			location.href="${path}/member/memberUpdateView.do";
+		})
+	})
+	
+
     //패스워드 일치 확인
-    $(function(){
-		$("#password2").blur(function(){
-			var pw=$("#password_").val();
-			var pwck=$("#password2").val();
+     $(function(){
+    	 $("#password-ck").blur(function(){
+			var pw=$("#password").val();
+			var pwck=$("#password-ck").val();
 			if(pw!=pwck){
 				alert("password 불일치");
 				//패스워드 비워주기
-				$("#password2").val("");
-				$("#password_").focus();
+				$("#password-ck").val("");
+				$("#password").focus();
 			}
 		});
-	});
-
-	
+		
+		
+		
+	}); 
 
 	//로그인 모달
 	const loginBtn = $('.login-btn');
@@ -540,10 +552,10 @@
 		});
 	});
 	
-	//로그인창 닫기 버튼 이벤트 바인드
-	const loginCloseBtn = $('.login-close-btn');
+	//x(취소) 버튼  아래 로그인함수 클릭시 생기는 이벤트 똑같이 달아주면됨
+	const logoutBtn = $('#logout-btn');
 	$(() => {
-		loginCloseBtn.on('click', () => {
+		logoutBtn.on('click', () => {
 			loginModal.toggle();
 			modalOverlay.toggle();
 		});
@@ -596,9 +608,9 @@
     const nav = $('.nav');
     const categoryBtn = $('.category-btn');
     $(() => {
+    	nav.hide();
         categoryBtn.on('click', () => {
-        	nav.fadeToggle(300);
-            nav.css("display", "flex");
+            nav.slideToggle(300);
         });
     });
 
@@ -706,7 +718,6 @@
     const datagenBtn = $('.datagen-btn');
     const projectgenBtn = $('.projectgen-btn');
    	const fundinglogBtn = $('.fundingLogDatagen-btn');
-   	const commentGenBtn = $('.commentGen-btn');
     $(() => {
     	datagenBtn.on('click', () => {
     		$.ajax({
@@ -716,7 +727,6 @@
     			}
     		});
     	});
-    	
     	projectgenBtn.on('click', () => {
     		$.ajax({
     			url: '${pageContext.request.contextPath}/projectgen.do',
@@ -725,19 +735,9 @@
     			}
     		});
     	});
-    	
     	fundinglogBtn.on('click', () => {
     		$.ajax({
     			url: '${pageContext.request.contextPath}/fundingLogDatagen.do',
-    			success: data => {
-    				alert('결과: ' + data.result);
-    			}
-    		});
-    	});
-    	
-    	commentGenBtn.on('click', () => {
-    		$.ajax({
-    			url: '${pageContext.request.contextPath}/commentGen.do',
     			success: data => {
     				alert('결과: ' + data.result);
     			}
@@ -756,19 +756,9 @@
            Kakao.API.request({
              url: '/v1/user/me',
              success: function(res) {
-             	console.log("res : "+JSON.stringify(res));
-               console.log(JSON.stringify(res.kaccount_email));
-               console.log(JSON.stringify(res.id));
-               console.log(JSON.stringify(res.properties.profile_image));
-               console.log(JSON.stringify(res.properties.nickname));
-               
-               var id = res.id;
-               var email = res.kaccount_email;
-               var profile = res.properties.profile_image;
-               var nick = res.properties.nickname;
-             //  testajax(id, email, profile);
-               testajax(res);
-               
+            	 testajax(res);
+            	 loginModal.toggle();
+            	 modalOverlay.toggle();
              },
              fail: function(error) {
                alert(JSON.stringify(error));
@@ -779,40 +769,22 @@
            alert(JSON.stringify(err));
          }
        });
-     
-       function testajax(res){
-    	   $.ajax({
-    		url : "${pageContext.request.contextPath}/memeber/isKakao.do?="+res,
-    		dataType:"json",
-    		success : function(data){
-    			console.log("res확인 중 : "+data);
-    		}
-    	   })
-       }
        
-       function testajax(id, email, profile, nick)
+       function testajax(res)
        {
+    	   console.log(res);
            $.ajax({
-           	url : "${pageContext.request.contextPath }/member/isKakao.do?kakaoId="+id,
+           	url : "${pageContext.request.contextPath }/member/isKakao.do",
            	dataType:"json",
-           	/* data : res, */
+           	type:"post",
+            data : {id:res.id,"email":res.kaccount_email,profile:res.properties['profile_image'], nick:res.properties['nickname']}, 
            	success : function(data){
            		console.log("돌려받은 값 : "+data.val);
            		if(data.val=="y"){
-           			console.log("y로 들어옴");
-           			loginModal.toggle();
-         			modalOverlay.toggle();
-           			
+           			location.href="${path}/";
            		}
            		else{
-           			var confirm=confirm("가입하시겠습니까?") 
-           			//yes 회원가입 / no 그냥 메인페이지
-           			if(confirm){
-           				alert("회원가입 페이지로 이동합니다.");
-           			}
-           			else{
-           				alert("그럼 그냥 구경");
-           			}
+           			console.log("로그인실패");
            		}
            	},
            	error:function(re,msg)
@@ -821,9 +793,7 @@
            		console.log(msg);
            	}
           })
-       }
-       
-    
+       };
     
 </script>
 </html>

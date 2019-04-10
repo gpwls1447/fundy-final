@@ -42,10 +42,11 @@
 	</update>
 	
 	<update id="deleteComment" parameterType="comment">
-		UPDATE COMMENT SET COMMENTDELETE = #{commentDelete} WHERE COMMENTNO = #{commentNo}
+		UPDATE COMMENTBOARD SET COMMENTDELETE = #{commentDelete} WHERE COMMENTNO = #{commentNo}
 	</update>
 	
 	<update id="deleteCommentReply" parameterType="commentReply">
+		UPDATE COMMENTREPLY SET COMMENTREPLYDELETE = #{commentReplyDelete} WHERE COMMENTREPLYNO = #{commentReplyNo}
 	</update>
-	
+
 </mapper>

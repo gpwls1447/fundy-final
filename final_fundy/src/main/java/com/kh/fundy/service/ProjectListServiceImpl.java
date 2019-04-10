@@ -45,4 +45,14 @@ public class ProjectListServiceImpl implements ProjectListService {
 		return dao.selectFunderList(projectNo);
 	}
 
+	@Override
+	public List<FundingOption> selectFundingOptionList(int projectNo) {
+		List<FundingOption> foList = dao.selectFundingOptionList(projectNo);
+		for(FundingOption fo : foList)
+		{
+			fo.setOdList(dao.selectOptionDetailList(projectNo));
+		}
+		return foList;
+	}
+
 }

@@ -238,7 +238,7 @@
 	    margin: 15px 0;
 	}
 </style>
-
+<div id="comment-container">
 <div class="comment-count">댓글 ${fn:length(list) }개</div>
 <div class="comment-warning">본 프로젝트와 무관한 글, 광고성, 욕설, 비방, 도배 등의 글은 예고 없이 삭제 등 조치가 취해질 수 있으며. 해당 내용으로 인해 메이커, 후원자, 제3자에게 피해가 가지 않도록 유의하시기 바랍니다.</div>
 <div class="textarea comment-textarea" contenteditable="true"></div>
@@ -251,16 +251,16 @@
 <span id="marginer"></span>
 
 <c:forEach items="${list }" var="list">
-<div class="comment-unit">
-
+<div data-comment-no="${list.commentNo }" class="comment-unit">
     <div class="comment-header">
         <img class="comment-profile" src="images/default_profile_1.png">
         <div class="comment-nick-date">
             <div class="comment-nick">${list.memberNick }<i class="material-icons comment-menu-btn">more_vert</i></div>
-            <div class="comment-date">${list.commentDate }</div>
+            <fmt:formatDate value="${list.commentDate }" var="cDate" pattern="yyyy.MM.dd mm:ss"/>
+            <div class="comment-date">${cDate }</div>
             <div class="comment-menu">
 				<div class="edit-btn"><i class="material-icons">edit</i>수정</div>
-				<div class="delete-btn"><i class="material-icons">delete</i>삭제</div>
+				<div class="delete-comment-btn"><i class="material-icons">delete</i>삭제</div>
             </div>
         </div>
     </div>
@@ -268,7 +268,7 @@
     <span class="edit-bar"></span>
     <div class="write-btn-set">
         <button class="cancel-btn cancel-edit nude-btn ripple">취소</button>
-        <button class="write-btn save-edit nude-btn ripple">저장</button>
+        <button class="write-btn save-comment-edit nude-btn ripple">저장</button>
     </div>
     <div class="comment-footer">
         <div class="comment-btn-container">
@@ -279,16 +279,15 @@
         <span class="textarea-bar"></span>
         <div class="write-btn-set">
             <button class="cancel-btn nude-btn cancel-reply ripple">취소</button>
-            <button class="write-btn basic-btn basic-btn-active ripple">등록</button>
+            <button class="write-reply write-btn basic-btn basic-btn-active ripple">등록</button>
         </div>
         <c:if test="${fn:length(list.crList) != 0}">
-        	<div class="toggle-reply"><span>답글 ${fn:length(list.crList)} 보기</span><span style="display:none">답글 숨기기</span></div>
+        <div class="toggle-reply"><span>답글 ${fn:length(list.crList)} 보기</span><span style="display:none">답글 숨기기</span></div>
         </c:if>
     </div>
-	<c:if test="${fn:length(list.crList) != 0}">
     <div class="reply-container">
         <c:forEach items="${list.crList }" var="crList">
-        <div class="comment-unit reply-unit">
+        <div data-comment-reply-no="${crList.commentReplyNo }" class="comment-unit reply-unit">
             <div class="comment-header">
 				<img class="comment-profile" src="images/default_profile_1.png">
 				<div class="comment-nick-date">
@@ -297,7 +296,7 @@
 				    <div class="comment-date">${replyDate }</div>
 				    <div class="comment-menu">
 				        <div class="edit-btn"><i class="material-icons">edit</i>수정</div>
-				        <div class="delete-btn"><i class="material-icons">delete</i>삭제</div>
+				        <div class="delete-reply-btn"><i class="material-icons">delete</i>삭제</div>
 				    </div>
 				</div>
             </div>
@@ -305,7 +304,7 @@
             <span class="edit-bar"></span>
             <div class="write-btn-set">
 				<button class="cancel-btn cancel-edit nude-btn ripple">취소</button>
-				<button class="write-btn save-edit nude-btn ripple">저장</button>
+				<button class="write-btn save-reply-edit nude-btn ripple">저장</button>
             </div>
             <div class="comment-footer">
 				<div class="comment-btn-container">
@@ -315,172 +314,244 @@
         </div>
         </c:forEach>
     </div>
-    </c:if>
 </div>
 </c:forEach>
+</div>
 ${pageBar }
 <script>
-	
+
 	/* 페이지 바 함수 */
 	var fn_paging = cPage => {
 		location.href='${path}/projectList/projectListDetail_community?cPage='+cPage+'&projectNo='+${projectNo};
 	};
+	    //코멘트 메뉴 버튼 토글
+	    var commentMenuBtn = $('.comment-menu-btn');
+	    $(() => {
+	        commentMenuBtn.on('mousedown', e => {
+	            const commentMenu = $('.comment-menu');
+	            const clickedMenu = $(e.target).parent().next().next();
 
-    //코멘트 메뉴 버튼 토글
-    var commentMenuBtn = $('.comment-menu-btn');
-    $(() => {
-        commentMenuBtn.on('mousedown', e => {
-            const commentMenu = $('.comment-menu');
-            const clickedMenu = $(e.target).parent().next().next();
+	            if(commentMenuBtn.index(e.target) > -1 && commentMenu.has(':visible').index(clickedMenu) > -1)
+	            {commentMenu.hide(); $('body').off('click'); return;}
+	            if(commentMenu.has(':visible').length > 0)
+	            {commentMenu.filter(':visible').hide();}
+	            
+	            clickedMenu.toggle();
+	            $('body').off('click');
 
-            if(commentMenuBtn.index(e.target) > -1 && commentMenu.has(':visible').index(clickedMenu) > -1)
-            {commentMenu.hide(); $('body').off('click'); return;}
-            if(commentMenu.has(':visible').length > 0)
-            {commentMenu.filter(':visible').hide();}
-            
-            clickedMenu.toggle();
-            $('body').off('click');
-
-            $('body').on('click', e => {
-                if(commentMenuBtn.index(e.target) > -1) return;
-                commentMenu.hide();
-                $('body').off('click');
-            });
-        });
-    });
-    
-    $(() => {
-	    $('div[contenteditable="true"]').on('keydown', e => {
-	    	if(e.keyCode === 13)
-	    	{
-	    		document.execCommand('defaultParagraphSeparator', false, 'p');
-	    		return false;
-	    	}
-	    	
+	            $('body').on('click', e => {
+	                if(commentMenuBtn.index(e.target) > -1) return;
+	                commentMenu.hide();
+	                $('body').off('click');
+	            });
+	        });
+	    });  
+	    
+	    //코멘트 작성
+	    var commentWriteBtn = $('.write-comment');
+	    $(() => {
+	    	commentWriteBtn.on('click', e => {
+				const commentText = $('.comment-textarea').html();
+				const parsedText = commentText.replace(/(<([^>]+)>)/g, '<br>');
+	    		
+	    		$.ajax({
+	    			type: 'post',
+	    			url: '${path}/comment/insertComment.do',
+	    			data: {'projectNo' : ${projectNo} , 'memberNick' : '${loggedMember.memberNick}', 'memberEmail' : '${loggedMember.memberEmail}', 'commentContent' : parsedText},
+	    			dataType: 'html',
+	    			success: data => {
+	    				$('.cancel-comment').trigger('click');
+	    				$('#marginer').after(data);
+	    			}
+	    		});
+	    	});
 	    });
-    	
-    });
-    
-    
-    //코멘트 작성
-    var commentWriteBtn = $('.write-comment');
-    $(() => {
-    	commentWriteBtn.on('click', e => {
-			var commentText+= $('.comment-textarea').text();
-    		$('.comment-text > div').each((index, item) => {
-    			commentText += $(item).text();
-    		});
-    		
-//     		$.ajax({
-//     			type: 'post',
-//     			url: 'comment/insertComment',
-//     			data: {"projectNo" : ${projectNo} , "commentContent" : },
-//     			success: data => {
-    					
-//     			}
-//     		});
-    	});
-    });
-    
-    
+	    
+	    //댓글 작성
+	    var replyWriteBtn = $('.write-reply');
+	    $(() => {
+	    	replyWriteBtn.on('click', e => {
+	    		const replyText = $(e.target).parent().prev().prev().html();
+	    		const parsedText = replyText.replace(/(<([^>]+)>)/g, '<br>');
+	    		$.ajax({
+	    			type: 'post',
+	    			url: '${path}/comment/insertCommentReply.do',
+	    			data: {'commentNo' : $(e.target).parent().parent().parent().data('commentNo'),
+	    				'commentReplyContent' : parsedText,
+	    				'memberEmail' : '${loggedMember.memberEmail}',
+	    				'memberNick' : '${loggedMember.memberNick}'},
+	    			dataType: 'html',
+	    			success: data => {
+	    				$(e.target).prev().trigger('click');
+	    				$(e.target).parent().parent().next().append(data);
+	    			}
+	    		});
+	    	});
+	    });
+	    
+	    //답글 토글
+	    var replyToggleBtn = $('.toggle-reply');
+	    $(() => {
+	        replyToggleBtn.parent().next().hide();
+	        replyToggleBtn.on('click', e => {
+	            $(e.target).toggle();
+	            $(e.target).siblings().toggle();
+	            $(e.currentTarget).parent().next().toggle();
+	        });
+	    });
 
-    //답글 토글
-    var replyToggleBtn = $('.toggle-reply');
-    $(() => {
-        replyToggleBtn.parent().next().hide();
-        replyToggleBtn.on('click', e => {
-            $(e.target).toggle();
-            $(e.target).siblings().toggle();
-            $(e.currentTarget).parent().next().toggle();
-        });
-    });
+	    //댓글작성 버튼 토글
+	    var commentTextArea = $('.comment-textarea');
+	    $(() => {
+	        commentTextArea.on('focus', e => {
+	            $(e.target).next().next().show();
+	        });
+			
+	    //댓글작성 취소
+	        $('.cancel-comment').on('click', e => {
+	            $(e.target).parent().hide();
+	            commentTextArea.text("");
+	            commentTextArea.blur();
+	        });
+	    });
+	    
+	    //코멘트 삭제버튼 작동
+	    var deleteCommentBtn = $('.delete-comment-btn');
+	    $(() => {
+	    	deleteCommentBtn.on('click', e => {
+	    		$.ajax({
+	    			type: 'post',
+	    			url: '${path}/comment/commentDelete.do',
+	    			data: {'commentNo' : $(e.currentTarget).parent().parent().parent().parent().data('commentNo')},
+	    			dataType: 'json',
+	    			success: data => {
+	    				if(date.result == 1)
+	    				{
+	    					$(e.currentTarget).parent().parent().parent().parent().remove();    					
+	    				}
+	    				else
+	    				{
+	    					alert("실패");	
+	    				}
+	    			}
+	    		});
+	    	});
+	    });
+	    
+	    //답글 삭제 버튼 바인드
+	    var deleteReplyBtn = $('.delete-reply-btn');
+	    $(() => {
+	    	deleteReplyBtn.on('click', e => {
+	    		$.ajax({
+	    			type: 'post',
+	    			url: '${path}/comment/commentReplyDelete.do',
+	    			data: {'commentReplyNo' : $(e.currentTarget).parent().parent().parent().parent().data('commentReplyNo')},
+	    			dataType: 'json',
+	    			success: data => {
+	    				if(date.result == 1)
+	    				{
+	    					$(e.currentTarget).parent().parent().parent().parent().remove();    					
+	    				}
+	    				else
+	    				{
+	    					alert("실패");	
+	    				}
+	    			}
+	    		});
+	    	});
+	    });
 
-    //댓글작성 버튼 토글
-    var commentTextArea = $('.comment-textarea');
-    $(() => {
-        commentTextArea.on('focus', e => {
-            $(e.target).next().next().show();
-        });
+	    //답글 작성 버튼 토글
+	    $(() => {
+	        $('.reply-textarea').hide();
+	        $('.write-btn-set').hide();
+	        $('.reply-btn').on('click', e => {
+	            $(e.target).parent().next().show().focus();
+	            $(e.target).parent().siblings('.write-btn-set').show();
+	        });
 
-        $('.cancel-comment').on('click', e => {
-            $(e.target).parent().hide();
-            commentTextArea.text("");
-            commentTextArea.blur();
-        });
-    });
+	        $('.cancel-reply').on('click', e => {
+	            $(e.target).parent().hide();
+	            $(e.target).parent().prev().prev().hide();
+	        });
+	    });
 
-    //답글 작성 버튼 토글
-    $(() => {
-        $('.reply-textarea').hide();
-        $('.write-btn-set').hide();
-        $('.reply-btn').on('click', e => {
-            $(e.target).parent().next().show().focus();
-            $(e.target).parent().siblings('.write-btn-set').show();
-        });
+	    //좋아요 클릭
+	    var likeBtn = $('.like-btn');
+	    $(() => {
+	        likeBtn.on('click', e => {
+	            $(e.target).toggleClass('liked');
+	        });
+	    });
 
-        $('.cancel-reply').on('click', e => {
-            $(e.target).parent().hide();
-            $(e.target).parent().prev().prev().hide();
-        });
-    });
+	    //수정, 수정취소버튼 클릭 이벤트 바인드
+	    var editBtn = $('.edit-btn');
+	    var cancelEditBtn =$('.cancel-edit')
+	    $(() => {
+	        editBtn.on('click', e => {
+	            const target = $(e.currentTarget).parent().parent().parent().next();
 
-    //좋아요 클릭
-    var likeBtn = $('.like-btn');
-    $(() => {
-        likeBtn.on('click', e => {
-            $(e.target).toggleClass('liked');
-        });
-    });
+	            target.data('tempText', target.text());
+	            target.data('target', target);
 
-    //수정, 수정취소버튼 클릭 이벤트 바인드
-    var editBtn = $('.edit-btn');
-    var cancelBtn 
-    $(() => {
-        editBtn.on('click', e => {
-            const target = $(e.currentTarget).parent().parent().parent().next();
+	            target.attr('contenteditable', 'true').focus();
+	            target.next().animate({width: 'toggle'}, 200);
+	            editCommon(target);
+	        });
 
-            target.data('tempText', target.text());
-            target.data('target', target);
+	        cancelEditBtn.on('click', e => {
+	            const target = $(e.target).parent().prev().prev().data('target');
 
-            target.attr('contenteditable', 'true').focus();
-            target.next().animate({width: 'toggle'}, 200);
-            editCommon(target);
-        });
+	            target.text(target.data('tempText'));
+	            target.attr('contenteditable', 'false');
+	            target.next().hide();
+	            editCommon(target);
+	        });
+	    });
 
-        cancelBtn.on('click', e => {
-            const target = $(e.target).parent().prev().prev().data('target');
+	    var editCommon = target => {
+	        target.prev().toggle();
+	        target.next().next().toggle();
+	        target.next().next().next().toggle();
+	    };
 
-            target.text(target.data('tempText'));
-            target.attr('contenteditable', 'false');
-            target.next().hide();
-            editCommon(target);
-        });
-    });
-
-    var editCommon = target => {
-        target.prev().toggle();
-        target.next().next().toggle();
-        target.next().next().next().toggle();
-    };
-
-    //삭제 버튼 바인드
-	var deleteBtn = $('.delete-btn');
-    $(() => {
-        deleteBtn.on('click', e => {
-        	
-        	
-            $(e.target).parent().parent().parent().parent().remove();
-        });
-    });
-
-    //수정 저장 버튼 바인드
-	var saveBtn = $('.save-edit');
-    $(() => {
-        saveBtn.on('click', e => {
-            const target = $(e.target).parent().prev().prev();
-            target.attr('contenteditable', 'false');
-            target.next().hide();
-            editCommon(target);
-        });
-    });
+	    //답글 수정 저장 버튼 바인드
+		var saveReplyBtn = $('.save-reply-edit');
+	    $(() => {
+	        saveReplyBtn.on('click', e => {
+	            const target = $(e.target).parent().prev().prev();
+	            const parsedText = target.html().replace(/(<([^>]+)>)/g, '<br>');
+	            $.ajax({
+	            	type: 'post',
+	            	url: '${path}/comment/commentReplyUpdate.do',
+	            	data: {'commentReplyNo' : $(e.currentTarget).parent().parent().data('commentReplyNo'),
+	            		'commentReplyContent' : parsedText	
+	            	},
+	            });
+	            saveFunction(target);
+	        });
+	    });
+	    
+	    //코멘트 수정 저장 버튼 바인드
+	    var saveCommentBtn = $('.save-comment-edit');
+	    $(() => {
+	        saveCommentBtn.on('click', e => {
+	            const target = $(e.target).parent().prev().prev();
+	            const parsedText = target.html().replace(/(<([^>]+)>)/g, '<br>');
+	            $.ajax({
+	            	type: 'post',
+	            	url: '${path}/comment/commentUpdate.do',
+	            	data: {'commentNo' : $(e.currentTarget).parent().parent().data('commentNo'),
+	            		'commentContent' : parsedText
+	            	},
+	            });
+	            saveFunction(target);
+	        });
+	    });
+	    
+	    var saveFunction = target => {
+	        target.attr('contenteditable', 'false');
+	        target.next().hide();
+	        editCommon(target);
+	    };
 </script>

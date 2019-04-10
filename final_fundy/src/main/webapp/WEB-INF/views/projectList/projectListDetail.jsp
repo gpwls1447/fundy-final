@@ -453,9 +453,9 @@
                             </c:forEach>
                         </div>
                         <div class="shipping-date">
-                                	예상 발송일<span class="divider-3">|</span><span><fmt:formatDate value="${foList.deliveryDate }" pattern="yyyy년 MM월 dd일"/></span>
+                        	예상 발송일<span class="divider-3">|</span><span><fmt:formatDate value="${foList.deliveryDate }" pattern="yyyy년 MM월 dd일"/></span>
                         </div>
-                        <button class="basic-btn-active ripple option-select-btn">선택하기</button>
+                        <button class="basic-btn-active ripple option-select-btn" onclick="location.href='${path}/pay/optionSelect.do?projectNo=${foList.projectNo }'">선택하기</button>
                     </div>
                     </c:forEach>
                 </div>
