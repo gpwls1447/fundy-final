@@ -13,394 +13,394 @@
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <style>
       /* footer 부분 */
-   .footer
-   {
-       width: 1005px;
-       display: flex;
-       flex-flow: column nowrap;
-       align-items: center;
-   }
-   
-   /* 유저 모달창 부분 */
-   
-   .user-modal
-   {
-       position: fixed;
-       top: 0;
-       right: 0;
-       width: 250px;
-       height: 100%;
-       background-color: white;
-       display: none;
-       font-family: 'Noto Sans KR';
-   }
-   
-   .modal-overlay
-   {
-       position: fixed;
-       top: 0;
-       width: 100vw;
-       height: 100vh;
-       background-color: black;
-       opacity: 0.4;
-       display: none;
-   }
-   
-   .close-btn
-   {
-       position: absolute;
-       top: 0;
-       left: 0;
-       width: 32px;
-       height: 32px;
-       background-color: white;
-       overflow: hidden;
-   }
-   
-   .close-btn > i
-   {
-       width: 100%;
-       height: 100%;
-       font-size: 35px;
-       opacity: .5;
-       color: black;
-       margin-top: 3px;
-       margin-left: 3px;
-       cursor: pointer;
-   }
-   
-   .close-btn > i:hover
-   {
-       opacity: .9;
-   }
-   
-   .user-modal-header
-   {
-       height: 250px;
-       display: flex;
-       flex-flow: column nowrap;
-       align-items: center;
-       padding-top: 90px;
-       padding-bottom: 10px;
-   }
-   
-   .user-modal-header > img
-   {
-       width: 100px;
-       height: 100px;
-       border-radius: 50%;
-       border: 1px solid #eee;
-   }
-   
-   .user-nick
-   {
-       font-size: 25px;
-       font-weight: bold;
-   }
-   
-   .user-modal-body
-   {
-       background-color: rgb(70, 70, 85);
-       display: flex;
-       flex-wrap: wrap;
-   }
-   
-   .user-menu-box
-   {
-       width: 50%;
-       padding: 12.5% 0;
-       display: flex;
-       flex-flow: column;
-       align-items: center;
-       justify-content: center;
-       position: relative;
-       cursor: pointer;
-   }
-   
-   .user-menu-box > i
-   {
-       font-size: 38px;
-       color: white;
-       opacity: .7;
-   }
-   
-   .user-menu-box:hover > i
-   {
-       opacity: 1;
-       transform: scale(1.1);
-   }
-   
-   .user-menu-box:hover .user-menu-text
-   {
-       opacity: 1;
-       transform: scale(1.1);
-   }
-   
-   .user-menu-text
-   {
-       margin-top: 3px;
-       color: white;
-       opacity: .7;
-       font-size: 13px;
-   }
-   
-   .bar
-   {
-       position: absolute;
-       display: block;
-       background-color: rgba(255, 255, 255, .2);
-   }
-   
-   .vertical-bar
-   {
-       width: 1px;
-       height: 65%;
-       right: 0;
-   }
-   
-   .horizontal-bar
-   {
-       width: 65%;
-       height: 1px;
-       bottom: 0;
-   }
-   
-   .user-modal-footer
-   {
-       height: 100%;
-       background-color: rgb(70, 70, 85);
-   }
-   
-   /* 로그인 회원가입 모달창 */
-   
-   .login-trans-btn
-   {
-      
-   }
-   
-   .login-modal{
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 1;
-      width: 75%;
-      width: 700px;
-      height: 600px;
-   }
-   
-   .backRight {
-      position: absolute;
-      right: 0;
-      width: 50%;
-      height: 100%;
-      background-image : url(${path}/resources/images/loginPicture1.jpg);
-      background-size: cover;
-      background-position: 50% 50%;
-   }
-   
-   .backLeft {
-      position: absolute;
-      left: 0;
-      width: 50%;
-      height: 100%;
-      background-image : url(${path}/resources/images/loginPicture4.jpg);
-      background-size: cover;
-      background-position: 50% 50%;
-   }
-   
-   #back {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      z-index: -999;
-   }
-   
-   #slideBox {
-      width: 50%;
-      max-height: 100%;
-      height: 100%;
-      overflow: hidden;
-      margin-left: 50%;
-      position: absolute;
-      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px
-         rgba(0, 0, 0, 0.22);
-   }
-   
-   .topLayer {
-      width: 200%;
-      height: 100%;
-      position: relative;
-      left: 0;
-      left: -100%;
-   }
-   
-   .left {
-      width: 50%;
-      height: 100%;
-      background: #2C3034;
-      left: 0;
-      position: absolute;
-   }
-   
-   .right {
-      width: 50%;
-      height: 100%;
-      background: #f9f9f9;
-      right: 0;
-      position: absolute;
-   }
-   
-   .content {
-      width: 250px;
-      margin: 0 auto;
-      top: 20%;
-      position: absolute;
-      left: 50%;
-      margin-left: -125px;
-   }
-   
-   .off {
-      background: none;
-      color: #999;
-      box-shadow: none;
-      border: 1px solid #999 !important;
-   }
-   
-   .right .off:hover {
-      background: #eee;
-      color: #444;
-      box-shadow: none;
-   }
-   
-   .left .off:hover {
-      box-shadow: none;
-      color: #03A9F4;
-      background: #363A3D;
-   } 
-      
-   .login-close-btn{
-      border: none;
-      outline: none;
-      position: absolute;
-      right: -40px;
-      top: 0;
-      width : 40px;
-      height : 40px;
-      background-color: rgba(255, 255, 255, 0.4);
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-   }
-   
-   .login-close-icon{
-      font-size : 30px;
-      color: #444;
-   }
-   
-   .signup-modal-input
-   {
-      width: 100%;
-      background-color: transparent;
-      border: 0;
-      outline: 0;
-      border-bottom: 1px solid #45494C;
-      font-size: 14px;
-      padding: 4px 0;
-      margin-top: 20px;
-      border-radius:0;
-      color: #eee;
-      transition: 0.3s linear;
-   }
-   
-   .login-modal-input
-   {
-      color: #444;
-   }
-   
-   .form-title
-   {
-      width: 100%;
-      font-weight: 300;
-/*       color: #03A9F4; */
-      color: #888;
-      font-size: 20px;
-      margin-bottom: 50px;
-   }
-   
-   .signup-modal-input::placeholder
-   {
-      font-size: 13px;
-      color : #777;
-      padding: 4px 0;
-      margin-top: 10px;
-   }
-   
-   .signup-modal-input:focus
-   {
-      background-color : transparent;
-      color: #ccc;
-      border-color: #ccc;
-   }
-   
-   
-   .login-modal-input
-   {
-      color: #999;
-      border-bottom: 1px solid #999;
-   }
-   
-   .login-modal-input::placeholder{
-      color : #999;
-   }
-   
-   .login-modal-input:focus
-   {
-      border-bottom: 1px solid #444;
-      color: #444;
-   }
-   
-   .brand-title
-   {
-      font-weight: 600;
-      font-size: 40px;
-   }
-   .modal-btn-container
-   {
-      display: flex;
-      margin: 15px 0;
-   }
-   
-   .modal-btn-container > input:last-of-type{margin-right: 0;}
-   {
-   }
-   
-   .login-modal-btn
-   {
-      margin-right: 5px;
-      flex: 1 1 0;
-      border: none;
-      outline: none;
-      padding: 10px 0;
-      font-size: 13px;
-      cursor: pointer;
-   }
-   
-   #kakao-login-btn
-   {
-      margin-top: 15px;
-      width: 100%;
-   }
+	.footer
+	{
+	    width: 1005px;
+	    display: flex;
+	    flex-flow: column nowrap;
+	    align-items: center;
+	}
+	
+	/* 유저 모달창 부분 */
+	
+	.user-modal
+	{
+	    position: fixed;
+	    top: 0;
+	    right: 0;
+	    width: 250px;
+	    height: 100%;
+	    background-color: white;
+	    display: none;
+	    font-family: 'Noto Sans KR';
+	}
+	
+	.modal-overlay
+	{
+	    position: fixed;
+	    top: 0;
+	    width: 100vw;
+	    height: 100vh;
+	    background-color: black;
+	    opacity: 0.4;
+	    display: none;
+	}
+	
+	.close-btn
+	{
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	    width: 32px;
+	    height: 32px;
+	    background-color: white;
+	    overflow: hidden;
+	}
+	
+	.close-btn > i
+	{
+	    width: 100%;
+	    height: 100%;
+	    font-size: 35px;
+	    opacity: .5;
+	    color: black;
+	    margin-top: 3px;
+	    margin-left: 3px;
+	    cursor: pointer;
+	}
+	
+	.close-btn > i:hover
+	{
+	    opacity: .9;
+	}
+	
+	.user-modal-header
+	{
+	    height: 250px;
+	    display: flex;
+	    flex-flow: column nowrap;
+	    align-items: center;
+	    padding-top: 90px;
+	    padding-bottom: 10px;
+	}
+	
+	.user-modal-header > img
+	{
+	    width: 100px;
+	    height: 100px;
+	    border-radius: 50%;
+	    border: 1px solid #eee;
+	}
+	
+	.user-nick
+	{
+	    font-size: 25px;
+	    font-weight: bold;
+	}
+	
+	.user-modal-body
+	{
+	    background-color: rgb(70, 70, 85);
+	    display: flex;
+	    flex-wrap: wrap;
+	}
+	
+	.user-menu-box
+	{
+	    width: 50%;
+	    padding: 12.5% 0;
+	    display: flex;
+	    flex-flow: column;
+	    align-items: center;
+	    justify-content: center;
+	    position: relative;
+	    cursor: pointer;
+	}
+	
+	.user-menu-box > i
+	{
+	    font-size: 38px;
+	    color: white;
+	    opacity: .7;
+	}
+	
+	.user-menu-box:hover > i
+	{
+	    opacity: 1;
+	    transform: scale(1.1);
+	}
+	
+	.user-menu-box:hover .user-menu-text
+	{
+	    opacity: 1;
+	    transform: scale(1.1);
+	}
+	
+	.user-menu-text
+	{
+	    margin-top: 3px;
+	    color: white;
+	    opacity: .7;
+	    font-size: 13px;
+	}
+	
+	.bar
+	{
+	    position: absolute;
+	    display: block;
+	    background-color: rgba(255, 255, 255, .2);
+	}
+	
+	.vertical-bar
+	{
+	    width: 1px;
+	    height: 65%;
+	    right: 0;
+	}
+	
+	.horizontal-bar
+	{
+	    width: 65%;
+	    height: 1px;
+	    bottom: 0;
+	}
+	
+	.user-modal-footer
+	{
+	    height: 100%;
+	    background-color: rgb(70, 70, 85);
+	}
+	
+	/* 로그인 회원가입 모달창 */
+	
+	.login-trans-btn
+	{
+		
+	}
+	
+	.login-modal{
+		display: none;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 1;
+		width: 75%;
+		width: 700px;
+		height: 600px;
+	}
+	
+	.backRight {
+		position: absolute;
+		right: 0;
+		width: 50%;
+		height: 100%;
+		background-image : url(${path}/resources/images/loginPicture1.jpg);
+		background-size: cover;
+		background-position: 50% 50%;
+	}
+	
+	.backLeft {
+		position: absolute;
+		left: 0;
+		width: 50%;
+		height: 100%;
+		background-image : url(${path}/resources/images/loginPicture4.jpg);
+		background-size: cover;
+		background-position: 50% 50%;
+	}
+	
+	#back {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		z-index: -999;
+	}
+	
+	#slideBox {
+		width: 50%;
+		max-height: 100%;
+		height: 100%;
+		overflow: hidden;
+		margin-left: 50%;
+		position: absolute;
+		box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px
+			rgba(0, 0, 0, 0.22);
+	}
+	
+	.topLayer {
+		width: 200%;
+		height: 100%;
+		position: relative;
+		left: 0;
+		left: -100%;
+	}
+	
+	.left {
+		width: 50%;
+		height: 100%;
+		background: #2C3034;
+		left: 0;
+		position: absolute;
+	}
+	
+	.right {
+		width: 50%;
+		height: 100%;
+		background: #f9f9f9;
+		right: 0;
+		position: absolute;
+	}
+	
+	.content {
+		width: 250px;
+		margin: 0 auto;
+		top: 20%;
+		position: absolute;
+		left: 50%;
+		margin-left: -125px;
+	}
+	
+	.off {
+		background: none;
+		color: #999;
+		box-shadow: none;
+		border: 1px solid #999 !important;
+	}
+	
+	.right .off:hover {
+		background: #eee;
+		color: #444;
+		box-shadow: none;
+	}
+	
+	.left .off:hover {
+		box-shadow: none;
+		color: #03A9F4;
+		background: #363A3D;
+	} 
+		
+	.login-close-btn{
+		border: none;
+		outline: none;
+		position: absolute;
+		right: -40px;
+		top: 0;
+		width : 40px;
+		height : 40px;
+		background-color: rgba(255, 255, 255, 0.4);
+		z-index: 1;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	
+	.login-close-icon{
+		font-size : 30px;
+		color: #444;
+	}
+	
+	.signup-modal-input
+	{
+		width: 100%;
+		background-color: transparent;
+		border: 0;
+		outline: 0;
+		border-bottom: 1px solid #45494C;
+		font-size: 14px;
+		padding: 4px 0;
+		margin-top: 20px;
+		border-radius:0;
+		color: #eee;
+		transition: 0.3s linear;
+	}
+	
+	.login-modal-input
+	{
+		color: #444;
+	}
+	
+	.form-title
+	{
+		width: 100%;
+		font-weight: 300;
+/* 		color: #03A9F4; */
+		color: #888;
+		font-size: 20px;
+		margin-bottom: 50px;
+	}
+	
+	.signup-modal-input::placeholder
+	{
+		font-size: 13px;
+		color : #777;
+		padding: 4px 0;
+		margin-top: 10px;
+	}
+	
+	.signup-modal-input:focus
+	{
+		background-color : transparent;
+		color: #ccc;
+		border-color: #ccc;
+	}
+	
+	
+	.login-modal-input
+	{
+		color: #999;
+		border-bottom: 1px solid #999;
+	}
+	
+	.login-modal-input::placeholder{
+		color : #999;
+	}
+	
+	.login-modal-input:focus
+	{
+		border-bottom: 1px solid #444;
+		color: #444;
+	}
+	
+	.brand-title
+	{
+		font-weight: 600;
+		font-size: 40px;
+	}
+	.modal-btn-container
+	{
+		display: flex;
+		margin: 15px 0;
+	}
+	
+	.modal-btn-container > input:last-of-type{margin-right: 0;}
+	{
+	}
+	
+	.login-modal-btn
+	{
+		margin-right: 5px;
+		flex: 1 1 0;
+		border: none;
+		outline: none;
+		padding: 10px 0;
+		font-size: 13px;
+		cursor: pointer;
+	}
+	
+	#kakao-login-btn
+	{
+		margin-top: 15px;
+		width: 100%;
+	}
 </style>
 
 <footer class="footer">
-       <br><br><br><br>
-       <button class="datagen-btn">멤버 생성</button>
-       <button class="projectgen-btn">프로젝트 생성</button>
-       <button class="fundingLogDatagen-btn">후원자로그 생성</button>
-       <button class="commentGen-btn">코멘트 생성</button>
+    	<br><br><br><br>
+	    <button class="datagen-btn">멤버 생성</button>
+	    <button class="projectgen-btn">프로젝트 생성</button>
+	    <button class="fundingLogDatagen-btn">후원자로그 생성</button>
+	    <button class="commentGen-btn">코멘트 생성</button>
     </footer>
     </div>
     
@@ -441,11 +441,10 @@
                 <i class="material-icons">chat</i>
                 <span class="user-menu-text">메시지</span>
             </div>
-            <div class="user-menu-box">
-                <span class="bar vertical-bar memberUpdate-btn"></span>
+            <div class="user-menu-box memberUpdate-btn">
+                <span class="bar vertical-bar"></span>
                 <i class="material-icons">fingerprint</i>
-                <span class="user-menu-text">
-                <a href="${pageContext.request.contextPath}/member/memberUpdateView.do">정보수정</a></span>
+                <span class="user-menu-text">정보수정</span>
             </div>
             <div class="user-menu-box logout-btn">
                 <i class="material-icons">exit_to_app</i>
@@ -459,129 +458,129 @@
     <!-- 로그인 모달 -->
     
     <div class="login-modal">
-   
-   <button class="login-close-btn">
-      <i  class="material-icons login-close-icon">close</i> 
-   </button>
-   
-   <div id="back">
-      <div class="backRight"></div>
-      <div class="backLeft"></div>
-   </div>
+	
+	<button class="login-close-btn">
+		<i  class="material-icons login-close-icon">close</i> 
+	</button>
+	
+	<div id="back">
+		<div class="backRight"></div>
+		<div class="backLeft"></div>
+	</div>
 
-   <div id="slideBox">
-      <div class="topLayer">
-         <div class="left">
-            <div class="content">
-               
-               <div class="signup-title form-title"><span class="brand-title">FUNDY</span>회원가입</div>
-               <form method="post" action="${path }/member/memberEnrollEnd.do" autocomplete="off">
-                  <div class="form-group">
-                     <input type="email" class="signup-modal-input" placeholder="이메일" id="memberEmail" name="memberEmail" required /> 
-                     <input type="password" class="signup-modal-input" placeholder="비밀번호" id="password" name="memberPw" required /> 
-                     <input type="password" class="signup-modal-input" placeholder="비밀번호 확인" id="password-ck" required /> 
-                     <input type="text" class="signup-modal-input" placeholder="닉네임" name="memberNick" required />
-                  </div>
-               <div class="modal-btn-container">
-                  <input type="submit" class="login-modal-btn" value="회원가입">
-                  <input type="button" id="goLeft" class="off login-modal-btn" onclick="return false;" value="로그인">
-               </div>
-                  </form>
-            </div>
-         </div>
-         <div class="right">
-            <div class="content">
-               <div class="login-title form-title"><span class="brand-title">FUNDY</span>로그인</div>
-               <form method="post" action="${path }/member/memberlogin.do" autocomplete="off">
-                  <div class="form-group">
-                     <input type="email" placeholder="email" name="memberEmail" class="signup-modal-input login-modal-input"/> 
-                     <input type="password" placeholder="password" name="memberPw" class="signup-modal-input login-modal-input"/>
-                  </div>
-                  <!-- 카카오로그인 -->
-                  <a id="kakao-login-btn"></a>
-                  <div class="modal-btn-container">
-                     <input type="button" id="goRight" class="off login-modal-btn" onclick="return false;" value="회원가입">
-                     <input type="submit" class="off login-modal-btn" value="로그인">
-                      </div>
-               </form>
-            </div>
-         </div>
-      </div>
-   </div>
+	<div id="slideBox">
+		<div class="topLayer">
+			<div class="left">
+				<div class="content">
+					
+					<div class="signup-title form-title"><span class="brand-title">FUNDY</span>회원가입</div>
+					<form method="post" action="${path }/member/memberEnrollEnd.do" autocomplete="off">
+						<div class="form-group">
+							<input type="email" class="signup-modal-input" placeholder="이메일" id="memberEmail" name="memberEmail" required /> 
+							<input type="password" class="signup-modal-input" placeholder="비밀번호" id="password" name="memberPw" required /> 
+							<input type="password" class="signup-modal-input" placeholder="비밀번호 확인" id="password-ck" required /> 
+							<input type="text" class="signup-modal-input" placeholder="닉네임" name="memberNick" required />
+						</div>
+					<div class="modal-btn-container">
+						<input type="submit" class="login-modal-btn" value="회원가입">
+						<input type="button" id="goLeft" class="off login-modal-btn" onclick="return false;" value="로그인">
+					</div>
+						</form>
+				</div>
+			</div>
+			<div class="right">
+				<div class="content">
+					<div class="login-title form-title"><span class="brand-title">FUNDY</span>로그인</div>
+					<form method="post" action="${path }/member/memberlogin.do" autocomplete="off">
+						<div class="form-group">
+							<input type="email" placeholder="email" name="memberEmail" class="signup-modal-input login-modal-input"/> 
+							<input type="password" placeholder="password" name="memberPw" class="signup-modal-input login-modal-input"/>
+						</div>
+						<!-- 카카오로그인 -->
+						<a id="kakao-login-btn"></a>
+						<div class="modal-btn-container">
+							<input type="button" id="goRight" class="off login-modal-btn" onclick="return false;" value="회원가입">
+							<input type="submit" class="off login-modal-btn" value="로그인">
+   					 	</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-   
+	
 <script>
-   //로그아웃 기능
-   $(() => {
-      $('.logout-btn').on("click", () => {
-         location.href="${path}/member/LogOut.do";   
-      });
-   });
-   
-   //정보수정 기능
-   $(() => {
-      $('.memberUpdate-btn').on("click", ()=> {
-         location.href="${path}/member/memberUpdateView.do";
-      })
-   })
-   
+	//로그아웃 기능
+	$(() => {
+		$('.logout-btn').on("click", () => {
+			location.href="${path}/member/LogOut.do";	
+		});
+	});
+	
+	//정보수정 기능
+	$(() => {
+		$('.memberUpdate-btn').on("click", ()=> {
+			location.href="${path}/member/memberUpdateView.do";
+		})
+	})
+	
 
     //패스워드 일치 확인
      $(function(){
-        $("#password-ck").blur(function(){
-         var pw=$("#password").val();
-         var pwck=$("#password-ck").val();
-         if(pw!=pwck){
-            alert("password 불일치");
-            //패스워드 비워주기
-            $("#password-ck").val("");
-            $("#password").focus();
-         }
-      });
-      
-      
-      
-   }); 
+    	 $("#password-ck").blur(function(){
+			var pw=$("#password").val();
+			var pwck=$("#password-ck").val();
+			if(pw!=pwck){
+				alert("password 불일치");
+				//패스워드 비워주기
+				$("#password-ck").val("");
+				$("#password").focus();
+			}
+		});
+		
+		
+		
+	}); 
 
-   //로그인 모달
-   const loginBtn = $('.login-btn');
-   const loginModal = $('.login-modal');
-   $(() => {
-      loginBtn.on('click', () => {
-         loginModal.toggle();
-         modalOverlay.toggle();
-      });
-   });
-   
-   //x(취소) 버튼  아래 로그인함수 클릭시 생기는 이벤트 똑같이 달아주면됨
-   const logoutBtn = $('#logout-btn');
-   $(() => {
-      logoutBtn.on('click', () => {
-         loginModal.toggle();
-         modalOverlay.toggle();
-      });
-   });
-   
-   
-   //로그인 회원가입 전환 기능
-    $(document).ready(function() {
-         $('#goRight').on('click', function() {
-            $('#slideBox').animate({
-               'marginLeft' : '0'
-            });
-            $('.topLayer').animate({
-               'marginLeft' : '100%'
-            });
-         });
-         $('#goLeft').on('click', function() {
-            $('#slideBox').animate({
-               'marginLeft' : '50%'
-            });
-            $('.topLayer').animate({
-               'marginLeft' : '0'
-            });
-         });
-      });
+	//로그인 모달
+	const loginBtn = $('.login-btn');
+	const loginModal = $('.login-modal');
+	$(() => {
+		loginBtn.on('click', () => {
+			loginModal.toggle();
+			modalOverlay.toggle();
+		});
+	});
+	
+	//x(취소) 버튼  아래 로그인함수 클릭시 생기는 이벤트 똑같이 달아주면됨
+	const logoutBtn = $('#logout-btn');
+	$(() => {
+		logoutBtn.on('click', () => {
+			loginModal.toggle();
+			modalOverlay.toggle();
+		});
+	});
+	
+	
+	//로그인 회원가입 전환 기능
+	 $(document).ready(function() {
+			$('#goRight').on('click', function() {
+				$('#slideBox').animate({
+					'marginLeft' : '0'
+				});
+				$('.topLayer').animate({
+					'marginLeft' : '100%'
+				});
+			});
+			$('#goLeft').on('click', function() {
+				$('#slideBox').animate({
+					'marginLeft' : '50%'
+				});
+				$('.topLayer').animate({
+					'marginLeft' : '0'
+				});
+			});
+		});
 
     //검색창 토글
     const searchBtn = $('.search-btn');
@@ -609,7 +608,7 @@
     const nav = $('.nav');
     const categoryBtn = $('.category-btn');
     $(() => {
-       nav.hide();
+    	nav.hide();
         categoryBtn.on('click', () => {
             nav.slideToggle(300);
         });
@@ -718,32 +717,32 @@
     
     const datagenBtn = $('.datagen-btn');
     const projectgenBtn = $('.projectgen-btn');
-      const fundinglogBtn = $('.fundingLogDatagen-btn');
+   	const fundinglogBtn = $('.fundingLogDatagen-btn');
     $(() => {
-       datagenBtn.on('click', () => {
-          $.ajax({
-             url: '${pageContext.request.contextPath}/datagen.do',
-             success: data => {
-                alert('결과: ' + data.result);
-             }
-          });
-       });
-       projectgenBtn.on('click', () => {
-          $.ajax({
-             url: '${pageContext.request.contextPath}/projectgen.do',
-             success: data => {
-                alert('결과: ' + data.result);
-             }
-          });
-       });
-       fundinglogBtn.on('click', () => {
-          $.ajax({
-             url: '${pageContext.request.contextPath}/fundingLogDatagen.do',
-             success: data => {
-                alert('결과: ' + data.result);
-             }
-          });
-       });
+    	datagenBtn.on('click', () => {
+    		$.ajax({
+    			url: '${pageContext.request.contextPath}/datagen.do',
+    			success: data => {
+    				alert('결과: ' + data.result);
+    			}
+    		});
+    	});
+    	projectgenBtn.on('click', () => {
+    		$.ajax({
+    			url: '${pageContext.request.contextPath}/projectgen.do',
+    			success: data => {
+    				alert('결과: ' + data.result);
+    			}
+    		});
+    	});
+    	fundinglogBtn.on('click', () => {
+    		$.ajax({
+    			url: '${pageContext.request.contextPath}/fundingLogDatagen.do',
+    			success: data => {
+    				alert('결과: ' + data.result);
+    			}
+    		});
+    	});
     });
     
     
@@ -757,9 +756,9 @@
            Kakao.API.request({
              url: '/v1/user/me',
              success: function(res) {
-                testajax(res);
-                loginModal.toggle();
-                modalOverlay.toggle();
+            	 testajax(res);
+            	 loginModal.toggle();
+            	 modalOverlay.toggle();
              },
              fail: function(error) {
                alert(JSON.stringify(error));
@@ -773,26 +772,26 @@
        
        function testajax(res)
        {
-          console.log(res);
+    	   console.log(res);
            $.ajax({
-              url : "${pageContext.request.contextPath }/member/isKakao.do",
-              dataType:"json",
-              type:"post",
+           	url : "${pageContext.request.contextPath }/member/isKakao.do",
+           	dataType:"json",
+           	type:"post",
             data : {id:res.id,"email":res.kaccount_email,profile:res.properties['profile_image'], nick:res.properties['nickname']}, 
-              success : function(data){
-                 console.log("돌려받은 값 : "+data.val);
-                 if(data.val=="y"){
-                    location.href="${path}/";
-                 }
-                 else{
-                    console.log("로그인실패");
-                 }
-              },
-              error:function(re,msg)
-              {
-                 console.log(re);
-                 console.log(msg);
-              }
+           	success : function(data){
+           		console.log("돌려받은 값 : "+data.val);
+           		if(data.val=="y"){
+           			location.href="${path}/";
+           		}
+           		else{
+           			console.log("로그인실패");
+           		}
+           	},
+           	error:function(re,msg)
+           	{
+           		console.log(re);
+           		console.log(msg);
+           	}
           })
        };
     
