@@ -1,16 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% 
+	session.setAttribute("projectNo", request.getAttribute("projectNo"));
+%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="${path }/resources/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${path }/resources/editor/js/HuskyEZCreator.js" charset="utf-8"></script>
 <link href="${path }/resources/css/projectWrite.css" rel="stylesheet">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script>
 	$(function() {
+		$('#viewLoading').hide();
 		///////////////////////////////
 		/* 스마트에디터 로드*/
 		var loadFlag = false;	//스마트에디터 로드가 됐는지 판별하는 플래그변수
@@ -24,7 +29,7 @@
 			    nhn.husky.EZCreator.createInIFrame({
 			        oAppRef: obj,
 			        elPlaceHolder: "editor",
-			        sSkinURI: "./resources/editor/SmartEditor2Skin.html",
+			        sSkinURI: "${path }/resources/editor/SmartEditor2Skin.html",
 			        htParams : {
 			            // 툴바 사용 여부
 			            bUseToolbar : true,            
@@ -63,6 +68,7 @@
 		/* 작성 완성률 */
 		//퍼센테이지를 계산하기위해 각 제이슨 멤버변수를 공백으로 초기화했음.
 		var percentage = 0;
+		var rewards;
 		var writeData = new Object();
 		var contentCnt = 0;
 		fn_loadedWriteData();	//임시저장된 프로젝트신청서시 퍼센테이지 계산후 로드
@@ -72,6 +78,9 @@
 			fn_loadedWriteData();
 		});
 		$("article:not(iframe)").click(function() {
+			fn_loadedWriteData();
+		});
+		$("#reward-container").click(function() {
 			fn_loadedWriteData();
 		});
 		
@@ -187,13 +196,15 @@
 		///////////////////////////////////////////////////////
 		/*폼데이터 값받아오고 퍼센테이지 계산하는 함수 페이지 전체로드시 실행된다. */
 		function fn_loadedWriteData() {
+			percentage = 0;
+			
 			if(obj.length > 0) {
 				obj.getById["editor"].exec("UPDATE_CONTENTS_FIELD", []);
 			}
-			writeData.subCtg = $("#_subCode").val();
+			writeData.minorCode = $("#_subCode").val();		//소분류코드
 			writeData.projectTitle = $("#_projectTitle").val();
 			writeData.projectThumnail = $("#projectThumnailCk").val();	//프로젝트썸네일 밸류 확인
-			writeData.projectSummary = $("#_projectSummary").val();
+			writeData.projectSumary = $("#_projectSummary").val();
 			writeData.memberNick = $("#_memberNick").val();
 			//writeData.memberProfile = $("#memberProfileCk").val();	//창작자 프로필 확인
 			writeData.goalPrice = removeCommas($("#_goalPrice").val());	//콤마를 제거하여 데이터삽입
@@ -206,19 +217,78 @@
 			writeData.bank = $("#_bank").val();
 			writeData.accNum = $("#_accNum").val();
 			writeData.accName = $("#_accName").val();
-			writeData.accType = $(".accType:checked").val();
-			writeData.birthday = $("#_birthday").val();
+			//writeData.accType = $(".accType:checked").val();
+			//writeData.birthday = $("#_birthday").val();
+			
+			rewards = new Array();	//리워드 배열
+			var rewardsLength = $(".reward").length;
+			for(var i=0; i<rewardsLength; i++) {
+				var reward = new Object();
+				
+				reward.packageNo = (i+1);
+				reward.rewardMoney = removeCommas($(".rewardMoney").eq(i).val());
+				reward.deliDay = $(".rewardDeli").eq(i).val();
+				
+				var products = new Array();	//리워드 구성품들배열
+				for(var j=0; j<$(".reward").eq(i).find($(".rewardName")).length; j++) {
+					var product = new Object();
+					
+					product.packageNo = i;
+					product.rewardName = $(".reward").eq(i).find(".rewardName").eq(j).val();
+					product.rewardCnt = $(".reward").eq(i).find(".rewardCnt").eq(j).val();
+					
+					products[j] = product;
+				}
+				reward.products = products;
+				
+				rewards[i] = reward;
+			}
 			
 			$.each(writeData,function(key,value) {
 				if(value != null && value.length > 0 && percentage < 100 && value != "<p>&nbsp;</p>") {
-					percentage = percentage + (1/Object.keys(writeData).length * 100);
+					percentage = percentage + ((1/Object.keys(writeData).length) * 100);
 				}
 			});
 			
 			percentage = Math.round(percentage);
 			$("#progress-span").html(percentage + "%");
 			$(".progress-bar").css("width", percentage + "%");
-			percentage = 0;
+			writeData.projectPhone = $("#_projectTelF").val() + $("#_projectTelM").val() + $("#_projectTelE").val();
+			if(percentage >= 100) {
+				$("#project-entry-btn").removeClass('disabled');
+			}
+			else {
+				$("#project-entry-btn").addClass('disabled');
+			}
+		}
+		
+		//프로젝트 데이터베이스에 저장하는 함수
+		function projectSaving() {
+			var jsonData = JSON.stringify(writeData);
+			$("#viewLoading").fadeIn(500);
+			$.ajax({
+				url: "${path }/projectWrite/tempSaveProject.do?projectNo=${projectNo }",
+				data: jsonData,
+				dataType: "html",
+				type: "POST",
+			    contentType:"application/json;charset=UTF-8",
+				success: function(data) {
+					for(var i=0; i<rewards.length; i++) {
+						jsonData = JSON.stringify(rewards[i]);
+						
+						$.ajax({
+							url: "${path }/projectWrite/tempSaveProjectReward.do?projectNo=${projectNo }",
+							data: jsonData,
+							dataType: "html",
+							type: "POST",
+						    contentType:"application/json;charset=UTF-8",
+							success: function(data) {
+								$("#viewLoading").fadeOut(500);
+							}
+						});
+					}
+				}
+			});
 		}
 		
 		///////////////////////////////////////////////////////////
@@ -229,13 +299,15 @@
             formData.append("upFile", file);
 			
 			$.ajax({
-				url: '${path }/upload/projectThumnail.do',
+				url: '${path }/upload/projectThumnail.do?projectNo=${projectNo}',
 				data: formData,
 				processData: false,
 				contentType: false,
 				type: 'POST',
 				success: function(data) {
 					$("#projectThumnailCk").val(data);
+					$("#thumnail-img").attr("width", "100%");
+					$("#thumnail-img").attr("height", "100%");
 					$("#thumnail-img").attr("src", data);
 					fn_loadedWriteData();
 				}
@@ -250,7 +322,7 @@
             formData.append("upFile", file);
 			
 			$.ajax({
-				url: '${path }/upload/memberProfile.do',
+				url: '${path }/upload/memberProfile.do?memberEmail=${creator.getMemberEmail() }',
 				data: formData,
 				processData: false,
 				contentType: false,
@@ -262,6 +334,35 @@
 				}
 			});
 			
+		});
+		
+		///////////////////////////////////////////////////////////
+		/* 프로젝트 검토요청하기 */
+		$("#project-entry-btn").click(function() {
+			fn_loadedWriteData();
+			projectSaving();
+			
+			if(percentage >= 100) {		//작성완성률이 100%여야 검토요청이가능 우선 신청페이지내용 데이터베이스에 저장후 작성한프로젝트상태를 신청함으로 변환
+				$("#viewLoading").fadeIn(500);
+				$.ajax({
+					url: "${path }/projectWrite/entryProject.do?projectNo=${projectNo }",
+					dataType: "html",
+					success: function(data) {
+						alert(data);
+						$("#viewLoading").fadeOut(500);
+						location.href="${path }/";
+					}
+				});
+			}
+			else {
+				console.log("작성완성률이 100%가 되어야 검토요청이 가능합니다.");
+			}
+		});
+		
+		///////////////////////////////////////////////////////////
+		/* 프로젝트 임시저장하기 */
+		$("#projectSaveTemp-btn").click(function() {
+			projectSaving();
 		});
 	});
 	
@@ -356,7 +457,7 @@
 		
 		if(rewardCnt < 5) {
 			$.ajax({
-				url: "${path }/addReward.do" ,
+				url: "${path }/projectWrite/addReward.do" ,
 				dataType: "html", 
 				success: function(data) {
 					$("#reward-container").append(data);
@@ -395,7 +496,7 @@
 		var length = $(event.target).closest('.rewardProduct-container').children('.product-col').length;
 		if(length < 5) {
 			$.ajax({
-				url: "${path }/addRewardProduct.do" ,
+				url: "${path }/projectWrite/addRewardProduct.do" ,
 				dataType: "html", 
 				success: function(data) {
 					target.append(data);
@@ -450,6 +551,7 @@
 			$(".deli-day").eq(i).siblings(".deliveryPicker").datepicker('setDate', today);
 		}
 	}
+
 </script>
 	<section class="projectWrite-section section">
 		<div class="projectWrite-header">프로젝트신청
@@ -479,14 +581,18 @@
 					</div>
 					<div>
 						<button class="btn btn-primary" style="background-color: #126196; border: 0px; margin-right: 5px;">미리보기</button>
-						<button class="btn btn-primary" style="background-color: #FF8C00; border: 0px;">검토 요청하기</button>
+						<button id="project-entry-btn" class="btn btn-primary disabled" style="background-color: #FF8C00; border: 0px;">검토 요청하기</button>
 					</div>
 				</div>
 			</div>
 		</article>
 		
 		<article class="write-detail write-summary selected">
-			<jsp:include page="writeSummary.jsp"></jsp:include>
+			<c:import url = "writeSummary.jsp"> 
+				<c:param name = "midCategoryList" value = "${midCategoryList }" /> 
+				<c:param name = "minorCategoryList" value = "${minorCategoryList }" /> 
+				<c:param name="creator" value="${creator }" />
+			</c:import>
 		</article>
 		
 		<article class="write-detail fund-reward-option">
@@ -503,10 +609,10 @@
 		
 		<article id="write-btn-container">
 			<button class="btn btn-secondary write-btn smartEditorLoad" id="write-back-btn" onclick="fn_changeTabBack()" style="border: 0px;">이전</button>
-			<button class="btn btn-primary write-btn" id="" onclick="" style="background-color: #FF8C00; border: 0px;">임시저장</button>
+			<button class="btn btn-primary write-btn" id="projectSaveTemp-btn" style="background-color: #FF8C00; border: 0px;">임시저장</button>
 			<button class="btn btn-primary write-btn smartEditorLoad" id="write-next-btn" onclick="fn_changeTabNext()" style="background-color: #126196; border: 0px;">다음</button>
 		</article>
 		<input type="hidden" id="tabCnt" value="0" />
-		
 	</section>
+<div id='viewLoading' class="spinner-border" style="width:150px; height:150px; position: fixed; top: 250px;"></div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

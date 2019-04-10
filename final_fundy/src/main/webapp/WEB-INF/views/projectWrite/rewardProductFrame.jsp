@@ -2,10 +2,10 @@
     pageEncoding="UTF-8"%>
 <div class='reward-col product-col'>
 	<div class='first-row'>
-		<input type='text' class='form-control inputLong' placeholder='내용을 입력해주세요.' />
+		<input type='text' class='form-control inputLong rewardName' placeholder='내용을 입력해주세요.' />
 	</div>
 	<div class='second-row'>
-		<input type='number' class='form-control inputLong' placeholder='수량' />
+		<input type='number' class='form-control inputLong rewardCnt' placeholder='수량' />
 	</div>
 	<div class='third-row'>
 		<button class='remove-btn' onclick='fn_removeProduct()'>

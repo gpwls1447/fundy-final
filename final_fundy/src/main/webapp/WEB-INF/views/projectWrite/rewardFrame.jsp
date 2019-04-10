@@ -25,7 +25,7 @@
 				<span>후원금액</span>
 			</div>
 			<div>
-				<input type="text" class="form-control inputShort inputMoney" oninput="addCommas()" placeholder="내용을 입력해주세요." />
+				<input type="text" class="form-control inputShort inputMoney rewardMoney" oninput="addCommas()" placeholder="내용을 입력해주세요." />
 				<span>원 후원자들에게 드리는 선물</span>
 			</div>
 		</div>
@@ -49,10 +49,10 @@
 		</div>
 		<div class="reward-col product-col">
 			<div class="first-row">
-				<input type="text" class="form-control inputLong" placeholder="내용을 입력해주세요." />
+				<input type="text" class="form-control inputLong rewardName" placeholder="내용을 입력해주세요." />
 			</div>
 			<div class="second-row">
-				<input type="number" class="form-control inputLong" placeholder="수량" />
+				<input type="number" class="form-control inputLong rewardCnt" placeholder="수량" />
 			</div>
 			<div class="third-row">
 				<button class='add-product' onclick="fn_addProduct()" style="background-color: white; border: 0;">
@@ -66,34 +66,33 @@
 				</button>
 			</div>
 		</div>
-	</div>
+	</div><!-- 
 	<div class="reward-detail-container">
 		<div>
 			<span>선물 설명</span>
 		</div>
 		<div>
-			<input type="text" class="form-control inputLong" id="" placeholder="예) 배송비 포함, 얼리버드, (선물세트 A) 등" />
+			<input type="text" class="form-control inputLong rewardContent" id="" placeholder="예) 배송비 포함, 얼리버드, (선물세트 A) 등" />
 		</div>
-	</div>
+	</div> -->
 	<div class="reward-deli-container">
 		<div>
 			<span>예상 발송일</span>
 		</div>
 		<div>
 			마감일로부터 <input type="text" maxlength="3" oninput="caldeliDate()" class="form-control inputSu deli-day" /> 일 뒤인
-			<input type="text" class="form-control inputDay deliveryPicker" onchange="calDeliDays(0)" /> 에 리워드를 전달하겠습니다.
+			<input type="text" class="form-control inputDay deliveryPicker rewardDeli" onchange="calDeliDays(0)" /> 에 리워드를 전달하겠습니다.
 		</div>
 	</div>
-	<div class="reward-isdeli-container">
+	<!-- <div class="reward-isdeli-container">
 		<span>배송 여부</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 		<form name='selDeliFrm' class="selDeliFrmC">
-			<input id="isDeli" type="radio" class="isDeli" name="selDeli" />
+			<input id="isDeli" type="radio" class="isDeli selDeli" name="selDeli" value="" />
 			<label for="isDeli" class="isDeliLa">배송하는 상품입니다.</label>
-			<input id="isNotDeli" type="radio" class="isNotDeli" name="selDeli" />
+			<input id="isNotDeli" type="radio" class="isNotDeli selDeli" name="selDeli" value="" />
 			<label for="isNotDeli" class="isDeliNotLa">배송하지않는 상품입니다.</label>
-			<input type="number" value="0" class="reward_priority" />
 		</form>
-	</div>
+	</div> -->
 	<div class="reward-delete-container">
 		<button onclick="fn_removeReward(0)" class="reward-delete-button remove-btn">
 			<div class="remove-btn-area">
@@ -105,4 +104,5 @@
 			</div>
 		</button>
 	</div>
+	<input type="hidden" class="reward_priority" value="" />
 </div>
