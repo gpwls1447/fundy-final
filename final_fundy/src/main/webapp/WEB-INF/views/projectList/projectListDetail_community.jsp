@@ -253,7 +253,7 @@
 <c:forEach items="${list }" var="list">
 <div data-comment-no="${list.commentNo }" class="comment-unit">
     <div class="comment-header">
-        <img class="comment-profile" src="images/default_profile_1.png">
+        <img class="comment-profile" src="${path }/resources/images/${list.memberProfile}">
         <div class="comment-nick-date">
             <div class="comment-nick">${list.memberNick }<i class="material-icons comment-menu-btn">more_vert</i></div>
             <fmt:formatDate value="${list.commentDate }" var="cDate" pattern="yyyy.MM.dd mm:ss"/>
