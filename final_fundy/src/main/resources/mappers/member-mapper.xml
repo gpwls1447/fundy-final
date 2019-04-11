@@ -57,9 +57,5 @@
    <update id="memberDelete">
       update member set memberQuit=sysdate where memberEmail=#{memberEmail}
    </update>
-	
-	<select id="selectOne" parameterType="String" resultType="member">
-		select * from member where memberEmail = #{memberEmail} and memberquit is null
-	</select>
-
+   
 </mapper>
