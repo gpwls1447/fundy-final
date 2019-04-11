@@ -28,7 +28,7 @@
             left: 0;
             width: 100%;
             min-width: 1005px;
-            height: 300px;
+            height: 340px;
         }
 
         .main-slide-container

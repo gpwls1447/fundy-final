@@ -71,10 +71,10 @@ public class ProjectListController {
 		ModelAndView mv = new ModelAndView();
 		int numPerPage = 10;
 		int totalCount = cService.selectCommentCount(projectNo);
-		System.out.println(totalCount);
-		List<Comment> list = cService.selectCommentList(cPage, numPerPage, projectNo);
-		String pageBar = getPageBar(totalCount, cPage, numPerPage);
 		
+		List<Comment> list = cService.selectCommentList(cPage, numPerPage, projectNo);
+		System.out.println(list.size());
+		String pageBar = getPageBar(totalCount, cPage, numPerPage);
 		
 		mv.addObject("list", list);
 		mv.addObject("pageBar", pageBar);

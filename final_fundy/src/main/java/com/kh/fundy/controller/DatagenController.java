@@ -38,7 +38,7 @@ public class DatagenController {
 	private final int rndTimeMonthlyTerm = 2;
 	private final int targetMemberCount = 300;
 	private final int targetProjectCount = 400;
-	private final int targetFundingLogCount = 3500;
+	private final int targetFundingLogCount = 4000;
 	private final int targetCommentCount = 2000;
 
 	@RequestMapping("/commentGen.do")
