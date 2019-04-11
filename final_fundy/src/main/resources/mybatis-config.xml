@@ -18,5 +18,7 @@
 		<typeAlias type="com.kh.fundy.model.vo.AskReply" alias="askReply"/>
 		<typeAlias type="com.kh.fundy.model.vo.Notice" alias="notice"/>
 		<typeAlias type="com.kh.fundy.model.vo.Attachment" alias="attachment"/>
+		<typeAlias type="com.kh.fundy.model.vo.Comment" alias="comment"/>
+		<typeAlias type="com.kh.fundy.model.vo.CommentReply" alias="commentReply"/>
    </typeAliases>
 </configuration>
