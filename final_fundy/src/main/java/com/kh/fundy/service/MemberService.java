@@ -18,11 +18,15 @@ public interface MemberService {
 	int memberAddressInsert(ShippingAddr s);
 	int memberUpdate(Member m);
 	List<Member> memberUpdateView(Member m);
-	
 	String selectCountUserAuth(String memberEmail);
 	int insertUserAuth(String memberEmail, String key);
 	int updateUserAuth(String memberEmail, String key);
-	
+	int memberUpdate(Member m, List<Member> list);
+	int memberPwUpdate(Member m);
+	int memberPwCheck(Member m);
+	int memberNickCheck(String memberNick);
+	int memberDelete(Member m);
+
 
 
 

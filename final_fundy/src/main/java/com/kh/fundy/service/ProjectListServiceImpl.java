@@ -16,7 +16,7 @@ public class ProjectListServiceImpl implements ProjectListService {
 
 	@Autowired
 	private ProjectListDao dao;
-	
+
 	@Override
 	public int selectCount(Map map) {
 		return dao.selectCount(map);
@@ -36,5 +36,11 @@ public class ProjectListServiceImpl implements ProjectListService {
 	public List<FundingLog> selectFunderList(int projectNo) {
 		return dao.selectFunderList(projectNo);
 	}
+
+	@Override
+	public int memberDelete(String memberEmail) {
+		return dao.memberDelete(memberEmail);
+	}
+
 
 }

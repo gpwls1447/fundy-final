@@ -18,4 +18,5 @@ public interface ProjectListDao {
 	List<FundingOption> selectFundingOptionList(int projectNo);
 	List<OptionDetail> selectOptionDetailList(int projectNo);
 	int memberDelete(String memberEmail);
+	
 }

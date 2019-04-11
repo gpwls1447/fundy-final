@@ -21,5 +21,9 @@ public interface MemberDao {
 	String selectCountUserAuth(String memberEmail);
 	int insertUserAuth(String memberEmail, String key);
 	int updateUserAuth(String memberEmail, String key);
+	int memberPwUpdate(Member m);
+	int memberPwCheck(Member m);
+	int memberNickCheck(String memberNick);
+	int memberDelete(Member m);
 
 }
