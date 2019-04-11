@@ -72,39 +72,17 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-<<<<<<< HEAD
-	public int memberPwUpdate(Member m) {
-		return session.update("member.memberPwUpdate", m);
-	}
-
-	@Override
-	public int memberPwCheck(Member m) {
-		return session.selectOne("member.memberPwCheck", m);
-	}
-
-	@Override
-	public int memberNickCheck(String memberNick) {
-		return session.selectOne("member.memberNickCheck", memberNick);
-	}
-
-	@Override
-	public int memberDelete(Member m) {
-		return session.update("member.memberDelete", m);
-	}
-	
-	
-=======
 	public String selectCountUserAuth(String memberEmail) {
 		return session.selectOne("member.memberEmailCheck", memberEmail);
 	}
 
 	@Override
-	   public int insertUserAuth(String memberEmail, String key) {
-	      Map map=new HashMap();
-	      map.put("memberEmail", memberEmail);
-	      map.put("authKey", key);
-	      return session.insert("member.insertUserAuth", map);
-	   }
+	public int insertUserAuth(String memberEmail, String key) {
+		Map map=new HashMap();
+		map.put("memberEmail", memberEmail);
+		map.put("authKey", key);
+		return session.insert("member.insertUserAuth", map);
+	}
 
 	@Override
 	public int updateUserAuth(String memberEmail, String key) {
@@ -114,6 +92,5 @@ public class MemberDaoImpl implements MemberDao {
 		return session.update("member.updateUserAuth", map);
 	}
 
->>>>>>> refs/heads/feature_kyo
 
 }
