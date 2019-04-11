@@ -331,7 +331,7 @@ import com.kh.fundy.service.ProjectListService;
 		 else
 		 {
 			 isSame = false; //불일치하면 false
-			 msg="비밀번호가 불일치합니다.";
+			 msg="비밀번호가 불일치합니다!!!!.";
 			 loc="/member/memberDeleteView.do";
 		 }
 		 
