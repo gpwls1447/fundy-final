@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,6 +56,22 @@ public class MainConroller {
 		model.addAttribute("soonProjectList", soonProjectList);		//마감임박 프로젝트
 		
 		mv.setViewName("mainViews/mainTest");
+		return mv;
+	}
+	
+	@RequestMapping("/main/changePopCtg.do")
+	public ModelAndView changePopCtg(@RequestParam(value = "majorCategory", required = false, defaultValue = "A01") String majorCategory, String midCode, Model model) {
+		mv = new ModelAndView();
+		
+		Map<String, String> ctgMap = new HashMap<String, String>();
+		ctgMap.put("majorCategory", majorCategory);
+		ctgMap.put("midCategory", midCode);
+		
+		List<Map<String, Object>> projectListCtg = service.selectProjectList(ctgMap);
+		model.addAttribute("projectListCtg", projectListCtg);
+		
+		mv.setViewName("mainViews/projMainFrame");
+		
 		return mv;
 	}
 	

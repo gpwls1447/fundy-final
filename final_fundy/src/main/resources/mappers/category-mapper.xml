@@ -15,7 +15,7 @@
 	</select>
 	
 	<select id="selectProjectList" parameterType="map" resultType="map">
-		select * from (select rownum as rn, a.* from (select membernick, midcode, projectthumnail, projecttitle, projectcontent, substr(enddate-sysdate, 9, 2) as remaindate, enddate, projectsumary, reach, goalprice, round(reach/goalprice*100) as reachrate, funderno
+		select * from (select rownum as rn, a.* from (select projectno, membernick, midcode, projectthumnail, projecttitle, projectcontent, substr(enddate-sysdate, 9, 2) as remaindate, enddate, projectsumary, reach, goalprice, round(reach/goalprice*100) as reachrate, funderno
 									from project
 									join minorcategory using(minorcode) 
 									join midcategory using(midcode) 
@@ -35,7 +35,7 @@
 	</select>
 	
 	<select id="selectNewSoonProjectList" parameterType="map" resultType="map">
-		select * from (select rownum as rn, a.* from (select membernick, midcode, projectthumnail, projecttitle, projectcontent, substr(enddate-sysdate, 9, 2) as remaindate, begindate, enddate, projectsumary, reach, goalprice, round(reach/goalprice*100) as reachrate, funderno
+		select * from (select rownum as rn, a.* from (select projectno, membernick, midcode, projectthumnail, projecttitle, projectcontent, substr(enddate-sysdate, 9, 2) as remaindate, begindate, enddate, projectsumary, reach, goalprice, round(reach/goalprice*100) as reachrate, funderno
 									from project
 									join minorcategory using(minorcode) 
 									join midcategory using(midcode) 

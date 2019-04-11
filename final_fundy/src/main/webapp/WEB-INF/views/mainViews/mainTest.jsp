@@ -218,8 +218,24 @@
         }
 </style>
 <script>
+$(function () {
+	$("#viewLoading").hide();
+});
+
 function fn_loadedList(midCode) {
-	console.log(midCode);
+	$("#viewLoading").fadeIn(500);
+	$.ajax({
+		url: "${path }/main/changePopCtg.do?midCode=" + midCode,
+		dataType: "html",
+		success: function(data) {
+			$(".ctg-populerList").html(data);
+			$("#viewLoading").fadeOut(500);
+		}
+	});
+}
+
+function fn_seeProjectView(projectNo) {
+	location.href="${path}/projectList/projectListDetail.do?projectNo=" + projectNo;
 }
 </script>
 <section class="section">
@@ -278,4 +294,5 @@ function fn_loadedList(midCode) {
             </div>
         </div>
 </section>
+<div id='viewLoading' class="spinner-border" style="width:150px; height:150px; position: fixed; top: 250px;"></div>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
