@@ -4,9 +4,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="path" value="${pageContext.request.contextPath }" />
-<div data-comment-reply-no="${commentReply.commentReplyNo }" class="comment-unit reply-unit" style="display:block">
+<div data-comment-reply-no="${commentReply.commentReplyNo }" class="comment-unit reply-unit">
 	<div class="comment-header">
-		<img class="comment-profile" src="images/default_profile_1.png">
+		<img class="comment-profile" src="${path }/resources/memberProfile/${loggedMember.memberProfile}">
 		<div class="comment-nick-date">
 		    <div class="comment-nick">${commentReply.memberNick }<i class="material-icons comment-menu-btn">more_vert</i></div>
 		    <fmt:formatDate value="${commentReply.commentReplyDate }" var="replyDate" pattern="yyyy.MM.dd hh:mm:ss"/>

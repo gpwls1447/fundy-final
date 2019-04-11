@@ -70,13 +70,14 @@
 	</select>
 	
 	<select id="selectOne" parameterType="int" resultType="project">
-		SELECT A.*, B.MINORNAME, C.*,
+		SELECT A.*, B.MINORNAME, C.*, D.MEMBERPROFILE,
 			nvl((select sum((e.fundPrice*d.packageamount)+d.extramoney) from fundinglog d join fundingoption e on d.packageNo = e.packageNo where d.projectNo = a.projectNo),0) as reach,
 			nvl((select sum((e.fundPrice*d.packageamount)+d.extramoney) from fundinglog d join fundingoption e on d.packageNo = e.packageNo where d.projectNo = a.projectNo)/goalprice*100,0) as reachRate,
 			nvl((select count(*) from fundinglog f where f.projectNo = a.projectNo),0) as funderNo
 		FROM PROJECT A
 		JOIN MINORCATEGORY B ON A.MINORCODE = B.MINORCODE
 		JOIN MIDCATEGORY C ON B.MIDCODE = C.MIDCODE
+		JOIN MEMBER D ON A.MEMBEREMAIL = D.MEMBEREMAIL
 		WHERE A.PROJECTNO = #{projectNo}
 		
 	</select>

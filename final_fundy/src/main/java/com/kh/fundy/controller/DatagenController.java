@@ -112,7 +112,7 @@ public class DatagenController {
 			if((int)(Math.random()*51)>49) {fl.setExtraMoney(10000);}
 			else {fl.setExtraMoney(0);}
 			
-			fl.setFunderDate(new Timestamp(rp.getEndDate().getTime() - ((int)(Math.random()*30)*86400000L)));
+			fl.setFunderDate(new Timestamp(System.currentTimeMillis() - ((int)(Math.random()*30)*86400000L)));
 			fl.setAnonymous("N");
 			result += pService.insertFundingLog(fl);
 		}

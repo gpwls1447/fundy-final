@@ -1,6 +1,7 @@
 package com.kh.fundy.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.kh.fundy.model.vo.Comment;
 import com.kh.fundy.model.vo.CommentReply;
@@ -15,4 +16,6 @@ public interface CommentService {
 	int updateCommentReply(CommentReply cr);
 	int deleteComment(Comment c);
 	int deleteCommentReply(CommentReply cr);
+	int insertLike(Map map);
+	int deleteLike(Map map);
 }

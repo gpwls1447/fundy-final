@@ -32,6 +32,7 @@
 	    height: 50px;
 	    border-radius: 50%;
 	    border:1px solid #eee;
+	    object-fit: contain;
 	}
 	
 	.donor-info
@@ -60,7 +61,7 @@
 <div class="donor-count">현재 이 프로젝트에<br>${fn:length(flList)}명의 참여가 이루어졌습니다.</div>
 <c:forEach items="${flList }" var="fl">
 	<div class="donor-box">
-	    <img class="donor-thumnail" src="${path }/resources/images/memberProfile/${fl.memberProfile}">
+	    <img class="donor-thumnail" src="${path }/resources/memberProfile/${fl.memberProfile}">
 	    <div class="donor-info">
 	        <div class="donor-nick-price"><span class="donor-nick">${fl.memberNick }</span> 님이 <span class="fund-price">${fl.fundPrice * fl.packageAmount + extraMoney }</span> 원을 후원하였습니다.</div>
             <fmt:parseNumber value="${fl.funderDate.time / (1000*60*60*24)}" integerOnly="true" var="fdDate"/>

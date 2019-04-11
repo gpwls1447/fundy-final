@@ -6,6 +6,9 @@
 <c:set var="path" value="${pageContext.request.contextPath }" />
 
 <style>
+	
+	#comment-container{width: 100%; display: flex; flex-flow: column nowrap; align-items: center;}
+	
 	.comment-count
 	{
 	    width: 100%;
@@ -41,7 +44,7 @@
 	    height: 1px;
 	    background-color: #444;
 	    margin-top: -1px;
-	    transition: .4s ease;
+	    transition: .5s ease;
 	}
 	
 	.write-btn-set
@@ -81,6 +84,7 @@
 	    height: 50px;
 	    border-radius: 50%;
 	    margin-right: 15px;
+		object-fit: contain;
 	}
 	
 	.comment-nick-date
@@ -255,7 +259,7 @@
     <div class="comment-header">
         <img class="comment-profile" src="${path }/resources/memberProfile/${list.memberProfile}">
         <div class="comment-nick-date">
-            <div class="comment-nick">${list.memberNick }<i class="material-icons comment-menu-btn">more_vert</i></div>
+            <div class="comment-nick">${list.memberNick }<c:if test="${loggedMember.memberNick == list.memberNick }"><i class="material-icons comment-menu-btn">more_vert</i></c:if></div>
             <fmt:formatDate value="${list.commentDate }" var="cDate" pattern="yyyy.MM.dd mm:ss"/>
             <div class="comment-date">${cDate }</div>
             <div class="comment-menu">
@@ -290,7 +294,7 @@
         <c:forEach items="${list.crList }" var="crList">
         <div data-comment-reply-no="${crList.commentReplyNo }" class="comment-unit reply-unit">
             <div class="comment-header">
-				<img class="comment-profile" src="${path }/memberProfile/${crList.memberProfile">
+				<img class="comment-profile" src="${path }/resources/memberProfile/${crList.memberProfile}">
 				<div class="comment-nick-date">
 				    <div class="comment-nick">${crList.memberNick }<i class="material-icons comment-menu-btn">more_vert</i></div>
 				    <fmt:formatDate value="${crList.commentReplyDate }" var="replyDate" pattern="yyyy.MM.dd hh:mm:ss"/>
@@ -325,6 +329,13 @@ ${pageBar }
 	var fn_paging = cPage => {
 		location.href='${path}/projectList/projectListDetail_community?cPage='+cPage+'&projectNo='+${projectNo};
 	};
+	
+	$(() => {
+		init();
+	});
+	
+	var init = () => {
+		
 	    //코멘트 메뉴 버튼 토글
 	    var commentMenuBtn = $('.comment-menu-btn');
 	    $(() => {
@@ -363,6 +374,7 @@ ${pageBar }
 	    			success: data => {
 	    				$('.cancel-comment').trigger('click');
 	    				$('#marginer').after(data);
+	    				init();
 	    			}
 	    		});
 	    	});
@@ -385,20 +397,10 @@ ${pageBar }
 	    			success: data => {
 	    				$(e.target).prev().trigger('click');
 	    				$(e.target).parent().parent().next().append(data);
+	    				init();
 	    			}
 	    		});
 	    	});
-	    });
-	    
-	    //답글 토글
-	    var replyToggleBtn = $('.toggle-reply');
-	    $(() => {
-	        replyToggleBtn.parent().next().hide();
-	        replyToggleBtn.on('click', e => {
-	            $(e.target).toggle();
-	            $(e.target).siblings().toggle();
-	            $(e.currentTarget).parent().next().toggle();
-	        });
 	    });
 
 	    //댓글작성 버튼 토글
@@ -426,13 +428,18 @@ ${pageBar }
 	    			data: {'commentNo' : $(e.currentTarget).parent().parent().parent().parent().data('commentNo')},
 	    			dataType: 'json',
 	    			success: data => {
-	    				if(date.result == 1)
+	    				console.log(data);
+	    				if(data.result == 1)
 	    				{
-	    					$(e.currentTarget).parent().parent().parent().parent().remove();    					
+	    					$(e.currentTarget).parent().parent().parent().parent().slideToggle(600);
+	    					setTimeout(() => {
+	    						$(e.currentTarget).parent().parent().parent().parent().remove();	
+	    					}, 1000);
+	    					    					
 	    				}
 	    				else
 	    				{
-	    					alert("실패");	
+	    					alert("삭제에 실패하였습니다.");	
 	    				}
 	    			}
 	    		});
@@ -449,13 +456,16 @@ ${pageBar }
 	    			data: {'commentReplyNo' : $(e.currentTarget).parent().parent().parent().parent().data('commentReplyNo')},
 	    			dataType: 'json',
 	    			success: data => {
-	    				if(date.result == 1)
+	    				if(data.result == 1)
 	    				{
-	    					$(e.currentTarget).parent().parent().parent().parent().remove();    					
+	    					$(e.currentTarget).parent().parent().parent().parent().slideToggle(600);
+	    					setTimeout(() => {
+	    						$(e.currentTarget).parent().parent().parent().parent().remove();    					
+	    					}, 2000);
 	    				}
 	    				else
 	    				{
-	    					alert("실패");	
+	    					alert("삭제에 실패하였습니다.");	
 	    				}
 	    			}
 	    		});
@@ -496,7 +506,7 @@ ${pageBar }
 	            target.data('target', target);
 
 	            target.attr('contenteditable', 'true').focus();
-	            target.next().animate({width: 'toggle'}, 200);
+	            target.next().animate({width: 'toggle'}, 400);
 	            editCommon(target);
 	        });
 
@@ -555,4 +565,16 @@ ${pageBar }
 	        target.next().hide();
 	        editCommon(target);
 	    };
+	}
+	
+    //답글 토글
+    var replyToggleBtn = $('.toggle-reply');
+    $(() => {
+        replyToggleBtn.parent().next().hide();
+        replyToggleBtn.on('click', e => {
+            $(e.target).toggle();
+            $(e.target).siblings().toggle();
+            $(e.currentTarget).parent().next().toggle();
+        });
+    });
 </script>

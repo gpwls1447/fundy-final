@@ -11,6 +11,9 @@
 	
 	<insert id="insertCommentReply" parameterType="commentReply">
 		INSERT INTO COMMENTREPLY VALUES(COMMENTREPLY_SEQ.NEXTVAL, #{commentNo}, #{memberEmail}, #{commentReplyContent}, #{commentReplyDate}, #{commentReplyMod}, #{commentReplyDelete})
+		<selectKey resultType="int" keyProperty="commentReplyNo" order="AFTER" keyColumn="commentReplyNo">
+			SELECT COMMENTREPLY_SEQ.CURRVAL FROM DUAL
+		</selectKey>
 	</insert>
 	
 	<select id="selectCommentCount" parameterType="int" resultType="int">

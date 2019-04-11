@@ -28,10 +28,10 @@
             <div class="header-group">
                 <div class="logo"><a href="${path }/main.do">FUNDY</a></div>
                 <div>
-                   <a href="${path }/main.do?majorCode='A02'" class="<c:if test="${majorCategory eq 'A02' }">current-div</c:if>">후원</a>
+                   <a href="${path }/main.do?majorCode=A02" class="<c:if test="${majorCode eq 'A02' }">current-div</c:if>">후원</a>
                 </div>
                 <div>
-                    <a href="${path }/main.do?majorCode='A01'" class="<c:if test="${majorCategory eq 'A01' }">current-div</c:if>">펀딩</a>
+                    <a href="${path }/main.do?majorCode=A01" class="<c:if test="${majorCode eq 'A01' }">current-div</c:if>">펀딩</a>
                 </div>
                 <div>
                     <i class="material-icons category-btn">more_horiz</i>

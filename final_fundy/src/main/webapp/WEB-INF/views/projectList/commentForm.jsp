@@ -5,9 +5,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="path" value="${pageContext.request.contextPath }" />
 
-<div data-comment-no="${list.commentNo }" class="comment-unit">
+<div data-comment-no="${comment.commentNo }" class="comment-unit">
     <div class="comment-header">
-        <img class="comment-profile" src="images/default_profile_1.png">
+        <img class="comment-profile" src="${path }/resources/memberProfile/${loggedMember.memberProfile}">
         <div class="comment-nick-date">
             <div class="comment-nick">${comment.memberNick }<i class="material-icons comment-menu-btn">more_vert</i></div>
             <div class="comment-date">${comment.commentDate }</div>
