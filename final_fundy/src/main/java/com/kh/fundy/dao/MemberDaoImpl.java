@@ -1,6 +1,8 @@
 package com.kh.fundy.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,7 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Autowired
 	SqlSessionTemplate session;
-	
+
 	@Override
 	public Member login(Member m) {
 		return session.selectOne("member.login", m);
@@ -70,6 +72,7 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public int memberPwUpdate(Member m) {
 		return session.update("member.memberPwUpdate", m);
 	}
@@ -90,5 +93,27 @@ public class MemberDaoImpl implements MemberDao {
 	}
 	
 	
+=======
+	public String selectCountUserAuth(String memberEmail) {
+		return session.selectOne("member.memberEmailCheck", memberEmail);
+	}
+
+	@Override
+	   public int insertUserAuth(String memberEmail, String key) {
+	      Map map=new HashMap();
+	      map.put("memberEmail", memberEmail);
+	      map.put("authKey", key);
+	      return session.insert("member.insertUserAuth", map);
+	   }
+
+	@Override
+	public int updateUserAuth(String memberEmail, String key) {
+		Map map=new HashMap();
+		map.put("memberEmail", memberEmail);
+		map.put("authKey", key);
+		return session.update("member.updateUserAuth", map);
+	}
+
+>>>>>>> refs/heads/feature_kyo
 
 }

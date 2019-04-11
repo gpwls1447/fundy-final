@@ -14,7 +14,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Autowired
 	private MemberDao dao;
-	
+
 	@Override
 	public int memberCount() {
 		return dao.memberCount();
@@ -67,6 +67,7 @@ public class MemberServiceImpl implements MemberService {
 	public List<Member> memberUpdateView(Member m) {
 		return dao.memberUpdateView(m);
 	}
+<<<<<<< HEAD
 	
 	@Override
 	public int memberPwUpdate(Member m) {
@@ -92,5 +93,26 @@ public class MemberServiceImpl implements MemberService {
 	
 	
 	
+=======
+
+	@Override
+	public String selectCountUserAuth(String memberEmail) {
+		return dao.selectCountUserAuth(memberEmail);
+	}
+
+	@Override
+	public int insertUserAuth(String memberEmail, String key) {
+		return dao.insertUserAuth(memberEmail, key);
+	}
+
+	@Override
+	public int updateUserAuth(String memberEmail, String key) {
+		return dao.updateUserAuth(memberEmail, key);
+	}
+
+
+
+
+>>>>>>> refs/heads/feature_kyo
 
 }
