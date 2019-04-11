@@ -19,11 +19,11 @@ public class MainConroller {
 	
 	
 	@RequestMapping("/main.do")
-	public String mainView(@RequestParam(value = "majorCategory", required = false, defaultValue = "A01") String majorCategory, Model model)
+	public String mainView(@RequestParam(value = "majorCode", required = false, defaultValue = "A01") String majorCategory, Model model)
 	{
 		List<Category> midCList = service.selectAllMid();
 		
-		model.addAttribute("majorCategory", majorCategory);
+		model.addAttribute("majorCode", majorCategory);
 		model.addAttribute("midCList", midCList);
 		return "main";
 	}

@@ -34,6 +34,7 @@ public class PayController {
 		ModelAndView mv = new ModelAndView();
 		fo = pService.selectFundingOptionList(fo.getProjectNo()).get(packageIndex);
 		mv.addObject("projectTitle", projectTitle);
+		mv.addObject("packageAmount", packageAmount);
 		mv.addObject("extraMoney", extraMoney);
 		mv.addObject("fundingOption", fo);
 		mv.setViewName("pay/payFinal");

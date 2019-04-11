@@ -15,15 +15,15 @@
 	</select>
 
 	<select id="login" parameterType="member" resultType="member">
-		select * from member where memberEmail=#{memberEmail} where memberquit is null
+		select * from member where memberEmail=#{memberEmail} and memberquit is null
 	</select>
 	
 	<select id="kakao" parameterType="member" resultType="member">
-		select * from member where kakaoId=#{kakaoId} where memberquit is null
+		select * from member where kakaoId=#{kakaoId} and memberquit is null
 	</select>
 	
 	<select id="selectOne" parameterType="String" resultType="member">
-		select * from member where memberEmail = #{memberEmail} where memberquit is null
+		select * from member where memberEmail = #{memberEmail} and memberquit is null
 	</select>
 
 </mapper>

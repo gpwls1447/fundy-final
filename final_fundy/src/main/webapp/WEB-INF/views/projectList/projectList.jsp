@@ -17,6 +17,7 @@
 	    display: flex;
 	    flex-flow: column nowrap;
 	    align-items: center;
+	    margin-top: 30px;
 	}
 	
 	.proj-search-result
@@ -47,6 +48,8 @@
 	    padding: 5px 10px;
 	    margin-right: 10px;
 	}
+	
+	.proj-list-order > select:last-of-type{margin-right: 0;}
 	
 	.proj-list-box
 	{

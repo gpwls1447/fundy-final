@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <style>
         .option-header
@@ -219,6 +220,14 @@
         .addr-inputs > div{display: flex; margin: 10px 0;}
         .addr-inputs > div > div:first-of-type{flex: 1 1 0;}
         .addr-inputs > div > div:last-of-type{flex: 5 1 0;}
+        
+        .addr-inputs input
+        {
+        	padding: 0 5px;
+        	border-radius: 2px;
+        	border: 1px solid #aaa;
+        	height: 35px !important;
+        }
 
         .addr-row input {margin: 5px 0;}
 
@@ -243,20 +252,22 @@
 
         #zip-code {width: 97px;}
         .addr-row input {width: 422px;}
-        .phone-row input {width: 124px;}
+        .phone-row input {width: 121px;}
         .phone-row span {margin: 0 5px;}
 
         .request-row > div:last-of-type
         {
-            width: 416px;
+            width: 422px;
             height: 90px;
         }
+    
 
         #request
         {
             width: inherit;
             height: inherit;
             resize: none;
+            border: 1px solid #aaa;
         }
 
         .addr-message
@@ -292,7 +303,7 @@
     </style>
     <section class="section">
         <div class="option-header">
-            <div class="go-back" onclick="location.href='${path}/projectList/projectListDetail.do?projectNo=${project.projectNo}'">
+            <div class="go-back" onclick="location.href='${path}/projectList/projectListDetail.do?projectNo=${fundingOption.projectNo}'">
             	<i class="material-icons">chevron_left</i>옵션선택으로 돌아가기</div>
             <div class="project-title">${projectTitle }</div>
         </div>
@@ -309,29 +320,30 @@
                     <span class="horizontal-line"></span>
                     <div class="option-detail">
                     	<c:forEach items="${fundingOption.odList }" var="odList" varStatus="vs">
-                        · ${odList.packageName } ${odList.packageAmount }개${!varStatus.last ? "<br>" : ""}
+                        · ${odList.packageName } X ${odList.packageAmount }ea${!varStatus.last ? "<br>" : ""}
                         </c:forEach>
                     </div>
                 </div>
                 <div>
                     <span class="horizontal-line"></span>
-                    <div class="amount">수량 2개</div>
-                    <div class="ship-date">예상 발송일 <span class="divider">|</span><span class="date">2019년 4월 26일</span></div>
+                    <div class="amount">${packageAmount } 개</div>
+                    <fmt:formatDate value="${fundingOption.deliveryDate }" var="dDate" pattern="yyyy년 MM월 dd일"/>
+                    <div class="ship-date">예상 발송일 <span class="divider">|</span><span class="date">${dDate }</span></div>
                 </div>    
             </div>
             <div class="price-info-container">
                 <div class="price-div original-money">
                     <div>후원 금액</div>
-                    <div>19,800</div>
+                    <div>${fundingOption.fundPrice }</div>
                 </div>
                 <div class="price-div extra-money">
                     <div>추가 후원금</div>
-                    <div>0</div>
+                    <div>${extraMoney }</div>
                 </div>
                 <span class="horizontal-line"></span>
                 <div class="price-div total-price">
                     <div>총금액</div>
-                    <div>19,800</div>
+                    <div id="final-price-value">${fundingOption.fundPrice * packageAmount + extraMoney}</div>
                 </div>
             </div>
         </div>
@@ -408,7 +420,7 @@
         <span class="horizontal-line line-2"></span>
         <div class="confirm-btn-sets">
             <button class="basic-btn btn-mod">이전</button>
-            <button class="basic-btn basic-btn-active btn-mod">결제하기</button>
+            <button class="basic-btn basic-btn-active btn-mod" onclick="callPayModule();">결제하기</button>
         </div>
     </section>
 <script>
@@ -437,5 +449,36 @@
             $(e.currentTarget).children('input').attr('checked', 'true');
         });
     });
+    
+    const IMP = window.IMP;
+    IMP.init('imp40348442');
+    
+    const callPayModule = () => {
+    	IMP.request_pay({
+            pg : 'inicis', 
+            pay_method : 'card',
+            merchant_uid : 'merchant_' + new Date().getTime(),
+            name : '주문명:결제테스트',
+            amount : parseInt($('#final-price-value').text()),
+            buyer_email : '${loggedMember.memberEmail}',
+            buyer_name : '${loggedMember.memberNick}',
+            buyer_addr : '서울특별시 강남구 삼성동',
+            buyer_postcode : '123-456',
+            m_redirect_url : ''
+        }, rsp => {
+            if ( rsp.success ) {
+                var msg = '결제가 완료되었습니다.';
+                msg += '고유ID : ' + rsp.imp_uid;
+                msg += '상점 거래ID : ' + rsp.merchant_uid;
+                msg += '결제 금액 : ' + rsp.paid_amount;
+                msg += '카드 승인번호 : ' + rsp.apply_num;
+            } else {
+                var msg = '결제에 실패하였습니다.';
+                msg += '에러내용 : ' + rsp.error_msg;
+            }
+            alert(msg);
+        });
+    };
+    
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

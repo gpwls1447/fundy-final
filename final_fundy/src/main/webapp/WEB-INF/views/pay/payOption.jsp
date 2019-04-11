@@ -242,7 +242,7 @@
         <div class="project-title">${project.projectTitle }</div>
     </div>
     <c:forEach items="${project.foList }" var="foList" varStatus="vs">
-    <div data-package-no="${vs.index}" class="option-container">
+    <div data-package-index="${vs.index}" class="option-container">
         <div>
             <div class="option-price">${foList.fundPrice }</div>
             <div class="option-detail">
@@ -288,12 +288,14 @@
     <div class="total-price-declare">총금액 <span class="total-price">${project.foList[packageIndex].fundPrice }</span> 원을 결제합니다.</div>
     <div class="btn-container">
         <button class="basic-btn" onclick="location.href='${path}/projectList/projectListDetail.do?projectNo=${project.projectNo}'">이전</button>
-        <button class="basic-btn basic-btn-active">다음단계로</button>    
+        <button class="basic-btn basic-btn-active" onclick="nextStep();">다음단계로</button>    
     </div>
 </section>
 <script>
     const plusBtn = $('.plus')
     const minusBtn = $('.minus')
+    
+    console.log(${project.projectNo});
 	
     //옵션 선택 이벤트 함수
     const options = $('.option-container');
@@ -317,6 +319,10 @@
 			$('.total-price').text(parseInt($('.selected').find('.option-price').text())+parseInt($('#extra-input').val()));
     	});
     });
+    
+    const nextStep = () => {
+    	location.href='${path}/pay/payFinal.do?projectNo=${project.projectNo}&projectTitle=${project.projectTitle }&packageIndex='+$('.selected').data('packageIndex')+'&extraMoney='+$('#extra-input').val()+'&packageAmount='+$('.selected').find('.amount-input').val();
+    };
     
    	//수량 이벤트 함수
     $(() => {

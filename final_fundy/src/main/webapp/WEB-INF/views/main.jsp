@@ -244,7 +244,7 @@
             <div class="proj-section-header">카테고리별 인기 프로젝트</div>
             <div class="popular-nav">
             	<c:forEach items="${midCList}" var="mc" varStatus="vs">
-                	<c:if test="${mc.majorCode eq majorCategory }">
+                	<c:if test="${mc.majorCode eq majorCode }">
 	                	<button class="basic-btn <c:if test="${vs.count eq 1 }">basic-btn-active</c:if>">${mc.midName }</button>                		
 					</c:if>
 				</c:forEach>
