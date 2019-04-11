@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.fundy.dao.AskBoardDao;
 import com.kh.fundy.model.vo.AskBoard;
+import com.kh.fundy.model.vo.AskReply;
 
 @Service
 public class AskBoardServiceImpl implements AskBoardService {
@@ -51,6 +52,13 @@ public class AskBoardServiceImpl implements AskBoardService {
 	@Override
 	public int askBoardUpdate(AskBoard askBoard) {
 		return dao.askBoardUpdate(askBoard);
+	}
+
+	
+	//댓글보이기
+	@Override
+	public List<AskReply> replyView(int askNo) {
+		return dao.replyView(askNo);
 	}
 
 	

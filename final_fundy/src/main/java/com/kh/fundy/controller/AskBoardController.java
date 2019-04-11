@@ -5,12 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.fundy.common.PageBarFactory;
+import com.kh.fundy.common.PageBarTemplate;
 import com.kh.fundy.model.vo.AskBoard;
+import com.kh.fundy.model.vo.AskReply;
 import com.kh.fundy.service.AskBoardService;
 
 
@@ -110,14 +111,18 @@ public class AskBoardController {
 		if(result>0)
 		{
 			AskBoard ab=service.askBoardView(askNo);
+			String msg="수정 성공하였습니다";
+			String loc="/askBoardView.do";
 			mv.addObject("ab",ab);
-			mv.setViewName("askBoard/askBoardView");
+			mv.addObject("msg",msg);
+			mv.addObject("loc",loc);
+			mv.setViewName("common/msg");
 		}
 		else
 		{
 			AskBoard ab=service.askBoardView(askNo);
 			String msg="수정 실패하였습니다.";
-			String loc="/askBoardUpdate.do";
+			String loc="/askBoardView.do";
 			mv.addObject("ab",ab);
 			mv.addObject("msg",msg);
 			mv.addObject("loc",loc);
@@ -142,23 +147,27 @@ public class AskBoardController {
 		
 		mv.addObject("list",list);
 		mv.addObject("totalList",totalList);
-		mv.addObject("pageBar",PageBarFactory.getPageBar(totalList,cPage,numPerPage,"/spring/askBoard/askBoardMain"));
+		mv.addObject("pageBar",PageBarFactory.getPageBar(totalList,cPage,numPerPage,"/fundy/askBoardMain.do"));
 		mv.setViewName("askBoard/askBoardMain");
 		
 		return mv;
 	}
 	
-	/*1대1게시판 상세보기페이지로 전환*/
+	/*1대1게시판 상세보기페이지로 전환//댓글 보이기도 추가로 작성*/
 	@RequestMapping("/askBoardView.do")
 	public ModelAndView askBoardView(int askNo)
 	{
-		
 		ModelAndView mv=new ModelAndView();
+		//댓글보이기
+		List<AskReply> list=service.replyView(askNo);
+		mv.addObject("list",list);
+		
+		//게시판 상세보기
 		AskBoard ab=service.askBoardView(askNo);
 		mv.addObject("ab",ab);
 		mv.setViewName("askBoard/askBoardView");
 		return mv;
 	}
 	
-	
+
 }

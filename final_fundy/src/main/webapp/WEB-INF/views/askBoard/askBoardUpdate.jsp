@@ -156,7 +156,7 @@
         .notice-form input[type="submit"]
         {
             color: white;
-            background-color: rgb(42, 71, 114);
+            background-color: rgb(18, 97, 149);
             width: 150px;
             height: 45px;
             align-self: flex-end;
@@ -168,15 +168,15 @@
             margin-left: 10px;
         }
 
-        .notice-form input[type="submit"]:hover
+       /*  .notice-form input[type="submit"]:hover
         {
             background-color: rgb(62, 91, 134);
-        }
+        } */
 
         .notice-form input[type="button"]
         {
             color: white;
-            background-color: rgb(42, 71, 114);
+            background-color: rgb(230, 126, 34);
             width: 150px;
             height: 45px;
             align-self: flex-end;
@@ -259,12 +259,71 @@
         .order-seq-list-cols > div:nth-of-type(5){flex: 2 1 0;}        
         .order-seq-list-cols > div:nth-of-type(6){flex: 1 1 0;}        
 
+
+		     .memberupdate-header
+        {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            font-size: 27px;
+            font-weight: bold;
+            margin: 30px 0;
+        }
+        
+          .memberupdate-nav
+        {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+          .memberupdate-nav > div
+        {
+            margin: 0 20px;
+            font-size: 17px;
+            position: relative;
+        }
+        
+         #divider
+        {
+            position: absolute;
+            display: block;
+            height: 1px;
+            border: none;
+            border-top: 1px solid #ccc;
+            left: 0;
+            width: 100vw;
+        }
+         .indicator
+        {
+            display: block;
+            bottom: -8px;
+            position: absolute;
+            width: 100%;
+            height: 5px;
+            background-color: rgb(76, 168, 228);
+        }
+        
+        a:link { color: red; text-decoration: none;}
+	 	a:visited { color: black; text-decoration: none;}
+	 	a:hover { color: blue; text-decoration: underline;}
+		
     </style>
 <section class="section">
   <div class="notice-form-wrapper">
-        <div class="notice-form-header">
-            1대1 게시판
+   <div class="notice-form-wrapper">
+ <div class="memberupdate-header">게시판</div>
+        <div class="memberupdate-nav">
+            <div><a href="${pageContext.request.contextPath}/askBoardMain.do">1대1게시판</a><span class="indicator"></span></div>
+            <div><a href="${pageContext.request.contextPath}/noticeMain.do">공지사항</a></div>
+          
         </div>
+
+        <hr id="divider"/>
+ 
+        <div class="notice-form-header">
+			<p></p>
+        </div>
+        <br/>
         <form name="updateForm"action="${path}/askBoardUpdateEnd.do" method="post" class="notice-form">
             <input type="hidden" name="askNo" id="askNo" value="${ab.askNo }"/>
             <div class="notice-form-title">
@@ -287,15 +346,18 @@
                 </div>
             </div> -->
             <div class="notice-frm-btn-set">
-                <input type="button" value="취소">
+                <input type="button" value="취소" onclick="fn_returnMain()">
                <input type="submit" id="saveBtn" value="저장">
             </div>
         </form>
     </div>
 
 <script>
+function fn_returnMain(){
+	 location.href="${path}/askBoardMain.do";
+}
 $(document).ready(function(){
-	$("#btnSave").click(function(){
+	$("#saveBtn").click(function(){
 		
 		var title = $("#title").val();
 		var content = $("#content").val();

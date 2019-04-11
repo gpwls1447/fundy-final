@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.fundy.model.vo.AskBoard;
+import com.kh.fundy.model.vo.AskReply;
 
 @Repository
 public class AskBoardDaoImpl implements AskBoardDao {
@@ -27,6 +28,7 @@ public class AskBoardDaoImpl implements AskBoardDao {
 		return session.selectOne("askBoard.selectCount");
 	}
 
+	//작성
 	@Override
 	public int insertAskBoard(AskBoard askBoard) {
 		
@@ -50,6 +52,12 @@ public class AskBoardDaoImpl implements AskBoardDao {
 	@Override
 	public int askBoardUpdate(AskBoard askBoard) {
 		return session.update("askBoard.askBoardUpdate",askBoard);
+	}
+
+	//댓글보여주기
+	@Override
+	public List<AskReply> replyView(int askNo) {
+		return session.selectList("askBoard.replyView",askNo);
 	}
 
 	
