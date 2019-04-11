@@ -239,7 +239,7 @@
 	}
 </style>
 <div id="comment-container">
-<div class="comment-count">댓글 ${fn:length(list) }개</div>
+<div class="comment-count">댓글 ${totalCount }개</div>
 <div class="comment-warning">본 프로젝트와 무관한 글, 광고성, 욕설, 비방, 도배 등의 글은 예고 없이 삭제 등 조치가 취해질 수 있으며. 해당 내용으로 인해 메이커, 후원자, 제3자에게 피해가 가지 않도록 유의하시기 바랍니다.</div>
 <div class="textarea comment-textarea" contenteditable="true"></div>
 <span class="textarea-bar"></span>
@@ -253,7 +253,7 @@
 <c:forEach items="${list }" var="list">
 <div data-comment-no="${list.commentNo }" class="comment-unit">
     <div class="comment-header">
-        <img class="comment-profile" src="${path }/resources/images/${list.memberProfile}">
+        <img class="comment-profile" src="${path }/resources/images/memberProfile/${list.memberProfile}">
         <div class="comment-nick-date">
             <div class="comment-nick">${list.memberNick }<i class="material-icons comment-menu-btn">more_vert</i></div>
             <fmt:formatDate value="${list.commentDate }" var="cDate" pattern="yyyy.MM.dd mm:ss"/>
@@ -273,6 +273,7 @@
     <div class="comment-footer">
         <div class="comment-btn-container">
             <i class="material-icons nude-btn like-btn ripple">thumb_up</i>
+            <span class="like-count"></span>
             <button class="ripple nude-btn reply-btn">REPLY</button>
         </div>
         <div class="textarea reply-textarea" contenteditable="true"></div>
@@ -308,7 +309,7 @@
             </div>
             <div class="comment-footer">
 				<div class="comment-btn-container">
-				    <i class="material-icons nude-btn like-btn ripple">thumb_up</i>
+				    <i class="material-icons nude-btn like-btn ripple">thumb_up</i><span class="like-count"></span>
 				</div>
             </div>
         </div>

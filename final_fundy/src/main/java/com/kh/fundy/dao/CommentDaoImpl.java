@@ -23,7 +23,7 @@ public class CommentDaoImpl implements CommentDao {
 	
 	@Override
 	public int selectCommentCount(int projectNo) {
-		return session.insert("comment.selectCommentCount", projectNo);
+		return session.selectOne("comment.selectCommentCount", projectNo);
 	}
 
 	@Override

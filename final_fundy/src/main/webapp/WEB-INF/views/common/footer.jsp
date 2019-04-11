@@ -718,6 +718,7 @@
     const datagenBtn = $('.datagen-btn');
     const projectgenBtn = $('.projectgen-btn');
    	const fundinglogBtn = $('.fundingLogDatagen-btn');
+   	const commentGenBtn = $('.commentGen-btn');
     $(() => {
     	datagenBtn.on('click', () => {
     		$.ajax({
@@ -740,6 +741,15 @@
     			url: '${pageContext.request.contextPath}/fundingLogDatagen.do',
     			success: data => {
     				alert('결과: ' + data.result);
+    			}
+    		});
+    	});
+    	
+    	commentGenBtn.on('click', () => {
+    		$.ajax({
+    			url: '${path}//commentGen.do',
+    			success: data => {
+    				alert('결과: '+ data.result);	
     			}
     		});
     	});

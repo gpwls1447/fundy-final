@@ -5,6 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <style>
 	.proj-category
@@ -77,7 +78,7 @@
 	{
 	    width: 100%;
 	    height: 6px;
-	    background-color: skyblue;
+	    background-color: rgb(153, 208, 229);
 	}
 	
 	.progbar-info
@@ -115,7 +116,7 @@
 	    display: flex;
 	    justify-content: space-between;
 	    width: 100%;
-	    margin-bottom: 70px;
+	    margin-bottom: 65px;
 	}
 	
 	.proj-main-btn-box > button:first-of-type
@@ -258,9 +259,9 @@
 	
 	.profile-pic
 	{
-	    width: 80px;
+	    width: 90px;
 	    height: 80px;
-	    border-radius: 10%;
+	    border-radius: 50%;
 	    margin-right: 20px;
 	}
 	
@@ -423,7 +424,7 @@
                 <div class="creator-info-box">
                     <div>창작자 정보</div>
                     <div class="creator-name-profile-pic">
-                        <img class="profile-pic" src="images/profile_pic_sample.jpg">
+                        <img class="profile-pic" src="${path }/resources/images/memberProfile/${project.memberProfile }">
                         <div class="creator-name">${project.memberNick }</div>
                     </div>
                     <div class="creator-info-rest">
@@ -439,7 +440,7 @@
                     ${fn:length(project.foList)}개의 옵션이 있습니다.
                 </div>
                 <div class="option-container">
-                    <c:forEach items="${project.foList }" var="foList">
+                    <c:forEach items="${project.foList }" var="foList" varStatus="vs">
                     <div class="option-box">
                         <div class="buyer-count">
                             <i class="material-icons">people</i>${foList.funderNo }명이 선택
@@ -455,7 +456,7 @@
                         <div class="shipping-date">
                         	예상 발송일<span class="divider-3">|</span><span><fmt:formatDate value="${foList.deliveryDate }" pattern="yyyy년 MM월 dd일"/></span>
                         </div>
-                        <button class="basic-btn-active ripple option-select-btn" onclick="location.href='${path}/pay/optionSelect.do?projectNo=${foList.projectNo }'">선택하기</button>
+                        <button class="basic-btn-active ripple option-select-btn" onclick="location.href='${path}/pay/optionSelect.do?projectNo=${foList.projectNo }&packageIndex=${vs.index }'">선택하기</button>
                     </div>
                     </c:forEach>
                 </div>
@@ -485,11 +486,16 @@
     };
     
     
-    //탭 클릭시 ㅇ
+    //탭 클릭시
     const projDetailTab = $('.proj-detail-tab');
     
     $(() => {
     	projDetailTab.on('click', e => {
+    		if( $(e.currentTarget).data('targetName') == '_intro' )
+    		{
+    			$('.proj-detail-bottom-left').html('${project.projectContent}');
+    			return;
+    		}
     		$.ajax({
     			type: 'get',
     			url: '${path}/projectList/detail'+$(e.currentTarget).data('targetName'),
@@ -501,6 +507,11 @@
     		});
     	});
     });
+    
+    new daum.Postcode({
+        oncomplete: data => {
+        }
+    }).open();
     
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

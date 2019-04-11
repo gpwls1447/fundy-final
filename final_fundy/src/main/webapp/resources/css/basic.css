@@ -73,7 +73,7 @@ input.h31
     margin: 0 10px;
     border: none;
     background-color: rgb(238, 238, 238);
-    border-radius: 3px;
+    border-radius: 2px;
     cursor: pointer;
     transition: 150ms linear;
     padding: 8px 20px !important;
@@ -163,13 +163,13 @@ input.h31
     position: absolute;
     content: '';
     display: none;
-    width: 5px;
+    width: 7px !important;
     height: 13px;
     border-right: 3px solid white;
     border-bottom: 3px solid white;
     transform: rotateZ(40deg);
     left: 8px;
-    top: 2px;
+    top: 3px;
 }
 
 .cb:checked + label span::after

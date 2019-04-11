@@ -43,9 +43,9 @@ public class ProjectListController {
 		
 		ModelAndView mv = new ModelAndView();
 		
-		mv.addObject("projectStatCode", projectStatCode);
 		mv.addObject("pageBar", pageBar);
 		mv.addObject("list", list);
+		mv.addObject("projectStatCode", projectStatCode);
 		mv.addObject("majorCode", majorCode);
 		mv.addObject("midCode", midCode);
 		mv.addObject("keyword", keyword);
@@ -71,12 +71,15 @@ public class ProjectListController {
 		ModelAndView mv = new ModelAndView();
 		int numPerPage = 10;
 		int totalCount = cService.selectCommentCount(projectNo);
+		System.out.println(totalCount);
 		List<Comment> list = cService.selectCommentList(cPage, numPerPage, projectNo);
 		String pageBar = getPageBar(totalCount, cPage, numPerPage);
+		
 		
 		mv.addObject("list", list);
 		mv.addObject("pageBar", pageBar);
 		mv.addObject("projectNo", projectNo);
+		mv.addObject("totalCount", totalCount);
 		mv.setViewName("projectList/projectListDetail_community");
 		
 		return mv;

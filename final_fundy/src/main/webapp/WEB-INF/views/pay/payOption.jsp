@@ -174,7 +174,9 @@
     #extra-input
     {
         width: 150px;
-        height: 25px;
+        padding: 4px 5px;
+        border-radius: 2px;
+        border: 1px solid #aaa;
     }
     
     .publicity > div:nth-of-type(2){flex: 1 1 0;}
@@ -199,7 +201,7 @@
         margin: 20px 0;
     }
 
-    .check-private > label {margin-right: 15px;}
+    .check-private > label {margin-right: 15px; margin-bottom: 0 !important;}
 
     .select-icon
     {
@@ -234,7 +236,9 @@
 </style>
 <section class="section">
     <div class="option-header">
-        <div class="go-back" onclick="location.href='${path}/projectListDetail.do?projectNo=${project.projectNo}'"><i class="material-icons">chevron_left</i>프로젝트로 돌아가기</div>
+        <div class="go-back" onclick="location.href='${path}/projectList/projectListDetail.do?projectNo=${project.projectNo}'">
+        	<i class="material-icons">chevron_left</i>프로젝트로 돌아가기
+        </div>
         <div class="project-title">${project.projectTitle }</div>
     </div>
     <c:forEach items="${project.foList }" var="foList" varStatus="vs">
@@ -267,7 +271,7 @@
         <div class="sub-title">후원금 더하기</div>
         <div>
             <div>후원금을 더하여 펀딩할 수 있습니다. 추가후원금을 입력하시겠습니까?</div>
-            <div class="extra-container"><input type="text" name="" id="extra-input"><span>원을 추가로 후원합니다.</span></div>
+            <div class="extra-container"><input type="number" name="" id="extra-input" step="10" value="0"><span>원을 추가로 후원합니다.</span></div>
         </div>
     </div>
     <div class="publicity">
@@ -276,14 +280,14 @@
         <div>
             <div>후원자 목록에 참여자 이름과 후원금액이 공개됩니다.<br>혹시 익명으로 후원하고 싶으시다면, 비공개로 선택해주세요.</div>
             <div class="check-private">
-                <input type="checkbox" name="" id="cb" class="cb">
+                <input type="checkbox" id="cb" class="cb">
                 <label for="cb"><span></span></label>비공개
             </div>
         </div>
     </div>
-    <div class="total-price-declare">총금액 <span class="total-price">19,800</span> 원을 결제합니다.</div>
+    <div class="total-price-declare">총금액 <span class="total-price">${project.foList[packageIndex].fundPrice }</span> 원을 결제합니다.</div>
     <div class="btn-container">
-        <button class="basic-btn">이전</button>
+        <button class="basic-btn" onclick="location.href='${path}/projectList/projectListDetail.do?projectNo=${project.projectNo}'">이전</button>
         <button class="basic-btn basic-btn-active">다음단계로</button>    
     </div>
 </section>
@@ -294,15 +298,26 @@
     //옵션 선택 이벤트 함수
     const options = $('.option-container');
     $(() => {
+    	options[${packageIndex}].classList.add('selected');
         options.on('click', e => {
             if(plusBtn.children().index(e.target) > -1
                 || minusBtn.children().index(e.target) > -1 
                 || $('.amount-input').index(e.target) > -1) return;
             if(options.is('.selected')) options.removeClass('selected');
             $(e.currentTarget).toggleClass('selected');
+            $('.total-price').text(parseInt($(e.currentTarget).find('.option-price').text())+parseInt($('#extra-input').val()));
         });
     });
-	
+    
+    //추가펀딩금액 인풋 이벤트
+    const extraInput = $('#extra-input');
+    $(() => {
+    	extraInput.on('blur', () => {
+			extraInput.val(Math.abs(Math.floor(extraInput.val()/10)*10));
+			$('.total-price').text(parseInt($('.selected').find('.option-price').text())+parseInt($('#extra-input').val()));
+    	});
+    });
+    
    	//수량 이벤트 함수
     $(() => {
         plusBtn.on('click', e => {

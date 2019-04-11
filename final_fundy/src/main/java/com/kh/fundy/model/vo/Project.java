@@ -32,6 +32,7 @@ public class Project {
 	private int reach;
 	private int reachRate;
 	private int funderNo;
+	private int memberProfile;
 	
 	public Project() {}
 
@@ -39,8 +40,8 @@ public class Project {
 			Timestamp beginDate, Timestamp endDate, int goalPrice, String recommended, String recImageName,
 			int anchorCount, String projectStatCode, String projectSumary, String projectEmail, String projectPhone,
 			String memberEmail, String minorCode, Timestamp projectFormDate, List<FundingOption> foList,
-			String minorName, String midCode, String midName, String majorCode, int reach, int reachRate,
-			int funderNo) {
+			String minorName, String midCode, String midName, String majorCode, int reach, int reachRate, int funderNo,
+			int memberProfile) {
 		super();
 		this.projectNo = projectNo;
 		this.memberNick = memberNick;
@@ -68,6 +69,7 @@ public class Project {
 		this.reach = reach;
 		this.reachRate = reachRate;
 		this.funderNo = funderNo;
+		this.memberProfile = memberProfile;
 	}
 
 	public int getProjectNo() {
@@ -276,6 +278,14 @@ public class Project {
 
 	public void setFunderNo(int funderNo) {
 		this.funderNo = funderNo;
+	}
+
+	public int getMemberProfile() {
+		return memberProfile;
+	}
+
+	public void setMemberProfile(int memberProfile) {
+		this.memberProfile = memberProfile;
 	}
 
 }
