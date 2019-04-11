@@ -153,7 +153,7 @@
         .notice-form input[type="submit"]
         {
             color: white;
-            background-color: rgb(42, 71, 114);
+            background-color: rgb(18, 97, 149);
             width: 150px;
             height: 45px;
             align-self: flex-end;
@@ -167,13 +167,13 @@
 
         .notice-form input[type="submit"]:hover
         {
-            background-color: rgb(62, 91, 134);
+            background-color:rgb(18, 97, 149);
         }
 
         .notice-form input[type="button"]
         {
             color: white;
-            background-color: rgb(42, 71, 114);
+            background-color: rgb(230, 126, 34);
             width: 150px;
             height: 45px;
             align-self: flex-end;
@@ -254,44 +254,192 @@
         .order-seq-list-cols > div:nth-of-type(3){flex: 4 1 0;}        
         .order-seq-list-cols > div:nth-of-type(4){flex: 1 1 0;}        
         .order-seq-list-cols > div:nth-of-type(5){flex: 2 1 0;}        
-        .order-seq-list-cols > div:nth-of-type(6){flex: 1 1 0;}        
+        .order-seq-list-cols > div:nth-of-type(6){flex: 1 1 0;}     
+        
+        .memberupdate-header
+        {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            font-size: 27px;
+            font-weight: bold;
+            margin: 30px 0;
+        }
+
+        .memberupdate-nav
+        {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .memberupdate-nav > div
+        {
+            margin: 0 20px;
+            font-size: 17px;
+            position: relative;
+        }
+
+        #divider
+        {
+            position: absolute;
+            display: block;
+            height: 1px;
+            border: none;
+            border-top: 1px solid #ccc;
+            left: 0;
+            width: 100vw;
+        }
+
+        .indicator
+        {
+            display: block;
+            bottom: -8px;
+            position: absolute;
+            width: 100%;
+            height: 5px;
+            background-color: rgb(76, 168, 228);
+        }
+
+        .memberupdate-body
+        {
+            margin-top: 40px;
+            display: flex;
+            flex-flow: column nowrap;
+            align-items: center;
+        }
+
+        .memberupdate-wrapper
+        {
+            width: 450px;
+            display: flex;
+            flex-flow: column nowrap;
+            align-items: center;
+        }
+
+        .memberupdate-wrapper input
+        {
+            height: 35px;
+            box-sizing: border-box;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            padding: 0 7px;
+        }
+        
+        .profile-pic-container
+        {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            position: relative;
+            margin-bottom: 35px !important;
+        }
+
+        .profile-pic
+        {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+
+        .profile-upload
+        {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            width: 100% !important;
+            height: 100% !important;
+            padding: 0 !important;
+            z-index: 2;
+            cursor: pointer;
+        }
+
+        .memberupdate-wrapper > div
+        {
+            display: flex;
+            margin: 10px 0;
+        }
+
+        .memberupdate-wrapper > div > div:first-of-type
+        {
+            width: 90px;
+            font-weight: bold;
+        }
+        .memberupdate-wrapper > div > div:last-of-type{width: 310px;}
+
+        .email{width: 100%;}
+
+        .intro
+        {
+            resize: none;
+            min-width: 308px;
+            min-height: 100px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .btn-set
+        {
+            width: 395px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn-mod
+        {
+            margin: 0;
+            margin-left: 10px;
+        }
+        
+         a:link { color: black; text-decoration: none;}
+	 	a:visited { color: black; text-decoration: none;}
+	 	a:hover { color: black; text-decoration: none;}
 
 </style>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <section class="section">
- <div class="notice-form-wrapper">
-        <div class="notice-form-header">
-            공지사항
+ <div class="memberupdate-header">게시판</div>
+        <div class="memberupdate-nav">
+            <div><a href="${pageContext.request.contextPath}/askBoardMain.do">1대1게시판</a><span class="indicator"></span></div>
+            <div><a href="${pageContext.request.contextPath}/noticeMain.do">공지사항</a></div>
+          
         </div>
+ <div class="notice-form-wrapper">
+
+        <hr id="divider"/>
+ 
+ 
+        <div class="notice-form-header">
+            <p></p>
+        </div>
+        <br/>
+        <br/>
         <form name="askForm"action="${path}/askBoardFormEnd.do" method="post" class="notice-form">
             <div class="notice-form-title">
                 <div>제목</div>
                 <div><input type="text" name="askTitle" id="title"></div>
             </div>
             <div class="notice-form-content">
-                <div>공지내용</div>
+                <div>게시판 내용</div>
                 <div><textarea name="askContent" id="content"></textarea></div>
             </div>
-            <div class="notice-form-image-upload">
-                <div>이미지</div>
-                <div>
-                    <div class="added-image-box">
-                        <img src="images/order_sample_5.jpg">
-                    </div>
-                    <div class="image-upload-container">
-                        <span>+</span><input type="file" name="originalFile" id="originalFile">
-                    </div>
-                </div>
-            </div>
             <div class="notice-frm-btn-set">
-                <input type="button" value="취소">
+                <input type="button" value="취소" onclick="history.back(-1);">
+                	<!-- 취소버튼을 눌렀을때 게시판 첫화면으로 돌아가게 하려고 하는데 스크립트가 안됨 -->
                 <input type="submit" id="saveBtn" value="저장">
             </div>
         </form>
     </div>
 <script>
+function fn_returnMainView()
+{
+	location.herf="${path}/askBoardMain.do";
+}
+
+
 $(document).ready(function(){
-	$("#btnSave").click(function(){
+	$("#saveBtn").click(function(){
 		var title = $("#title").val();
 		var content = $("#content").val();
 		if(title=="")

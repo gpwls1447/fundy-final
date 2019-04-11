@@ -28,7 +28,7 @@
             <div class="header-group">
                 <div class="logo"><a href="${path }/main.do">FUNDY</a></div>
                 <div>
-                	<a href="${path }/main.do?majorCode='A02'" class="<c:if test="${majorCategory eq 'A02' }">current-div</c:if>">후원</a>
+                   <a href="${path }/main.do?majorCode='A02'" class="<c:if test="${majorCategory eq 'A02' }">current-div</c:if>">후원</a>
                 </div>
                 <div>
                     <a href="${path }/main.do?majorCode='A01'" class="<c:if test="${majorCategory eq 'A01' }">current-div</c:if>">펀딩</a>
@@ -37,10 +37,10 @@
                     <i class="material-icons category-btn">more_horiz</i>
                 </div>
                 <div>
-                	<a href="${path }/project/projectWrite.do?majorCategory=A01">프로젝트 작성</a>
+                   <a href="${path }/project/projectWrite.do?majorCode=A01">프로젝트 작성</a>
                 </div>
                 <div>
-                	<a href="${path }/">게시판</a>
+                   <a href="${path }/askBoardMain.do">게시판</a>
                 </div>
             </div>
             <div class="header-group">
@@ -51,14 +51,14 @@
         
                 <c:if test="${loggedMember==null }">
                 <div class="header-last login-btn" >
-					<img src="${path }/resources/images/user_icon.png">
+               <img src="${path }/resources/images/user_icon.png">
                 </div>
                 </c:if>
                 
                 <c:if test="${loggedMember!=null }">
                 <div>${loggedMember.memberNick }님 환영합니다 </div>
                 <div class="header-last user-btn" >
-					<img src="${path }/resources/images/user_icon.png">
+                  <img src="${path }/resources/images/user_icon.png">
                 </div>
                 </c:if>
                 

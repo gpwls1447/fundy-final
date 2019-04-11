@@ -23,7 +23,7 @@
             height: 40px;
             margin: 0;
             border: none;
-            background-color: rgb(42, 71, 114);
+            background-color: rgb(18, 97, 149);
             color: white;
             margin: 0 10px;
             border-radius: 2px;
@@ -102,48 +102,112 @@
             margin-right: 5px;
             margin-top: 4px;
         }
+        
+          .memberupdate-header
+        {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            font-size: 27px;
+            font-weight: bold;
+            margin: 30px 0;
+        }
+        
+          .memberupdate-nav
+        {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+          .memberupdate-nav > div
+        {
+            margin: 0 20px;
+            font-size: 17px;
+            position: relative;
+        }
+        
+         #divider
+        {
+            position: absolute;
+            display: block;
+            height: 1px;
+            border: none;
+            border-top: 1px solid #ccc;
+            left: 0;
+            width: 100vw;
+        }
+         .indicator
+        {
+            display: block;
+            bottom: -8px;
+            position: absolute;
+            width: 100%;
+            height: 5px;
+            background-color: rgb(76, 168, 228);
+        }
+        
+          a:link { color: black; text-decoration: none;}
+	 	a:visited { color: black; text-decoration: none;}
+	 	a:hover { color: black; text-decoration: underline;}
+        
     </style>
+    
+    
 
 <section class="section">
+<div class="memberupdate-header">공지사항</div>
+        <div class="memberupdate-nav">
+            <div><a href="${pageContext.request.contextPath}/askBoardMain.do">1대1게시판</a></div>
+            <div><a href="${pageContext.request.contextPath}/noticeMain.do">공지사항</a><span class="indicator"></span></div>
+          
+        </div>
 
     <div class="support-notice-view-wrapper">
         <div class="support-notice-view-title">
-            <p>공지사항</p><span>더 푸드 포럼의 새로운 소식들을 확인하세요.</span>
+            <p></p>
         </div>
+        <br/>
         <div class="support-notice-view">
             <div class="support-notice-view-title">
                 <div>제목</div>
-                <div>[가격인상공지] 미니 드리퍼 5종</div>
+                <div>${nt.noticeTitle }</div>
             </div>
             <div class="support-notice-view-wrtier">
                 <div>작성자</div>
-                <div>TheFoodForum</div>
+                <div>펀디메니저</div>
             </div>
             <div class="support-notice-view-date-hit">
                 <div>작성일</div>
-                <div>2019-02-19</div>
-                <div>조회수</div>
-                <div>338</div>
+                <div><fmt:formatDate value="${nt.noticeDate}" pattern="yyyy/MM/dd hh:mm:ss"/></div>
             </div>
             <div class="support-notice-view-content">
                 <div>
-                    dfasdfasdf
+                    ${nt.noticeContent}
                 </div>
             </div>
             <div class="support-notice-view-btns">
-                <input type="button" value="수정">
-                <input type="button" value="목록보기">
-            </div>
-            <div class="support-notice-prev">
-                <div><img src="arrow-up.png">이전글</div>
-                <div>[가격인상공지] 무농약</div>
-            </div>
-            <div class="support-notice-next">
-                <div><img src="arrow-down.png">다음글</div>
-                <div>[가격인상공지] 무농약</div>
+                <input type="button" value="수정" onclick="fn_noticeUpdate();">
+                <input type="button" value="삭제" onclick="fn_noticeDelete();">
             </div>
         </div>
     </div>
-
+<script>
+   function fn_noticeDelete(){
+	  if(confirm("삭제 하시겠습니까??")){
+      	location.href="${path}/noticeDelete.do?noticeNo=${nt.noticeNo}";
+	  }
+	  else
+		  {
+		  	return;
+		  }
+	  }
+   
+   
+   function fn_noticeUpdate()
+   {
+	   location.href="${path}/noticeUpdate.do?noticeNo=${nt.noticeNo}";
+   }
+   
+</script>
 </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

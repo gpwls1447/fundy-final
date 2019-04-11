@@ -5,12 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.fundy.common.PageBarFactory;
+import com.kh.fundy.common.PageBarTemplate;
 import com.kh.fundy.model.vo.AskBoard;
+import com.kh.fundy.model.vo.AskReply;
 import com.kh.fundy.service.AskBoardService;
 
 
@@ -53,7 +54,7 @@ public class AskBoardController {
 			mv.setViewName("common/msg");
 			
 		}
-		mv.setViewName("askBoard/askBoardMain");
+		/*mv.setViewName("askBoard/askBoardMain");*/
 		
 		return mv;
 		//로그인 아이디 값을 고정값으로 되는지 확인됨
@@ -61,11 +62,30 @@ public class AskBoardController {
 	
 	/*1대1게시판 삭제*/
 	@RequestMapping("/askBoardDelete.do")
-	public String askBoardDelete(int askNo) throws Exception
+	public ModelAndView askBoardDelete(int askNo) throws Exception
 	{
+		 ModelAndView mv=new ModelAndView();
 		int result=service.askBoardDelete(askNo);
+		if(result>0)
+		{
+			String msg="삭제 완료 하였습니다.";
+			String loc="/askBoardMain.do";
+			mv.addObject("msg",msg);
+			mv.addObject("loc",loc);
+			mv.setViewName("common/msg");
+			
+		}
+		else
+		{
+			String msg="삭제 실패 하였습니다.";
+			String loc="/askBoardMain.do";
+			mv.addObject("msg",msg);
+			mv.addObject("loc",loc);
+			mv.setViewName("common/msg");
+			
+		}
 		
-		return "/askBoard/askBoardMain";
+		return mv;
 	}
 	
 	/*1대1게시판 수정 화면으로 전환*/
@@ -91,14 +111,18 @@ public class AskBoardController {
 		if(result>0)
 		{
 			AskBoard ab=service.askBoardView(askNo);
+			String msg="수정 성공하였습니다";
+			String loc="/askBoardView.do";
 			mv.addObject("ab",ab);
-			mv.setViewName("askBoard/askBoardView");
+			mv.addObject("msg",msg);
+			mv.addObject("loc",loc);
+			mv.setViewName("common/msg");
 		}
 		else
 		{
 			AskBoard ab=service.askBoardView(askNo);
 			String msg="수정 실패하였습니다.";
-			String loc="/askBoardUpdate.do";
+			String loc="/askBoardView.do";
 			mv.addObject("ab",ab);
 			mv.addObject("msg",msg);
 			mv.addObject("loc",loc);
@@ -119,29 +143,31 @@ public class AskBoardController {
 		ModelAndView mv=new ModelAndView();
 		
 		List<AskBoard> list=service.selectList(cPage,numPerPage);
-		System.out.println(list);
 		int totalList=service.selectCount();
 		
 		mv.addObject("list",list);
 		mv.addObject("totalList",totalList);
-		mv.addObject("pageBar",PageBarFactory.getPageBar(totalList,cPage,numPerPage,"/spring/askBoard/askBoardMain"));
+		mv.addObject("pageBar",PageBarFactory.getPageBar(totalList,cPage,numPerPage,"/fundy/askBoardMain.do"));
 		mv.setViewName("askBoard/askBoardMain");
 		
-		System.out.println(list);
 		return mv;
 	}
 	
-	/*1대1게시판 상세보기페이지로 전환*/
+	/*1대1게시판 상세보기페이지로 전환//댓글 보이기도 추가로 작성*/
 	@RequestMapping("/askBoardView.do")
 	public ModelAndView askBoardView(int askNo)
 	{
-		
 		ModelAndView mv=new ModelAndView();
+		//댓글보이기
+		List<AskReply> list=service.replyView(askNo);
+		mv.addObject("list",list);
+		
+		//게시판 상세보기
 		AskBoard ab=service.askBoardView(askNo);
 		mv.addObject("ab",ab);
 		mv.setViewName("askBoard/askBoardView");
 		return mv;
 	}
 	
-	
+
 }

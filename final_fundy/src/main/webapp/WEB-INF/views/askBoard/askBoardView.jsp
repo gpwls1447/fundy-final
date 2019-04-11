@@ -14,7 +14,7 @@
             font-size: 14px;
         }
 
-        .support-notice-view-wrapper input
+        .support-notice-view-wrapper input[type="button"]
         {
             font-family: 'Noto Sans KR';
             font-size: 12px;
@@ -22,12 +22,28 @@
             height: 40px;
             margin: 0;
             border: none;
-            background-color: rgb(42, 71, 114);
+            background-color: rgb(18, 97, 149);
             color: white;
             margin: 0 10px;
             border-radius: 2px;
             cursor: pointer;
         }
+        
+         .support-notice-view-wrapper input[type="submit"]
+        {
+            font-family: 'Noto Sans KR';
+            font-size: 12px;
+            width: 120px;
+            height: 40px;
+            margin: 0;
+            border: none;
+            background-color: rgb(18, 97, 149);
+            color: white;
+            margin: 0 10px;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        
 
         .support-notice-view-wrapper input:focus
         {
@@ -49,7 +65,7 @@
         {
             display: flex;
             flex-flow: column nowrap;
-            border-top: 2px solid rgb(42, 71, 114);
+           /*  border-top: 2px solid rgb(42, 71, 114); */
             border-bottom: 1px solid rgb(42, 71, 114);
         }
 
@@ -101,12 +117,83 @@
             margin-right: 5px;
             margin-top: 4px;
         }
+        
+             .memberupdate-header
+        {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            font-size: 27px;
+            font-weight: bold;
+            margin: 30px 0;
+        }
+        
+          .memberupdate-nav
+        {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+          .memberupdate-nav > div
+        {
+            margin: 0 20px;
+            font-size: 17px;
+            position: relative;
+        }
+        
+         #divider
+        {
+            position: absolute;
+            display: block;
+            height: 1px;
+            border: none;
+            border-top: 1px solid #ccc;
+            left: 0;
+            width: 100vw;
+        }
+         .indicator
+        {
+            display: block;
+            bottom: -8px;
+            position: absolute;
+            width: 100%;
+            height: 5px;
+            background-color: rgb(76, 168, 228);
+        }
+        
+        a:link { color: black; text-decoration: none;}
+	 	a:visited { color: black; text-decoration: none;}
+	 	a:hover { color: black; text-decoration: none;}
+		
+		#replyTable{border-spacing:10px;
+					border-collapse:separate;
+		}
+		
+		#reply-container{display: inline-block; margin: 1em; width: 100%;}
+		o
+      /*   .reply-container input[type="text"]
+        {
+        	width:600px;
+        
+        } */
+        
 </style>
 <section class="section">
+ <div class="notice-form-wrapper">
+ <div class="memberupdate-header">게시판</div>
+        <div class="memberupdate-nav">
+            <div><a href="${pageContext.request.contextPath}/askBoardMain.do">1대1게시판</a><span class="indicator"></span></div>
+            <div><a href="${pageContext.request.contextPath}/noticeMain.do">공지사항</a></div>
+          
+        </div>
+
+        <hr id="divider"/>
+ 
  <div class="support-notice-view-wrapper">
         <div class="support-notice-view-title">
-            <p>공지사항</p><span>더 푸드 포럼의 새로운 소식들을 확인하세요.</span>
+            <p></p>
         </div>
+        <br/>
         <div class="support-notice-view">
             <div class="support-notice-view-title">
                 <div>제목</div>
@@ -122,24 +209,45 @@
                 <!-- <div>조회수</div>
                 <div>338</div> -->
             </div>
+            <hr/>
             <div class="support-notice-view-content">
                 <div>
                    ${ab.askContent}
                 </div>
             </div>
+            <hr/>
+           <div>
+            <table id="replyTable">
+            	<c:forEach items="${list }" var="are">
+            		<tr>
+            			<td>
+		            		펀디메니저
+		            	</td>
+		            	<td>
+		            		${are.askReplyContent }
+		            	</td>
+		            	<td>
+		            		<fmt:formatDate value="${are.askReplyDate }" pattern="yyyy/MM/dd hh:mm:ss"/>
+		            	</td>
+		           </tr>
+           		</c:forEach>
+		     </table>
+            </div>
+            <form id="replyForm" action="${path}/insertRe.do?askNo=${ab.askNo}" method="post">
+           		  <div class="reply-container">
+                	<div>댓글입력</div>
+                	<div><!-- <textarea name="askReplyContent" id="askReplyContent"></textarea> -->
+                	<input type="text" name="askReplyContent" id="askReplyContent" style="width:600px;height:40px;border:0; border-bottom:1px solid black;"/>
+                	<input type="submit" value="등록" onclick="reSaveBtn"/></div>
+            	</div>
+            </form>
+         <br/>
+        </div>
             <div class="support-notice-view-btns">
                 <input type="button" value="수정" onclick="fn_askBoardUpdate();">
                 <input type="button" value="삭제" onclick="fn_askBoardDelete();">
+                <input type="button" value="목록" onclick="history.back(-1);">
             </div>
-            <div class="support-notice-prev">
-                <div><img src="arrow-up.png">이전글</div>
-                <div>[가격인상공지] 무농약</div>
-            </div>
-            <div class="support-notice-next">
-                <div><img src="arrow-down.png">다음글</div>
-                <div>[가격인상공지] 무농약</div>
-            </div>
-        </div>
     </div>
 <script>
    function fn_askBoardDelete(){
@@ -157,6 +265,19 @@
    {
 	   location.href="${path}/askBoardUpdate.do?askNo=${ab.askNo}";
    }
+   
+   $(document).ready(function(){
+		$("#reSaveBtn").click(function(){
+			var content = $("#askReplyContent").val();
+			if(content=="")
+				{
+					alert("댓글을 입력하세요");
+					document.replyForm.askReplyContent.focus();
+					return;
+				}
+			document.replyForm.submit();
+		});
+	});
 </script>
 
 

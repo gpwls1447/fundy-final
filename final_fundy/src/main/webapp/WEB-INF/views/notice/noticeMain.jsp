@@ -25,7 +25,7 @@
 
         .support-board-rows
         {
-            border-top: 2px solid rgb(38, 85, 139);
+            border-top: 2px solid rgb(38, 85, 139); 
             font-size: 12px;
         }
 
@@ -43,8 +43,8 @@
         }
 
         .support-board-header > div:nth-of-type(1){flex: 1 1 0;}
-        .support-board-header > div:nth-of-type(2){flex: 14 1 0;}
-        .support-board-header > div:nth-of-type(3){flex: 4 1 0;}
+        .support-board-header > div:nth-of-type(2){flex: 4 1 0;}
+        .support-board-header > div:nth-of-type(3){flex: 10 1 0;}
         .support-board-header > div:nth-of-type(4){flex: 3 1 0;}
         .support-board-header > div:nth-of-type(5){flex: 1 1 0;}
 
@@ -70,96 +70,119 @@
         }
 
         .support-board-cols > div:nth-of-type(1){flex: 1 1 0;}
-        .support-board-cols > div:nth-of-type(2){flex: 14 1 0;}
-        .support-board-cols > div:nth-of-type(3){flex: 4 1 0;}
+        .support-board-cols > div:nth-of-type(2){flex: 4 1 0;}
+        .support-board-cols > div:nth-of-type(3){flex: 10 1 0;}
         .support-board-cols > div:nth-of-type(4){flex: 3 1 0;color: #aaa;}
         .support-board-cols > div:nth-of-type(5){flex: 1 1 0;color: #aaa;}
+        
+          .memberupdate-header
+        {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            font-size: 27px;
+            font-weight: bold;
+            margin: 30px 0;
+        }
+        
+          .memberupdate-nav
+        {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+          .memberupdate-nav > div
+        {
+            margin: 0 20px;
+            font-size: 17px;
+            position: relative;
+        }
+        
+         #divider
+        {
+            position: absolute;
+            display: block;
+            height: 1px;
+            border: none;
+            border-top: 1px solid #ccc;
+            left: 0;
+            width: 100vw;
+        }
+         .indicator
+        {
+            display: block;
+            bottom: -8px;
+            position: absolute;
+            width: 100%;
+            height: 5px;
+            background-color: rgb(76, 168, 228);
+        }
+        
+           a:link { color: black; text-decoration: none;}
+	 	a:visited { color: black; text-decoration: none;}
+	 	a:hover { color: black; text-decoration: underline;}
+	 	
+	 		#addBtn{
+		 color: white;
+            background-color: rgb(18, 97, 149);
+            width: 150px;
+            height: 45px;
+            align-self: flex-end;
+            margin: 20px 0;
+            border: none;
+
+            border-radius: 2px;
+            cursor: pointer;
+		}
+		
+		.support-notice-update-btns
+        {
+            display: flex;
+            justify-content: flex-end;
+            padding: 10px 0;
+        }
+        
     </style>
 <section class="section">
+ <div class="memberupdate-header">공지사항</div>
+           <div class="memberupdate-nav">
+            <div><a href="${pageContext.request.contextPath}/askBoardMain.do">1대1게시판</a></div>
+            <div><a href="${pageContext.request.contextPath}/noticeMain.do">공지사항</a><span class="indicator"></span></div>
+          
+        </div>
+	<hr id="divider"/>
 
 <div class="support-board-title">
-            <p>공지사항</p>
-            <p>더 푸드 포럼의 새로운 소식들을 확인하세요.</p>
+            <p></p>
+            
         </div>
         <div class="support-board-rows">
             <div class="support-board-header">
                 <div>번호</div>
-                <div>제목</div>
                 <div>작성자</div>
+                <div>제목</div>
                 <div>작성일</div>
-                <div>조회</div>
+                
             </div>
+        	<c:forEach items="${list }" var="nt">
             <div class="support-board-cols">
-                <div>8</div>
-                <div>공지 8</div>
-                <div>TheFoodForum</div>
-                <div>2019-02-13</div>
-                <div>95</div>
+                <div>${nt.noticeNo }</div>
+                <div>펀디메니저</div>
+                <div><a href="${path}/noticeView.do?noticeNo=${nt.noticeNo}">${nt.noticeTitle }</a></div>
+                <div><fmt:formatDate value="${nt.noticeDate }" pattern="yyyy/MM/dd"/></div>
             </div>
-            <div class="support-board-cols">
-                <div>7</div>
-                <div>공지 7</div>
-                <div>TheFoodForum</div>
-                <div>2019-02-13</div>
-                <div>95</div>
-            </div>
-            <div class="support-board-cols">
-                <div>6</div>
-                <div>공지 6</div>
-                <div>TheFoodForum</div>
-                <div>2019-02-13</div>
-                <div>95</div>
-            </div>
-            <div class="support-board-cols">
-                <div>5</div>
-                <div>공지 5</div>
-                <div>TheFoodForum</div>
-                <div>2019-02-13</div>
-                <div>95</div>
-            </div>
-            <div class="support-board-cols">
-                <div>4</div>
-                <div>공지 4</div>
-                <div>TheFoodForum</div>
-                <div>2019-02-13</div>
-                <div>95</div>
-            </div>
-            <div class="support-board-cols">
-                <div>3</div>
-                <div>공지 3</div>
-                <div>TheFoodForum</div>
-                <div>2019-02-13</div>
-                <div>95</div>
-            </div>
-            <div class="support-board-cols">
-                <div>2</div>
-                <div>공지 2</div>
-                <div>TheFoodForum</div>
-                <div>2019-02-13</div>
-                <div>95</div>
-            </div>
-            <div class="support-board-cols">
-                <div>1</div>
-                <div>공지 1</div>
-                <div>TheFoodForum</div>
-                <div>2019-02-13</div>
-                <div>95</div>
-            </div>
+            </c:forEach>
         </div>
-
+        <div class="support-notice-update-btns">
+		<input type="button" value="게시물 작성" id="addBtn" onclick="fn_noticeForm();"/>
+		</div>
         <div class="pagebar">
-            <div class="pagebar-unit">
-                <img class="pagebar-nav" src="images/sharp_navigate_prev_black.png">
-            </div>
-            <div class="pagebar-unit pagebar-unit-active">1</div>
-            <div class="pagebar-unit">2</div>
-            <div class="pagebar-unit">3</div>
-            <div class="pagebar-unit">4</div>
-            <div class="pagebar-unit">5</div>
-            <div class="pagebar-unit">
-                <img class="pagebar-nav" src="images/sharp_navigate_next_black.png">
-            </div>
+             ${pageBar }
         </div>
-
+<script>
+   function fn_noticeForm(){
+      location.href="${path}/noticeForm.do";
+   }
+</script>
 </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

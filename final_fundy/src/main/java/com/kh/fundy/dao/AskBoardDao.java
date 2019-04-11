@@ -3,6 +3,7 @@ package com.kh.fundy.dao;
 import java.util.List;
 
 import com.kh.fundy.model.vo.AskBoard;
+import com.kh.fundy.model.vo.AskReply;
 
 public interface AskBoardDao {
 
@@ -16,4 +17,6 @@ public interface AskBoardDao {
 	AskBoard askBoardView(int askNo);
 	//수정하기
 	int askBoardUpdate(AskBoard askBoard);
+	
+	List<AskReply> replyView(int askNo);
 }

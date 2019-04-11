@@ -41,8 +41,8 @@
         }
 
         .support-board-header > div:nth-of-type(1){flex: 1 1 0;}
-        .support-board-header > div:nth-of-type(2){flex: 14 1 0;}
-        .support-board-header > div:nth-of-type(3){flex: 4 1 0;}
+        .support-board-header > div:nth-of-type(2){flex: 4 1 0;}
+        .support-board-header > div:nth-of-type(3){flex: 10 1 0;}
         .support-board-header > div:nth-of-type(4){flex: 3 1 0;}
         .support-board-header > div:nth-of-type(5){flex: 1 1 0;}
 
@@ -68,17 +68,92 @@
         }
 
         .support-board-cols > div:nth-of-type(1){flex: 1 1 0;}
-        .support-board-cols > div:nth-of-type(2){flex: 14 1 0;}
-        .support-board-cols > div:nth-of-type(3){flex: 4 1 0;}
-        .support-board-cols > div:nth-of-type(4){flex: 3 1 0;color: #aaa;}
+        .support-board-cols > div:nth-of-type(2){flex: 4 1 0;}
+        .support-board-cols > div:nth-of-type(3){flex: 10 1 0;}
+        .support-board-cols > div:nth-of-type(4){flex: 3 1 0;}
         .support-board-cols > div:nth-of-type(5){flex: 1 1 0;color: #aaa;}
+        
+        .memberupdate-header
+        {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            font-size: 27px;
+            font-weight: bold;
+            margin: 30px 0;
+        }
+        
+          .memberupdate-nav
+        {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+          .memberupdate-nav > div
+        {
+            margin: 0 20px;
+            font-size: 17px;
+            position: relative;
+        }
+        
+         #divider
+        {
+            position: absolute;
+            display: block;
+            height: 1px;
+            border: none;
+            border-top: 1px solid #ccc;
+            left: 0;
+            width: 100vw;
+        }
+         .indicator
+        {
+            display: block;
+            bottom: -8px;
+            position: absolute;
+            width: 100%;
+            height: 5px;
+            background-color: rgb(76, 168, 228);
+        }
+        
+        a:link { color: black; text-decoration: none;}
+	 	a:visited { color: black; text-decoration: none;}
+	 	a:hover { color: black; text-decoration: none;}
 
+		.support-notice-view-btns
+        {
+            display: flex;
+            justify-content: flex-end;
+            padding: 10px 0;
+        }
+		
+		#addBtn{
+		 color: white;
+            background-color: rgb(18, 97, 149);
+            width: 150px;
+            height: 45px;
+            align-self: flex-end;
+            margin: 20px 0;
+            border: none;
+
+            border-radius: 2px;
+            cursor: pointer;
+		}
+		
 </style>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <section class="section">
+       <div class="memberupdate-header">게시판</div>
+        <div class="memberupdate-nav">
+            <%-- <div><a href="${pageContext.request.contextPath}/member/memberUpdateView.do">기본정보수정</a><span class="indicator"></span></div> --%>
+            <div><a href="${pageContext.request.contextPath}/askBoardMain.do">1대1게시판</a><span class="indicator"></span></div>
+            <div><a href="${pageContext.request.contextPath}/noticeMain.do">공지사항</a></div>
+           <%--  <div><a href="${pageContext.request.contextPath}/member/memberDeleteView.do">회원탈퇴</a></div> --%>
+        </div>
+
+        <hr id="divider"/>
       <div class="support-board-title">
-            <p>공지사항</p>
-            <p>더 푸드 포럼의 새로운 소식들을 확인하세요.</p>
+         <p></p>
         </div>
         <div class="support-board-rows">
             <div class="support-board-header">
@@ -92,27 +167,18 @@
             <div class="support-board-cols">
                 <div>${askB.askNo}</div>
                 <div>${askB.askWriter }</div>
-                <div><a href="${path}//askBoardView.do?askNo=${askB.askNo}">${askB.askTitle }</a></div>
+                <div><a href="${path}/askBoardView.do?askNo=${askB.askNo}">${askB.askTitle }</a></div>
                 <div><fmt:formatDate value="${askB.askDate }" pattern="yyyy/MM/dd"/></div>
                 <div>대기중</div><!-- 댓글 구현한 후 댓글 달릴시 대기중->완료로 전환되게 하려해요 -->
             </div>
        		</c:forEach>
         </div>
         
-        <%-- <div>${pageBar }</div> --%>
-<input type="button" value="게시물 작성" id="addBtn" onclick="fn_askBoardForm();"/>
+        <div class="support-notice-view-btns">
+			<input type="button" value="게시물 작성" id="addBtn" onclick="fn_askBoardForm();"/>
+		</div>
         <div class="pagebar">
-            <div class="pagebar-unit">
-                <img class="pagebar-nav" src="images/sharp_navigate_prev_black.png">
-            </div>
-            <div class="pagebar-unit pagebar-unit-active">1</div>
-            <div class="pagebar-unit">2</div>
-            <div class="pagebar-unit">3</div>
-            <div class="pagebar-unit">4</div>
-            <div class="pagebar-unit">5</div>
-            <div class="pagebar-unit">
-                <img class="pagebar-nav" src="images/sharp_navigate_next_black.png">
-            </div>
+            ${pageBar }
         </div>
 
 

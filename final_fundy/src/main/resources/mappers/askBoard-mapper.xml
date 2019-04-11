@@ -12,7 +12,7 @@
 		<!-- select A.*,(select count(*) from attachment where A.askno=askno) filecount from ask A order by askdate desc -->
 		select * from ask order by askno desc
 	</select>
-	
+		
 	<!-- 게시물 작성하기 -->
 	<insert id="insertAskBoard" parameterType="askBoard">
 		insert into ask values(ask_seq.nextval,#{askTitle},'writer',#{askContent},sysdate,null,null)
@@ -32,4 +32,9 @@
 	<update id="askBoardUpdate" parameterType="askBoard">
 		update ask set asktitle = #{askTitle},askcontent = #{askContent},askmod=sysdate where askno = #{askNo}
 	</update>
+	
+	<!-- 댓글보이기 -->
+	<select id="replyView" resultType="askReply">
+  	select * from askreply where askno=#{askNo} order by askreplydate desc
+  </select>
 </mapper>
