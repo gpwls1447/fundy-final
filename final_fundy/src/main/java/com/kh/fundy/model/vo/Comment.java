@@ -8,25 +8,31 @@ public class Comment {
 	private int commentNo;
 	private int projectNo;
 	private String memberEmail;
-	private String memberContent;
+	private String commentContent;
 	private Timestamp commentDate;
 	private Timestamp commentMod;
 	private Timestamp commentDelete;
 	private List<CommentReply> crList;
 	
+	private String memberNick;
+	private String memberProfile;
+	
 	public Comment() {}
 
-	public Comment(int commentNo, int projectNo, String memberEmail, String memberContent, Timestamp commentDate,
-			Timestamp commentMod, Timestamp commentDelete, List<CommentReply> crList) {
+	public Comment(int commentNo, int projectNo, String memberEmail, String commentContent, Timestamp commentDate,
+			Timestamp commentMod, Timestamp commentDelete, List<CommentReply> crList, String memberNick,
+			String memberProfile) {
 		super();
 		this.commentNo = commentNo;
 		this.projectNo = projectNo;
 		this.memberEmail = memberEmail;
-		this.memberContent = memberContent;
+		this.commentContent = commentContent;
 		this.commentDate = commentDate;
 		this.commentMod = commentMod;
 		this.commentDelete = commentDelete;
 		this.crList = crList;
+		this.memberNick = memberNick;
+		this.memberProfile = memberProfile;
 	}
 
 	public int getCommentNo() {
@@ -53,12 +59,12 @@ public class Comment {
 		this.memberEmail = memberEmail;
 	}
 
-	public String getMemberContent() {
-		return memberContent;
+	public String getCommentContent() {
+		return commentContent;
 	}
 
-	public void setMemberContent(String memberContent) {
-		this.memberContent = memberContent;
+	public void setCommentContent(String commentContent) {
+		this.commentContent = commentContent;
 	}
 
 	public Timestamp getCommentDate() {
@@ -91,6 +97,22 @@ public class Comment {
 
 	public void setCrList(List<CommentReply> crList) {
 		this.crList = crList;
+	}
+
+	public String getMemberNick() {
+		return memberNick;
+	}
+
+	public void setMemberNick(String memberNick) {
+		this.memberNick = memberNick;
+	}
+
+	public String getMemberProfile() {
+		return memberProfile;
+	}
+
+	public void setMemberProfile(String memberProfile) {
+		this.memberProfile = memberProfile;
 	}
 	
 }

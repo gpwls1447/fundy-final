@@ -2,7 +2,7 @@ package com.kh.fundy.common;
 
 public class PageBarTemplate {
 
-	public static String getPageBar(int totalCount, int cPage, int numPerPage, String url)
+	public static String getPageBar(int totalCount, int cPage, int numPerPage)
 	{
 		String pageBar = "";
 		int totalPage = (int)Math.ceil((double)totalCount / numPerPage);
@@ -42,7 +42,7 @@ public class PageBarTemplate {
 		if(pageNo > totalPage)
 		{
 			pageBar += "<div class='pagebar-unit'>";
-			pageBar += "<img class='pagebar-nav' src='/fundy/resources/images/sharp_navigate_prev_black.png'>";
+			pageBar += "<img class='pagebar-nav' src='/fundy/resources/images/sharp_navigate_next_black.png'>";
 			pageBar += "</div>";
 		}
 		else

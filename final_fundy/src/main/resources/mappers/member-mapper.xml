@@ -15,11 +15,11 @@
 	</select>
 
 	<select id="login" parameterType="member" resultType="member">
-		select * from member where memberEmail=#{memberEmail}
+		select * from member where memberEmail=#{memberEmail} and memberquit is null
 	</select>
 	
 	<select id="kakao" parameterType="member" resultType="member">
-		select * from member where kakaoId=#{kakaoId}
+		select * from member where kakaoId=#{kakaoId} and memberquit is null
 	</select>
 	
 	<select id="selectOne" parameterType="member" resultType="member">
@@ -58,8 +58,8 @@
       update member set memberQuit=sysdate where memberEmail=#{memberEmail}
    </update>
 	
-	
-	
-	
+	<select id="selectOne" parameterType="String" resultType="member">
+		select * from member where memberEmail = #{memberEmail} and memberquit is null
+	</select>
 
 </mapper>

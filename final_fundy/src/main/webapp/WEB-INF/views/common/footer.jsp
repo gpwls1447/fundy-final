@@ -512,6 +512,12 @@
 </div>
 	
 <script>
+	//로그아웃 기능
+	$(() => {
+		$('.logout-btn').on("click", () => {
+			location.href="${path}/member/LogOut.do";	
+		});
+	});
 	
 	//이메일 인증
 	$(() => {
@@ -525,6 +531,26 @@
 					alert("이메일이 발송되었습니다. 인증번호를 적어주세요");
 				}
 			});
+			
+	//정보수정 기능
+	$(() => {
+		$('.memberUpdate-btn').on("click", ()=> {
+			location.href="${path}/member/memberUpdateView.do";
+		})
+	})
+	
+
+    //패스워드 일치 확인
+     $(function(){
+    	 $("#password-ck").blur(function(){
+			var pw=$("#password").val();
+			var pwck=$("#password-ck").val();
+			if(pw!=pwck){
+				alert("password 불일치");
+				//패스워드 비워주기
+				$("#password-ck").val("");
+				$("#password").focus();
+			}
 		});
 	});
 
@@ -555,10 +581,6 @@
 				$("#password").focus();
 			}
 		});
-    	 //정규화적용
-		
-		
-		
 	}); 
 
 	//로그인 모달
@@ -737,6 +759,7 @@
     const datagenBtn = $('.datagen-btn');
     const projectgenBtn = $('.projectgen-btn');
    	const fundinglogBtn = $('.fundingLogDatagen-btn');
+   	const commentGenBtn = $('.commentGen-btn');
     $(() => {
     	datagenBtn.on('click', () => {
     		$.ajax({
@@ -762,8 +785,15 @@
     			}
     		});
     	});
+    	commentGenBtn.on('click', () => {
+    		$.ajax({
+    			url: '${path}//commentGen.do',
+    			success: data => {
+    				alert('결과: '+ data.result);	
+    			}
+    		});
+    	});
     });
-    
     
   //카카오 로그인 
     Kakao.init('3936fbb46415d0ad3589f5b20380fa77');

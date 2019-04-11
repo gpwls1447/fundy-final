@@ -14,5 +14,5 @@ public interface ProjectListService {
 	Project selectOne(int projectNo);
 	List<FundingLog> selectFunderList(int projectNo);
 	int memberDelete(String memberEmail);
-	
+	List<FundingOption> selectFundingOptionList(int projectNo);
 }

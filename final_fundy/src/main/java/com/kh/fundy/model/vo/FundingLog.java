@@ -13,11 +13,16 @@ public class FundingLog {
 	private int extraMoney;
 	private Timestamp funderDate;
 	private String anonymous;
+	
+	private String memberNick;
+	private String memberProfile;
+	private int fundPrice;
 
 	public FundingLog() {}
 
 	public FundingLog(int fundingLogNo, String memberEmail, int projectNo, String deliveryStatCode, int packageNo,
-			int packageAmount, int extraMoney, Timestamp funderDate, String anonymous) {
+			int packageAmount, int extraMoney, Timestamp funderDate, String anonymous, String memberNick,
+			String memberProfile, int fundPrice) {
 		super();
 		this.fundingLogNo = fundingLogNo;
 		this.memberEmail = memberEmail;
@@ -28,6 +33,9 @@ public class FundingLog {
 		this.extraMoney = extraMoney;
 		this.funderDate = funderDate;
 		this.anonymous = anonymous;
+		this.memberNick = memberNick;
+		this.memberProfile = memberProfile;
+		this.fundPrice = fundPrice;
 	}
 
 	public int getFundingLogNo() {
@@ -100,6 +108,30 @@ public class FundingLog {
 
 	public void setAnonymous(String anonymous) {
 		this.anonymous = anonymous;
+	}
+
+	public String getMemberNick() {
+		return memberNick;
+	}
+
+	public void setMemberNick(String memberNick) {
+		this.memberNick = memberNick;
+	}
+
+	public String getMemberProfile() {
+		return memberProfile;
+	}
+
+	public void setMemberProfile(String memberProfile) {
+		this.memberProfile = memberProfile;
+	}
+
+	public int getFundPrice() {
+		return fundPrice;
+	}
+
+	public void setFundPrice(int fundPrice) {
+		this.fundPrice = fundPrice;
 	}
 
 }

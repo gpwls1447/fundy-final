@@ -1,3 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<c:set var="path" value="${pageContext.request.contextPath }" />
+<c:set var="now" value="<%=new java.util.Date()%>"/>
+<fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="nowDate"/>  
+<fmt:parseNumber value="${now.time / (1000*60*60)}" integerOnly="true" var="nowHour"/>  
+<fmt:parseNumber value="${now.time / (1000*60)}" integerOnly="true" var="nowMinute"/>  
+
 <style>
 	.donor-count
 	{
@@ -39,55 +50,33 @@
 	}
 	
 	.donor-date{color: gray; font-size: 15px;}
+	
+	.fund-price
+	{
+		font-weight: bold;
+	}
 </style>
 
-<div class="donor-count">현재 이 프로젝트에<br>256명의 참여가 이루어졌습니다.</div>
-<div class="donor-box">
-    <img class="donor-thumnail" src="images/pepe.png">
-    <div class="donor-info">
-        <div class="donor-nick-price"><span class="donor-nick">21Kyo</span> 님이 38,000원을 후원하셨습니다.</div>
-        <div class="donor-date">14분전</div>
-    </div>
-</div>
-<div class="donor-box">
-    <img class="donor-thumnail" src="images/pepe.png">
-    <div class="donor-info">
-        <div class="donor-nick-price"><span class="donor-nick">21Kyo</span> 님이 38,000원을 후원하셨습니다.</div>
-        <div class="donor-date">14분전</div>
-    </div>
-</div>
-<div class="donor-box">
-    <img class="donor-thumnail" src="images/pepe.png">
-    <div class="donor-info">
-        <div class="donor-nick-price"><span class="donor-nick">21Kyo</span> 님이 38,000원을 후원하셨습니다.</div>
-        <div class="donor-date">14분전</div>
-    </div>
-</div>
-<div class="donor-box">
-    <img class="donor-thumnail" src="images/pepe.png">
-    <div class="donor-info">
-        <div class="donor-nick-price"><span class="donor-nick">21Kyo</span> 님이 38,000원을 후원하셨습니다.</div>
-        <div class="donor-date">14분전</div>
-    </div>
-</div>
-<div class="donor-box">
-    <img class="donor-thumnail" src="images/pepe.png">
-    <div class="donor-info">
-        <div class="donor-nick-price"><span class="donor-nick">21Kyo</span> 님이 38,000원을 후원하셨습니다.</div>
-        <div class="donor-date">14분전</div>
-    </div>
-</div>
-
-<div class="pagebar">
-    <div class="pagebar-unit">
-        <img class="pagebar-nav" src="images/sharp_navigate_prev_black.png">
-    </div>
-    <div class="pagebar-unit pagebar-unit-active">1</div>
-    <div class="pagebar-unit">2</div>
-    <div class="pagebar-unit">3</div>
-    <div class="pagebar-unit">4</div>
-    <div class="pagebar-unit">5</div>
-    <div class="pagebar-unit">
-        <img class="pagebar-nav" src="images/sharp_navigate_next_black.png">
-    </div>
-</div>
+<div class="donor-count">현재 이 프로젝트에<br>${fn:length(flList)}명의 참여가 이루어졌습니다.</div>
+<c:forEach items="${flList }" var="fl">
+	<div class="donor-box">
+	    <img class="donor-thumnail" src="${path }/resources/images/memberProfile/${fl.memberProfile}">
+	    <div class="donor-info">
+	        <div class="donor-nick-price"><span class="donor-nick">${fl.memberNick }</span> 님이 <span class="fund-price">${fl.fundPrice * fl.packageAmount + extraMoney }</span> 원을 후원하였습니다.</div>
+            <fmt:parseNumber value="${fl.funderDate.time / (1000*60*60*24)}" integerOnly="true" var="fdDate"/>
+            <fmt:parseNumber value="${fl.funderDate.time / (1000*60*60)}" integerOnly="true" var="fdHour"/>
+            <fmt:parseNumber value="${fl.funderDate.time / (1000*60)}" integerOnly="true" var="fdMinute"/>            
+            <div class="donor-date">
+				<c:if test="${nowDate - fdDate > 0}">
+	            	${nowDate - fdDate}일 전
+	            </c:if>
+	            <c:if test="${nowDate - fdDate < 0 && nowHour - fdHour > 0}">
+	            	${nowHour - fdHour}시간 전
+	            </c:if>
+	            <c:if test="${nowDate - fdDate < 0 && nowHour - fdHour < 0 }">
+	            	${nowMinute - fdMinute}분 전
+	            </c:if>
+      		</div>
+        </div>
+	</div>
+</c:forEach>
