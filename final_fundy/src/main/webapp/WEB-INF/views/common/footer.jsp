@@ -627,9 +627,9 @@
     const nav = $('.nav');
     const categoryBtn = $('.category-btn');
     $(() => {
-       nav.hide();
         categoryBtn.on('click', () => {
             nav.slideToggle(300);
+            nav.css('display', 'flex');
         });
     });
 

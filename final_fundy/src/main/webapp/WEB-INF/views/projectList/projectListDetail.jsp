@@ -380,7 +380,7 @@
         </div>
         <div class="proj-main-info">
             <div class="proj-main-left">
-                <img class="proj-thumnail" src="${path }/resources/projectIntroImages/${project.projectThumnail}">
+                <img class="proj-thumnail" src="${path }/resources/projectRepresent/${project.projectThumnail}">
                 <div class="progbar-container">
                     <div class="progbar-empty"></div>
                     <div class="progbar-filled" style="width:${project.reachRate < 100 ? project.reachRate : 100}%"></div>
