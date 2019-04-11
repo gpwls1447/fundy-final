@@ -3,7 +3,7 @@
 <mapper namespace="project">
 
 	<insert id="insertOne" parameterType="project">
-		INSERT INTO PROJECT VALUES(PROJECT_SEQ.NEXTVAL, #{memberNick}, #{projectThumnail}, #{projectTitle}, #{projectContent}, #{beginDate}, #{endDate}, #{goalPrice}, 'N', NULL, #{anchorCount}, #{projectStatCode}, #{projectSumary}, #{projectPhone}, #{memberEmail}, #{minorCode}, 'N', #{projectFormDate})
+		INSERT INTO PROJECT VALUES(PROJECT_SEQ.NEXTVAL, #{projectThumnail}, #{projectTitle}, #{projectContent}, #{beginDate}, #{endDate}, #{goalPrice}, 'N', NULL, #{anchorCount}, #{projectStatCode}, #{projectSumary}, #{projectPhone}, #{memberEmail}, #{minorCode}, 'N', #{projectFormDate})
 		<selectKey keyProperty="projectNo" resultType="int" order="AFTER" keyColumn="projectNo">
 			SELECT PROJECT_SEQ.CURRVAL FROM DUAL
 		</selectKey>
