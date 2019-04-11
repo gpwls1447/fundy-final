@@ -164,7 +164,7 @@
             font-weight: bold;
             margin-top: 5px;
             margin-bottom: 10px;
-            font-size: 19px;
+            font-size: 16px;
         }
 
         .proj-title > a

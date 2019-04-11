@@ -165,7 +165,10 @@
             font-weight: bold;
             margin-top: 5px;
             margin-bottom: 10px;
-            font-size: 19px;
+            font-size: 16px;
+            white-space: wrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
         }
 
         .proj-title > a
@@ -266,7 +269,7 @@ function fn_seeProjectView(projectNo) {
             <div class="proj-section-header">카테고리별 인기 프로젝트</div>
             <div class="popular-nav">
             	<c:forEach items="${midCList}" var="mc" varStatus="vs">
-                	<c:if test="${mc.majorCode eq majorCategory }">
+                	<c:if test="${mc.majorCode eq majorCode }">
 	                	<button class="basic-btn <c:if test="${vs.count eq 1 }">basic-btn-active</c:if>" onclick="fn_loadedList('${mc.midCode }')">${mc.midName }</button>                		
 					</c:if>
 				</c:forEach>

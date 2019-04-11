@@ -35,10 +35,10 @@ public class MainConroller {
 	}
 	
 	@RequestMapping("/main.do")
-	public ModelAndView mainTest(@RequestParam(value = "majorCategory", required = false, defaultValue = "A01") String majorCategory,@RequestParam(value = "majorCategory", required = false, defaultValue = "B01") String midCategory, Model model) {
+	public ModelAndView mainTest(@RequestParam(value = "majorCode", required = false, defaultValue = "A01") String majorCode, @RequestParam(value = "midCategory", required = false, defaultValue = "B01") String midCategory, Model model) {
 		mv = new ModelAndView();
 		Map<String, String> ctgMap = new HashMap<String, String>();
-		ctgMap.put("majorCategory", majorCategory);
+		ctgMap.put("majorCode", majorCode);
 		ctgMap.put("midCategory", midCategory);
 		
 		List<Map<String, Object>> projectListCtg = service.selectProjectList(ctgMap);	//모든목록이나 중분류카테고리별 조회
@@ -48,7 +48,7 @@ public class MainConroller {
 		
 		List<Category> midCList = service.selectAllMid();
 		
-		model.addAttribute("majorCategory", majorCategory);
+		model.addAttribute("majorCode", majorCode);
 		model.addAttribute("midCList", midCList);
 		model.addAttribute("projectListCtg", projectListCtg);		//카테고리별인기프로젝트
 		model.addAttribute("editorProjectList", editorProjectList);	//에디터추천프로젝트
