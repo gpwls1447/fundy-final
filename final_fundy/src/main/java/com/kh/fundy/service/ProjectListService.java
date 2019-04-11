@@ -13,5 +13,4 @@ public interface ProjectListService {
 	List<Project> selectList(int cPage, int numPerPage, Map map);
 	Project selectOne(int projectNo);
 	List<FundingLog> selectFunderList(int projectNo);
-	int memberDelete(String memberEmail);
 }

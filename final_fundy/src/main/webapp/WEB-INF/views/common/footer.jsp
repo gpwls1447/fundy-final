@@ -476,13 +476,9 @@
 					<div class="signup-title form-title"><span class="brand-title">FUNDY</span>회원가입</div>
 					<form method="post" action="${path }/member/memberEnrollEnd.do" autocomplete="off">
 						<div class="form-group">
-<<<<<<< HEAD
-							<input type="email" class="signup-modal-input" placeholder="이메일" id="memberEmail" name="memberEmail" required /> 
-=======
 							<input type="email" class="signup-modal-input" placeholder="이메일" id="memberEmail" name="memberEmail" required />
 							<input type="button" class="signup-modal-input" id="emailAuth" value="메일인증" />
 							<input type="text" class="signup-modal-input" id="AuthKey" placeholder="인증번호" />
->>>>>>> refs/heads/feature_kyo
 							<input type="password" class="signup-modal-input" placeholder="비밀번호" id="password" name="memberPw" required /> 
 							<input type="password" class="signup-modal-input" placeholder="비밀번호 확인" id="password-ck" required /> 
 							<input type="text" class="signup-modal-input" placeholder="닉네임" name="memberNick" required />
@@ -516,34 +512,7 @@
 </div>
 	
 <script>
-	//로그아웃 기능
-	$(() => {
-		$('.logout-btn').on("click", () => {
-			location.href="${path}/member/LogOut.do";	
-		});
-	});
 	
-<<<<<<< HEAD
-	//정보수정 기능
-	$(() => {
-		$('.memberUpdate-btn').on("click", ()=> {
-			location.href="${path}/member/memberUpdateView.do";
-		})
-	})
-	
-
-    //패스워드 일치 확인
-     $(function(){
-    	 $("#password-ck").blur(function(){
-			var pw=$("#password").val();
-			var pwck=$("#password-ck").val();
-			if(pw!=pwck){
-				alert("password 불일치");
-				//패스워드 비워주기
-				$("#password-ck").val("");
-				$("#password").focus();
-			}
-=======
 	//이메일 인증
 	$(() => {
 		$('#emailAuth').on("click", () => {
@@ -556,10 +525,7 @@
 					alert("이메일이 발송되었습니다. 인증번호를 적어주세요");
 				}
 			});
->>>>>>> refs/heads/feature_kyo
 		});
-<<<<<<< HEAD
-=======
 	});
 
 	//로그아웃 기능
@@ -590,7 +556,6 @@
 			}
 		});
     	 //정규화적용
->>>>>>> refs/heads/feature_kyo
 		
 		
 		
@@ -607,27 +572,13 @@
 	});
 	
 	//로그인창 닫기 버튼 이벤트 바인드
-<<<<<<< HEAD
-    const loginCloseBtn = $('.login-close-btn');
-    $(() => {
-       loginCloseBtn.on('click', () => {
-          loginModal.toggle();
-          modalOverlay.toggle();
-       });
-    });
- 
-	
-	//x(취소) 버튼  아래 로그인함수 클릭시 생기는 이벤트 똑같이 달아주면됨
-	/* const logoutBtn = $('#logout-btn');
-=======
 	const loginCloseBtn = $('.login-close-btn');
->>>>>>> refs/heads/feature_kyo
 	$(() => {
 		loginCloseBtn.on('click', () => {
 			loginModal.toggle();
 			modalOverlay.toggle();
 		});
-	}); */
+	});
 	
 	
 	//로그인 회원가입 전환 기능
@@ -824,11 +775,8 @@
            Kakao.API.request({
              url: '/v1/user/me',
              success: function(res) {
-<<<<<<< HEAD
-=======
             	 console.log("object : "+JSON.stringify(res));
             	 console.log(JSON.stringify(res.id));
->>>>>>> refs/heads/feature_kyo
             	 testajax(res);
             	 loginModal.toggle();
             	 modalOverlay.toggle();
@@ -867,10 +815,6 @@
            	}
           })
        };
-<<<<<<< HEAD
-      
-=======
     
->>>>>>> refs/heads/feature_kyo
 </script>
 </html>
