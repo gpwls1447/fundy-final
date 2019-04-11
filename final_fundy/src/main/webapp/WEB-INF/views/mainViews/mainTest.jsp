@@ -149,6 +149,7 @@
             margin: 0 10px;
             border-bottom: 1px solid rgb(224, 224, 224); 
             padding-bottom: 30px;
+            cursor: pointer;
         }
 
         .proj-box:first-of-type{margin-left: 0;}

@@ -736,7 +736,8 @@
     
     const datagenBtn = $('.datagen-btn');
     const projectgenBtn = $('.projectgen-btn');
-      const fundinglogBtn = $('.fundingLogDatagen-btn');
+    const fundinglogBtn = $('.fundingLogDatagen-btn');
+    const commentGenBtn = $('.commentGen-btn');
     $(() => {
        datagenBtn.on('click', () => {
           $.ajax({
@@ -763,16 +764,14 @@
           });
        });
        
-      /*  commentGenBtn.on('click', () => {
-			$.ajax({
-   			url: '${path}//commentGen.do',
-   			success: data => {
-   				alert('결과: '+ data.result);
-   			}
-   			});
-   		}); */
-    });
-    
+       commentGenBtn.on('click', () => {
+           $.ajax({
+              url: '${pageContext.request.contextPath}/commentGen.do',
+              success: data => {
+                 alert('결과: ' + data.result);
+              }
+           });
+        });
     
   //카카오 로그인 
     Kakao.init('3936fbb46415d0ad3589f5b20380fa77');
