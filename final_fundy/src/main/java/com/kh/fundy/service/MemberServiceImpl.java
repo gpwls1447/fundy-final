@@ -14,7 +14,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Autowired
 	private MemberDao dao;
-	
+
 	@Override
 	public int memberCount() {
 		return dao.memberCount();
@@ -53,21 +53,39 @@ public class MemberServiceImpl implements MemberService {
 	public Member selectOneKakao(Member m) {
 		return dao.selectOneKakao(m);
 	}
-	
-	  @Override
-	   public int memberAddressInsert(ShippingAddr s) {
-	      return dao.memberAddressInsert(s);
-	   }
 
-	   @Override
-	   public int memberUpdate(Member m) {
-	      return dao.memberUpdate(m);
-	   }
+	@Override
+	public int memberAddressInsert(ShippingAddr s) {
+		return dao.memberAddressInsert(s);
+	}
 
-	   @Override
-	   public List<Member> memberUpdateView(Member m) {
-	      return dao.memberUpdateView(m);
-	   }
-	
+	@Override
+	public int memberUpdate(Member m) {
+		return dao.memberUpdate(m);
+	}
+
+	@Override
+	public List<Member> memberUpdateView(Member m) {
+		return dao.memberUpdateView(m);
+	}
+
+	@Override
+	public String selectCountUserAuth(String memberEmail) {
+		return dao.selectCountUserAuth(memberEmail);
+	}
+
+	@Override
+	public int insertUserAuth(String memberEmail, String key) {
+		return dao.insertUserAuth(memberEmail, key);
+	}
+
+	@Override
+	public int updateUserAuth(String memberEmail, String key) {
+		return dao.updateUserAuth(memberEmail, key);
+	}
+
+
+
+
 
 }

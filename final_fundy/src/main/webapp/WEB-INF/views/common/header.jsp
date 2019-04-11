@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
-<title>Insert title here</title>
+<title>즐거움이 가득한 Fundy</title>
 <script src="${path }/resources/js/jquery-3.3.1.min.js"></script>
 <link href="${path }/resources/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -36,6 +36,12 @@
                 <div>
                     <i class="material-icons category-btn">more_horiz</i>
                 </div>
+                <div>
+                	<a href="${path }/project/projectWrite.do?majorCategory=A01">프로젝트 작성</a>
+                </div>
+                <div>
+                	<a href="${path }/">게시판</a>
+                </div>
             </div>
             <div class="header-group">
                 <div>
@@ -52,7 +58,7 @@
                 <c:if test="${loggedMember!=null }">
                 <div>${loggedMember.memberNick }님 환영합니다 </div>
                 <div class="header-last user-btn" >
-						<img src="${path }/resources/images/user_icon.png">
+					<img src="${path }/resources/images/user_icon.png">
                 </div>
                 </c:if>
                 

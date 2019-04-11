@@ -30,5 +30,20 @@
     	update Member set memberNick=#{memberNick}, intro=#{intro}, memberProfile=#{memberProfile} where memberEmail=#{memberEmail}
   	 </update>
 	
+	<select id="memberEmailCheck" parameterType="string" resultType="string">
+		select emailAuthKey from member where memberEmail=#{memberEmail}
+	</select>
+	
+	<insert id="insertUserAuth" parameterType="map">
+		insert into member (emailAuthKey, memberEmail) values (#{emailAuthkey} ,#{memberEmail})
+	</insert>
+
+	<update id="updateUserAuth">
+		update into member set emailAuthkey=#{emailAuthkey} where memberEmail=#{memberEmail}
+	</update>
+	
+	
+	
+	
 
 </mapper>
