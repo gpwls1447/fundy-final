@@ -63,7 +63,6 @@ public class ProjectListController {
 	@RequestMapping("/projectList/projectListDetail.do")
 	public ModelAndView projectListDetail(int projectNo)
 	{
-		System.out.println(projectNo);
 		Project p = pService.selectOne(projectNo);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("project", p);

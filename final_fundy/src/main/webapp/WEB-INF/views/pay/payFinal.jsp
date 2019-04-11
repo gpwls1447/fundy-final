@@ -228,6 +228,8 @@
         	border: 1px solid #aaa;
         	height: 35px !important;
         }
+        
+        #addr-0{display: flex; align-items: center;}
 
         .addr-row input {margin: 5px 0;}
 
@@ -240,7 +242,6 @@
         {
             margin: 5px 10px 5px 0;
             padding: 6px 15px;
-            transform: translateY(1px);
         }
 
         .addr-inputs input 
@@ -334,7 +335,7 @@
             <div class="price-info-container">
                 <div class="price-div original-money">
                     <div>후원 금액</div>
-                    <div>${fundingOption.fundPrice }</div>
+                    <div>${fundingOption.fundPrice * packageAmount }</div>
                 </div>
                 <div class="price-div extra-money">
                     <div>추가 후원금</div>
@@ -377,8 +378,8 @@
                     <div class="addr-row">
                         <div>주소</div>
                         <div>
-                            <div>
-                                <button class="basic-btn basic-btn-active ripple">주소찾기</button>
+                            <div id="addr-0">
+                                <button class="basic-btn basic-btn-active ripple" onclick="loadDaumPost();">주소찾기</button>
                                 <input type="text" name="" id="zip-code">
                             </div>
                             <input type="text" name="" id="addr-1">
@@ -478,6 +479,14 @@
             }
             alert(msg);
         });
+    };
+    
+    const loadDaumPost = () => {
+    	new daum.Postcode({
+    		oncomplete: data => {
+    				
+    		}
+    	}).open();
     };
     
 </script>
