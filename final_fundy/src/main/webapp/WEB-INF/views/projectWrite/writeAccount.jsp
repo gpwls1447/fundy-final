@@ -83,7 +83,7 @@
 								<div class="content-row">
 									<input type="text" class="form-control inputShort" id="_accName" maxlength="8" placeholder="ex)홍길동" />
 								</div>
-							</div>
+							</div><!-- 
 							<div class="acc-col">
 								<div class="cate-row">
 									<span>계좌 종류</span>
@@ -104,7 +104,7 @@
 								<div class="content-row">
 									<input type="number" class="form-control inputLong" id="_birthday" min="0" maxlength="6" oninput="maxLengthCheck(this)" placeholder="숫자로만 입력해주세요 예) 820125" />
 								</div>
-							</div>
+							</div> -->
 						</div>
 					</div>
 				</div>

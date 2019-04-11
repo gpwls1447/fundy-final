@@ -13,5 +13,45 @@
 	<select id="selectAllMinor" resultType="category">
 		select * from (select majorCode, majorname, midcode, midname from majorCategory join midCategory using (majorCode)) join minorCategory using (midCode) order by minorcode
 	</select>
+	
+	<select id="selectProjectList" parameterType="map" resultType="map">
+		select * from (select rownum as rn, a.* from (select projectno, membernick, midcode, projectthumnail, projecttitle, projectcontent, substr(enddate-sysdate, 9, 2) as remaindate, enddate, projectsumary, reach, goalprice, round(reach/goalprice*100) as reachrate, funderno
+									from project
+									join minorcategory using(minorcode) 
+									join midcategory using(midcode) 
+									join majorcategory using(majorcode)
+									join member using(memberemail)
+							        join (select FUNDINGOPTION.PROJECTNO, sum(nvl(fundprice,0)*nvl(packageamount,0)) + sum(nvl(extramoney,0)) as reach, count(fundinglogno) as funderno
+							                from FUNDINGLOG 
+							                right outer join fundingoption on fundinglog.projectno=fundingoption.projectno group by FUNDINGOPTION.PROJECTNO)
+							            using(projectno)
+									where majorcode='A01' AND projectstatcode='PS03' AND midcode=#{midCategory}
+									order by funderno desc, enddate asc) a )
+		where rn between 1 and 4
+	</select>
+	
+	<select id="selectEditorProjectList" parameterType="map" resultType="map">
+		select * from project join member using(memberemail) where recommended='Y' OR recommended='y'
+	</select>
+	
+	<select id="selectNewSoonProjectList" parameterType="map" resultType="map">
+		select * from (select rownum as rn, a.* from (select projectno, membernick, midcode, projectthumnail, projecttitle, projectcontent, substr(enddate-sysdate, 9, 2) as remaindate, begindate, enddate, projectsumary, reach, goalprice, round(reach/goalprice*100) as reachrate, funderno
+									from project
+									join minorcategory using(minorcode) 
+									join midcategory using(midcode) 
+									join majorcategory using(majorcode)
+									join member using(memberemail)
+							        join (select FUNDINGOPTION.PROJECTNO, sum(nvl(fundprice,0)*nvl(packageamount,0)) + sum(nvl(extramoney,0)) as reach, count(fundinglogno) as funderno
+							                from FUNDINGLOG 
+							                right outer join fundingoption on fundinglog.projectno=fundingoption.projectno group by FUNDINGOPTION.PROJECTNO)
+							            using(projectno)
+									where majorcode='A01' AND projectstatcode='PS03'
+									order by <choose>
+												<when test="condition == 'new'">begindate desc</when>
+												<when test="condition == 'soon'">enddate asc</when>
+											</choose>
+									) a )
+		where rn between 1 and 4
+	</select>
 
 </mapper>

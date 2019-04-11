@@ -519,6 +519,7 @@
 		});
 	});
 	
+<<<<<<< HEAD
 	//이메일 인증
 	$(() => {
 		$('#emailAuth').on("click", () => {
@@ -581,7 +582,8 @@
 				$("#password").focus();
 			}
 		});
-	}); 
+	});
+		
 
 	//로그인 모달
 	const loginBtn = $('.login-btn');
@@ -795,56 +797,58 @@
     	});
     });
     
-  //카카오 로그인 
-    Kakao.init('3936fbb46415d0ad3589f5b20380fa77');
-       // 카카오 로그인 버튼을 생성합니다.
-       Kakao.Auth.createLoginButton({
-         container: '#kakao-login-btn',
-         success: function(authObj) {
-           // 로그인 성공시, API를 호출합니다.
-           Kakao.API.request({
-             url: '/v1/user/me',
-             success: function(res) {
-            	 console.log("object : "+JSON.stringify(res));
-            	 console.log(JSON.stringify(res.id));
-            	 testajax(res);
-            	 loginModal.toggle();
-            	 modalOverlay.toggle();
-             },
-             fail: function(error) {
-               alert(JSON.stringify(error));
-             }
-           });
-         },
-         fail: function(err) {
-           alert(JSON.stringify(err));
-         }
-       });
-       
-       function testajax(res)
-       {
-    	   console.log(res);
-           $.ajax({
-           	url : "${pageContext.request.contextPath }/member/isKakao.do",
-           	dataType:"json",
-           	type:"post",
-            data : {id:res.id,"email":res.kaccount_email,profile:res.properties['profile_image'], nick:res.properties['nickname']}, 
-           	success : function(data){
-           		console.log("돌려받은 값 : "+data.val);
-           		if(data.val=="y"){
-           			location.href="${path}/";
-           		}
-           		else{
-           			console.log("로그인실패");
-           		}
-           	},
-           	error:function(re,msg)
-           	{
-           		console.log(re);
-           		console.log(msg);
-           	}
-          })
-       };
+    
+    //카카오 로그인 
+      Kakao.init('3936fbb46415d0ad3589f5b20380fa77');
+         // 카카오 로그인 버튼을 생성합니다.
+         Kakao.Auth.createLoginButton({
+           container: '#kakao-login-btn',
+           success: function(authObj) {
+             // 로그인 성공시, API를 호출합니다.
+             Kakao.API.request({
+               url: '/v1/user/me',
+               success: function(res) {
+              	 console.log("object : "+JSON.stringify(res));
+              	 console.log(JSON.stringify(res.id));
+              	 testajax(res);
+              	 loginModal.toggle();
+              	 modalOverlay.toggle();
+               },
+               fail: function(error) {
+                 alert(JSON.stringify(error));
+               }
+             });
+           },
+           fail: function(err) {
+             alert(JSON.stringify(err));
+           }
+         });
+         
+         function testajax(res)
+         {
+      	   console.log(res);
+             $.ajax({
+             	url : "${pageContext.request.contextPath }/member/isKakao.do",
+             	dataType:"json",
+             	type:"post",
+              data : {id:res.id,"email":res.kaccount_email,profile:res.properties['profile_image'], nick:res.properties['nickname']}, 
+             	success : function(data){
+             		console.log("돌려받은 값 : "+data.val);
+             		if(data.val=="y"){
+             			location.href="${path}/";
+             		}
+             		else{
+             			console.log("로그인실패");
+             		}
+             	},
+             	error:function(re,msg)
+             	{
+             		console.log(re);
+             		console.log(msg);
+             	}
+            })
+         };
+      
     
 </script>
 </html>

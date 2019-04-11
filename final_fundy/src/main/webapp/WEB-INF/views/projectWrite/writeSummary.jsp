@@ -18,18 +18,16 @@ select#_subCode option.subCtgs {
 					<div>
 						<select class="form-control inputShort" id="_mainCtg">
 							<option disabled="disabled" selected="selected">중분류 카테고리</option>
-							<option id="mainCtg00" value="mainCtg00">중분류00</option>
-							<option id="mainCtg01" value="mainCtg01">중분류01</option>
-							<option id="mainCtg02" value="mainCtg02">중분류02</option>
+							<c:forEach var="midCtg" items="${midCategoryList }" varStatus="status">
+								<option id="${midCtg.getMidCode() }" value="${midCtg.getMidCode() }">${midCtg.getMidName() }</option>
+							</c:forEach>
 						</select>
 						&nbsp;&nbsp;&nbsp;
 						<select class="form-control inputShort" id="_subCode">
 							<option id="subCtgs" disabled="disabled" selected="selected" value="">소분류 카테고리</option>
-							<%for(int i=0; i<3; i++) {%>
-								<%for(int j=0; j<3; j++) {%>
-								<option class="subCtgs mainCtg0<%=i %>" value="m0<%=i %>, s0<%=j %>">중분류0<%=i %>, 소분류0<%=j %></option>
-								<%} %>
-							<%} %>
+							<c:forEach var="minorCtg" items="${minorCategoryList }" varStatus="status">
+								<option class="subCtgs ${minorCtg.getMidCode() }" value="${minorCtg.getMinorCode() }">${minorCtg.getMinorName() }</option>
+							</c:forEach>
 						</select>
 					</div>
 				</div>
@@ -57,8 +55,8 @@ select#_subCode option.subCtgs {
 					<div>
 						프로젝트 대표 이미지를 첨부해주세요.
 					</div>
-					<div id="thumnail-drag" style="width:500px; height:281.25px;">
-						<img id="thumnail-img" src="${path }/resources/images/upload-project-icon.png" onclick="fn_uploadThumnail()" width="100%" height="100%" />
+					<div id="thumnail-drag" style="display:flex; justify-content:center; align-items:center; width:500px; height:281.25px; border: 1px solid #ccc;">
+						<img id="thumnail-img" onclick="fn_uploadThumnail()" src="${path }/resources/images/upload-project-icon.png" width="20%" height="30%" style="display:flex;" />
 						<div style="display:none">
 							<form id="thumnailForm" method="post" action="${path }/upload/projectThumnail.do" enctype="multipart/form-data">
 								<input type="file" class="projectThumnail" id="_projectThumnail" name="projectThumnail" />
@@ -92,7 +90,8 @@ select#_subCode option.subCtgs {
 						프로젝트를 진행하는 창작자 이름을 적어주세요. 팀이 있으시다면 팀명으로 적어주셔도 됩니다.
 					</div>
 					<div>
-						<input type="text" class="form-control" id="_memberNick" maxlength="20" placeholder="내용을 입력해주세요." style="display: inline-block; width: 97.5%;" />
+						<input type="text" value="${creator.getMemberNick() }"
+						 class="form-control" id="_memberNick" maxlength="20" placeholder="내용을 입력해주세요." style="display: inline-block; width: 97.5%;" />
 					</div>
 				</div>
 			</div>
@@ -106,7 +105,14 @@ select#_subCode option.subCtgs {
 						창작자 프로필 사진을 변경 할 수 있습니다. 차후에 변경 할 수 있습니다.
 					</div>
 					<div class="creator-profile-img">
-						<img id="profile-image" alt="" onclick="fn_uploadProfile()" src="resources/images/user_icon.png" width="100%" height="100%">
+						<c:choose>
+							<c:when test="${creator.memberProfile != null }">
+								<img id="profile-image" alt="" onclick="fn_uploadProfile()" src="${path }/resources/memberProfile/${creator.memberProfile }" width="100%" height="100%">
+							</c:when>
+							<c:otherwise>
+								<img id="profile-image" alt="" onclick="fn_uploadProfile()" src="${path }/resources/images/user_icon.png" width="100%" height="100%">
+							</c:otherwise>
+						</c:choose>
 						<div style="display:none">
 							<form id="FILE_FORM-PROFILE" method="post" enctype="multipart/form-data">
 								<input type="file" name="memberProfile" id="_memberProfile" />
