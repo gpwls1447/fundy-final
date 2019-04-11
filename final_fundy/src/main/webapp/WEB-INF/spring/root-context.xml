@@ -27,23 +27,4 @@
 	<bean class="org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean">
 		<property name="maxBinaryMessageBufferSize" value="1020400"/>
 	</bean>
-	
-	  <!-- 메일 보내기 (SEND) -->
-   <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-      <property name="host" value="smtp.gmail.com" />
-      <property name="port" value="587" />
-      <property name="username" value="kein0924@gmail.com" />
-      <property name="password" value="tkfkdgo1645!" />
-    
-
-      <!-- email 요청시는 SMTP -->
-      <property name="javaMailProperties">
-         <props>
-            <prop key="mail.transport.protocol">smtp</prop>
-            <prop key="mail.smtp.auth">true</prop>
-            <prop key="mail.smtp.starttls.enable">true</prop>
-            <prop key="mail.debug">true</prop>
-         </props>
-      </property>
-   </bean>
 </beans>

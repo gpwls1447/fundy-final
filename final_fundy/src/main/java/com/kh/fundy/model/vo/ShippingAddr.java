@@ -1,6 +1,19 @@
 package com.kh.fundy.model.vo;
 
 public class ShippingAddr {
+<<<<<<< HEAD
+	
+	private int shipAddrNo;
+	private String shipAddrTag;
+	private String shipAddrReceiver;
+	private int zipCode;
+	private String shipAddr;
+	private String shipAddrDetail;
+	private String phone;
+	private String memberEmail;
+	
+	public ShippingAddr() {}
+=======
    
    private int shipAddrNo;
    private String shipAddrTag;
@@ -12,7 +25,22 @@ public class ShippingAddr {
    private String memberEmail;
    
    public ShippingAddr() {}
+>>>>>>> refs/heads/feature_kyo
 
+<<<<<<< HEAD
+	public ShippingAddr(int shipAddrNo, String shipAddrTag, String shipAddrReceiver, int zipCode, String shipAddr,
+			String shipAddrDetail, String phone, String memberEmail) {
+		super();
+		this.shipAddrNo = shipAddrNo;
+		this.shipAddrTag = shipAddrTag;
+		this.shipAddrReceiver = shipAddrReceiver;
+		this.zipCode = zipCode;
+		this.shipAddr = shipAddr;
+		this.shipAddrDetail = shipAddrDetail;
+		this.phone = phone;
+		this.memberEmail = memberEmail;
+	}
+=======
    public ShippingAddr(int shipAddrNo, String shipAddrTag, String shipAddrReceiver, int zipCode, String shipAddr,
          String shipAddrDetail, String phone, String memberEmail) {
       super();
@@ -25,6 +53,7 @@ public class ShippingAddr {
       this.phone = phone;
       this.memberEmail = memberEmail;
    }
+>>>>>>> refs/heads/feature_kyo
 
    public int getShipAddrNo() {
       return shipAddrNo;
@@ -82,6 +111,25 @@ public class ShippingAddr {
       this.phone = phone;
    }
 
+<<<<<<< HEAD
+	public String getMemberEmail() {
+		return memberEmail;
+	}
+
+	public void setMemberEmail(String memberEmail) {
+		this.memberEmail = memberEmail;
+	}
+
+	@Override
+	public String toString() {
+		return "ShippingAddr [shipAddrNo=" + shipAddrNo + ", shipAddrTag=" + shipAddrTag + ", shipAddrReceiver="
+				+ shipAddrReceiver + ", zipCode=" + zipCode + ", shipAddr=" + shipAddr + ", shipAddrDetail="
+				+ shipAddrDetail + ", phone=" + phone + ", memberEmail=" + memberEmail + "]";
+	}
+
+	
+}
+=======
    public String getMemberEmail() {
       return memberEmail;
    }
@@ -99,3 +147,4 @@ public class ShippingAddr {
 
    
 }
+>>>>>>> refs/heads/feature_kyo

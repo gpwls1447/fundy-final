@@ -89,4 +89,8 @@
 	<select id="selectOptionDetailList" parameterType="int">
 	</select>
 	
+	<select id="memberDelete" parameterType="string" resultType="int">
+		select count(*) from project where memberEmail=#{memberEmail} and projectStatCode='PS03'
+	</select>
+	
 </mapper>

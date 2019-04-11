@@ -3,7 +3,7 @@
 <mapper namespace="member">
 
 	<select id="memberCount" resultType="int">
-		SELECT COUNT(*) FROM MEMBER
+		SELECT COUNT(*) FROM MEMBER where memberQuit is null
 	</select>
 	
 	<select id="memberDeleteAll">
@@ -15,12 +15,32 @@
 	</select>
 
 	<select id="login" parameterType="member" resultType="member">
-		select * from member where memberEmail=#{memberEmail}
+		select * from member where memberEmail=#{memberEmail} and memberQuit is null
 	</select>
 	
 	<select id="kakao" parameterType="member" resultType="member">
-		select * from member where kakaoId=#{kakaoId}
+		select * from member where kakaoId=#{kakaoId} and  where memberQuit is null
 	</select>
+	
+	<update id="memberUpdate">
+		update Member set memberNick=#{memberNick}, intro=#{intro}, memberProfile=#{memberProfile} where memberEmail=#{memberEmail} and memberQuit is null
+	</update>
+	
+	<update id="memberPwUpdate">
+		update member set memberPw=#{memberPw} where memberEmail=#{memberEmail} and memberQuit is null
+	</update>
+	
+	<select id="memberPwCheck" parameterType="member" resultType="member">
+		select memberPw from member where memberEmail=#{memberEmail} and memberQuit is null
+	</select>
+	
+	<select id="memberNickCheck" parameterType="string" resultType="int">
+		select count(*) from member where memberNick=#{memberNick} and memberQuit is null
+	</select>
+	
+	<update id="memberDelete">
+		update member set memberQuit=sysdate where memberEmail=#{memberEmail}
+	</update>
 	
 	<select id="selectOne" parameterType="member" resultType="member">
 		select * from member where kakaoId=#{kakaoId}
