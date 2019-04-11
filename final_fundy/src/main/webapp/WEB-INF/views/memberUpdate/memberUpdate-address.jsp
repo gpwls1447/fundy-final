@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
-   ShippingAddr s=(ShippingAddr)request.getAttribute("s");
+	ShippingAddr s=(ShippingAddr)request.getAttribute("s");
 %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
@@ -182,16 +182,17 @@
             <div><a href="${pageContext.request.contextPath}/member/memberUpdateView.do">기본정보수정</a></div>
             <div><a href="${pageContext.request.contextPath}/member/memberPwView.do">비밀번호변경</a></div>
             <div><a href="${pageContext.request.contextPath}/member/memberAddressView.do">배송지관리</a><span class="indicator"></span></div>
-            <div><a href="${pageContext.request.contextPath}/member/memberDeieteView.do">회원탈퇴</a></div>
+            <div><a href="${pageContext.request.contextPath}/member/memberDeleteView.do">회원탈퇴</a></div>
         </div>
         <hr id="divider" />
         <div class="memberupdate-body">
             <form action="${pageContext.request.contextPath}/member/memberAddress.do" method="post" class="shipping-addr" name="addrFrm">
                 <div class="addr-list-container">
-                   <c:forEach items="${list }" var="list" varStatus="addr">
-                       <div data-index="${addr }" class="addr-unit ${addr.index == 0 ? 'addr-unit-selected' : ''}">${list.shippAddrTag }<i class="material-icons delete-btn">close</i></div>                   
+                	<%-- <c:forEach items="${list }" var="list" varStatus="addr">
+	                    <div data-index="${addr }" class="addr-unit ${addr.index == 0 ? 'addr-unit-selected' : ''}">${list.shippAddrTag }<i class="material-icons delete-btn">close</i></div>                   
                     </c:forEach>
-                    
+                     --%>
+                     
                     <div class="add-addr tooltip"><i class="material-icons">add</i>
                         <span class="tooltiptext">새 배송지</span>
                     </div>
@@ -202,7 +203,7 @@
                     <div class="addr-tag-row">
                         <div>배송지명</div>
                         <div>
-                            <input type="text" name="shipAddrTag" id="addr-tag" value="${s.shipAddTag }">
+                            <input type="text" name="shipAddrTag" id="addr-tag" value="">
                         </div>
                     </div>
                     <div class="receiver-row">
@@ -251,15 +252,15 @@
         </div>
     </section>
                 <script>
-                   function send(){
-                      $("#memberEmail").val($("#email").html());
-                   }
+                	function send(){
+                		$("#memberEmail").val($("#email").html());
+                	}
                 </script>
                 
                 <script>
-                   function update(){
-                      
-                   }
+                	function update(){
+                		
+                	}
                 </script>
     <div class="modal-overlay"></div>
     <div class="user-modal">
@@ -344,8 +345,8 @@
 
         $('.add-btn').on('click', e => {
             e.preventDefault();
-           $(".shipping-addr").attr("action","${pageContext.request.contextPath}/member/memberAddressInsert.do");
-           $(".shipping-addr").submit();
+        	$(".shipping-addr").attr("action","${pageContext.request.contextPath}/member/memberAddressInsert.do");
+        	$(".shipping-addr").submit();
         });
 
         $('.add-cancel-btn').on('click', e =>{
@@ -361,9 +362,9 @@
 </script>
 
 <script>
-   function fn_updateAddr(){
-      addrFrm.submit();
-   }
+	function fn_updateAddr(){
+		addrFrm.submit();
+	}
 
 </script>
 
