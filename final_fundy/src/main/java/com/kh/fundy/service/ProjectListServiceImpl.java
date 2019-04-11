@@ -37,9 +37,4 @@ public class ProjectListServiceImpl implements ProjectListService {
 		return dao.selectFunderList(projectNo);
 	}
 
-	@Override
-	public int memberDelete(String memberEmail) {
-		return dao.memberDelete(memberEmail);
-	}
-
 }

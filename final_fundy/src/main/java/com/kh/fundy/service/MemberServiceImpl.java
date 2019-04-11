@@ -45,6 +45,7 @@ public class MemberServiceImpl implements MemberService {
 		return dao.memberAddressView(s);
 	}
 	public List<Member> selectList() {
+		// TODO Auto-generated method stub
 		return dao.selectList();
 	}
 
@@ -67,33 +68,6 @@ public class MemberServiceImpl implements MemberService {
 	public List<Member> memberUpdateView(Member m) {
 		return dao.memberUpdateView(m);
 	}
-<<<<<<< HEAD
-	
-	@Override
-	public int memberPwUpdate(Member m) {
-		return dao.memberPwUpdate(m);
-	}
-
-	@Override
-	public int memberPwCheck(Member m) {
-		return dao.memberPwCheck(m);
-	}
-
-	@Override
-	public int memberNickCheck(String memberNick) {
-		return dao.memberNickCheck(memberNick);
-	}
-
-	@Override
-	public int memberDelete(Member m) {
-		return dao.memberDelete(m);
-	}
-	
-	
-	
-	
-	
-=======
 
 	@Override
 	public String selectCountUserAuth(String memberEmail) {
@@ -113,6 +87,5 @@ public class MemberServiceImpl implements MemberService {
 
 
 
->>>>>>> refs/heads/feature_kyo
 
 }
