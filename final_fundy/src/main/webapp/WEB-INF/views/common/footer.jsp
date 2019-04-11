@@ -763,14 +763,14 @@
           });
        });
        
-       commentGenBtn.on('click', () => {
+      /*  commentGenBtn.on('click', () => {
 			$.ajax({
    			url: '${path}//commentGen.do',
    			success: data => {
    				alert('결과: '+ data.result);
    			}
    			});
-   		});
+   		}); */
     });
     
     

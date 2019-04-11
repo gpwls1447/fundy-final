@@ -24,7 +24,7 @@ public class MainConroller {
 	private CategoryService service;
 	
 	
-	@RequestMapping("/main.do")
+	@RequestMapping("/mainNotused.do")
 	public String mainView(@RequestParam(value = "majorCode", required = false, defaultValue = "A01") String majorCategory, Model model)
 	{
 		List<Category> midCList = service.selectAllMid();
@@ -34,7 +34,7 @@ public class MainConroller {
 		return "main";
 	}
 	
-	@RequestMapping("/test/mainTest.do")
+	@RequestMapping("/main.do")
 	public ModelAndView mainTest(@RequestParam(value = "majorCategory", required = false, defaultValue = "A01") String majorCategory,@RequestParam(value = "majorCategory", required = false, defaultValue = "B01") String midCategory, Model model) {
 		mv = new ModelAndView();
 		Map<String, String> ctgMap = new HashMap<String, String>();
