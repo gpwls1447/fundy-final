@@ -1,10 +1,12 @@
 package com.kh.fundy.controller;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -16,11 +18,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.fundy.model.vo.Member;
+import com.kh.fundy.model.vo.Project;
 import com.kh.fundy.model.vo.ShippingAddr;
 import com.kh.fundy.service.MemberService;
+import com.kh.fundy.service.ProjectListService;
 
  @SessionAttributes(value= {"loggedMember"})
  @Controller
@@ -32,6 +37,9 @@ import com.kh.fundy.service.MemberService;
 
 	 @Autowired
 	 private MemberService service;
+	 
+	 @Autowired
+	 private ProjectListService pService;
 
 	 //암호화
 	 @Autowired
@@ -66,12 +74,22 @@ import com.kh.fundy.service.MemberService;
 		 model.addAttribute("loc", loc);
 		 return "common/msg";
 	 }
+	 
+	//로그아웃
+	@RequestMapping("/member/LogOut.do")
+	   public String logOut(SessionStatus session, HttpSession session1) {
+	      session1.invalidate();
+	      if(!session.isComplete()) {
+	    	  session.setComplete();
+	      }
+	         return "redirect:/";
+	      }
 
 	 // 카카오 로그인 후, 우리 사이트 가입 여부 후 분기처리 (Ajax로 리턴)
 	 @RequestMapping("/member/isKakao.do")
 	 @ResponseBody
 	 public Map isKakao(Member m, Model model, HttpSession session) {
-		 
+		 System.out.println("들어왔따~~");
 		 System.out.println(m.getKakaoId());
 		 String msg="";
 		 String loc="";
@@ -79,7 +97,6 @@ import com.kh.fundy.service.MemberService;
 		 
 		 if(m.getKakaoId()!=null) {
 			 msg="로그인 성공";
-			 
 			 Member result=service.login(m);
 			 model.addAttribute("loggedMember", result);
 			 map.put("val", "y");
@@ -89,33 +106,6 @@ import com.kh.fundy.service.MemberService;
 		 }
 		 return map;
 		 
-	 }
-
-	 //카카오 로그인이 성공적이고, 우리사이트 회원이 아닐 때, 회원가입 페이지 이동
-	 @RequestMapping("/member/memberEnrollKakao.do")
-	 public String memberEnroll(Member m, Model model) {
-		 model.addAttribute("Member", m);
-		 return "member/memberEnrollForm";
-	 }
-
-	 // 카카오 로그인이 성공적이고, 우리사이트 회원일 때 로그인처리 세션부여 (로그인처리)
-	 @RequestMapping("/member/memberLoginKakao.do")
-	 public String memberLoginKakao(Member m, HttpSession session, Model model) {
-		 Member result = service.selectOneKakao(m);
-
-		 String msg = "";
-		 String loc = "/";
-
-		 if(result!=null) {
-			 msg = "카카오 로그인 성공";
-			 session.setAttribute("loginMember", result);
-		 } else {
-			 msg = "카카오 로그인 실패!";
-		 }
-
-		 model.addAttribute("msg", msg);
-		 model.addAttribute("loc", loc);
-		 return "common/msg";
 	 }
 
 
@@ -238,17 +228,116 @@ import com.kh.fundy.service.MemberService;
 		 return "memberUpdate/memberUpdate-pw";
 	 }
 	 
-	 /*//비밀번호 변경 update
+	 //비밀번호 변경 update
 	 @RequestMapping("member/memberPw.do")
-	 public String memberPw(Member m, Model model, String beforePw) {
-		 String beforePw2 = m.getMemberPw();
+	 public String memberPw(Member m, Model model) {
 		 
+		 m.setMemberPw(bcEncoder.encode(m.getMemberPw()));
+		 int result = service.memberPwUpdate(m);
 		 String msg="";
 		 String loc="";
-		 if(beforePw!=beforePw2) {
+		
+		 if(result>0) {
+			 msg="비밀번호 변경이 완료되었습니다.";
+			 loc="/";
+		 } else {
+			 msg="비밀번호 변경이 실패되었습니다. 다시 시도해주세요.";
+			 loc="memberUpdate/memberUpdate-pw";
+		 }
+		 
+		 model.addAttribute("msg", msg);
+		 model.addAttribute("loc", loc);
+		 
+		 return "common/msg";
+	 }
+	 
+	 //비밀번호 확인
+	 @RequestMapping("/member/memberPwCheck.do")
+	 public void memberPwCheck(Member m, Model model, String memberPw, HttpServletResponse res) throws IOException{
+		 
+		 ModelAndView mv = new ModelAndView();
+		 System.out.println(m.getMemberEmail());
+		 System.out.println(m.getMemberPw());
+		 Member result = service.login(m);
+		 result.getMemberPw();
+		 
+		 boolean isSame;
+		 if(bcEncoder.matches(memberPw, result.getMemberPw())) {
+			 isSame = true; //일치하면 true
+		 }
+		 else
+		 {
+			 isSame = false; //불일치해서 false
+		 }
+		 
+		 mv.addObject("result", isSame);
+		 mv.setViewName("jsonView");
+
+		 res.getWriter().print(isSame);
+	 }
+	 
+	 //닉네임 중복확인
+	 @RequestMapping("/member/memberNickCheck.do")
+	 public void memberNickCheck(Member m, Model model, String memberNick, HttpServletResponse res) throws IOException{
+		 System.out.println("닉네임 들어왔나? : "+m.getMemberNick());
+		 
+		 int result = service.memberNickCheck(memberNick);
+		 System.out.println("닉네임 int : "+result);
+		 if(result>0) {
+			 
+		 } else {
 			 
 		 }
 		 
+		 res.getWriter().print(result);
+	 }
+	 
+	 //회원탈퇴 view
+	 @RequestMapping("/member/memberDeleteView.do")
+	 public String memberDeleteView(Member m, Model model) {
+		 return "memberUpdate/memberUpdate-memberDelete";
+	 }
+	 
+	 
+	 @RequestMapping("/member/memberDelete.do")
+	 public String memberDelete(Member m, Model model, HttpSession session1, SessionStatus session, String memberPw, String memberEmail) {
 		 
-	 }*/
+		 System.out.println("이메일 들어오나? : "+m.getMemberEmail());
+		 String msg="";
+		 String loc="";
+		 int projectResult = pService.memberDelete(memberEmail); //프로젝트 진행 여부
+		 
+		 System.out.println("프로젝트 진행여부 : "+projectResult);
+		 Member pwResult = service.login(m); //비밀번호 일치 여부
+		 pwResult.getMemberPw();
+		 
+		 boolean isSame;
+		 if(bcEncoder.matches(memberPw, pwResult.getMemberPw())) {
+			 isSame = true; //일치하면 true
+			 if(projectResult==0) {
+				 int result = service.memberDelete(m);
+				 msg="회원탈퇴가 완료되었습니다.";
+				 
+				 session1.invalidate(); //세션끊기
+				 if(!session.isComplete()) {
+					 session.setComplete();
+				 }
+				 loc="/";
+			 } else {
+				 msg="진행중인 프로젝트가 있습니다. 탈퇴가 불가능합니다.";
+				 loc="/member/memberDeleteView.do";
+			 }
+		 }
+		 else
+		 {
+			 isSame = false; //불일치하면 false
+			 msg="비밀번호가 불일치합니다.";
+			 loc="/member/memberDeleteView.do";
+		 }
+		 
+		 model.addAttribute("msg", msg);
+		 model.addAttribute("loc", loc);
+		 
+		 return "common/msg";
+	 }
  }

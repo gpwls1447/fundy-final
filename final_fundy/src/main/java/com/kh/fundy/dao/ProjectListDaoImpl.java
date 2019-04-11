@@ -53,5 +53,10 @@ public class ProjectListDaoImpl implements ProjectListDao {
 	public List<OptionDetail> selectOptionDetailList(int projectNo) {
 		return session.selectList("project.selectOptionDetailList", projectNo);
 	}
+
+	@Override
+	public int memberDelete(String memberEmail) {
+		return session.selectOne("project.memberDelete", memberEmail);
+	}
 	
 }

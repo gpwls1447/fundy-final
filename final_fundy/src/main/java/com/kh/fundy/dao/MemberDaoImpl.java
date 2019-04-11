@@ -69,4 +69,26 @@ public class MemberDaoImpl implements MemberDao {
 		return session.selectList("member.memberUpdateView", m);
 	}
 
+	@Override
+	public int memberPwUpdate(Member m) {
+		return session.update("member.memberPwUpdate", m);
+	}
+
+	@Override
+	public int memberPwCheck(Member m) {
+		return session.selectOne("member.memberPwCheck", m);
+	}
+
+	@Override
+	public int memberNickCheck(String memberNick) {
+		return session.selectOne("member.memberNickCheck", memberNick);
+	}
+
+	@Override
+	public int memberDelete(Member m) {
+		return session.update("member.memberDelete", m);
+	}
+	
+	
+
 }

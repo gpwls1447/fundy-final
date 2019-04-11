@@ -68,5 +68,29 @@ public class MemberServiceImpl implements MemberService {
 		return dao.memberUpdateView(m);
 	}
 	
+	@Override
+	public int memberPwUpdate(Member m) {
+		return dao.memberPwUpdate(m);
+	}
+
+	@Override
+	public int memberPwCheck(Member m) {
+		return dao.memberPwCheck(m);
+	}
+
+	@Override
+	public int memberNickCheck(String memberNick) {
+		return dao.memberNickCheck(memberNick);
+	}
+
+	@Override
+	public int memberDelete(Member m) {
+		return dao.memberDelete(m);
+	}
+	
+	
+	
+	
+	
 
 }

@@ -74,6 +74,7 @@
             box-sizing: border-box;
             border-radius: 4px;
             border: 1px solid #ccc;
+            padding: 0 7px;
         }
         
         .profile-pic-container
@@ -149,7 +150,7 @@
             <div><a href="${pageContext.request.contextPath}/member/memberUpdateView.do">기본정보수정</a><span class="indicator"></span></div>
             <div><a href="${pageContext.request.contextPath}/member/memberPwView.do">비밀번호변경</a></div>
             <div><a href="${pageContext.request.contextPath}/member/memberAddressView.do">배송지관리</a></div>
-            <div><a href="${pageContext.request.contextPath}/member/memberDeieteView.do">회원탈퇴</a></div>
+            <div><a href="${pageContext.request.contextPath}/member/memberDeleteView.do">회원탈퇴</a></div>
         </div>
 
         <hr id="divider"/>
@@ -168,8 +169,8 @@
                 <div class="nick-row">
                     <div>닉네임</div>
                     <div>
-                        <input type="text" name="memberNick" class="nick" placeholder="닉네임을 입력해주세요." value="${loggedMember.memberNick}">
-                        <button class="basic-btn basic-btn-active btn-mod" onclick="checkNick();">중복확인</button>
+                        <input type="text" name="memberNick" id="memberNick" class="nick" placeholder="닉네임을 입력해주세요." value="${loggedMember.memberNick}">
+                        <button class="basic-btn basic-btn-active btn-mod" id="nickCheck" onclick="return false;">중복확인</button>
                     </div>
                 </div>
                 <div class="intro-row">
@@ -234,6 +235,32 @@
 			
 		} 
 	}
+</script>
+
+<script>
+	var checkNick=0;
+	$(function(){
+		$('#nickCheck').click(function(){
+			var memberNick = $('#memberNick').val();
+			$.ajax({
+				url:"${path}/member/memberNickCheck.do",
+				type:"post",
+				data:{"memberNick":memberNick},
+				dataType:"json",
+				success:function(data){
+					console.log();
+					if(data>0){
+						alert('사용할수 없는 닉네임입니다. 다시 입력해주세요.');
+						$('#memberNick').val('');
+					} else {
+						alert('사용가능한 닉네임입니다.');
+						
+					}
+				}
+				
+			});
+		});
+	});
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </html>

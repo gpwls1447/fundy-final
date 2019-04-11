@@ -142,6 +142,7 @@
             margin-left: 10px;
         }
         
+        
 </style>
 
 <section class="section">
@@ -150,45 +151,121 @@
         <div><a href="${pageContext.request.contextPath}/member/memberUpdateView.do">기본정보수정</a></div>
         <div><a href="${pageContext.request.contextPath}/member/memberPwView.do">비밀번호변경</a><span class="indicator"></span></div>
         <div><a href="${pageContext.request.contextPath}/member/memberAddressView.do">배송지관리</a></div>
-        <div><a href="${pageContext.request.contextPath}/member/memberDeieteView.do">회원탈퇴</a></div>
+        <div><a href="${pageContext.request.contextPath}/member/memberDeleteView.do">회원탈퇴</a></div>
     </div>
 	<hr id="divider"/>
         <div class="memberupdate-body">
             <form action="${pageContext.request.contextPath}/member/memberPw.do" method="post" class="memberupdate-wrapper" name="pwFrm"> 
+	            <div class="nick-row">
+	           		<div>아이디</div>
+		                <div>
+		                	<input type="text" name="memberEmail" class="nick" value="${loggedMember.memberEmail}" readonly>
+		                </div>
+		        </div>
                 <div class="nick-row">
                     <div>기존 비밀번호</div>
                     <div>
-                        <input type="text" name="beforePw" class="nick" placeholder="기존 비밀번호를 입력해주세요.">
-                        <button class="basic-btn basic-btn-active btn-mod" onclick="pwCheck();">확인</button>
+                        <input type="password" name="beforePw" id="beforePw" class="nick" placeholder="기존 비밀번호를 입력해주세요.">
+                        <button class="basic-btn basic-btn-active btn-mod" id="pwCheckBtn" onclick="return false;">확인</button>
                     </div>
                 </div>
                 
-                <div class="email-row">
-                    <div>비밀번호 수정</div>
-                    <div><input type="text" name="newPw" class="email" placeholder="신규 비밀번호를 입력해주세요."></div>
-                </div>
-                
-                <div class="email-row">
-                    <div>비밀번호 확인</div>
-                    <div><input type="text" name="newPwCheck" class="email" placeholder="비밀번호를 다시 입력해주세요."></div>
-                </div>
-                
-                <div class="btn-set">
-                    <button class="basic-btn btn-mod">취소</button>
-                    <button class="basic-btn basic-btn-active btn-mod" onclick="update();">수정하기</button>
-                </div>
+	                <div class="email-row" id="updatePw" style="display:none">
+	                    <div>비밀번호 수정</div>
+	                    <div><input type="password" name="memberPw" id="memberPw" class="email" placeholder="신규 비밀번호를 입력해주세요."></div>
+	                </div>
+	                
+	                <div class="email-row" id="updatePw2" style="display:none">
+	                    <div>비밀번호 확인</div>
+	                    <div><input type="password" name="newPwCheck" id="newPwCheck" class="email" placeholder="비밀번호를 다시 입력해주세요." ></div>
+	                </div>
+	                <div  id="pwSpan"></div>
+	                
+	                <div class="btn-set" id="updatePw3" style="display:none">
+	                    <button class="basic-btn btn-mod" onclick="fn_cancel()">취소</button>
+	                    <button class="basic-btn basic-btn-active btn-mod" onclick="return fn_update()" id="updateBtn">수정하기</button>
+	                </div>
+               
             </form>
         </div>
 </section>
 <script>
-	function update(){
-		var confirm="수정하시겠습니까?";
-		if(comfirm){
+
+	//수정하기 버튼 눌렀을 때
+	function fn_update(){
+		var check = confirm("수정하시겠습니까?");
+		var memberPw = $('#memberPw').val();
+		var newPwCheck = $('#newPwCheck').val();
+		
+		if(memberPw.trim().length == 0 || newPwCheck.trim().length == 0){
+			alert('비밀번호를 입력해주세요.');
+			return false;
+		}
+		
+		if(check==true){
 			pwFrm.submit();
 		}
 	}
+	
+	function fn_cancel(){
+		
+	}
+	
+	//비밀번호 불일치일 경우
+	$(function(){
+		$('#newPwCheck').on('blur', function(){
+			
+			var memberPw = $('#memberPw').val();
+			var newPwCheck = $('#newPwCheck').val();
+			var updateBtn = document.getElementById('updateBtn');
+			
+			if(memberPw.trim().length == 0 || newPwCheck.trim().length == 0) return;
+			if(memberPw!=newPwCheck){
+				$('#pwSpan').text('비밀번호가 일치하지 않습니다.').css('color', 'red');
+				updateBtn.disabled = true;
+				
+			} else {
+				$('#pwSpan').text('비밀번호가 일치합니다.').css('color', 'green');
+				updateBtn.disabled = false;
+			}
+		});
+		
+		$('#newPwCheck').on('keydown', function(){
+			$('#pwSpan').text('');
+		});
+	});
+	
 </script>
 
-
+<script>
+	//기존비밀번호 확인하기 
+	$(function(){ 
+		$('#pwCheckBtn').click(function(e){
+			e.preventDefault();
+			var beforePw = $('#beforePw').val();
+			var memberEmail = $('#memberEmail').val();
+			$.ajax({
+				type:"post",
+				url:"${path}/member/memberPwCheck.do",
+				data:{"memberPw":beforePw, "memberEmail":"${loggedMember.memberEmail}"},
+				dataType:"text",
+				success:function(data){
+					console.log(data);
+					if(data=='true'){
+						alert('비밀번호가 일치합니다. 변경을 해주세요');
+						$('#pwCheckBtn').text('확인완료');
+						$('#updatePw').show();
+						$('#updatePw2').show();
+						$('#updatePw3').show();
+						
+					} else{
+						alert('비밀번호가 불일치합니다. 다시 입력해주세요.');
+						
+					} 
+				}
+			});
+		});
+	});
+</script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
