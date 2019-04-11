@@ -25,7 +25,7 @@
 	</select>
 	
 	<select id="selectCommentReply" parameterType="int" resultType="commentReply">
-		SELECT * FROM COMMENTREPLY 
+		SELECT * FROM COMMENTREPLY
 		JOIN MEMBER USING(MEMBEREMAIL)
 		WHERE COMMENTNO = #{commentNo}
 		AND COMMENTREPLYDELETE IS NULL
