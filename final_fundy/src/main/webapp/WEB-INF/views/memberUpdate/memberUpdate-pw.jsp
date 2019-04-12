@@ -29,6 +29,12 @@
             font-size: 17px;
             position: relative;
         }
+        
+        .memberupdate-nav > div > a
+        {
+        	text-decoration: none;
+        	color: #444;
+        }
 
         #divider
         {
@@ -39,6 +45,7 @@
             border-top: 1px solid #ccc;
             left: 0;
             width: 100vw;
+            margin-top: 7px;
         }
 
         .indicator

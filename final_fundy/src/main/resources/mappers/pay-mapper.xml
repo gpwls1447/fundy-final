@@ -3,7 +3,7 @@
 <mapper namespace="pay">
 	
 	<insert id="insertFundingLog" parameterType="fundingLog">
-		INSERT INTO FUNDINGLOG VALUES(FUNDINGLOG_SEQ.NEXTVAL, #{memberEmail}, #{projectNo}, #{deliveryStatCode}, #{packageNo}, #{packageAmount}, #{extraMoney}, #{funderDate}, #{anonymous})
+		INSERT INTO FUNDINGLOG VALUES(FUNDINGLOG_SEQ.NEXTVAL, #{memberEmail}, #{projectNo}, #{deliveryStatCode}, #{packageNo}, #{packageAmount}, #{extraMoney}, #{funderDate}, #{anonymous}, #{impUid}, #{merchantUid}, #{paidAmount}, #{applyNum})
 	</insert>
 	
 </mapper>

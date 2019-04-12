@@ -181,13 +181,13 @@ input.h31
 
 /* 툴팁 출력 */
 
-.tooltip {
+.my-tooltip {
     position: relative;
 }
 
-.tooltiptext{font-size: 13px;}
+.my-tooltiptext{font-size: 13px;}
 
-.tooltip .tooltiptext {
+.my-tooltip .my-tooltiptext {
     opacity: 0;
     width: 120px;
     background-color: #666;
@@ -202,7 +202,7 @@ input.h31
     transition: .2s linear;
 }
 
-.tooltip .tooltiptext::after {
+.my-tooltip .my-tooltiptext::after {
     content: "";
     position: absolute;
     top: 37%;
@@ -213,7 +213,7 @@ input.h31
     border-color: transparent #666 transparent transparent;
 }
 
-.tooltip:hover .tooltiptext {
+.my-tooltip:hover .my-tooltiptext {
     opacity: 1;
 }
 

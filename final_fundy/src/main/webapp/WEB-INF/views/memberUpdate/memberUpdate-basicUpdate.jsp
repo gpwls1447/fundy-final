@@ -30,6 +30,12 @@
             font-size: 17px;
             position: relative;
         }
+        
+        .memberupdate-nav > div > a
+        {
+        	text-decoration: none;
+        	color: #444;
+        }
 
         #divider
         {
@@ -40,6 +46,7 @@
             border-top: 1px solid #ccc;
             left: 0;
             width: 100vw;
+            margin-top: 7px;
         }
 
         .indicator
@@ -158,7 +165,7 @@
         <div class="memberupdate-body">
             <form action="${pageContext.request.contextPath}/member/memberUpdate.do" method="post" name="updateFrm" class="memberupdate-wrapper">
                 <div class="profile-pic-container">
-                    <img class="profile-pic" src="${path }/resources/images/default_profile_1.png"> <!-- 파일 올라가는 부분 --> 
+                    <img class="profile-pic" src="${path }/resources/memberProfile/${loggedMember.memberProfile}"> <!-- 파일 올라가는 부분 --> 
                     <input type="file" id="memberProfile" name="memberProfile" class="profile-upload" value="${loggedMember.memberProfile }"> <!-- 파일 미리보기 보여줄 부분 -->
                 </div>
                 <div class="email-row">

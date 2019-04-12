@@ -5,8 +5,8 @@
 		update ShippingAddr set shipAddrTag=#{shipAddrTag}, shipAddrReceiver=#{shipAddrReceiver}, zipCode=#{zipCode}, shipAddr=#{shipAddr}, shipAddrDetail=#{shipAddrDetail}, phone=#{phone} where memberEmail=#{memberEmail}
 	</update>
 	
-	<select id="updateAddressView" resultType="shippingAddr">
-		select * from ShippingAddr where memberEmail=#{memberEmail}
+	<select id="selectAddrList" parameterType="string" resultType="shippingAddr">
+		select * from ShippingAddr where memberEmail = #{memberEmail}
 	</select>
 	
 	<insert id="insertMemberAddress">

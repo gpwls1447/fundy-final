@@ -280,7 +280,7 @@
         <div>
             <div>후원자 목록에 참여자 이름과 후원금액이 공개됩니다.<br>혹시 익명으로 후원하고 싶으시다면, 비공개로 선택해주세요.</div>
             <div class="check-private">
-                <input type="checkbox" id="cb" class="cb">
+                <input type="checkbox" id="cb" class="cb" name="anonymous" value="Y">
                 <label for="cb"><span></span></label>비공개
             </div>
         </div>
@@ -294,8 +294,6 @@
 <script>
     const plusBtn = $('.plus')
     const minusBtn = $('.minus')
-    
-    console.log(${project.projectNo});
 	
     //옵션 선택 이벤트 함수
     const options = $('.option-container');
@@ -321,7 +319,10 @@
     });
     
     const nextStep = () => {
-    	location.href='${path}/pay/payFinal.do?projectNo=${project.projectNo}&projectTitle=${project.projectTitle }&packageIndex='+$('.selected').data('packageIndex')+'&extraMoney='+$('#extra-input').val()+'&packageAmount='+$('.selected').find('.amount-input').val();
+    	var anonymous;
+    	if($('#cb')[0].checked) anonymous = 'Y';
+    	else anonymous = 'N';
+    	location.href='${path}/pay/payFinal.do?projectNo=${project.projectNo}&projectTitle=${project.projectTitle }&packageIndex='+$('.selected').data('packageIndex')+'&extraMoney='+$('#extra-input').val()+'&packageAmount='+$('.selected').find('.amount-input').val()+'&anonymous='+anonymous;
     };
     
    	//수량 이벤트 함수

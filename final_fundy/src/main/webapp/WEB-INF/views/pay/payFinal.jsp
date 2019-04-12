@@ -327,7 +327,7 @@
                 </div>
                 <div>
                     <span class="horizontal-line"></span>
-                    <div class="amount">${packageAmount } 개</div>
+                    <div class="amount">${fundingLog.packageAmount } 개</div>
                     <fmt:formatDate value="${fundingOption.deliveryDate }" var="dDate" pattern="yyyy년 MM월 dd일"/>
                     <div class="ship-date">예상 발송일 <span class="divider">|</span><span class="date">${dDate }</span></div>
                 </div>    
@@ -335,16 +335,16 @@
             <div class="price-info-container">
                 <div class="price-div original-money">
                     <div>후원 금액</div>
-                    <div>${fundingOption.fundPrice * packageAmount }</div>
+                    <div>${fundingOption.fundPrice * fundingLog.packageAmount }</div>
                 </div>
                 <div class="price-div extra-money">
                     <div>추가 후원금</div>
-                    <div>${extraMoney }</div>
+                    <div>${fundingLog.extraMoney }</div>
                 </div>
                 <span class="horizontal-line"></span>
                 <div class="price-div total-price">
                     <div>총금액</div>
-                    <div id="final-price-value">${fundingOption.fundPrice * packageAmount + extraMoney}</div>
+                    <div id="final-price-value">${fundingOption.fundPrice * fundingLog.packageAmount + fundingLog.extraMoney}</div>
                 </div>
             </div>
         </div>
@@ -423,6 +423,21 @@
             <button class="basic-btn btn-mod">이전</button>
             <button class="basic-btn basic-btn-active btn-mod" onclick="callPayModule();">결제하기</button>
         </div>
+        
+        <form action="${path}/pay/settle.do" method="post" style="display:hidden" id="settle-frm">
+        	<input type="hidden" name="memberEmail" value="${loggedMember.memberEmail }">
+		    <input type="hidden" name="projectNo" value="${fundingLog.projectNo }">
+		    <input type="hidden" name="packageNo" value="${fundingOption.packageNo }">
+		    <input type="hidden" name="packageAmount" value="${fundingLog.packageAmount }">
+		    <input type="hidden" name="extraMoney" value="${fundingLog.extraMoney }">
+		    <input type="hidden" name="anonymous" value="${fundingLog.anonymous }">
+		    <input type="hidden" name="impUid" value="" id="imp-uid">
+		    <input type="hidden" name="merchantUid" value="" id="merchant-uid">
+		    <input type="hidden" name="paidAmount" value="" id="paid-amount">       
+		    <input type="hidden" name="apply_num" value="" id="apply_num">
+        
+        </form>
+        
     </section>
 <script>
 
@@ -455,30 +470,35 @@
     IMP.init('imp40348442');
     
     const callPayModule = () => {
-    	IMP.request_pay({
-            pg : 'inicis', 
-            pay_method : 'card',
-            merchant_uid : 'merchant_' + new Date().getTime(),
-            name : '주문명:결제테스트',
-            amount : parseInt($('#final-price-value').text()),
-            buyer_email : '${loggedMember.memberEmail}',
-            buyer_name : '${loggedMember.memberNick}',
-            buyer_addr : '서울특별시 강남구 삼성동',
-            buyer_postcode : '123-456',
-            m_redirect_url : ''
-        }, rsp => {
-            if ( rsp.success ) {
-                var msg = '결제가 완료되었습니다.';
-                msg += '고유ID : ' + rsp.imp_uid;
-                msg += '상점 거래ID : ' + rsp.merchant_uid;
-                msg += '결제 금액 : ' + rsp.paid_amount;
-                msg += '카드 승인번호 : ' + rsp.apply_num;
-            } else {
-                var msg = '결제에 실패하였습니다.';
-                msg += '에러내용 : ' + rsp.error_msg;
-            }
-            alert(msg);
-        });
+    	$('#settle-frm').submit();
+    	
+//     	IMP.request_pay({
+//             pg : 'inicis', 
+//             pay_method : 'card',
+//             merchant_uid : 'merchant_' + new Date().getTime(),
+//             name : '주문명:결제테스트',
+//             amount : parseInt($('#final-price-value').text()),
+//             buyer_email : '${loggedMember.memberEmail}',
+//             buyer_name : '${loggedMember.memberNick}',
+//             buyer_addr : '서울특별시 강남구 삼성동',
+//             buyer_postcode : '123-456',
+//             m_redirect_url : ''
+//         }, rsp => {
+//             if ( rsp.success ) {
+//                 var msg = '결제가 완료되었습니다.';
+//                 $('#imp-uid').val(rsp.imp_uid);
+//                 $('#merchant-uid').val(rsp.merchant_uid);
+//                 $('#paid-amount').val(rsp.paid_amount);
+//                 $('#apply_num').val(rsp.apply_num);
+
+//                 $('#settle-frm').submit();
+                
+//             } else {
+//                 var msg = '결제에 실패하였습니다.';
+//                 msg += '에러내용 : ' + rsp.error_msg;
+//             }
+//             alert(msg);
+//         });
     };
     
     const loadDaumPost = () => {

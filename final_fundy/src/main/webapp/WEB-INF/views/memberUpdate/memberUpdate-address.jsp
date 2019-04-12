@@ -3,9 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%
-	ShippingAddr s=(ShippingAddr)request.getAttribute("s");
-%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <style>
@@ -32,6 +29,12 @@
             font-size: 17px;
             position: relative;
         }
+        
+        .memberupdate-nav > div > a
+        {
+        	text-decoration: none;
+        	color: #444;
+        }
 
         #divider
         {
@@ -42,6 +45,7 @@
             border-top: 1px solid #ccc;
             left: 0;
             width: 100vw;
+            margin-top: 7px;
         }
 
         .indicator
@@ -179,37 +183,34 @@
 <section class="section">
         <div class="memberupdate-header">회원정보 수정</div>
         <div class="memberupdate-nav">
-            <div><a href="${pageContext.request.contextPath}/member/memberUpdateView.do">기본정보수정</a></div>
-            <div><a href="${pageContext.request.contextPath}/member/memberPwView.do">비밀번호변경</a></div>
-            <div><a href="${pageContext.request.contextPath}/member/memberAddressView.do">배송지관리</a><span class="indicator"></span></div>
-            <div><a href="${pageContext.request.contextPath}/member/memberDeleteView.do">회원탈퇴</a></div>
+            <div><a href="${path }/member/memberUpdateView.do">기본정보수정</a></div>
+            <div><a href="${path }/member/memberPwView.do">비밀번호변경</a></div>
+            <div><a href="${path }/member/memberAddressView.do">배송지관리</a><span class="indicator"></span></div>
+            <div><a href="${path }/member/memberDeleteView.do">회원탈퇴</a></div>
         </div>
         <hr id="divider" />
         <div class="memberupdate-body">
-            <form action="${pageContext.request.contextPath}/member/memberAddress.do" method="post" class="shipping-addr" name="addrFrm">
+            <form action="${path }/member/memberAddress.do" method="post" class="shipping-addr" name="addrFrm">
                 <div class="addr-list-container">
-                	<%-- <c:forEach items="${list }" var="list" varStatus="addr">
-	                    <div data-index="${addr }" class="addr-unit ${addr.index == 0 ? 'addr-unit-selected' : ''}">${list.shippAddrTag }<i class="material-icons delete-btn">close</i></div>                   
+                	<c:forEach items="${list }" var="list" varStatus="vs">
+	                    <div data-index="${vs.index }" class="addr-unit ${vs.index == 0 ? 'addr-unit-selected' : ''}">${list.shipAddrTag }<i class="material-icons delete-btn">close</i></div>                   
                     </c:forEach>
-                     --%>
-                     
-                    <div class="add-addr tooltip"><i class="material-icons">add</i>
-                        <span class="tooltiptext">새 배송지</span>
+                    <div class="add-addr my-tooltip"><i class="material-icons">add</i>
+                        <span class="my-tooltiptext">새 배송지</span>
                     </div>
                 </div>
-                
                 
                 <div class="addr-inputs">
                     <div class="addr-tag-row">
                         <div>배송지명</div>
                         <div>
-                            <input type="text" name="shipAddrTag" id="addr-tag" value="">
+                            <input type="text" name="shipAddrTag" id="ship-addr-tag" value="">
                         </div>
                     </div>
                     <div class="receiver-row">
                         <div>수취인</div>
                         <div>
-                            <input type="text" name="shipAddrReceiver" id="receiver" value="">
+                            <input type="text" name="shipAddrReceiver" id="ship-addr-receiver" value="">
                         </div>
                     </div>
                     <div class="addr-row">
@@ -219,8 +220,8 @@
                                 <button class="basic-btn basic-btn-active ripple">주소찾기</button>
                                 <input type="text" name="zipCode" id="zip-code" >
                             </div>
-                            <input type="text" name="shipAddr" id="addr-1" value="">
-                            <input type="text" name="shipAddrDetail" id="addr-2" placeholder="상세주소를 입력해주세요." value="">
+                            <input type="text" name="shipAddr" id="ship-addr" value="">
+                            <input type="text" name="shipAddrDetail" id="ship-addr-detail" placeholder="상세주소를 입력해주세요." value="">
                         </div>
                     </div>
                     <div class="phone-row">
@@ -231,9 +232,6 @@
                             <input type="tel" name="phone3" id="phone-3" value="">
                         </div>
                     </div>
-                    <%-- <c:set var="loggedMember" value="${sessionScope.loggedMember }"/> --%>
-                    <div id="email" style="display:none;">${loggedMember.memberEmail}</div>
-                    <input type="hidden" id="memberEmail" name="memberEmail">
                 </div>
                 
 
@@ -308,7 +306,6 @@
         </div>
         <div class="user-modal-footer"></div>
     </div>
-</body>
 <script>
     
     //주소 선택 이벤트
@@ -319,6 +316,18 @@
             if(deleteBtn.index(e.target) != -1) return;
             addrUnits.removeClass('addr-unit-selected');
             $(e.currentTarget).toggleClass('addr-unit-selected');
+			
+            const index = $(e.currentTarget).data('index');
+			
+        	$('#ship-addr-tag').val('${list[index].shipAddrTag}');
+        	$('#ship-addr-receiver').val('${list[index].shipAddrReceiver}');
+        	$('#zip-code').val('${list[index].zipCode}');
+        	$('#ship-addr').val('${list[index].shipAddr}');
+        	$('#ship-addr-detail').val('${list[index].shipAddrDetail}');
+
+        	$('#phone-1').val(${fn:substring(list[index].phone, 0, 3)});
+        	$('#phone-2').val(${fn:substring(list[index].phone, 4, 8)});
+        	$('#phone-3').val(${fn:substring(list[index].phone, 9, 13)});
         });
     });
 

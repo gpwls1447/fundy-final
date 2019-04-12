@@ -37,15 +37,6 @@ public class MemberDaoImpl implements MemberDao {
 		return session.insert("member.insertOne", m);
 	}
 
-	@Override
-	public int memberAddress(ShippingAddr s) {
-		return session.update("shippingAddr.updateAddress", s);
-	}
-
-	@Override
-	public List<ShippingAddr> memberAddressView(ShippingAddr s) {
-		return session.selectList("shippingAddr.updateAddressView", s);
-	}
 
 	public List<Member> selectList() {
 		return session.selectList("member.kakao");
@@ -55,21 +46,7 @@ public class MemberDaoImpl implements MemberDao {
 	public Member selectOneKakao(Member m) {
 		return session.selectOne("member.selectOne", m);
 	}
-
-	@Override
-	public int memberAddressInsert(ShippingAddr s) {
-		return session.insert("shippingAddr.insertMemberAddress", s);
-	}
-
-	@Override
-	public int memberUpdate(Member m) {
-		return session.update("member.memberUpdate", m);
-	}
-
-	@Override
-	public List<Member> memberUpdateView(Member m) {
-		return session.selectList("member.memberUpdateView", m);
-	}
+	
 
 	@Override
 	public String selectCountUserAuth(String memberEmail) {
@@ -91,27 +68,5 @@ public class MemberDaoImpl implements MemberDao {
 		map.put("authKey", key);
 		return session.update("member.updateUserAuth", map);
 	}
-
-	@Override
-	public int memberPwUpdate(Member m) {
-		return session.update("member.memberPwUpdate", m);
-	}
-
-	@Override
-	public int memberPwCheck(Member m) {
-		return session.selectOne("member.memberPwCheck", m);
-	}
-
-	@Override
-	public int memberNickCheck(String memberNick) {
-		return session.selectOne("member.memberNickCheck", memberNick);
-	}
-
-	@Override
-	public int memberDelete(Member m) {
-		return session.update("member.memberDelete", m);
-	}
-
-
 
 }
