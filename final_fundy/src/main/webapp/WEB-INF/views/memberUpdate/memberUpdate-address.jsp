@@ -5,6 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <style>
         .memberupdate-header
         {
@@ -126,7 +127,7 @@
         .addr-inputs > div {display: flex; margin: 10px 0;}
         .addr-inputs > div > div:first-of-type{flex: 1 1 0; font-weight: bold;}
         .addr-inputs > div > div:last-of-type{flex: 5 1 0;}
-        .addr-inputs input {width: 190px; height: 31px; padding: 0 6px;}
+        .addr-inputs input {width: 190px; height: 35px; padding: 0 6px; border-radius: 3px; border: 1px solid #ccc; }
         
         .addr-row input {margin: 5px 0;}
 
@@ -144,7 +145,7 @@
 
         #zip-code {width: 97px;}
         .addr-row input {width: 422px;}
-        .phone-row input {width: 124px;}
+        .phone-row input {width: 121px;}
         .phone-row span {margin: 0 5px;}
 
         .addr-unit-selected
@@ -180,7 +181,7 @@
 
 </style>
 
-<section class="section">
+	<section class="section">
         <div class="memberupdate-header">회원정보 수정</div>
         <div class="memberupdate-nav">
             <div><a href="${path }/member/memberUpdateView.do">기본정보수정</a></div>
@@ -190,10 +191,10 @@
         </div>
         <hr id="divider" />
         <div class="memberupdate-body">
-            <form action="${path }/member/memberAddress.do" method="post" class="shipping-addr" name="addrFrm">
+            <form action="${path }/member/memberAddress.do" method="post" class="shipping-addr" id="addr-frm" autocomplete="off">
                 <div class="addr-list-container">
                 	<c:forEach items="${list }" var="list" varStatus="vs">
-	                    <div data-index="${vs.index }" class="addr-unit ${vs.index == 0 ? 'addr-unit-selected' : ''}">${list.shipAddrTag }<i class="material-icons delete-btn">close</i></div>                   
+	                    <div data-ship-addr-no="${list.shipAddrNo }" class="addr-unit ${vs.index == 0 ? 'addr-unit-selected' : ''}">${list.shipAddrTag }<i class="material-icons delete-btn">close</i></div>                   
                     </c:forEach>
                     <div class="add-addr my-tooltip"><i class="material-icons">add</i>
                         <span class="my-tooltiptext">새 배송지</span>
@@ -217,7 +218,7 @@
                         <div>주소</div>
                         <div>
                             <div>
-                                <button class="basic-btn basic-btn-active ripple">주소찾기</button>
+                                <button class="basic-btn basic-btn-active ripple" id="find-addr" onclick="return false;">주소찾기</button>
                                 <input type="text" name="zipCode" id="zip-code" >
                             </div>
                             <input type="text" name="shipAddr" id="ship-addr" value="">
@@ -249,65 +250,7 @@
             </form>
         </div>
     </section>
-                <script>
-                	function send(){
-                		$("#memberEmail").val($("#email").html());
-                	}
-                </script>
-                
-                <script>
-                	function update(){
-                		
-                	}
-                </script>
-    <div class="modal-overlay"></div>
-    <div class="user-modal">
-        <div class="user-modal-header">
-            <div class="close-btn">
-                <i class="material-icons">clear</i>
-            </div>
-            <img class ="user-profile-pic" src="images/profile_pic_sample.jpg">
-            <div class="user-nick">
-                Amber Heard
-            </div>
-        </div>
-        <div class="user-modal-body">
-            <div class="user-menu-box">
-                <span class="bar vertical-bar"></span>
-                <span class="bar horizontal-bar"></span>
-                <i class="material-icons">work_outline</i>
-                <span class="user-menu-text">내프로젝트</span>
-            </div>
-            <div class="user-menu-box">
-                <span class="bar horizontal-bar"></span>
-                <i class="material-icons">card_giftcard</i>
-                <span class="user-menu-text">후원내역</span>
-            </div>
-            <div class="user-menu-box">
-                <span class="bar vertical-bar"></span>
-                <span class="bar horizontal-bar"></span>
-                <i class="material-icons">favorite</i>
-                <span class="user-menu-text">찜바구니</span>
-            </div>
-            <div class="user-menu-box">
-                <span class="bar horizontal-bar"></span>
-                <i class="material-icons">chat</i>
-                <span class="user-menu-text">메시지</span>
-            </div>
-            <div class="user-menu-box">
-                <span class="bar vertical-bar"></span>
-                <i class="material-icons">fingerprint</i>
-                <span class="user-menu-text">정보수정</span>
-            </div>
-            <div class="user-menu-box">
-                <i class="material-icons">exit_to_app</i>
-                <span class="user-menu-text">로그아웃</span>
-            </div>
-        </div>
-        <div class="user-modal-footer"></div>
-    </div>
 <script>
-    
     //주소 선택 이벤트
     const deleteBtn = $('.delete-btn');
     const addrUnits = $('.addr-unit');
@@ -317,20 +260,26 @@
             addrUnits.removeClass('addr-unit-selected');
             $(e.currentTarget).toggleClass('addr-unit-selected');
 			
-            const index = $(e.currentTarget).data('index');
+            const shipAddrNo = $(e.currentTarget).data('shipAddrNo');
 			
-        	$('#ship-addr-tag').val('${list[index].shipAddrTag}');
-        	$('#ship-addr-receiver').val('${list[index].shipAddrReceiver}');
-        	$('#zip-code').val('${list[index].zipCode}');
-        	$('#ship-addr').val('${list[index].shipAddr}');
-        	$('#ship-addr-detail').val('${list[index].shipAddrDetail}');
+            $.ajax({
+            	type: 'get',
+            	url: '${path}/memberUpdate/selectShipAddr.ajax?shipAddrNo='+shipAddrNo,
+            	dataType: 'json',
+            	success: data => {
+                	$('#ship-addr-tag').val(data.addr.shipAddrTag);
+                	$('#ship-addr-receiver').val(data.addr.shipAddrReceiver);
+                	$('#zip-code').val(data.addr.zipCode);
+                	$('#ship-addr').val(data.addr.shipAddr);
+                	$('#ship-addr-detail').val(data.addr.shipAddrDetail);
 
-        	$('#phone-1').val(${fn:substring(list[index].phone, 0, 3)});
-        	$('#phone-2').val(${fn:substring(list[index].phone, 4, 8)});
-        	$('#phone-3').val(${fn:substring(list[index].phone, 9, 13)});
+                	$('#phone-1').val(data.addr.phone.substring(0, 3));
+                	$('#phone-2').val(data.addr.phone.substring(4, 8));
+                	$('#phone-3').val(data.addr.phone.substring(9, 13));
+            	}
+            });
         });
     });
-
 
     //주소 삭제 이벤트
     $(() => {
@@ -338,10 +287,26 @@
             const flag = confirm('정말로 삭제하시겠습니까?');
             if(flag)
             {
-                $(e.currentTarget).parent().remove();
+            	const shipAddrNo = $(e.currentTarget).parent().data('shipAddrNo');
+            	
+            	$.ajax({
+            		type: 'get',
+            		url: '${path}/memberUpdate/deleteShipAddr.ajax?shipAddrNo='+shipAddrNo,
+            		dataType: 'json',
+            		success: data => {
+            			if(data.result > 0)
+            			{
+                        	$(e.currentTarget).parent().fadeOut(500);
+                        	setTimeout(() => {
+            	                $(e.currentTarget).parent().remove();            		
+                        	}, 600);
+            			}
+            		}
+            	});
             }
         });
     });
+    
 
     $(() => {
         $('.save-cancel-btn').on('click', e =>{
@@ -354,8 +319,8 @@
 
         $('.add-btn').on('click', e => {
             e.preventDefault();
-        	$(".shipping-addr").attr("action","${pageContext.request.contextPath}/member/memberAddressInsert.do");
-        	$(".shipping-addr").submit();
+        	$("#addr-frm").attr("action","${pageContext.request.contextPath}/memberUpdate/insertShipAddr.do");
+        	$("#addr-frm").submit();
         });
 
         $('.add-cancel-btn').on('click', e =>{
@@ -363,6 +328,7 @@
         });
 
         $('.add-addr').on('click', () => {
+        	addrUnits.removeClass('addr-unit-selected');
             $('input').val("");
             $('.btn-set').toggle();
         });
@@ -375,6 +341,23 @@
 		addrFrm.submit();
 	}
 
+</script>
+
+<script>
+	//주소API 기능 바인드
+	$(() => {
+		$('#find-addr').on('click', loadDaumPost);
+	});
+
+
+	const loadDaumPost = () => {
+	    new daum.Postcode({
+	        oncomplete: data => {
+				$('#zip-code').val(data.zonecode);
+				$('#ship-addr').val(data.roadAddress);
+	        }
+	    }).open();
+	}
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

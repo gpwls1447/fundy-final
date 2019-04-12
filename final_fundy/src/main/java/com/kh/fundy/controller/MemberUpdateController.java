@@ -67,18 +67,36 @@ public class MemberUpdateController {
    }
     
     //배송지 정보 동적 조회
-    @RequestMapping("/member/selectShipAddr.ajax")
-    public ModelAndView selectShipAddrAjax(int index, HttpSession session) {
+    @RequestMapping("/memberUpdate/selectShipAddr.ajax")
+    public ModelAndView selectShipAddrAjax(ShippingAddr sa, HttpSession session) 
+    {
     	ModelAndView mv = new ModelAndView();
-    	List<ShippingAddr> list = service.selectAddrList(((Member)session.getAttribute("loggedMember")).getMemberEmail());
+    	sa = service.selectAddr(sa);
+    	
+    	mv.addObject("addr", sa);
+    	mv.setViewName("jsonView");
     	return mv;
     }
     
-   //기본 배송지 없을때 추가하기
-    @RequestMapping("/member/memberAddressInsert.do")
-    public String memberAddressInsert(ShippingAddr sa, Model model, String phone1, String phone2, String phone3) {
+    //배송지 정보 삭제
+	@RequestMapping("/memberUpdate/deleteShipAddr.ajax")
+    public ModelAndView deleteShipAddrAjax(ShippingAddr sa, HttpSession session)
+    {
+    	ModelAndView mv = new ModelAndView();
+    	int result = service.deleteAddr(sa);
+    	
+    	mv.addObject("result", result);
+    	mv.setViewName("jsonView");
+    	return mv;
+    }
+    
+   //배송지 추가
+    @RequestMapping("/memberUpdate/insertShipAddr.do")
+    public String memberAddressInsert(ShippingAddr sa, Model model, String phone1, String phone2, String phone3, HttpSession session) {
+       sa.setMemberEmail(((Member)(session.getAttribute("loggedMember"))).getMemberEmail());
        sa.setPhone(phone1+phone2+phone3);
-       int result = service.memberAddressInsert(sa);
+       
+       int result = service.insertAddr(sa);
        
        String msg;
        if(result > 0) {msg="배송지 정보가  추가되었습니다.";} 
@@ -130,7 +148,6 @@ public class MemberUpdateController {
                Member mem=new Member();
                mem.setMemberProfile(renamedFile);
                list.add(mem);
-               //list.add(new Attachment(0,0,OriFileName,renamedFile,null,0,null));
             }
             
          }

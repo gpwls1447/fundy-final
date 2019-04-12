@@ -1,6 +1,7 @@
 package com.kh.fundy.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,21 +15,6 @@ public class MemberUpdateDaoImpl implements MemberUpdateDao {
 
 	@Autowired
 	private SqlSessionTemplate session;
-	
-	@Override
-	public int memberAddress(ShippingAddr s) {
-		return session.update("shippingAddr.updateAddress", s);
-	}
-	
-	@Override
-	public List<ShippingAddr> selectAddrList(String memberEmail) {
-		return session.selectList("shippingAddr.selectAddrList", memberEmail);
-	}
-	
-	@Override
-	public int memberAddressInsert(ShippingAddr s) {
-		return session.insert("shippingAddr.insertMemberAddress", s);
-	}
 	
 	@Override
 	public int memberUpdate(Member m) {
@@ -58,6 +44,32 @@ public class MemberUpdateDaoImpl implements MemberUpdateDao {
 	@Override
 	public int memberDelete(Member m) {
 		return session.update("member.memberDelete", m);
+	}
+	
+	@Override
+	public int memberAddress(ShippingAddr s) {
+		return session.update("shippingAddr.updateAddress", s);
+	}
+	
+
+	@Override
+	public int insertAddr(ShippingAddr sa) {
+		return session.insert("shippingAddr.insertAddr", sa);
+	}
+	
+	@Override
+	public List<ShippingAddr> selectAddrList(String memberEmail) {
+		return session.selectList("shippingAddr.selectAddrList", memberEmail);
+	}
+	
+	@Override
+	public ShippingAddr selectAddr(ShippingAddr sa) {
+		return session.selectOne("shippingAddr.selectAddr", sa);
+	}
+	
+	@Override
+	public int deleteAddr(ShippingAddr sa) {
+		return session.delete("shippingAddr.deleteAddr", sa);
 	}
 	
 }
