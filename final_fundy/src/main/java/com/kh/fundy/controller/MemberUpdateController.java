@@ -30,10 +30,10 @@ import com.kh.fundy.service.ProjectListService;
 public class MemberUpdateController {
 
 	@Autowired
-	private MemberUpdateService mUservice;
+	private MemberUpdateService service;
 	
 	@Autowired
-	private MemberService service;
+	private MemberService mService;
 	
 	@Autowired
 	private ProjectListService pService;
@@ -41,12 +41,12 @@ public class MemberUpdateController {
 	@Autowired
 	private BCryptPasswordEncoder bcEncoder;
 	
-	  //배송지 정보 뷰화면
+	
+	//배송지 정보 뷰화면
     @RequestMapping("/member/memberAddressView.do")
-    public ModelAndView memberAddressView(Model model, HttpSession session) {
+    public ModelAndView memberAddressView(HttpSession session) {
       ModelAndView mv = new ModelAndView();
-      List<ShippingAddr> list = mUservice.selectAddrList(((Member)session.getAttribute("loggedMember")).getMemberEmail());
-      System.out.println(list.size());
+      List<ShippingAddr> list = service.selectAddrList(((Member)session.getAttribute("loggedMember")).getMemberEmail());
       mv.addObject("list", list);
       mv.setViewName("memberUpdate/memberUpdate-address");
       return mv;
@@ -55,35 +55,30 @@ public class MemberUpdateController {
     //배송지 정보 수정하기
     @RequestMapping("/member/memberAddress.do")
     public String memberAddress(ShippingAddr s, Model model) {
-         /*String shipAddrTag = s.getShipAddrTag();
-         String shipAddrReceiver = s.getShipAddrReceiver();
-         int zipCode = s.getZipCode();
-         String shipAddr = s.getShipAddr();
-         String shipAddrDatail = s.getShipAddrDetail();
-         String phone = s.getPhone();*/
-      int result = mUservice.memberAddress(s);
+      int result = service.memberAddress(s);
          
-      String msg = "";
-      String loc = "";
-         
-      if(result>0) {
-         msg="배송지 정보 수정 완료!";
-         loc="/member/memberAddressView.do"; //서블릿으로 보내야함
-      } else {
-         msg="배송지 정보 수정 오류입니다.";
-         loc="/member/memberAddressView.do";
-      }
+      String msg;
+      if(result>0) {msg="배송지 정보 수정 완료!";} 
+      else {msg="배송지 정보 수정 오류입니다.";}
          
       model.addAttribute("msg", msg);
-      model.addAttribute("loc", loc);
+      model.addAttribute("loc", "/member/memberAddressView.do");
       return "common/msg";
    }
+    
+    //배송지 정보 동적 조회
+    @RequestMapping("/member/selectShipAddr.ajax")
+    public ModelAndView selectShipAddrAjax(int index, HttpSession session) {
+    	ModelAndView mv = new ModelAndView();
+    	List<ShippingAddr> list = service.selectAddrList(((Member)session.getAttribute("loggedMember")).getMemberEmail());
+    	return mv;
+    }
     
    //기본 배송지 없을때 추가하기
     @RequestMapping("/member/memberAddressInsert.do")
     public String memberAddressInsert(ShippingAddr sa, Model model, String phone1, String phone2, String phone3) {
        sa.setPhone(phone1+phone2+phone3);
-       int result = mUservice.memberAddressInsert(sa);
+       int result = service.memberAddressInsert(sa);
        
        String msg;
        if(result > 0) {msg="배송지 정보가  추가되었습니다.";} 
@@ -99,7 +94,6 @@ public class MemberUpdateController {
     public String memberUpdateView(Member m, Model model) {
        return "memberUpdate/memberUpdate-basicUpdate";
     }
-    
     
     //기본정보 변경 업데이트
     @RequestMapping("/member/memberUpdate.do")
@@ -141,7 +135,7 @@ public class MemberUpdateController {
             
          }
        
-       int result = mUservice.memberUpdate(m, list);
+       int result = service.memberUpdate(m, list);
        
        String loc="";
        String msg="";
@@ -171,7 +165,7 @@ public class MemberUpdateController {
     public String memberPw(Member m, Model model) {
        
        m.setMemberPw(bcEncoder.encode(m.getMemberPw()));
-       int result = mUservice.memberPwUpdate(m);
+       int result = service.memberPwUpdate(m);
        String msg="";
        String loc="";
       
@@ -196,7 +190,7 @@ public class MemberUpdateController {
        ModelAndView mv = new ModelAndView();
        System.out.println(m.getMemberEmail());
        System.out.println(m.getMemberPw());
-       Member result = service.login(m);
+       Member result = mService.login(m);
        result.getMemberPw();
        
        boolean isSame;
@@ -219,7 +213,7 @@ public class MemberUpdateController {
     public void memberNickCheck(Member m, Model model, String memberNick, HttpServletResponse res) throws IOException{
        System.out.println("닉네임 들어왔나? : "+m.getMemberNick());
        
-       int result = mUservice.memberNickCheck(memberNick);
+       int result = service.memberNickCheck(memberNick);
        System.out.println("닉네임 int : "+result);
        if(result>0) {
           
@@ -246,14 +240,14 @@ public class MemberUpdateController {
        int projectResult = pService.memberDelete(memberEmail); //프로젝트 진행 여부
        
        System.out.println("프로젝트 진행여부 : "+projectResult);
-       Member pwResult = service.login(m); //비밀번호 일치 여부
+       Member pwResult = mService.login(m); //비밀번호 일치 여부
        pwResult.getMemberPw();
        
        boolean isSame;
        if(bcEncoder.matches(memberPw, pwResult.getMemberPw())) {
           isSame = true; //일치하면 true
           if(projectResult==0) {
-             int result = mUservice.memberDelete(m);
+             int result = service.memberDelete(m);
              msg="회원탈퇴가 완료되었습니다.";
              
              session1.invalidate(); //세션끊기
