@@ -4,24 +4,30 @@
   
   	<!-- 전체 게시물 카운트 -->
 	<select id="selectCount" resultType="_int">
-		select count(*) from ask
+		select count(*) from ask where askdelete is null
+	</select>
+	
+	<!-- 상태바에 필요한 댓글리스트 -->
+	<select id="replyList" resultType="askReply">
+		select a.*, (select count(*) from askreply where a.askno=askno) reply from ask a order by a.askno desc
 	</select>
 	
 	<!-- 전체리스트 불러오기 -->
-	<select id="selectList" resultType="askBoard">
+	<select id="selectList" resultType="map">
 		<!-- select A.*,(select count(*) from attachment where A.askno=askno) filecount from ask A order by askdate desc -->
-		select * from ask order by askno desc
+		<!-- select * from ask where askdelete is null order by askno desc -->
+		select a.*, (select count(*) from askreply where a.askno=askno and askreplydelete is null ) reply from ask a where askdelete is null order by a.askno desc
 	</select>
 		
 	<!-- 게시물 작성하기 -->
 	<insert id="insertAskBoard" parameterType="askBoard">
-		insert into ask values(ask_seq.nextval,#{askTitle},'writer',#{askContent},sysdate,null,null)
+		insert into ask values(ask_seq.nextval,#{askTitle},#{askWriter},#{askContent},#{askDate},null,null)
 	</insert>
 	
 	<!-- 게시물 삭제 -->
-	<delete id="deleteAskBoard">
-		delete from ask where askno = #{askNo}
-	</delete>
+	<update id="deleteAskBoard" parameterType="askBoard">
+		update ask set askdelete = #{askDelete} where askNo = #{askNo}
+	</update>
 	
 	<!-- 게시물 상세보기 -->
 	<select id="askBoardView" parameterType="int" resultType="askBoard">
@@ -30,11 +36,11 @@
 	
 	<!-- 게시물 수정 -->
 	<update id="askBoardUpdate" parameterType="askBoard">
-		update ask set asktitle = #{askTitle},askcontent = #{askContent},askmod=sysdate where askno = #{askNo}
+		update ask set asktitle = #{askTitle},askcontent = #{askContent},askmod=#{askMod} where askno = #{askNo}
 	</update>
 	
 	<!-- 댓글보이기 -->
 	<select id="replyView" resultType="askReply">
-  	select * from askreply where askno=#{askNo} order by askreplydate desc
+  	select * from askreply where askno=#{askNo} and askreplydelete is null order by askreplydate desc
   </select>
 </mapper>

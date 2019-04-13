@@ -54,9 +54,8 @@ public class NoticeDaoImpl implements NoticeDao {
 
 	//공지사항 삭제
 	@Override
-	public int noticeDelete(int noticeNo) {
-		System.out.println(noticeNo);
-		return session.delete("notice.noticeDelete",noticeNo);
+	public int noticeDelete(Notice notice) {
+		return session.update("notice.noticeDelete",notice);
 	}
 	
 	

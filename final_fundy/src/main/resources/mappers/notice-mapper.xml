@@ -4,19 +4,23 @@
   
   <!-- 전체 공지사항 카운트 -->
   <select id="selectCount" resultType="_int">
-  	select count(*) from notice
+  	select count(*) from notice where noticedelete is null
   </select>
   
   <!-- 공지사항 전체리스트 불러오기 -->
   <select id="selectList" resultType="notice">
   	<!-- select A.*,(select count(*) from NoticeImage where A.noticeno=noticeno) filecount from notice A order by noticedate desc; -->
-  	select * from notice order by noticeno desc
+  	select * from notice where noticedelete is null order by noticeno desc
   </select>
   
   <!-- 공지사항 입력 -->
   <insert id="insertNotice" parameterType="notice">
-  	insert into notice values(Notice_SEQ.nextval,#{noticeTitle},#{noticeContent},sysdate,null,null)
+  	insert into notice values(Notice_SEQ.nextval,#{noticeTitle},#{noticeContent},#{noticeDate},null,null)
   </insert>
+  <!-- 날짜입력 바꿔주기 -->
+  
+  
+  
   <!-- 공지사항 파일입력 -->
   <insert id="insertAttachment" parameterType="attachment">
   	insert into NoticeImage(noticeNo,originalfilename,renamedfilename) values(#{noticeNO},#{originalFileName},#{renamedFileName})
@@ -28,12 +32,12 @@
 	</select>
   
   <!-- 공지사항 삭제 -->
-	<delete id="noticeDelete">
-		delete from notice where noticeno = #{noticeNo}
-	</delete>
+	<update id="noticeDelete" parameterType="notice">
+		update notice set noticedelete = #{noticeDelete} where noticeNo = #{noticeNo}
+	</update>
   
   <!-- 공지사항 수정 -->
-	<update id="NoticeUpdate" parameterType="notice">
-		update notice set noticetitle = #{noticeTitle},noticecontent = #{noticeContent},noticeedit=sysdate where noticeno = #{noticeNo}
+	<update id="noticeUpdate" parameterType="notice">
+		update notice set noticetitle = #{noticeTitle},noticecontent = #{noticeContent},noticeedit=#{noticeEdit} where noticeno = #{noticeNo}
 	</update>
 </mapper>

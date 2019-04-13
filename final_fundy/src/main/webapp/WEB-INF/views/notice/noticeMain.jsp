@@ -174,7 +174,9 @@
             </c:forEach>
         </div>
         <div class="support-notice-update-btns">
+         <c:if test='${loggedMember.memberEmail.equals("admin@naver.com") }'>
 		<input type="button" value="게시물 작성" id="addBtn" onclick="fn_noticeForm();"/>
+		</c:if>
 		</div>
         <div class="pagebar">
              ${pageBar }

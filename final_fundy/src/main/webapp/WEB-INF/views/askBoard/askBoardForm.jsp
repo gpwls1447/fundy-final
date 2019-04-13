@@ -416,9 +416,10 @@
         <br/>
         <br/>
         <form name="askForm"action="${path}/askBoardFormEnd.do" method="post" class="notice-form">
+            <input type="hidden" name="askWriter" id="writer" value="${loggedMember.memberNick}" >
             <div class="notice-form-title">
                 <div>제목</div>
-                <div><input type="text" name="askTitle" id="title"></div>
+                <div><input type="text" name="askTitle" id="title"  autocomplete="off"></div>
             </div>
             <div class="notice-form-content">
                 <div>게시판 내용</div>

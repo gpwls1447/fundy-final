@@ -17,6 +17,14 @@ public class AskReplyServiceImpl implements AskReplyService {
 	@Override
 	public int insertReply(AskReply askReply) {
 		return dao.insertReply(askReply);
+		
+	
+	}
+
+	//댓글 삭제
+	@Override
+	public int deleteReply(AskReply askReply) {
+		return dao.deleteReply(askReply);
 	}
 	
 	

@@ -16,7 +16,7 @@ public interface NoticeService {
 	//공지사항 상세보기
 	Notice noticeView(int noticeNo);
 	//공지사항 삭제
-	int noticeDelete(int noticeNo);
+	int noticeDelete(Notice notice);
 	//공지사항 수정
 	int noticeUpdate(Notice notice);
 	

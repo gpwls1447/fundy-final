@@ -186,8 +186,11 @@
                 </div>
             </div>
             <div class="support-notice-view-btns">
-                <input type="button" value="수정" onclick="fn_noticeUpdate();">
-                <input type="button" value="삭제" onclick="fn_noticeDelete();">
+            	<c:if test='${loggedMember.memberEmail.equals("admin@naver.com") }'>
+                	<input type="button" value="수정" onclick="fn_noticeUpdate();">
+                	<input type="button" value="삭제" onclick="fn_noticeDelete();">
+             	</c:if>
+                <input type="button" value="목록" onclick="fn_noticeMain();">
             </div>
         </div>
     </div>
@@ -201,6 +204,10 @@
 		  	return;
 		  }
 	  }
+   function fn_noticeMain()
+   {
+	   location.href="${path}/noticeMain.do";
+   }
    
    
    function fn_noticeUpdate()

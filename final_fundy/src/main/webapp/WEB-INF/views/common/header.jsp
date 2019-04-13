@@ -37,7 +37,7 @@
                     <i class="material-icons category-btn">more_horiz</i>
                 </div>
                 <div>
-                   <a href="${path }/project/projectWrite.do?majorCode=A01">프로젝트 작성</a>
+                   <a href="${path }/project/projectWrite.do?majorCategory=A01">프로젝트 작성</a>
                 </div>
                 <div>
                    <a href="${path }/askBoardMain.do">게시판</a>
