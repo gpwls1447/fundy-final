@@ -344,9 +344,9 @@
 <section class="section">
    <div class="message-header">메시지</div>
         <div class="message-nav">
-           <div><a href="${pageContext.request.contextPath}/messageMain.do">일반 메시지</a><span class="indicator"></span></div>
+           <div><a href="${pageContext.request.contextPath}/messageMain.do">일반 메시지</a></div>
             <div><a href="${pageContext.request.contextPath}/myProjectMessage.do">내 프로젝트 메시지</a></div>
-            <div><a href="${pageContext.request.contextPath}/adminMessage.do">운영자 메시지</a></div>
+            <div><a href="${pageContext.request.contextPath}/adminMessage.do">운영자 메시지</a><span class="indicator"></span></div>
         </div>
         <hr id="divider"/>
         <div class="message-body">
