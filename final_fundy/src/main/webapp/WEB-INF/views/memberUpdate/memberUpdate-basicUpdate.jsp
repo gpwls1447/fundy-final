@@ -7,149 +7,150 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <style>
-.memberupdate-header
-        {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            font-size: 27px;
-            font-weight: bold;
-            margin: 30px 0;
-        }
-
-        .memberupdate-nav
-        {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
-
-        .memberupdate-nav > div
-        {
-            margin: 0 20px;
-            font-size: 17px;
-            position: relative;
-        }
-        
-        .memberupdate-nav > div > a
-        {
-        	text-decoration: none;
-        	color: #444;
-        }
-
-        #divider
-        {
-            position: absolute;
-            display: block;
-            height: 1px;
-            border: none;
-            border-top: 1px solid #ccc;
-            left: 0;
-            width: 100vw;
-            margin-top: 7px;
-        }
-
-        .indicator
-        {
-            display: block;
-            bottom: -8px;
-            position: absolute;
-            width: 100%;
-            height: 5px;
-            background-color: rgb(76, 168, 228);
-        }
-
-        .memberupdate-body
-        {
-            margin-top: 40px;
-            display: flex;
-            flex-flow: column nowrap;
-            align-items: center;
-        }
-
-        .memberupdate-wrapper
-        {
-            width: 450px;
-            display: flex;
-            flex-flow: column nowrap;
-            align-items: center;
-        }
-
-        .memberupdate-wrapper input
-        {
-            height: 35px;
-            box-sizing: border-box;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            padding: 0 7px;
-        }
-        
-        .profile-pic-container
-        {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            position: relative;
-            margin-bottom: 35px !important;
-        }
-
-        .profile-pic
-        {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-        }
-
-        .profile-upload
-        {
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0;
-            width: 100% !important;
-            height: 100% !important;
-            padding: 0 !important;
-            z-index: 2;
-            cursor: pointer;
-        }
-
-        .memberupdate-wrapper > div
-        {
-            display: flex;
-            margin: 10px 0;
-        }
-
-        .memberupdate-wrapper > div > div:first-of-type
-        {
-            width: 90px;
-            font-weight: bold;
-        }
-        .memberupdate-wrapper > div > div:last-of-type{width: 310px;}
-
-        .email{width: 100%;}
-
-        .intro
-        {
-            resize: none;
-            min-width: 308px;
-            min-height: 100px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-        }
-
-        .btn-set
-        {
-            width: 395px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .btn-mod
-        {
-            margin: 0;
-            margin-left: 10px;
-        }
-        
+	.memberupdate-header
+	{
+	    width: 100%;
+	    display: flex;
+	    justify-content: center;
+	    font-size: 27px;
+	    font-weight: bold;
+	    margin: 30px 0;
+	}
+	
+	.memberupdate-nav
+	{
+	    width: 100%;
+	    display: flex;
+	    justify-content: center;
+	}
+	
+	.memberupdate-nav > div
+	{
+	    margin: 0 20px;
+	    font-size: 17px;
+	    position: relative;
+	}
+	
+	.memberupdate-nav > div > a
+	{
+		text-decoration: none;
+		color: #444;
+	}
+	
+	#divider
+	{
+	    position: absolute;
+	    display: block;
+	    height: 1px;
+	    border: none;
+	    border-top: 1px solid #ccc;
+	    left: 0;
+	    width: 100vw;
+	    margin-top: 7px;
+	}
+	
+	.indicator
+	{
+	    display: block;
+	    bottom: -8px;
+	    position: absolute;
+	    width: 100%;
+	    height: 5px;
+	    background-color: rgb(76, 168, 228);
+	}
+	
+	.memberupdate-body
+	{
+	    margin-top: 40px;
+	    display: flex;
+	    flex-flow: column nowrap;
+	    align-items: center;
+	}
+	
+	.memberupdate-wrapper
+	{
+	    width: 450px;
+	    display: flex;
+	    flex-flow: column nowrap;
+	    align-items: center;
+	}
+	
+	.memberupdate-wrapper input
+	{
+	    height: 35px;
+	    box-sizing: border-box;
+	    border-radius: 4px;
+	    border: 1px solid #ccc;
+	    padding: 0 7px;
+	}
+	
+	.profile-pic-container
+	{
+	    width: 80px;
+	    height: 80px;
+	    border-radius: 50%;
+	    position: relative;
+	    margin-bottom: 35px !important;
+	}
+	
+	.profile-pic
+	{
+	    width: 100%;
+	    height: 100%;
+	    border-radius: 50%;
+	    object-fit: contain;
+	    border: 1px solid #eee;
+	}
+	
+	.profile-upload
+	{
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	    opacity: 0;
+	    width: 100% !important;
+	    height: 100% !important;
+	    padding: 0 !important;
+	    z-index: 2;
+	    cursor: pointer;
+	}
+	
+	.memberupdate-wrapper > div
+	{
+	    display: flex;
+	    margin: 10px 0;
+	}
+	
+	.memberupdate-wrapper > div > div:first-of-type
+	{
+	    width: 90px;
+	    font-weight: bold;
+	}
+	.memberupdate-wrapper > div > div:last-of-type{width: 310px;}
+	
+	.email{width: 100%;}
+	
+	.intro
+	{
+	    resize: none;
+	    min-width: 308px;
+	    min-height: 100px;
+	    border-radius: 4px;
+	    border: 1px solid #ccc;
+	}
+	
+	.btn-set
+	{
+	    width: 395px;
+	    display: flex;
+	    justify-content: center;
+	}
+	
+	.btn-mod
+	{
+	    margin: 0;
+	    margin-left: 10px;
+	}
 </style>
     <section class="section">
         <div class="memberupdate-header">회원정보 수정</div>
@@ -163,10 +164,10 @@
         <hr id="divider"/>
         
         <div class="memberupdate-body">
-            <form action="${pageContext.request.contextPath}/member/memberUpdate.do" method="post" name="updateFrm" class="memberupdate-wrapper">
+            <form action="${pageContext.request.contextPath}/member/memberUpdate.do" method="post" id="member-update-frm" class="memberupdate-wrapper">
                 <div class="profile-pic-container">
-                    <img class="profile-pic" src="${path }/resources/memberProfile/${loggedMember.memberProfile}"> <!-- 파일 올라가는 부분 --> 
-                    <input type="file" id="memberProfile" name="memberProfile" class="profile-upload" value="${loggedMember.memberProfile }"> <!-- 파일 미리보기 보여줄 부분 -->
+                    <img class="profile-pic" src="${path }/resources/memberProfile/${loggedMember.memberProfile}">
+                    <input type="file" id="profile-input" name="memberProfile" class="profile-upload" value="${loggedMember.memberProfile }">
                 </div>
                 <div class="email-row">
                     <div>이메일</div>
@@ -191,17 +192,49 @@
                     <button class="basic-btn btn-mod">취소</button>
                     <button class="basic-btn basic-btn-active btn-mod" onclick="update();">수정하기</button>
                 </div>
+                <input type="hidden" name="uploadFileName" id="uploadFileName" value="">
             </form>
         </div>
     </section> 
+<script>
+	//파일 변경시 파일 업로드
+	$(() => {
+		const profileInput = $('#profile-input');
+		profileInput.on('input', () => {
+			
+			if(/\.(gif|jpg|jpeg|png)$/i.test(profileInput[0].files[0].name));
+			{
+				alert('이미지 파일이 아닙니다.');
+				return;
+			}
+			
+			const formData = new FormData();
+			formData.append("profileImage", profileInput[0].files[0], profileInput[0].files[0].name);
+			formData.append("uploadFileName", $('#uploadFileName').val());
+			console.log($('#uploadFileName').val());
+			
+			$.ajax({
+				type: 'post',
+				url: '${path}/memberUpdate/updateProfilePic.ajax',
+				data: formData,
+				processData: false,
+				contentType: false,
+				dataType: 'json',
+				success: data => {
+					$('.profile-pic').attr('src', '${path}/resources/memberProfile/'+data.uploadFileName);
+					$('#uploadFileName').val(data.uploadFileName);
+				}
+			});
+		});
+	});
 
+</script>
 
 <script>
 	function update(){
 		var comfirm="수정하시겠습니까?";
 		if(comfirm==true){
-			updateFrm.submit();
-			
+			$('#member-update-form').submit();
 		} 
 	}
 </script>

@@ -39,7 +39,7 @@ public class DatagenController {
 	private final int targetMemberCount = 300;
 	private final int targetProjectCount = 400;
 	private final int targetFundingLogCount = 4000;
-	private final int targetCommentCount = 2000;
+	private final int targetCommentCount = 2500;
 
 	@RequestMapping("/commentGen.do")
 	public ModelAndView commentGen()
@@ -81,7 +81,7 @@ public class DatagenController {
 		}
 		
 		mv.addObject("result", result);
-		mv.setViewName("jasonView");
+		mv.setViewName("jsonView");
 		return mv;
 	}
 	

@@ -54,11 +54,6 @@ public class MemberUpdateServiceImpl implements MemberUpdateService {
 	public int memberDelete(Member m) {
 		return dao.memberDelete(m);
 	}
-
-	@Override
-	public int memberUpdate(Member m, List<Member> list) {
-		return 0;
-	}
 	
 	@Override
 	public List<ShippingAddr> selectAddrList(String memberEmail) {
@@ -74,6 +69,5 @@ public class MemberUpdateServiceImpl implements MemberUpdateService {
 	public int deleteAddr(ShippingAddr sa) {
 		return dao.deleteAddr(sa);
 	}
-
 
 }

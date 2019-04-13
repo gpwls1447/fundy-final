@@ -11,7 +11,6 @@ public interface MemberUpdateService {
 	int memberAddress(ShippingAddr s);
 	int memberUpdate(Member m);
 	List<Member> memberUpdateView(Member m);
-	int memberUpdate(Member m, List<Member> list);
 	int memberPwUpdate(Member m);
 	int memberPwCheck(Member m);
 	int memberNickCheck(String memberNick);

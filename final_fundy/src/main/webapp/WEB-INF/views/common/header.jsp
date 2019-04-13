@@ -56,7 +56,10 @@
                 </c:if>
                 
                 <c:if test="${loggedMember!=null }">
-                <div>${loggedMember.memberNick }님 환영합니다 </div>
+                <div>${loggedMember.memberNick }님</div>
+                <div onclick="location.href='${path}/message/messageList.do?memberEmail=${loggedMember.memberEmail}'">
+                	<button class="nude-btn message-btn"><i class="material-icons message-icon unread">notifications</i></button>
+                </div>
                 <div class="header-last user-btn" >
                   <img src="${path }/resources/images/user_icon.png">
                 </div>

@@ -61,17 +61,19 @@
 
         .memberupdate-body
         {
-            display: flex;
             margin-top: 40px;
+            display: flex;
+            flex-flow: column nowrap;
+            align-items: center;
         }
 
         .shipping-addr 
         {
             display: flex;
-            width: 100%;
             flex-flow: column nowrap;
             align-items: center;
         }
+        
         .shipping-addr > div{width: 570px; display: flex;}
         .shipping-addr > div:first-of-type{flex: 1 1 0;}
         .shipping-addr > div:last-of-type{flex: 5 1 0;}
@@ -146,6 +148,7 @@
         #zip-code {width: 97px;}
         .addr-row input {width: 422px;}
         .phone-row input {width: 121px;}
+        .phone-row input:last-of-type {width: 120px;}
         .phone-row span {margin: 0 5px;}
 
         .addr-unit-selected
@@ -205,13 +208,13 @@
                     <div class="addr-tag-row">
                         <div>배송지명</div>
                         <div>
-                            <input type="text" name="shipAddrTag" id="ship-addr-tag" value="">
+                            <input type="text" name="shipAddrTag" id="ship-addr-tag" value="${list[0].shipAddrTag }">
                         </div>
                     </div>
                     <div class="receiver-row">
                         <div>수취인</div>
                         <div>
-                            <input type="text" name="shipAddrReceiver" id="ship-addr-receiver" value="">
+                            <input type="text" name="shipAddrReceiver" id="ship-addr-receiver" value="${list[0].shipAddrReceiver }">
                         </div>
                     </div>
                     <div class="addr-row">
@@ -219,18 +222,18 @@
                         <div>
                             <div>
                                 <button class="basic-btn basic-btn-active ripple" id="find-addr" onclick="return false;">주소찾기</button>
-                                <input type="text" name="zipCode" id="zip-code" >
+                                <input type="text" name="zipCode" id="zip-code" value="${list[0].zipCode}" }>
                             </div>
-                            <input type="text" name="shipAddr" id="ship-addr" value="">
-                            <input type="text" name="shipAddrDetail" id="ship-addr-detail" placeholder="상세주소를 입력해주세요." value="">
+                            <input type="text" name="shipAddr" id="ship-addr" value="${list[0].shipAddr }">
+                            <input type="text" name="shipAddrDetail" id="ship-addr-detail" placeholder="상세주소를 입력해주세요." value="${list[0].shipAddrDetail }">
                         </div>
                     </div>
                     <div class="phone-row">
                         <div>연락처</div>
                         <div>
-                            <input type="tel" name="phone1" id="phone-1" value=""><span>─</span>
-                            <input type="tel" name="phone2" id="phone-2" value=""><span>─</span>
-                            <input type="tel" name="phone3" id="phone-3" value="">
+                            <input type="tel" name="phone1" id="phone-1" value="${fn:substring(list[0].phone, 0, 3) }"><span>─</span>
+                            <input type="tel" name="phone2" id="phone-2" value="${fn:substring(list[0].phone, 3, 7) }"><span>─</span>
+                            <input type="tel" name="phone3" id="phone-3" value="${fn:substring(list[0].phone, 7, 11) }">
                         </div>
                     </div>
                 </div>
@@ -274,8 +277,8 @@
                 	$('#ship-addr-detail').val(data.addr.shipAddrDetail);
 
                 	$('#phone-1').val(data.addr.phone.substring(0, 3));
-                	$('#phone-2').val(data.addr.phone.substring(4, 8));
-                	$('#phone-3').val(data.addr.phone.substring(9, 13));
+                	$('#phone-2').val(data.addr.phone.substring(3, 7));
+                	$('#phone-3').val(data.addr.phone.substring(7, 11));
             	}
             });
         });
