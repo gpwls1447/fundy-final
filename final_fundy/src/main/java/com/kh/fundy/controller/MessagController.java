@@ -1,10 +1,13 @@
 package com.kh.fundy.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.fundy.model.vo.Message;
 import com.kh.fundy.service.MessageService;
 
 @Controller
@@ -15,10 +18,14 @@ public class MessagController {
 	
 	//메세지 리스트로 보내기
 	@RequestMapping("/messageMain.do")
-	public ModelAndView messageMain()
+	public ModelAndView messageMain(String receiverEmail )
 	{
+		System.out.println(receiverEmail);
 		ModelAndView mv=new ModelAndView();
-		
+		List<Message> list=service.messageList(receiverEmail);
+		System.out.println(list);
+		mv.addObject("list",list);
+		mv.addObject("receiverEmail",receiverEmail);
 		mv.setViewName("/message/messageMain");
 		return mv;
 	}

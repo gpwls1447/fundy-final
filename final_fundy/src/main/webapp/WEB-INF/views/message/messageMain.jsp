@@ -159,44 +159,30 @@
                     <option value="">읽은 메시지</option>
                 </select>
             </div>
+            <c:forEach items="${list }" var="mg">
             <div class="msg-unit">
                 <div class="thumnail-container">
                     <img class="msg-thumnail" src="images/default_profile_1.png">
-                    <span class="unread-mark">N</span>
+                    <span class="unread-mark">
+                    <c:if test="${mg.hasRead==null }">
+                    	N
+                    </c:if>
+                    </span>
                 </div>
                 <div class="msg-body">
-                    <div class="msg-nick">21kyo</div>
-                <a href="${pageContext.request.contextPath}/messageView.do">
-                    <div class="proj-title">'꼬마백조' 날개찾기</div>
+                    <div class="msg-nick">${mg.senderEmail }</div>
+                <a href="${pageContext.request.contextPath}/messageView.do?senderEmail=${mg.senderEmail}">
+                    <div class="proj-title">${mg.projectTitle }</div>
                 </a>
-                    <div class="msg-content">감사합니다!! 다시 주문해볼게요~~~~~~~~~~~!</div>
+                    <div class="msg-content">${mg.messageContent }</div>
                 </div>
-                <div class="msg-date">19/03/24     19:20:54</div>
+                <div class="msg-date">
+                <fmt:formatDate value="${mg.messageDate }" pattern="yyyy/MM/dd hh:mm"/>
+                </div>
             </div>
-            <div class="msg-unit">
-                <div class="thumnail-container">
-                    <img class="msg-thumnail" src="images/default_profile_1.png">
-                    <span class="unread-mark">N</span>
-                </div>
-                <div class="msg-body">
-                    <div class="msg-nick">21kyo</div>
-                    <div class="proj-title">'꼬마백조' 날개찾기</div>
-                    <div class="msg-content">감사합니다!! 다시 주문해볼게요~~~~~~~~~~~!</div>
-                </div>
-                <div class="msg-date">19/03/24     19:20:54</div>
-            </div>
-            <div class="msg-unit">
-                <div class="thumnail-container">
-                    <img class="msg-thumnail" src="images/default_profile_1.png">
-                    <span class="unread-mark">N</span>
-                </div>
-                <div class="msg-body">
-                    <div class="msg-nick">21kyo</div>
-                    <div class="proj-title">'꼬마백조' 날개찾기</div>
-                    <div class="msg-content">감사합니다!! 다시 주문해볼게요~~~~~~~~~~~!</div>
-                </div>
-                <div class="msg-date">19/03/24     19:20:54</div>
-            </div>
+            </c:forEach>
+       
+          
         </div>
 
 </section>

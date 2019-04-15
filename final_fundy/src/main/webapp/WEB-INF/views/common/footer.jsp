@@ -436,7 +436,7 @@
                 <i class="material-icons">favorite</i>
                 <span class="user-menu-text">찜바구니</span>
             </div>
-            <div class="user-menu-box">
+            <div class="user-menu-box message-btn">
                 <span class="bar horizontal-bar"></span>
                 <i class="material-icons">chat</i>
                 <span class="user-menu-text">메시지</span>
@@ -541,6 +541,13 @@
          location.href="${path}/member/memberUpdateView.do";
       })
    })
+   
+   //메세지 화면 전환
+    $(() => {
+      $('.message-btn').on("click", ()=> {
+         location.href="${path}/messageMain.do?receiverEmail=${loggedMember.memberEmail}";
+      });
+   });
    
 
     //패스워드 일치 확인
