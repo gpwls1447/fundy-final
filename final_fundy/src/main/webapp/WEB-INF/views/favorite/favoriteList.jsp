@@ -6,18 +6,6 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <style>
-        body
-        {
-            font-family: 'Noto Sans KR';
-            display: flex;
-            flex-flow: column nowrap;
-            align-items: center;
-        }
-
-        body button
-        {
-            font-family: 'Noto Sans KR';
-        }
 
         .proj-list-wrapper
         {
@@ -139,82 +127,33 @@
     <div class="proj-list-wrapper">
         <div class="proj-search-result">찜바구니</div>
 
-
-		<!-- 찜바구니 리스트 -->
-        <div class="proj-list-box">
-            <div class="proj-list-thumnail">
-                <img src="images/thumnail_sample.jpg">
-            </div>
-            <div class="proj-list-body">
-                <div class="proj-list-title">{project.projectTitle}</div>
-                <div class="proj-creator">LAC</div>
-                <hr>
-                <div class="proj-brief">{project.projectSumary}</div>
-                <div class="proj-progbar-container">
-                    <div class="proj-progbar-emtpy"></div>
-                    <div class="proj-progbar-filled"></div>
-                    <div class="proj-progbar-info">
-                        <span>60%</span>
-                        <span>{project.goalPrice}</span>
-                        <span>6일남음</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-
-        <div class="pagebar">
-            <div class="pagebar-unit">
-                <img class="pagebar-nav" src="images/sharp_navigate_prev_black.png">
-            </div>
-            <div class="pagebar-unit pagebar-unit-active">1</div>
-            <div class="pagebar-unit">2</div>
-            <div class="pagebar-unit">3</div>
-            <div class="pagebar-unit">4</div>
-            <div class="pagebar-unit">5</div>
-            <div class="pagebar-unit">
-                <img class="pagebar-nav" src="images/sharp_navigate_next_black.png">
-            </div>
-        </div>
+		<c:forEach items="${map['list']}" var="list">
+			<!-- 찜바구니 리스트 -->
+	        <div class="proj-list-box">
+	            <div class="proj-list-thumnail">
+	                <img src="${path}/resources/projectIntroImages/${list.projectThumnail }">
+	            </div>
+	            <div class="proj-list-body">
+	                <div class="proj-list-title">${list.projectTitle}</div>
+	                <div class="proj-creator">LAC</div>
+	                <hr>
+	                <div class="proj-brief">${list.projectSumary }</div>
+	                <div class="proj-progbar-container">
+	                    <div class="proj-progbar-emtpy"></div>
+	                    <div class="proj-progbar-filled"></div>
+	                    <div class="proj-progbar-info">
+	                        <span>60%</span>
+	                        <span>${list.goalPrice}</span>
+	                        <span>6일남음</span>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+        </c:forEach>
+       
+       ${map['pageBar']}
+		
     </div>
 </body>
-<script>
-    
-    //유저모달창 토글
-    const userModal = $('.user-modal');
-    const userBtn = $('.user-btn');
-    const modalOverlay = $('.modal-overlay');
-    const userModalBody = $('.user-modal-body');
-    const userModalHeader = $('.user-modal-header');
-
-    $(() => {
-        userModalBody.hide();
-        userModalHeader.hide();
-        userBtn.on('click', e => {
-            modalOverlay.toggle();
-            userModal.animate({width: 'toggle'}, 300);
-            setTimeout(fadeToggleUser, 100);
-        });
-        $('.close-btn').on('click', () => {
-            modalOverlay.toggle();
-            fadeToggleUser();
-            userModal.animate({width: 'toggle'}, 300);
-        });
-    });
-
-    //유저모달창 내부 요소 Fade효과함수
-    const fadeToggleUser = () => {
-        userModalHeader.fadeToggle(250);
-        userModalBody.fadeToggle(250);
-    }
-
-    $(() => {
-        $('.proj-category').children().on('click', e => {
-            console.log($(e.currentTarget).data('category'));
-        });
-    });
-</script>
-
-
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

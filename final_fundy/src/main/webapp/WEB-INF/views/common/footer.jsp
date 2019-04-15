@@ -588,9 +588,9 @@
             <div class="close-btn">
                 <i class="material-icons">clear</i>
             </div>
-            <img class ="user-profile-pic" src="${path }/resources/images/profile_pic_sample.jpg">
+            <img class ="user-profile-pic" src="${path }/resources/memberProfile/${loggedMember.memberProfile}">
             <div class="user-nick">
-                Amber Heard
+                ${loggedMember.memberNick }
             </div>
         </div>
         <div class="user-modal-body">
@@ -605,7 +605,7 @@
                 <i class="material-icons">card_giftcard</i>
                 <span class="user-menu-text">후원내역</span>
             </div>
-            <div class="user-menu-box">
+            <div class="user-menu-box favorite-btn">
                 <span class="bar vertical-bar"></span>
                 <span class="bar horizontal-bar"></span>
                 <i class="material-icons">favorite</i>
@@ -779,6 +779,13 @@
    $(() => {
       $('.memberUpdate-btn').on("click", ()=> {
          location.href="${path}/member/memberUpdateView.do";
+      })
+   })
+   
+ //찜바구니 기능
+   $(() => {
+      $('.favorite-btn').on("click", ()=> {
+         location.href="${path}/favorite/favoriteList.do";
       })
    })
    

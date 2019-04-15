@@ -1,7 +1,9 @@
 package com.kh.fundy.controller;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,8 +33,8 @@ public class PayController {
 	public ModelAndView optionSelect(int projectNo, @RequestParam(value="packageIndex", required=false, defaultValue = "-1") int packageIndex)
 	{
 		ModelAndView mv = new ModelAndView();
-		
-		Project p = projService.selectOne(projectNo);
+		Map<String, Integer> map = new HashMap<>();
+		Project p = projService.selectOne(map);
 		mv.addObject("project", p);
 		mv.addObject("packageIndex", packageIndex);
 		mv.setViewName("pay/payOption");

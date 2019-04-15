@@ -61,7 +61,7 @@
                 	<button class="nude-btn message-btn"><i class="material-icons message-icon unread">notifications</i></button>
                 </div>
                 <div class="header-last user-btn" >
-                	<img src="${path }/resources/images/user_icon.png">
+                	<img src="${path }/resources/memberProfile/${loggedMember.memberProfile}">
                 </div>
                 </c:if>
                 

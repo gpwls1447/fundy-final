@@ -29,8 +29,8 @@ public class ProjectListServiceImpl implements ProjectListService {
 	}
 
 	@Override
-	public Project selectOne(int projectNo) {
-		Project p = dao.selectOne(projectNo);
+	public Project selectOne(Map map) {
+		Project p = dao.selectOne(map);
 		List<FundingOption> foList = dao.selectFundingOptionList(p.getProjectNo());
 		for(FundingOption fo : foList)
 		{

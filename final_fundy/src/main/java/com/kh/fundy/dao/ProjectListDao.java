@@ -13,7 +13,7 @@ public interface ProjectListDao {
 	int selectCount(Map map);
 	List<Project> selectList(int cPage, int numPerPage, Map map);
 	int insertOne(Project p);
-	Project selectOne(int projectNo);
+	Project selectOne(Map map);
 	List<FundingLog> selectFunderList(int projectNo);
 	List<FundingOption> selectFundingOptionList(int projectNo);
 	List<OptionDetail> selectOptionDetailList(int projectNo);
