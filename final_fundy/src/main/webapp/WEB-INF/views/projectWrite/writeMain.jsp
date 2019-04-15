@@ -240,6 +240,7 @@
 					products[j] = product;
 				}
 				reward.products = products;
+				console.log(i + ":" + reward.rewardMoney);
 				
 				rewards[i] = reward;
 			}

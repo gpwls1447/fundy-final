@@ -106,4 +106,14 @@ public class ProjectWriteDaoImpl implements ProjectWriteDao {
 	public int insertOptionDetail(Map<String, Object> option) {
 		return session.insert("projectWrite.insertOptionDetail", option);
 	}
+	
+	@Override
+	public int projectWritedCnt(String memberEmail) {
+		return session.selectOne("projectWrite.projectWritedCnt", memberEmail);
+	}
+	
+	@Override
+	public int selectSavedProjectNo(String memberEmail) {
+		return session.selectOne("projectWrite.selectSavedProjectNo", memberEmail);
+	}
 }

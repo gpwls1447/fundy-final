@@ -24,4 +24,6 @@ public interface ProjectWriteService {
 	int saveFundingOption(Map<String, Object> reward);
 	void deleteRewards(Map<String, Object> reward);
 	int insertOptionDetail (Map<String,Object> option);
+	int projectWritedCnt(String memberEmail);
+	int selectSavedProjectNo(String memberEmail);
 }

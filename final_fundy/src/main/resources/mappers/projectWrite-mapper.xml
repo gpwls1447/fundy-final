@@ -29,6 +29,14 @@
 		SELECT PACKAGENO FROM FUNDINGOPTION WHERE PROJECTNO=${projectNo}
 	</select>
 	
+	<select id="projectWritedCnt" parameterType="string" resultType="_int">
+		SELECT count(*) FROM PROJECT WHERE MEMBEREMAIL=#{memberEmail} AND (PROJECTSTATCODE IS NULL OR PROJECTSTATCODE='PS01')
+	</select>
+	
+	<select id="selectSavedProjectNo" parameterType="string" resultType="_int">
+		SELECT PROJECTNO FROM (SELECT ROWNUM AS RN, PROJECTNO FROM PROJECT WHERE MEMBEREMAIL=#{memberEmail} AND (PROJECTSTATCODE IS NULL OR PROJECTSTATCODE='PS01') order by projectno desc) WHERE RN=1
+	</select>
+	
 	<insert id="insertProject" parameterType="string">
 		INSERT INTO PROJECT VALUES(PROJECT_SEQ.NEXTVAL, null, null, null, SYSDATE, null, null, null, null, 0, null, null, null, null, #{memberEmail}, null, null)
 	</insert>

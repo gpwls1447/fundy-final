@@ -113,7 +113,6 @@ public class ProjectWriteController {
 	        
 	        if( file.exists() ){
 	            if(file.delete()){
-	            	System.out.println("삭제성공");
 	            }else{
 	            	
 	            }
@@ -207,21 +206,34 @@ public class ProjectWriteController {
     }
     @RequestMapping("/project/projectWrite.do")
 	public ModelAndView projectWrite(HttpSession session ,String majorCategory) {
+    	mv = new ModelAndView();
+    	
     	Member m = (Member)session.getAttribute("loggedMember");
     	m = service.selectMember(m);
-    	service.insertProject(m.getMemberEmail());
-    	int projectNo = service.selectProjectNo();
     	
-    	List<Category> midList = service.selectMidCategorys(majorCategory);
-    	List<Category> list = service.selectMinorCategorys(majorCategory);
-    	
-    	mv = new ModelAndView();
-    	mv.addObject("midCategoryList", midList);
-    	mv.addObject("minorCategoryList", list);
-    	mv.addObject("projectNo", projectNo);
-    	mv.addObject("creator", m);
-    	mv.setViewName("projectWrite/writeMain");
-		return mv;
+    	//신청 목록에있는 프로젝트 검사 있으면 작성중인 프로젝트로이동 아니면 새로 생성후 작성페이지로 이동
+    	int projectWritedCnt = service.projectWritedCnt(m.getMemberEmail());
+    	System.out.println(projectWritedCnt);
+    	if(projectWritedCnt >= 5) {
+    		int projectNo = service.selectSavedProjectNo(m.getMemberEmail());
+    		mv.addObject("msg", "작성중인 프로젝트가 존재합니다. 작성중인 프로젝트신청페이지로 이동합니다.");
+    		mv.addObject("loc", "");
+    		mv.setViewName("common/msg");
+    		return mv;
+    	}
+    	else {
+    		service.insertProject(m.getMemberEmail());
+        	int projectNo = service.selectProjectNo();
+        	
+        	List<Category> midList = service.selectMidCategorys(majorCategory);
+        	List<Category> list = service.selectMinorCategorys(majorCategory);
+        	mv.addObject("midCategoryList", midList);
+        	mv.addObject("minorCategoryList", list);
+        	mv.addObject("projectNo", projectNo);
+        	mv.addObject("creator", m);
+        	mv.setViewName("projectWrite/writeMain");
+    		return mv;
+    	}
 	}
     
     //신청서 임시저장
@@ -276,10 +288,8 @@ public class ProjectWriteController {
     	
     	List<Map<String,Object>> resultMap = new ArrayList<Map<String,Object>>();
         resultMap = JSONArray.fromObject(reward.get("products"));
-        System.out.println(reward.get("products"));
              
         for (Map<String, Object> map : resultMap) {
-            System.out.println(map.get("rewardName") + " : " + map.get("rewardCnt"));
             service.insertOptionDetail(map);
         }
     	

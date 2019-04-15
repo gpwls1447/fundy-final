@@ -104,4 +104,14 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
 	public int insertOptionDetail(Map<String,Object> option) {
 		return dao.insertOptionDetail(option);
 	}
+	
+	@Override
+	public int projectWritedCnt(String memberEmail) {
+		return dao.projectWritedCnt(memberEmail);
+	}
+	
+	@Override
+	public int selectSavedProjectNo(String memberEmail) {
+		return dao.selectSavedProjectNo(memberEmail);
+	}
 }
