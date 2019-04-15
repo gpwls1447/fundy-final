@@ -36,9 +36,16 @@
                 <div>
                     <i class="material-icons category-btn">more_horiz</i>
                 </div>
-                <div>
-                	<button class="proposal-btn" onclick="location.href='${path }/project/projectWrite.do?majorCategory=A01'">프로젝트 신청</button>
-                </div>
+                <c:if test="${loggedMember.memberNick eq 'admin' }">
+                	<div>
+                		<button class="proposal-btn" onclick="location.href='${path}/admin/adminPage.do'">관리자 페이지</button>
+                	</div>
+                </c:if>
+                <c:if test="${loggedMember.memberNick != 'admin'} ">
+	                <div>
+	                	<button class="proposal-btn" onclick="location.href='${path }/project/projectWrite.do?majorCategory=A01'">프로젝트 신청</button>
+	                </div>
+                </c:if>
                 <div>
                    <a href="${path }/askBoardMain.do">게시판</a>
                 </div>
@@ -57,9 +64,6 @@
                 
                 <c:if test="${loggedMember!=null }">
                 <div>${loggedMember.memberNick }님</div>
-                <div onclick="location.href='${path}/message/messageList.do?memberEmail=${loggedMember.memberEmail}'">
-                	<button class="nude-btn message-btn"><i class="material-icons message-icon unread">notifications</i></button>
-                </div>
                 <div class="header-last user-btn" >
                 	<img src="${path }/resources/images/user_icon.png">
                 </div>
