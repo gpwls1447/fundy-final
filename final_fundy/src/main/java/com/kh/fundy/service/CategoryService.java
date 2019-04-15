@@ -12,5 +12,5 @@ public interface CategoryService {
 	List<Category> selectAllMinor();
 	List<Map<String, Object>> selectProjectList(Map<String, String> ctgMap);
 	List<Map<String, Object>> selectEditorProjectList(Map<String, String> ctgMap);
-	List<Map<String, Object>> selectNewSoonProjectList(String midCtg, String condition);
+	List<Map<String, Object>> selectNewSoonProjectList(String midCtg, String condition, String majorCode);
 }

@@ -41,16 +41,16 @@ public class MainConroller {
 		ctgMap.put("majorCode", majorCode);
 		ctgMap.put("midCategory", midCategory);
 		
-		List<Map<String, Object>> projectListCtg = service.selectProjectList(ctgMap);	//모든목록이나 중분류카테고리별 조회
+		//List<Map<String, Object>> projectListCtg = service.selectProjectList(ctgMap);	//인기 카테고리조회
 		List<Map<String, Object>> editorProjectList = service.selectEditorProjectList(ctgMap);	//에디터추천 프로젝트조회
-		List<Map<String, Object>> newProjectList = service.selectNewSoonProjectList("all", "new");
-		List<Map<String, Object>> soonProjectList = service.selectNewSoonProjectList("all", "soon");
+		List<Map<String, Object>> newProjectList = service.selectNewSoonProjectList("all", "new", majorCode);
+		List<Map<String, Object>> soonProjectList = service.selectNewSoonProjectList("all", "soon", majorCode);
 		
 		List<Category> midCList = service.selectAllMid();
 		
 		model.addAttribute("majorCode", majorCode);
 		model.addAttribute("midCList", midCList);
-		model.addAttribute("projectListCtg", projectListCtg);		//카테고리별인기프로젝트
+		//model.addAttribute("projectListCtg", projectListCtg);		//카테고리별인기프로젝트
 		model.addAttribute("editorProjectList", editorProjectList);	//에디터추천프로젝트
 		model.addAttribute("newProjectList", newProjectList);		//새 프로젝트
 		model.addAttribute("soonProjectList", soonProjectList);		//마감임박 프로젝트
@@ -64,7 +64,8 @@ public class MainConroller {
 		mv = new ModelAndView();
 		
 		Map<String, String> ctgMap = new HashMap<String, String>();
-		ctgMap.put("majorCategory", majorCategory);
+		System.out.println(majorCategory);
+		ctgMap.put("majorCode", majorCategory);
 		ctgMap.put("midCategory", midCode);
 		
 		List<Map<String, Object>> projectListCtg = service.selectProjectList(ctgMap);

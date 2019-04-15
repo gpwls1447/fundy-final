@@ -28,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.fundy.model.vo.Category;
 import com.kh.fundy.model.vo.Member;
+import com.kh.fundy.model.vo.Project;
 import com.kh.fundy.service.ProjectWriteService;
 
 import net.sf.json.JSONArray;
@@ -231,12 +232,13 @@ public class ProjectWriteController {
         	mv.addObject("minorCategoryList", list);
         	mv.addObject("projectNo", projectNo);
         	mv.addObject("creator", m);
+        	mv.addObject("majorCode", majorCategory);
         	mv.setViewName("projectWrite/writeMain");
     		return mv;
     	}
 	}
     
-    //신청서 임시저장
+    //신청서 임시저장 (신청서 전반및 리워드까지 전부)
     //신청서부분
     @SuppressWarnings("unchecked")
     @RequestMapping(value="/projectWrite/tempSaveProject.do", method=RequestMethod.POST)
@@ -262,24 +264,29 @@ public class ProjectWriteController {
     		project.put("accNum", 0);	//목표금액과 같은이유 계좌번호에 null값이 못들어감
     	}
     	
+    	//리워드및 프로덕트 업데이트
+    	service.deleteRewards(project);
     	List<Map<String,Object>> rewardsMap = new ArrayList<Map<String,Object>>();
         rewardsMap = JSONArray.fromObject(project.get("rewards"));
         for (int i=0; i<rewardsMap.size(); i++) {
-        	List<Map<String,Object>> products = new ArrayList<Map<String,Object>>();
-        	products = JSONArray.fromObject(rewardsMap.get(i).get("products"));
-        	for(int j=0; j<products.size(); j++) {
-        		System.out.println(products.get(i).get("rewardName"));
-        		System.out.println(products.get(i).get("rewardCnt"));
+        	rewardsMap.get(i).put("projectNo", projectNo);	//프로젝트번호 전달
+        	if(rewardsMap.get(i).get("rewardMoney") != null && !rewardsMap.get(i).get("rewardMoney").equals("")) {
+        		service.saveFundingOption(rewardsMap.get(i));	//리워드 저장
+            	
+            	List<Map<String,Object>> products = new ArrayList<Map<String,Object>>();
+            	products = JSONArray.fromObject(rewardsMap.get(i).get("products"));
+            	for(int j=0; j<products.size(); j++) {
+            		service.insertOptionDetail(products.get(j));
+            	}
         	}
         }
     	
     	
     	service.deleteProjectAccount(project);
     	service.tempSaveProjectAccount(project);
-    	service.deleteRewards(project);
     	res.getWriter().print("saved");
     }
-    //리워드부분
+    //리워드부분 : NOT USING
     @SuppressWarnings("unchecked")
 	@RequestMapping(value="/projectWrite/tempSaveProjectReward.do", method=RequestMethod.POST)
     @ResponseBody
@@ -317,4 +324,15 @@ public class ProjectWriteController {
     	service.updateEntryProject(pNo);
     	res.getWriter().print("Entry!");
     }
+    
+    //미리보기
+    @RequestMapping("/projectWrite/projectPreview.do")
+	public ModelAndView projectListDetail(int projectNo)
+	{
+		Project p = service.selectProjectPreview(projectNo);
+		mv = new ModelAndView();
+		mv.addObject("project", p);
+		mv.setViewName("projectPreview/projectPreview");
+		return mv;
+	}
 }
