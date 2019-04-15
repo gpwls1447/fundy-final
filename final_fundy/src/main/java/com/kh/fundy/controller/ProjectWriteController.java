@@ -238,6 +238,7 @@ public class ProjectWriteController {
     
     //신청서 임시저장
     //신청서부분
+    @SuppressWarnings("unchecked")
     @RequestMapping(value="/projectWrite/tempSaveProject.do", method=RequestMethod.POST)
     @ResponseBody
     public void tempSaveProject(HttpServletResponse res, @RequestBody Map<String, Object> project, String projectNo) throws IOException {
@@ -260,6 +261,19 @@ public class ProjectWriteController {
     	if(project.get("accNum").equals("")) {
     		project.put("accNum", 0);	//목표금액과 같은이유 계좌번호에 null값이 못들어감
     	}
+    	
+    	List<Map<String,Object>> rewardsMap = new ArrayList<Map<String,Object>>();
+        rewardsMap = JSONArray.fromObject(project.get("rewards"));
+        for (int i=0; i<rewardsMap.size(); i++) {
+        	List<Map<String,Object>> products = new ArrayList<Map<String,Object>>();
+        	products = JSONArray.fromObject(rewardsMap.get(i).get("products"));
+        	for(int j=0; j<products.size(); j++) {
+        		System.out.println(products.get(i).get("rewardName"));
+        		System.out.println(products.get(i).get("rewardCnt"));
+        	}
+        }
+    	
+    	
     	service.deleteProjectAccount(project);
     	service.tempSaveProjectAccount(project);
     	service.deleteRewards(project);
