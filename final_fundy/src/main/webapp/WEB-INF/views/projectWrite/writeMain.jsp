@@ -241,6 +241,7 @@
 				}
 				reward.products = products;
 				console.log(i + ":" + reward.rewardMoney);
+				writeData.rewards = rewards;
 				
 				rewards[i] = reward;
 			}
