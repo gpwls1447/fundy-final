@@ -9,121 +9,19 @@
 <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
+
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <style>
     /* footer 부분 */
-	.footer
-	{
-		margin-top: 100px;
-		border-top: 1px solid #eee;
-		width: 100%;
-		min-width: 1005px;
-	}
+   .footer
+   {
+      margin-top: 100px;
+      border-top: 1px solid #eee;
+      width: 100%;
+      min-width: 1005px;
+   }
    
-    .footer-top
-    {
-        width: 100%;
-        height: 230px;
-        display: flex;
-        align-items: center;
-        background-color: rgb(19, 79, 105);
-        color: rgba(255, 255, 255, 0.4);
-        box-sizing: border-box;
-        font-size: 13px;
-    }
-
-    .footer-top > div
-    {
-        flex: 1 1 0;
-        display: flex;
-        flex-flow: column nowrap;
-        align-items: center;
-        justify-content: center;
-        padding: 20px 50px;
-        line-height: 25px;
-    }
-
-    .footer-title
-    {
-        margin-bottom: 20px;
-        font-size: 17px;
-        color: #eee;
-    }
-
-    .footer-sub
-    {
-        display: flex;
-        flex-flow : column nowrap;
-    }
-
-    .footer-horiz-line
-    {   
-        display: block;
-        width: 1px;
-        height: 70%;
-        background-color: rgba(255, 255, 255, 0.2);
-    }
-
-
-    .footer-bottom
-    {
-        width: 100%;
-        background-color: rgb(44, 56, 64);
-        color: #666;
-        font-size: 12px;
-        padding: 15px 50px;
-        box-sizing: border-box;
-        display: flex;
-    }
-
-    .footer-bottom > div {flex: 1 1 0;}
-
-    .site-nav
-    {
-        display: flex;
-    }
-
-
-    .site-nav > span
-    {
-        font-weight: bold;
-        margin-right: 20px;
-        display: flex;
-        align-items: center;
-    }
-
-    #footer-logo
-    {
-        font-size: 22px;
-        font-weight: 900;
-    }
-
-    .copyright{margin: 10px 0;}
-
-    #footer-links
-    {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-    }
-
-    #footer-links button
-    {
-        background-color: transparent;
-        border: none;
-        padding: 0;
-        display: flex;
-        margin-left: 10px;
-        cursor: pointer;
-    }
-
-    #footer-links img
-    {
-        width: 40px;
-        opacity: .6;
-    }
-  
-    .footer-top
+       .footer-top
     {
         width: 100%;
         height: 230px;
@@ -965,11 +863,13 @@
         
         //검색창 Enter 이벤트
         searchBar.on('keyup', e => {
-	       	if(e.keyCode == 13)
-	       	{
-	       		location.href='${path}/projectList/projectList.do?keyword='+searchBar.val()+'&majorCode=${majorCode}';
-	       	}
-    	});
+           if(e.keyCode == 13)
+           {
+              location.href='${path}/projectList/projectList.do?keyword='+searchBar.val()+'&majorCode=${majorCode}';
+           }
+        });
+
+    });
 
     //네비게이션 바 토글
     const nav = $('.nav');
@@ -1078,17 +978,21 @@
         userModalBody.fadeToggle(time);
     }
     
+    
+    
+   //데이터생성 버튼
     const datagenBtn = $('.datagen-btn');
     $(() => {
        datagenBtn.on('click', () => {
           $.ajax({
-             url: '${path}/datagen.do',
+             url: '${pageContext.request.contextPath}/datagen.do',
              success: data => {
-                alert('결과: ' + data.result);
+                alert('멤버: ' + data.mResult + '\n' + '프로젝트: ' + data.pResult + '\n' + '후원: ' + data.flResult + '\n' + '코멘트: ' + data.cResult);
              }
           });
        });
     });
+    
     
   //카카오 로그인 
     Kakao.init('3936fbb46415d0ad3589f5b20380fa77');
