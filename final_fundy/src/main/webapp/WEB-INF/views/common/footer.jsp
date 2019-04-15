@@ -298,7 +298,7 @@
       right: 0;
       width: 50%;
       height: 100%;
-      background-image : url(${path}/resources/images/loginPicture1.jpg);
+      background-image : url(${path}/resources/images/loginPicture_love.jpg);
       background-size: cover;
       background-position: 50% 50%;
    }
@@ -308,7 +308,7 @@
       left: 0;
       width: 50%;
       height: 100%;
-      background-image : url(${path}/resources/images/loginPicture4.jpg);
+      background-image : url(${path}/resources/images/loginPicture_dog.jpg);
       background-size: cover;
       background-position: 50% 50%;
    }
@@ -369,6 +369,7 @@
       color: #999;
       box-shadow: none;
       border: 1px solid #999 !important;
+      
    }
    
    .right .off:hover {
@@ -505,6 +506,10 @@
    .email-group >input
    {
          
+   }
+   span{
+   		font-size:11px;
+   		color:lavender;
    }
    
 </style>
@@ -653,18 +658,23 @@
                   <div class="form-group">
                   <div class="email-group">
                      <input type="email" class="signup-modal-input" placeholder="이메일" id="memberEmail" name="memberEmail" required />
-                     <input type="button" class="off login-modal-btn" id="emailAuth" value="메일인증" />
+                     <input type="button" class="off login-modal-btn" id="emailAuth" value="메일인증" 
+                     		style="margin-top: 10px; padding-top: 0px; padding-bottom: 0px; width: 65px; height: 35px;"/>
                   </div>
                   <div class="email-group">  
-                     <input type="text" class="signup-modal-input" id="authKey" name="authKey" placeholder="인증번호" />
-                     <input type="button" class="off login-modal-btn" id="authCheck" value="인증확인" />
+                    <input type="text" class="signup-modal-input" id="authKey" name="authKey" placeholder="인증번호" />
+                    <input type="button" class="off login-modal-btn " id="authCheck" value="인증확인" 
+                   			style="margin-top: 10px; padding-top: 0px; padding-bottom: 0px; width: 65px; height: 35px;"/>
                   </div>   
-                     <input type="password" class="signup-modal-input" placeholder="비밀번호" id="password" name="memberPw" required /> 
+                    <span class="auth ok">인증키가 일치합니다.</span>
+              		<span class="auth error">인증키가 일치하지 않습니다.</span>
+             		<input type="hidden" name="chekcAuth" id="checkAuth"/>
+                    <input type="password" class="signup-modal-input" placeholder="비밀번호" id="password" name="memberPw" required /> 
                     <input type="password" class="signup-modal-input" placeholder="비밀번호 확인" id="password-ck" required /> 
                     <input type="text" class="signup-modal-input" placeholder="닉네임" id="memberNick" name="memberNick" required />
                     <span class="guide ok">사용 가능</span>
-               <span class="guide error">사용 불가</span>
-               <input type="hidden" name="checkId" id="checkId"/>
+              		<span class="guide error">사용 불가</span>
+             		<input type="hidden" name="checkId" id="checkId"/>
                   </div>
                   <div class="modal-btn-container">
                   <input type="submit" class="login-modal-btn" value="회원가입">
@@ -694,11 +704,10 @@
    </div>
 </div>
 <input type="hidden" id="nickCheck" value="0">
-   
+<input type="hidden" id="authCheck" value="0">
 <script>
 
    //닉네임 중복 체크
-   var checkNick=0;
    $(".guide").hide();
    $(() => {
       $("#memberNick").on("keyup", () => {
@@ -710,7 +719,6 @@
             dataType:"json",
             success:function(data){
                if(data==true){
-                  console.log("사용 가능");
                   $(".guide.ok").show()
                   $(".guide.error").hide();
                   $("#nickCheck").val("1");
@@ -734,14 +742,14 @@
             dataType:"json",
             data:{"memberEmail":email},
             success:function(data){
-               console.log(data);
-                  alert("이메일이 발송되었습니다. 인증번호를 적어주세요");
+            	alert("이메일이 발송되었습니다. 인증번호를 적어주세요");
             }
          });
       });
    });
    
    //이메일 인증키 확인
+   $(".auth").hide();
    $(() => {
       $('#authCheck').on("click", ()=> {
          var authKey=$("#authKey").val().trim();
@@ -750,14 +758,14 @@
             dataType:"json",
             data:{"authKey":authKey},
             success:function(data){
-               console.log("인증키확인");
-               console.log(data);
                if(data==true){
-                  //span태그로 인증키 일치 불일치 여부 띄워주기
-               }
-               else{
-                  
-               }
+                   $(".auth.ok").show()
+                   $(".auth.error").hide();
+                }
+                else{
+                   $(".auth.ok").hide()
+                   $(".auth.error").show();
+                }
             },
             error:function(e){
                console.log(e);
@@ -1004,8 +1012,6 @@
            Kakao.API.request({
              url: '/v1/user/me',
              success: function(res) {
-                console.log("object : "+JSON.stringify(res));
-                console.log(JSON.stringify(res.id));
                 testajax(res);
                 loginModal.toggle();
                 modalOverlay.toggle();
@@ -1022,19 +1028,16 @@
        
        function testajax(res)
        {
-          console.log(res);
            $.ajax({
               url : "${pageContext.request.contextPath }/member/isKakao.do",
               dataType:"json",
               type:"post",
             data : {id:res.id,"email":res.kaccount_email,profile:res.properties['profile_image'], nick:res.properties['nickname']}, 
               success : function(data){
-                 console.log("돌려받은 값 : "+data.val);
                  if(data.val=="y"){
                     location.href="${path}/";
                  }
                  else{
-                    console.log("로그인실패");
                  }
               },
               error:function(re,msg)
