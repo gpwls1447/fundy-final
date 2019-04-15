@@ -136,6 +136,7 @@
        background-color: white;
        display: none;
        font-family: 'Noto Sans KR';
+       z-index: 3;
    }
    
    .modal-overlay
@@ -147,6 +148,7 @@
        background-color: black;
        opacity: 0.4;
        display: none;
+       z-index: 2;
    }
    
    .close-btn
@@ -287,7 +289,7 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      z-index: 1;
+      z-index: 3;
       width: 75%;
       width: 700px;
       height: 600px;
@@ -503,9 +505,9 @@
         display : flex;
    }
    
-	#slideBox > span{
-		font-size:11px;
-		color:lavender;
+	.span{
+      font-size:11px;
+      color:lavender;
    }
    
 </style>

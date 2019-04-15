@@ -157,7 +157,7 @@
         <c:forEach items="${list }" var="list">
         <div data-project-no="${list.projectNo }" class="proj-list-box">
             <div class="proj-list-thumnail">
-                <img src="${path }/resources/projectIntroImages/${list.projectThumnail}">
+                <img src="${path }/resources/projectRepresent/${list.projectThumnail}">
             </div>
             <div class="proj-list-body">
                 <div class="proj-list-title">${list.projectTitle }</div>
