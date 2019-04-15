@@ -2,6 +2,7 @@ package com.kh.fundy.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -57,6 +58,7 @@ public class NoticeController {
 	@RequestMapping("/noticeFormEnd.do")
 	   public ModelAndView insertBoard(Notice notice, MultipartFile[] upFile,HttpServletRequest re)
 	   {
+			notice.setNoticeDate(new Timestamp(System.currentTimeMillis()));
 	      ModelAndView mv=new ModelAndView();
 	      System.out.println(notice);
 	      
@@ -119,10 +121,11 @@ public class NoticeController {
 	
 	/*공지사항 삭제*/
 	@RequestMapping("/noticeDelete.do")
-	public ModelAndView noticeDelete(int noticeNo) throws Exception
+	public ModelAndView noticeDelete(Notice notice) throws Exception
 	{
+		notice.setNoticeDelete(new Timestamp(System.currentTimeMillis()));
 		 ModelAndView mv=new ModelAndView();
-		int result=service.noticeDelete(noticeNo);
+		int result=service.noticeDelete(notice);
 		if(result>0)
 		{
 			String msg="삭제 완료 하였습니다.";
@@ -162,14 +165,14 @@ public class NoticeController {
 	@RequestMapping("/noticeUpdateEnd.do")
 	public ModelAndView askBoardUpdateEnd(Notice notice,int noticeNo)
 	{
-		
+		notice.setNoticeEdit(new Timestamp(System.currentTimeMillis()));
 		ModelAndView mv=new ModelAndView();
 		int result=service.noticeUpdate(notice);
 		if(result>0)
 		{
 			Notice nt=service.noticeView(noticeNo);
 			String msg="수정 성공하였습니다";
-			String loc="/noticeView.do";
+			String loc="/noticeView.do?noticeNo="+noticeNo;
 			mv.addObject("nt",nt);
 			mv.addObject("msg",msg);
 			mv.addObject("loc",loc);
@@ -179,7 +182,7 @@ public class NoticeController {
 		{
 			Notice nt=service.noticeView(noticeNo);
 			String msg="수정 실패하였습니다.";
-			String loc="/noticeView.do";
+			String loc="/noticeView.do?noticeNo="+noticeNo;
 			mv.addObject("nt",nt);
 			mv.addObject("msg",msg);
 			mv.addObject("loc",loc);

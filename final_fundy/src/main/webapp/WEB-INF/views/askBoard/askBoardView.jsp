@@ -44,6 +44,35 @@
             cursor: pointer;
         }
         
+        #reDelBtn
+        {
+         	font-family: 'Noto Sans KR';
+            font-size: 12px;
+            width: 120px;
+            height: 40px;
+            margin: 0;
+            border: none;
+            background-color:rgb(230, 126, 34);
+            color: white;
+            margin: 0 10px;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        
+        #boardDeleteBtn
+        {
+        	font-family: 'Noto Sans KR';
+            font-size: 12px;
+            width: 120px;
+            height: 40px;
+            margin: 0;
+            border: none;
+            background-color:rgb(230, 126, 34);
+            color: white;
+            margin: 0 10px;
+            border-radius: 2px;
+            cursor: pointer;
+        }
 
         .support-notice-view-wrapper input:focus
         {
@@ -65,7 +94,7 @@
         {
             display: flex;
             flex-flow: column nowrap;
-           /*  border-top: 2px solid rgb(42, 71, 114); */
+           border-top: 2px solid rgb(42, 71, 114);
             border-bottom: 1px solid rgb(42, 71, 114);
         }
 
@@ -217,9 +246,14 @@
             </div>
             <hr/>
            <div>
+          <form id="replyDelForm" action="${path}/askReplyDelete.do?askNo=${ab.askNo}" method="post">
             <table id="replyTable">
             	<c:forEach items="${list }" var="are">
             		<tr>
+            			<td>
+            				<input type="hidden" name="askReplyNo" id="askReplyNo" value="${are.askReplyNo }"/>
+            				<input type="hidden" name="askNo" id="askReNo" value="${are.askNo }"/>
+            			</td>
             			<td>
 		            		펀디메니저
 		            	</td>
@@ -227,29 +261,54 @@
 		            		${are.askReplyContent }
 		            	</td>
 		            	<td>
-		            		<fmt:formatDate value="${are.askReplyDate }" pattern="yyyy/MM/dd hh:mm:ss"/>
+		            		<fmt:formatDate value="${are.askReplyDate }" pattern="yyyy/MM/dd hh:mm"/>
 		            	</td>
+		            	<c:if test='${loggedMember.memberEmail.equals("admin@naver.com") }'>
+		            	<td>
+		            		<input type="submit" value="삭제" id="reDelBtn"onclick="fn_replyDelete();"/>
+		            	</td>
+		            	</c:if>
 		           </tr>
            		</c:forEach>
 		     </table>
+		     </form>
             </div>
             <form id="replyForm" action="${path}/insertRe.do?askNo=${ab.askNo}" method="post">
            		  <div class="reply-container">
+           		   <c:if test='${loggedMember.memberEmail.equals("admin@naver.com") }'>
                 	<div>댓글입력</div>
-                	<div><!-- <textarea name="askReplyContent" id="askReplyContent"></textarea> -->
-                	<input type="text" name="askReplyContent" id="askReplyContent" style="width:600px;height:40px;border:0; border-bottom:1px solid black;"/>
-                	<input type="submit" value="등록" onclick="reSaveBtn"/></div>
+                	<div>
+                	<input type="text" name="askReplyContent" id="askReplyContent" style="width:600px;height:40px;border:0; border-bottom:1px solid black;"  autocomplete="off"/>
+                	<input type="submit" value="등록" onclick="reSaveBtn" id="reSaveBtn"/>
+                	</div>
+                	</c:if>
             	</div>
             </form>
          <br/>
         </div>
             <div class="support-notice-view-btns">
+            	<c:if test="${loggedMember.memberNick==ab.askWriter }">
                 <input type="button" value="수정" onclick="fn_askBoardUpdate();">
-                <input type="button" value="삭제" onclick="fn_askBoardDelete();">
-                <input type="button" value="목록" onclick="history.back(-1);">
+                </c:if>
+                <c:if test='${loggedMember.memberEmail.equals("admin@naver.com") }'>
+                <input type="button" value="삭제" onclick="fn_askBoardDelete();" id="boardDeleteBtn">
+                </c:if>
+                <input type="button" value="목록" onclick="fn_returnMain();">
             </div>
     </div>
 <script>
+function fn_returnMain()
+{
+	location.href="${path}/askBoardMain.do";
+}
+
+$(document).ready(function(){
+	$("#reDelBtn").click(function(){
+	
+		document.replyDelForm.submit();
+	});
+});
+
    function fn_askBoardDelete(){
 	  if(confirm("삭제 하시겠습니까??")){
       	location.href="${path}/askBoardDelete.do?askNo=${ab.askNo}";

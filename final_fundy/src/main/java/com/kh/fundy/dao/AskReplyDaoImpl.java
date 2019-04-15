@@ -18,11 +18,12 @@ public class AskReplyDaoImpl implements AskReplyDao {
 	@Override
 	public int insertReply(AskReply askReply) {
 		return session.insert("askReply.insertReply",askReply);
-		
-		
-		
-		
-		
+	}
+
+
+	@Override
+	public int deleteReply(AskReply askReply) {
+		return session.update("askReply.deleteReply",askReply);
 	}
 	
 	

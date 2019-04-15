@@ -59,8 +59,8 @@ public class NoticeServiceImpl implements NoticeService {
 
 	//공지사항 삭제
 	@Override
-	public int noticeDelete(int noticeNo) {
-		return dao.noticeDelete(noticeNo);
+	public int noticeDelete(Notice notice) {
+		return dao.noticeDelete(notice);
 	}
 
 	//공지사항 수정

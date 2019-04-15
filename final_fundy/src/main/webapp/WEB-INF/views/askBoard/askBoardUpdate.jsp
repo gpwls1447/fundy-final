@@ -324,27 +324,17 @@
 			<p></p>
         </div>
         <br/>
-        <form name="updateForm"action="${path}/askBoardUpdateEnd.do" method="post" class="notice-form">
+        <form name="updateForm"action="${path}/askBoardUpdateEnd.do?askNo=${ab.askNo}" method="post" class="notice-form">
             <input type="hidden" name="askNo" id="askNo" value="${ab.askNo }"/>
             <div class="notice-form-title">
                 <div>제목</div>
-               <div><input type="text" name="askTitle" id="title" value="${ab.askTitle }"></div>
+               <div><input type="text" name="askTitle" id="title" value="${ab.askTitle }"  autocomplete="off"></div>
             </div>
             <div class="notice-form-content">
                 <div>내용</div>
                  <div><textarea name="askContent" id="content">${ab.askContent }</textarea></div>
             </div>
-          <!--   <div class="notice-form-image-upload">
-                <div>이미지</div>
-                <div>
-                    <div class="added-image-box">
-                        <img src="images/order_sample_5.jpg">
-                    </div>
-                    <div class="image-upload-container">
-                        <span>+</span><input type="file" name="originalFile" id="originalFile">
-                    </div>
-                </div>
-            </div> -->
+          
             <div class="notice-frm-btn-set">
                 <input type="button" value="취소" onclick="fn_returnMain()">
                <input type="submit" id="saveBtn" value="저장">

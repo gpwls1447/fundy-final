@@ -9,7 +9,6 @@
 <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
-
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <style>
     /* footer 부분 */
@@ -21,7 +20,7 @@
 		min-width: 1005px;
 	}
    
-       .footer-top
+    .footer-top
     {
         width: 100%;
         height: 230px;
@@ -33,7 +32,7 @@
         font-size: 13px;
     }
 
-    .footer-top > div 
+    .footer-top > div
     {
         flex: 1 1 0;
         display: flex;
@@ -123,9 +122,8 @@
         width: 40px;
         opacity: .6;
     }
->>>>>>> refs/heads/feature_jwj
-   
-       .footer-top
+  
+    .footer-top
     {
         width: 100%;
         height: 230px;

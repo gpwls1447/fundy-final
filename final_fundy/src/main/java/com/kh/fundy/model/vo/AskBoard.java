@@ -95,6 +95,9 @@ public class AskBoard {
 		return "AskBoard [askNo=" + askNo + ", askTitle=" + askTitle + ", askWriter=" + askWriter + ", askContent="
 				+ askContent + ", askDate=" + askDate + ", askDelete=" + askDelete + ", askMod=" + askMod + "]";
 	}
-	
+
+
+
+
 	
 }
