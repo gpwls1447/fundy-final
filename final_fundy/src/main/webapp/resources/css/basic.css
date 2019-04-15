@@ -243,7 +243,7 @@ input.h31
     cursor: pointer;
     transition: 150ms linear;
     box-sizing: border-box;
-    box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.3);
 }
 
 .pagebar-unit > a
