@@ -38,14 +38,23 @@ public class DatagenController {
 	private final int rndTimeMonthlyTerm = 2;
 	private final int targetMemberCount = 300;
 	private final int targetProjectCount = 400;
-	private final int targetFundingLogCount = 4000;
+	private final int targetFundingLogCount = 3500;
 	private final int targetCommentCount = 2500;
 
-	@RequestMapping("/commentGen.do")
-	public ModelAndView commentGen()
+	@RequestMapping("/datagen.do")
+	public ModelAndView run()
 	{
 		ModelAndView mv = new ModelAndView();
-		
+		mv.addObject("mResult", memberDatagen());
+		mv.addObject("pResult", projectDatagen());
+		mv.addObject("flResult", fundingLogDatagen());
+		mv.addObject("cResult", commentGen());
+		mv.setViewName("jsonView");
+		return mv;
+	}
+	
+	public int commentGen()
+	{	
 		String[] contents = {"물건 잘 받았습니다. 생각했던 것보다 좋네요.", "별로없입니다. 재구매는 없을 것 같네요.", "좋은 일에 동참할 수 있어 기쁩니다.", "조금이나마 도움이 되었으면 좋겠습니다.", "물건 정말 기대되네요." };
 		String[] replies = {"동감합니다.", "저는 그렇게 생각하지 않습니다.", "저는 그저 그렇네요", "맞습니다.", "인정"};
 		
@@ -80,16 +89,11 @@ public class DatagenController {
 			}
 		}
 		
-		mv.addObject("result", result);
-		mv.setViewName("jsonView");
-		return mv;
+		return result;
 	}
 	
-	@RequestMapping("/fundingLogDatagen.do")
-	public ModelAndView fundingLogDatagen()
-	{
-		ModelAndView mv = new ModelAndView();
-		
+	public int fundingLogDatagen()
+	{	
 		FundingLog fl = new FundingLog();
 		Member m;
 		
@@ -117,25 +121,11 @@ public class DatagenController {
 			result += pService.insertFundingLog(fl);
 		}
 		
-		mv.addObject("result", result);
-		mv.setViewName("jsonView");
-		return mv;
+		return result;
 	}
 	
-	@RequestMapping("/datagen.do")
-	public ModelAndView run()
+	public int projectDatagen()
 	{
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("result", memberDatagen());
-		mv.setViewName("jsonView");
-		return mv;
-	}
-	
-	@RequestMapping("/projectgen.do")
-	public ModelAndView projectDatagen()
-	{
-		ModelAndView mv = new ModelAndView();
-		
 		Project p = new Project();
 		Member m;
 		
@@ -178,9 +168,8 @@ public class DatagenController {
 			p.setProjectFormDate(rndBeginDate);
 			result += dService.insertProject(p);
 		}
-		mv.addObject("result", result);
-		mv.setViewName("jsonView");
-		return mv;
+		
+		return result;
 	}
 	
 	public int memberDatagen()
@@ -226,15 +215,6 @@ public class DatagenController {
 			m.setLastLoggedIn(tempTime);
 			
 			result += mService.insertOne(m);
-		}
-
-		
-		if(result == targetMemberCount)
-		{
-			System.out.println("회원데이터 생성 완료");
-		}
-		else {
-			System.out.println("회원데이터 생성중 오류 발생");
 		}
 		
 		return result;

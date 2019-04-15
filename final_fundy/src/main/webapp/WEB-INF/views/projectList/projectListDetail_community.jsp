@@ -243,7 +243,7 @@
 	}
 </style>
 <div id="comment-container">
-<div class="comment-count">댓글 ${totalCount }개</div>
+<div class="comment-count">댓글 <span class="tc">${totalCount }</span>개</div>
 <div class="comment-warning">본 프로젝트와 무관한 글, 광고성, 욕설, 비방, 도배 등의 글은 예고 없이 삭제 등 조치가 취해질 수 있으며. 해당 내용으로 인해 메이커, 후원자, 제3자에게 피해가 가지 않도록 유의하시기 바랍니다.</div>
 <div class="textarea comment-textarea" contenteditable="true"></div>
 <span class="textarea-bar"></span>
@@ -332,12 +332,51 @@ ${pageBar }
 	
 	$(() => {
 		init();
+		
+	    //커멘트작성 버튼 토글
+	    const commentTextArea = $('.comment-textarea');
+	    $(() => {
+	        commentTextArea.on('focus', e => {
+	            $(e.target).next().next().show();
+	        });
+		
+	    	//댓글작성 취소
+	        $('.cancel-comment').on('click', e => {
+	            $(e.target).parent().hide();
+	            commentTextArea.text("");
+	            commentTextArea.blur();
+	        });
+	    });
+	    
+	    //커멘트 등록
+	    const commentWriteBtn = $('.write-comment');
+	    $(() => {
+	    	commentWriteBtn.on('click', e => {
+				const commentText = $('.comment-textarea').html();
+				const parsedText = commentText.replace(/(<([^>]+)>)/g, '<br>');
+	    		
+	    		$.ajax({
+	    			type: 'post',
+	    			url: '${path}/comment/insertComment.do',
+	    			data: {'projectNo' : ${projectNo} , 'memberNick' : '${loggedMember.memberNick}', 'memberEmail' : '${loggedMember.memberEmail}', 'commentContent' : parsedText},
+	    			dataType: 'html',
+	    			success: data => {
+	    				$('.cancel-comment').trigger('click');
+	    				$('#marginer').after(data);
+	    				init();
+	    				
+	    				$('.tc').text(parseInt($('.tc').text()) + 1);
+	    			}
+	    		});
+	    	});
+	    });
 	});
 	
 	var init = () => {
 		
-	    //코멘트 메뉴 버튼 토글
+	    //메뉴 버튼 토글
 	    var commentMenuBtn = $('.comment-menu-btn');
+       	commentMenuBtn.off('mousedown');
 	    $(() => {
 	        commentMenuBtn.on('mousedown', e => {
 	            const commentMenu = $('.comment-menu');
@@ -357,31 +396,11 @@ ${pageBar }
 	                $('body').off('click');
 	            });
 	        });
-	    });  
-	    
-	    //코멘트 작성
-	    var commentWriteBtn = $('.write-comment');
-	    $(() => {
-	    	commentWriteBtn.on('click', e => {
-				const commentText = $('.comment-textarea').html();
-				const parsedText = commentText.replace(/(<([^>]+)>)/g, '<br>');
-	    		
-	    		$.ajax({
-	    			type: 'post',
-	    			url: '${path}/comment/insertComment.do',
-	    			data: {'projectNo' : ${projectNo} , 'memberNick' : '${loggedMember.memberNick}', 'memberEmail' : '${loggedMember.memberEmail}', 'commentContent' : parsedText},
-	    			dataType: 'html',
-	    			success: data => {
-	    				$('.cancel-comment').trigger('click');
-	    				$('#marginer').after(data);
-	    				init();
-	    			}
-	    		});
-	    	});
 	    });
 	    
-	    //댓글 작성
+	    //답글 작성
 	    var replyWriteBtn = $('.write-reply');
+   		replyWriteBtn.off('click');
 	    $(() => {
 	    	replyWriteBtn.on('click', e => {
 	    		const replyText = $(e.target).parent().prev().prev().html();
@@ -402,24 +421,10 @@ ${pageBar }
 	    		});
 	    	});
 	    });
-
-	    //댓글작성 버튼 토글
-	    var commentTextArea = $('.comment-textarea');
-	    $(() => {
-	        commentTextArea.on('focus', e => {
-	            $(e.target).next().next().show();
-	        });
-			
-	    //댓글작성 취소
-	        $('.cancel-comment').on('click', e => {
-	            $(e.target).parent().hide();
-	            commentTextArea.text("");
-	            commentTextArea.blur();
-	        });
-	    });
 	    
-	    //코멘트 삭제버튼 작동
+	    //커멘트 삭제
 	    var deleteCommentBtn = $('.delete-comment-btn');
+	    deleteCommentBtn.off('click');
 	    $(() => {
 	    	deleteCommentBtn.on('click', e => {
 	    		$.ajax({
@@ -435,6 +440,7 @@ ${pageBar }
 	    					setTimeout(() => {
 	    						$(e.currentTarget).parent().parent().parent().parent().remove();	
 	    					}, 1000);
+	    					$('.tc').text(parseInt($('.tc').text()) -1 );
 	    					    					
 	    				}
 	    				else
@@ -446,8 +452,9 @@ ${pageBar }
 	    	});
 	    });
 	    
-	    //답글 삭제 버튼 바인드
+	    //답글 삭제
 	    var deleteReplyBtn = $('.delete-reply-btn');
+	    deleteReplyBtn.off('click');
 	    $(() => {
 	    	deleteReplyBtn.on('click', e => {
 	    		$.ajax({
@@ -473,6 +480,7 @@ ${pageBar }
 	    });
 
 	    //답글 작성 버튼 토글
+	    $('.reply-btn').off('click');
 	    $(() => {
 	        $('.reply-textarea').hide();
 	        $('.write-btn-set').hide();
@@ -489,15 +497,18 @@ ${pageBar }
 
 	    //좋아요 클릭
 	    var likeBtn = $('.like-btn');
+	    likeBtn.off('click');
 	    $(() => {
 	        likeBtn.on('click', e => {
 	            $(e.target).toggleClass('liked');
 	        });
 	    });
 
-	    //수정, 수정취소버튼 클릭 이벤트 바인드
+	    //수정, 수정취소
 	    var editBtn = $('.edit-btn');
-	    var cancelEditBtn =$('.cancel-edit')
+	    var cancelEditBtn = $('.cancel-edit');
+	    editBtn.off('click');
+	    cancelEditBtn.off('click');
 	    $(() => {
 	        editBtn.on('click', e => {
 	            const target = $(e.currentTarget).parent().parent().parent().next();
@@ -526,8 +537,9 @@ ${pageBar }
 	        target.next().next().next().toggle();
 	    };
 
-	    //답글 수정 저장 버튼 바인드
+	    //답글 수정 저장
 		var saveReplyBtn = $('.save-reply-edit');
+	    saveReplyBtn.off('click');
 	    $(() => {
 	        saveReplyBtn.on('click', e => {
 	            const target = $(e.target).parent().prev().prev();
@@ -543,8 +555,9 @@ ${pageBar }
 	        });
 	    });
 	    
-	    //코멘트 수정 저장 버튼 바인드
+	    //코멘트 수정 저장
 	    var saveCommentBtn = $('.save-comment-edit');
+	    saveCommentBtn.off('click');
 	    $(() => {
 	        saveCommentBtn.on('click', e => {
 	            const target = $(e.target).parent().prev().prev();
@@ -569,6 +582,7 @@ ${pageBar }
 	
     //답글 토글
     var replyToggleBtn = $('.toggle-reply');
+    replyToggleBtn.off('click');
     $(() => {
         replyToggleBtn.parent().next().hide();
         replyToggleBtn.on('click', e => {

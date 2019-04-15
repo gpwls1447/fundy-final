@@ -72,9 +72,10 @@
             display: flex;
             flex-flow: column nowrap;
             align-items: center;
+
         }
         
-        .shipping-addr > div{width: 570px; display: flex;}
+        .shipping-addr > div{width: 455px; display: flex;}
         .shipping-addr > div:first-of-type{flex: 1 1 0;}
         .shipping-addr > div:last-of-type{flex: 5 1 0;}
         
@@ -127,9 +128,9 @@
         }
 
         .addr-inputs > div {display: flex; margin: 10px 0;}
-        .addr-inputs > div > div:first-of-type{flex: 1 1 0; font-weight: bold;}
-        .addr-inputs > div > div:last-of-type{flex: 5 1 0;}
-        .addr-inputs input {width: 190px; height: 35px; padding: 0 6px; border-radius: 3px; border: 1px solid #ccc; }
+        .addr-inputs > div > div:first-of-type{width: 85px; font-weight: bold;}
+        .addr-inputs > div > div:last-of-type{width: 370px;}
+        .addr-inputs input {width: 199px; height: 35px; padding: 0 6px; border-radius: 3px; border: 1px solid #ccc; }
         
         .addr-row input {margin: 5px 0;}
 
@@ -146,9 +147,8 @@
         }
 
         #zip-code {width: 97px;}
-        .addr-row input {width: 422px;}
-        .phone-row input {width: 121px;}
-        .phone-row input:last-of-type {width: 120px;}
+        .addr-row input {width: 362px;}
+        .phone-row input {width: 101px;}
         .phone-row span {margin: 0 5px;}
 
         .addr-unit-selected
@@ -158,27 +158,30 @@
 
         .message
         {
+       		width: 100%;
             font-size: 14px;
-            margin: 30px;
+			margin-bottom: 20px;
+			color: gray;
         }
 
-        .btn-sets
+        .btn-set
         {
-            width: 100%;
+            width: 440px !important;
             display: flex;
-            flex-flow: column nowrap;
             align-items: center;
-        }
-
-        .add-btn-set
-        {
-            display: none;
+            justify-content: flex-end;
         }
 
         .btn-mod
         {
-            margin: none;
+            margin: 15px 0;
+            margin-left: 10px;
             padding: 10px 35px;
+        }
+        
+        .add-btn
+        {
+        	display: none;
         }
 
 
@@ -203,7 +206,7 @@
                         <span class="my-tooltiptext">새 배송지</span>
                     </div>
                 </div>
-                
+                <span class="message">배송지는 5개까지 등록됩니다.</span>
                 <div class="addr-inputs">
                     <div class="addr-tag-row">
                         <div>배송지명</div>
@@ -222,7 +225,7 @@
                         <div>
                             <div>
                                 <button class="basic-btn basic-btn-active ripple" id="find-addr" onclick="return false;">주소찾기</button>
-                                <input type="text" name="zipCode" id="zip-code" value="${list[0].zipCode}" }>
+                                <input type="text" name="zipCode" id="zip-code" value="${list[0].zipCode}">
                             </div>
                             <input type="text" name="shipAddr" id="ship-addr" value="${list[0].shipAddr }">
                             <input type="text" name="shipAddrDetail" id="ship-addr-detail" placeholder="상세주소를 입력해주세요." value="${list[0].shipAddrDetail }">
@@ -237,18 +240,10 @@
                         </div>
                     </div>
                 </div>
-                
-
-                <span class="message">배송지는 5개까지 등록됩니다.</span>
-                <div class="btn-sets">
-                    <div class="save-btn-set btn-set">
-                        <button class="basic-btn btn-mod save-cancel-btn ripple">취소</button>
-                        <button class="basic-btn basic-btn-active btn-mod modify-btn ripple" onclick="update();">수정</button>
-                    </div>
-                    <div class="add-btn-set btn-set">
-                        <button class="basic-btn btn-mod add-cancel-btn ripple">취소</button>
-                        <button class="basic-btn basic-btn-active btn-mod add-btn ripple" onclick="send();">추가</button>
-                    </div>
+                <div class="btn-set">
+                    <button class="basic-btn btn-mod save-cancel-btn ripple">취소</button>
+                    <button class="basic-btn basic-btn-active btn-mod modify-btn ripple" onclick="update();">수정</button>
+                    <button class="basic-btn basic-btn-active btn-mod add-btn ripple" onclick="send();">추가</button>
                 </div>
             </form>
         </div>
@@ -260,6 +255,7 @@
     $(() => {
         addrUnits.on('click', e => {
             if(deleteBtn.index(e.target) != -1) return;
+            $('.add-btn').hide();
             addrUnits.removeClass('addr-unit-selected');
             $(e.currentTarget).toggleClass('addr-unit-selected');
 			
@@ -332,8 +328,8 @@
 
         $('.add-addr').on('click', () => {
         	addrUnits.removeClass('addr-unit-selected');
-            $('input').val("");
-            $('.btn-set').toggle();
+            $('input').val('');
+            $('.add-btn').show();
         });
     });
 

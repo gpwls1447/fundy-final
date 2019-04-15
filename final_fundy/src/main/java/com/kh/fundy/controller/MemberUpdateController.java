@@ -114,44 +114,27 @@ public class MemberUpdateController {
     public String memberUpdateView(Member m, Model model) {
        return "memberUpdate/memberUpdate-basicUpdate";
     }
-    
-    
-    @RequestMapping("/memberUpdate/updateProfilePic.ajax")
-    public ModelAndView updateProfilePic(MultipartHttpServletRequest mr, MultipartFile mf, String uploadFileName) throws IllegalStateException, IOException
-    {
+        
+    //기본 회원정보 변경 업데이트
+    @RequestMapping("/memberUpdate/basicUpdate.do")
+    public ModelAndView memberUpdate(Member m, MultipartHttpServletRequest mr, MultipartFile mf) throws IllegalStateException, IOException {
     	ModelAndView mv = new ModelAndView();
-
+    	
     	String path = mr.getSession().getServletContext().getRealPath("/resources/memberProfile");
     	File dir = new File(path);
     	if(!dir.exists()){
     		dir.mkdirs();
     	}
-
-    	if(!uploadFileName.equals(""))
-    	{
-    		File fileToDelete = new File(dir + File.separator + uploadFileName);
-    		fileToDelete.delete();
-    	}
-    	   	
+    	
     	mf = mr.getFile("profileImage");
     	if(!mf.isEmpty())
     	{
-    		uploadFileName = renameFile(mf.getOriginalFilename());
-    		mf.transferTo(new File(dir + File.separator + uploadFileName));
+    		String changedName = renameFile(mf.getOriginalFilename());
+    		mf.transferTo(new File(dir + File.separator + changedName));
     	}
     	
-    	mv.addObject("uploadFileName", uploadFileName);
-    	mv.setViewName("jsonView");
-    	return mv;
-    }
-    
-    //기본 회원정보 변경 업데이트
-    @RequestMapping("/member/memberUpdate.do")
-    public ModelAndView memberUpdate(Member m) {
-    	ModelAndView mv = new ModelAndView();
-        int result = service.memberUpdate(m);
-        
         String msg;
+        int result = service.memberUpdate(m);
         if(result > 0) { msg="회원수정이 완료되었습니다."; } 
         else { msg="오류발생. 다시 시도해주세요."; }
        

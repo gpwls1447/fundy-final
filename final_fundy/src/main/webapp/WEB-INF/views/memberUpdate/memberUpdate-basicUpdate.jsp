@@ -69,7 +69,7 @@
 	
 	.memberupdate-wrapper
 	{
-	    width: 450px;
+	    width: 100%;
 	    display: flex;
 	    flex-flow: column nowrap;
 	    align-items: center;
@@ -78,10 +78,17 @@
 	.memberupdate-wrapper input
 	{
 	    height: 35px;
+	    width: 222px;
 	    box-sizing: border-box;
-	    border-radius: 4px;
+	    border-radius: 3px;
 	    border: 1px solid #ccc;
 	    padding: 0 7px;
+	}
+		
+	.memberupdate-wrapper > div
+	{
+	    display: flex;
+	    margin: 10px 0;
 	}
 	
 	.profile-pic-container
@@ -114,26 +121,18 @@
 	    z-index: 2;
 	    cursor: pointer;
 	}
-	
-	.memberupdate-wrapper > div
-	{
-	    display: flex;
-	    margin: 10px 0;
-	}
-	
-	.memberupdate-wrapper > div > div:first-of-type
-	{
-	    width: 90px;
-	    font-weight: bold;
-	}
-	.memberupdate-wrapper > div > div:last-of-type{width: 310px;}
+
+	.memberupdate-wrapper > div > div:first-of-type{width: 80px; font-weight: bold;}
+	.memberupdate-wrapper > div > div:last-of-type{width: 320px; display: flex;}
 	
 	.email{width: 100%;}
+
+	.nick{width: 222px;}
 	
 	.intro
 	{
 	    resize: none;
-	    min-width: 308px;
+	    min-width: 320px;
 	    min-height: 100px;
 	    border-radius: 4px;
 	    border: 1px solid #ccc;
@@ -141,9 +140,9 @@
 	
 	.btn-set
 	{
-	    width: 395px;
+	    width: 400px;
 	    display: flex;
-	    justify-content: center;
+	    justify-content: flex-end;
 	}
 	
 	.btn-mod
@@ -155,19 +154,19 @@
     <section class="section">
         <div class="memberupdate-header">회원정보 수정</div>
         <div class="memberupdate-nav">
-            <div><a href="${pageContext.request.contextPath}/member/memberUpdateView.do">기본정보수정</a><span class="indicator"></span></div>
-            <div><a href="${pageContext.request.contextPath}/member/memberPwView.do">비밀번호변경</a></div>
-            <div><a href="${pageContext.request.contextPath}/member/memberAddressView.do">배송지관리</a></div>
-            <div><a href="${pageContext.request.contextPath}/member/memberDeleteView.do">회원탈퇴</a></div>
+            <div><a href="${path}/member/memberUpdateView.do">기본정보수정</a><span class="indicator"></span></div>
+            <div><a href="${path}/member/memberPwView.do">비밀번호변경</a></div>
+            <div><a href="${path}/member/memberAddressView.do">배송지관리</a></div>
+            <div><a href="${path}/member/memberDeleteView.do">회원탈퇴</a></div>
         </div>
 
         <hr id="divider"/>
         
         <div class="memberupdate-body">
-            <form action="${pageContext.request.contextPath}/member/memberUpdate.do" method="post" id="member-update-frm" class="memberupdate-wrapper">
+            <form action="${path}/memberUpdate/basicUpdate.do" method="post" class="memberupdate-wrapper" enctype="multipart/form-data">
                 <div class="profile-pic-container">
                     <img class="profile-pic" src="${path }/resources/memberProfile/${loggedMember.memberProfile}">
-                    <input type="file" id="profile-input" name="memberProfile" class="profile-upload" value="${loggedMember.memberProfile }">
+                    <input type="file" id="profile-input" name="profileImage" class="profile-upload" value="${loggedMember.memberProfile }" accept="image/*">
                 </div>
                 <div class="email-row">
                     <div>이메일</div>
@@ -185,58 +184,28 @@
                     <div>한줄소개</div>
                     <div>
                         <textarea name="intro" id="intro" class="intro" placeholder="200자 이내로 입력해주세요." >${loggedMember.intro}</textarea>
-                        
                     </div>
                 </div>
                 <div class="btn-set">
                     <button class="basic-btn btn-mod">취소</button>
-                    <button class="basic-btn basic-btn-active btn-mod" onclick="update();">수정하기</button>
+                    <button class="basic-btn basic-btn-active btn-mod">수정하기</button>
                 </div>
-                <input type="hidden" name="uploadFileName" id="uploadFileName" value="">
             </form>
         </div>
     </section> 
 <script>
-	//파일 변경시 파일 업로드
+	//파일 변경시 파일 미리보기
 	$(() => {
 		const profileInput = $('#profile-input');
 		profileInput.on('input', () => {
 			
-			if(/\.(gif|jpg|jpeg|png)$/i.test(profileInput[0].files[0].name));
-			{
-				alert('이미지 파일이 아닙니다.');
-				return;
+			const reader = new FileReader();
+			reader.readAsDataURL(profileInput[0].files[0]);
+			reader.onload = () => {
+				$('.profile-pic').attr('src', reader.result);
 			}
-			
-			const formData = new FormData();
-			formData.append("profileImage", profileInput[0].files[0], profileInput[0].files[0].name);
-			formData.append("uploadFileName", $('#uploadFileName').val());
-			console.log($('#uploadFileName').val());
-			
-			$.ajax({
-				type: 'post',
-				url: '${path}/memberUpdate/updateProfilePic.ajax',
-				data: formData,
-				processData: false,
-				contentType: false,
-				dataType: 'json',
-				success: data => {
-					$('.profile-pic').attr('src', '${path}/resources/memberProfile/'+data.uploadFileName);
-					$('#uploadFileName').val(data.uploadFileName);
-				}
-			});
 		});
 	});
-
-</script>
-
-<script>
-	function update(){
-		var comfirm="수정하시겠습니까?";
-		if(comfirm==true){
-			$('#member-update-form').submit();
-		} 
-	}
 </script>
 
 <script>
@@ -256,10 +225,9 @@
 						$('#memberNick').val('');
 					} else {
 						alert('사용가능한 닉네임입니다.');
-						
+
 					}
 				}
-				
 			});
 		});
 	});

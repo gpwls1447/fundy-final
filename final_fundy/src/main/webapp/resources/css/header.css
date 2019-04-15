@@ -166,6 +166,23 @@
         {
             box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.7);
         }
+        
+    .proposal-btn
+    {
+        background-color: rgb(68, 194, 177);
+        color: white;
+        padding: 8px 20px;
+        border: none;
+        box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.3);
+        transition: .1s linear;
+        cursor: pointer;
+        font-size: 15px;
+    }
 
-        .section{width: 1005px;}
+    .proposal-btn:hover
+    {
+        box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    .section{width: 1005px;}
 
