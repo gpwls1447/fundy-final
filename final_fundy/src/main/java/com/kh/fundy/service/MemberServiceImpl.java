@@ -35,15 +35,7 @@ public class MemberServiceImpl implements MemberService {
 		return dao.insertOne(m);
 	}
 
-	@Override
-	public int memberAddress(ShippingAddr s) {
-		return dao.memberAddress(s);
-	}
-
-	@Override
-	public List<ShippingAddr> memberAddressView(ShippingAddr s) {
-		return dao.memberAddressView(s);
-	}
+	
 	public List<Member> selectList() {
 		return dao.selectList();
 	}
@@ -52,21 +44,7 @@ public class MemberServiceImpl implements MemberService {
 	public Member selectOneKakao(Member m) {
 		return dao.selectOneKakao(m);
 	}
-
-	@Override
-	public int memberAddressInsert(ShippingAddr s) {
-		return dao.memberAddressInsert(s);
-	}
-
-	@Override
-	public int memberUpdate(Member m) {
-		return dao.memberUpdate(m);
-	}
-
-	@Override
-	public List<Member> memberUpdateView(Member m) {
-		return dao.memberUpdateView(m);
-	}
+	
 
 	@Override
 	public String selectCountUserAuth(String memberEmail) {
@@ -84,32 +62,10 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int memberPwUpdate(Member m) {
-		return dao.memberPwUpdate(m);
+	public Member selectCheckNick(Member m) {
+		return dao.selectCheckNick(m);
 	}
-
-	@Override
-	public int memberPwCheck(Member m) {
-		return dao.memberPwCheck(m);
-	}
-
-	@Override
-	public int memberNickCheck(String memberNick) {
-		return dao.memberNickCheck(memberNick);
-	}
-
-	@Override
-	public int memberDelete(Member m) {
-		return dao.memberDelete(m);
-	}
-
-	@Override
-	public int memberUpdate(Member m, List<Member> list) {
-		return 0;
-	}
-
-
-
-
+	
+	
 
 }

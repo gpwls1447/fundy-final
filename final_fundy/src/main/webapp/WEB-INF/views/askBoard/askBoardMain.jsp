@@ -139,16 +139,31 @@
             border-radius: 2px;
             cursor: pointer;
 		}
-		
+		#askCom
+		{
+			/* border-radius:15px 15px 15px 15px; */
+			color: rgb(18, 97, 149);
+			/* background-color: rgb(18, 97, 149);
+			border:1px solid rgb(18, 97, 149); 
+			margin: 0; */
+		}
+		#askRd
+		{
+			/* border-radius:15px 15px 15px 15px; */
+			color: #ccc;
+			/* width: 60px;
+            height: 50px;
+			background-color: #ccc;
+			border:1px solid #ccc; 
+			margin: 0; */
+		}
 </style>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <section class="section">
        <div class="memberupdate-header">게시판</div>
         <div class="memberupdate-nav">
-            <%-- <div><a href="${pageContext.request.contextPath}/member/memberUpdateView.do">기본정보수정</a><span class="indicator"></span></div> --%>
             <div><a href="${pageContext.request.contextPath}/askBoardMain.do">1대1게시판</a><span class="indicator"></span></div>
             <div><a href="${pageContext.request.contextPath}/noticeMain.do">공지사항</a></div>
-           <%--  <div><a href="${pageContext.request.contextPath}/member/memberDeleteView.do">회원탈퇴</a></div> --%>
         </div>
 
         <hr id="divider"/>
@@ -165,17 +180,27 @@
             </div>
              <c:forEach items="${list }" var="askB">
             <div class="support-board-cols">
-                <div>${askB.askNo}</div>
-                <div>${askB.askWriter }</div>
-                <div><a href="${path}/askBoardView.do?askNo=${askB.askNo}">${askB.askTitle }</a></div>
-                <div><fmt:formatDate value="${askB.askDate }" pattern="yyyy/MM/dd"/></div>
-                <div>대기중</div><!-- 댓글 구현한 후 댓글 달릴시 대기중->완료로 전환되게 하려해요 -->
+                <div>${askB.ASKNO}</div>
+                <div>${askB.ASKWRITER }</div>
+                <div><a href="${path}/askBoardView.do?askNo=${askB.ASKNO}">${askB.ASKTITLE }</a></div>
+                <div>
+                	${askB.ASKDATE }<!-- 형변환이 안됨 질문해야됨 -->
+                </div>
+                <!-- 리턴값을 모두 맵으로 바꾸고 맵퍼의 리절드 타입을 맵으로 바꾸고 나머지 .뒤에 대문자로 바꾸기 -->
+                <c:if test="${askB.REPLY >=1}">
+                	<div id="askCom">답변완료</div>
+                </c:if>
+                <c:if test="${askB.REPLY ==0}">
+                	<div id="askRd">대기중</div>
+                </c:if>
             </div>
        		</c:forEach>
         </div>
         
         <div class="support-notice-view-btns">
+        <c:if test='${loggedMember!=null }'>
 			<input type="button" value="게시물 작성" id="addBtn" onclick="fn_askBoardForm();"/>
+		</c:if>
 		</div>
         <div class="pagebar">
             ${pageBar }

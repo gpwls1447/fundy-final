@@ -324,10 +324,11 @@
             <p></p>
         </div>
         <br/>
-        <form name="noticeForm" action="${path}/noticeFormEnd.do" method="post" class="notice-form">
+        <form name="noticeForm" action="${path }/noticeFormEnd.do" method="post" class="notice-form">
+       
             <div class="notice-form-title">
                 <div>제목</div>
-                <div><input type="text" name="noticeTitle" id="title"></div>
+                <div><input type="text" name="noticeTitle" id="title"  autocomplete="off"></div>
             </div>
             <div class="notice-form-content">
                 <div>공지내용</div>
@@ -345,18 +346,12 @@
                 </div>
             </div>
             <div class="notice-frm-btn-set">
-                <input type="button" value="취소" onclick="fn_returnMainView();">
+                <input type="button" value="취소" onclick="history.back(-1);">
                 <input type="submit" value="저장" id="saveBtn">
             </div>
         </form>
     </div>
  <script>
-function fn_returnMainView()
-{
-	location.herf="${path}/noticeMain.do";
-}
-
-
 $(document).ready(function(){
 	$("#saveBtn").click(function(){
 		var title = $("#title").val();

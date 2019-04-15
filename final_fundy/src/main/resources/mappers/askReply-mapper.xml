@@ -7,5 +7,10 @@
   	insert into askreply values(askreply_seq.nextval,#{askNo},#{askReplyContent},sysdate,null,null)
   </insert>
   
+  <!-- 댓글삭제하기 -->
+  <update id="deleteReply" parameterType="askReply" >
+  	update askreply set askreplydelete = #{askReplyDelete} where askreplyno = #{askReplyNo}
+  </update>
+  
   
 </mapper>

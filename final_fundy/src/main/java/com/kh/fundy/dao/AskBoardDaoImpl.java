@@ -1,6 +1,7 @@
 package com.kh.fundy.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -17,7 +18,7 @@ public class AskBoardDaoImpl implements AskBoardDao {
 	private SqlSessionTemplate session;
 	
 	@Override
-	public List<AskBoard> selectList(int cPage, int numPerPage) {
+	public List<Map<String,String>> selectList(int cPage, int numPerPage) {
 		
 		return session.selectList("askBoard.selectList",null,new RowBounds((cPage-1)*numPerPage,numPerPage));
 	}
@@ -37,9 +38,9 @@ public class AskBoardDaoImpl implements AskBoardDao {
 	
 	//삭제
 	@Override
-	public int askBoardDelete(int askNo) {
+	public int askBoardDelete(AskBoard ab) {
 		
-		return session.delete("askBoard.deleteAskBoard",askNo);
+		return session.update("askBoard.deleteAskBoard",ab);
 	}
 
 	//상세보기
@@ -58,6 +59,12 @@ public class AskBoardDaoImpl implements AskBoardDao {
 	@Override
 	public List<AskReply> replyView(int askNo) {
 		return session.selectList("askBoard.replyView",askNo);
+	}
+
+	//상태바에 필요한 댓글리스트
+	@Override
+	public List<AskReply> AskReplyList() {
+		return session.selectList("askBoard.replyList");
 	}
 
 	

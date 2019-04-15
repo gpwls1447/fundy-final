@@ -1,6 +1,7 @@
 package com.kh.fundy.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class AskBoardServiceImpl implements AskBoardService {
 	
 	//전체보기
 	@Override
-	public List<AskBoard> selectList(int cPage, int numPerPage) {
+	public List<Map<String,String>> selectList(int cPage, int numPerPage) {
 		
 		return dao.selectList(cPage,numPerPage);
 	}
@@ -37,9 +38,9 @@ public class AskBoardServiceImpl implements AskBoardService {
 
 	//삭제
 	@Override
-	public int askBoardDelete(int askNo) {
+	public int askBoardDelete(AskBoard ab) {
 		
-		return dao.askBoardDelete(askNo);
+		return dao.askBoardDelete(ab);
 	}
 	
 	//상세보기
@@ -59,6 +60,12 @@ public class AskBoardServiceImpl implements AskBoardService {
 	@Override
 	public List<AskReply> replyView(int askNo) {
 		return dao.replyView(askNo);
+	}
+
+	//상태바에 필요한 댓글리스트
+	@Override
+	public List<AskReply> askReplyList() {
+		return dao.AskReplyList();
 	}
 
 	

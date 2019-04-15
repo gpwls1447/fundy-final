@@ -11,6 +11,9 @@
 	
 	<insert id="insertCommentReply" parameterType="commentReply">
 		INSERT INTO COMMENTREPLY VALUES(COMMENTREPLY_SEQ.NEXTVAL, #{commentNo}, #{memberEmail}, #{commentReplyContent}, #{commentReplyDate}, #{commentReplyMod}, #{commentReplyDelete})
+		<selectKey resultType="int" keyProperty="commentReplyNo" order="AFTER" keyColumn="commentReplyNo">
+			SELECT COMMENTREPLY_SEQ.CURRVAL FROM DUAL
+		</selectKey>
 	</insert>
 	
 	<select id="selectCommentCount" parameterType="int" resultType="int">
@@ -21,14 +24,14 @@
 		SELECT * FROM COMMENTBOARD 
 		JOIN MEMBER USING(MEMBEREMAIL)
 		WHERE PROJECTNO = #{projectNo}
-		AND COMMENTDELETE IS NULL
+		AND COMMENTDELETE IS NULL ORDER BY #{commentDate} DESC
 	</select>
 	
 	<select id="selectCommentReply" parameterType="int" resultType="commentReply">
 		SELECT * FROM COMMENTREPLY
 		JOIN MEMBER USING(MEMBEREMAIL)
 		WHERE COMMENTNO = #{commentNo}
-		AND COMMENTREPLYDELETE IS NULL
+		AND COMMENTREPLYDELETE IS NULL ORDER BY #{commentReplyDate} DESC
 	</select>
 	
 	<update id="updateComment" parameterType="comment">

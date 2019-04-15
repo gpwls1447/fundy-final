@@ -20,5 +20,5 @@ public interface NoticeDao {
 	//공지사항 수정
 	int noticeUpdate(Notice notice);
 	//공지사항 삭제
-	int noticeDelete(int noticeNo);
+	int noticeDelete(Notice notice);
 }

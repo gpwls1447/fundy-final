@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="shippingAddr">
+	
+	<insert id="insertAddr">
+		insert into ShippingAddr values (shippingaddr_seq.nextval, #{memberEmail}, #{shipAddrTag}, #{shipAddrReceiver}, #{zipCode}, #{shipAddr}, #{shipAddrDetail}, #{phone})
+	</insert>
+	
 	<update id="updateAddress">
 		update ShippingAddr set shipAddrTag=#{shipAddrTag}, shipAddrReceiver=#{shipAddrReceiver}, zipCode=#{zipCode}, shipAddr=#{shipAddr}, shipAddrDetail=#{shipAddrDetail}, phone=#{phone} where memberEmail=#{memberEmail}
 	</update>
 	
-	<select id="updateAddressView" resultType="shippingAddr">
-		select * from ShippingAddr where memberEmail=#{memberEmail}
+	<select id="selectAddrList" parameterType="string" resultType="shippingAddr">
+		select * from ShippingAddr where memberEmail = #{memberEmail}
 	</select>
 	
-	<insert id="insertMemberAddress">
-		insert into ShippingAddr values (shippingaddr_seq.nextval, #{memberEmail}, #{shipAddrTag}, #{shipAddrReceiver}, #{zipCode}, #{shipAddr}, #{shipAddrDetail}, #{phone})
-	</insert>
+	<select id="selectAddr" parameterType="shippingAddr" resultType="shippingAddr">
+		SELECT * FROM SHIPPINGADDR WHERE SHIPADDRNO = #{shipAddrNo}
+	</select>
+	
+	<delete id="deleteAddr" parameterType="shippingAddr">
+		DELETE FROM SHIPPINGADDR WHERE SHIPADDRNO = #{shipAddrNo}
+	</delete>
 </mapper>

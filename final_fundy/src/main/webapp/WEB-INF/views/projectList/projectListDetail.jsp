@@ -231,7 +231,7 @@
 	
 	.proj-detail-bottom{width: 100%; display: flex;}
 	
-	.proj-detail-bottom-left{flex: 7 1 0; margin-right: 25px; display: flex; flex-flow: column }
+	.proj-detail-bottom-left{flex: 7 1 0; margin-right: 25px; display: flex; flex-flow: column; width: 100%;}
 	.proj-detail-bottom-right{flex: 4 1 0;}
 	
 	.creator-info-box
@@ -257,10 +257,11 @@
 	
 	.profile-pic
 	{
-	    width: 90px;
+	    width: 80px;
 	    height: 80px;
 	    border-radius: 50%;
 	    margin-right: 20px;
+	    object-fit: contain;
 	}
 	
 	.creator-info-rest
@@ -422,7 +423,7 @@
                 <div class="creator-info-box">
                     <div>창작자 정보</div>
                     <div class="creator-name-profile-pic">
-                        <img class="profile-pic" src="${path }/resources/images/memberProfile/${project.memberProfile }">
+                        <img class="profile-pic" src="${path }/resources/memberProfile/${project.memberProfile }">
                         <div class="creator-name">${project.memberNick }</div>
                     </div>
                     <div class="creator-info-rest">
@@ -505,12 +506,6 @@
     		});
     	});
     });
-    
-    new daum.Postcode({
-        oncomplete: data => {
-        	
-        }
-    }).open();
     
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

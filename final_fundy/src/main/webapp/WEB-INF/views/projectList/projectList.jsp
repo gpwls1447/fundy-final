@@ -77,8 +77,8 @@
 	
 	.proj-list-thumnail > img
 	{
-	    width: 97%;
-	    height: 97%;
+		width: 100%;
+		height: 100%;
 	}
 	
 	.proj-list-title
@@ -211,6 +211,7 @@
 	});
 	
 	$(() => {
+		$('.nav').show();
 		$('.nav').css('display', 'flex');
 	});
 

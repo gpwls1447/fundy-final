@@ -319,11 +319,11 @@
         <div class="notice-form-header">
             <p></p>
         </div>
-        <form name="updateForm" action="${paht}/noticeUpdateEnd.do" method="post" class="notice-form">
+        <form name="updateForm" action="${pageContext.request.contextPath }/noticeUpdateEnd.do" method="post" class="notice-form">
             <input type="hidden" name="noticeNo" id="noticeNo" value="${nt.noticeNo }"/>
             <div class="notice-form-title">
                 <div>제목</div>
-                <div><input type="text" name="noticeTitle" id="title" value="${nt.noticeTitle}"></div>
+                <div><input type="text" name="noticeTitle" id="title" value="${nt.noticeTitle}"  autocomplete="off"></div>
             </div>
             <div class="notice-form-content">
                 <div>공지내용</div>

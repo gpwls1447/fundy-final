@@ -32,7 +32,7 @@ public class Project {
 	private int reach;
 	private int reachRate;
 	private int funderNo;
-	private int memberProfile;
+	private String memberProfile;
 	
 	public Project() {}
 
@@ -41,7 +41,7 @@ public class Project {
 			int anchorCount, String projectStatCode, String projectSumary, String projectEmail, String projectPhone,
 			String memberEmail, String minorCode, Timestamp projectFormDate, List<FundingOption> foList,
 			String minorName, String midCode, String midName, String majorCode, int reach, int reachRate, int funderNo,
-			int memberProfile) {
+			String memberProfile) {
 		super();
 		this.projectNo = projectNo;
 		this.memberNick = memberNick;
@@ -280,11 +280,11 @@ public class Project {
 		this.funderNo = funderNo;
 	}
 
-	public int getMemberProfile() {
+	public String getMemberProfile() {
 		return memberProfile;
 	}
 
-	public void setMemberProfile(int memberProfile) {
+	public void setMemberProfile(String memberProfile) {
 		this.memberProfile = memberProfile;
 	}
 
