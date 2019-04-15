@@ -33,6 +33,8 @@ public class Project {
 	private int reachRate;
 	private int funderNo;
 	private String memberProfile;
+	private int favorited;
+	
 	
 	public Project() {}
 
@@ -41,7 +43,7 @@ public class Project {
 			int anchorCount, String projectStatCode, String projectSumary, String projectEmail, String projectPhone,
 			String memberEmail, String minorCode, Timestamp projectFormDate, List<FundingOption> foList,
 			String minorName, String midCode, String midName, String majorCode, int reach, int reachRate, int funderNo,
-			String memberProfile) {
+			String memberProfile, int favorited) {
 		super();
 		this.projectNo = projectNo;
 		this.memberNick = memberNick;
@@ -70,6 +72,7 @@ public class Project {
 		this.reachRate = reachRate;
 		this.funderNo = funderNo;
 		this.memberProfile = memberProfile;
+		this.favorited = favorited;
 	}
 
 	public int getProjectNo() {
@@ -288,4 +291,25 @@ public class Project {
 		this.memberProfile = memberProfile;
 	}
 
+	public int getFavorited() {
+		return favorited;
+	}
+
+	public void setFavorited(int favorited) {
+		this.favorited = favorited;
+	}
+
+	@Override
+	public String toString() {
+		return "Project [projectNo=" + projectNo + ", memberNick=" + memberNick + ", projectTitle=" + projectTitle
+				+ ", projectThumnail=" + projectThumnail + ", projectContent=" + projectContent + ", beginDate="
+				+ beginDate + ", endDate=" + endDate + ", goalPrice=" + goalPrice + ", recommended=" + recommended
+				+ ", recImageName=" + recImageName + ", anchorCount=" + anchorCount + ", projectStatCode="
+				+ projectStatCode + ", projectSumary=" + projectSumary + ", projectEmail=" + projectEmail
+				+ ", projectPhone=" + projectPhone + ", memberEmail=" + memberEmail + ", minorCode=" + minorCode
+				+ ", projectFormDate=" + projectFormDate + ", foList=" + foList + ", minorName=" + minorName
+				+ ", midCode=" + midCode + ", midName=" + midName + ", majorCode=" + majorCode + ", reach=" + reach
+				+ ", reachRate=" + reachRate + ", funderNo=" + funderNo + ", memberProfile=" + memberProfile
+				+ ", favorited=" + favorited + "]";
+	}
 }

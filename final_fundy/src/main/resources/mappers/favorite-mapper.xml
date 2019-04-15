@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="favorite">
-	<select id="favoriteList" resultType="favorite">
-		select favoriteNo, favorite memberEmail, projectNo from favorite 
-		where memberEmail = #{memberEmail} order by projectNo
+	<select id="favoriteList" resultType="favorite" parameterType="string">
+		select projectNo from favorite where memberEmail=#{sessionMemberEmail}
 	</select>
+	
+	<select id="selectCount" resultType="int" parameterType="string">
+		select count(*) from favorite where memberEmail=#{sessionMemberEmail} 
+	</select>
+	
+	<insert id="insertFavorite" parameterType="favorite">
+		insert into favorite values(#{memberEmail}, #{projectNo}, favoriteno_seq.nextval)
+	</insert>
+	
+	<delete id="deleteFavorite" parameterType="favorite">
+		delete from favorite where memberEmail=#{memberEmail} and projectNo=#{projectNo}
+	</delete>
 
 </mapper>
