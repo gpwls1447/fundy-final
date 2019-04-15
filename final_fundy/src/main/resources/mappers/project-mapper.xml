@@ -46,11 +46,13 @@
 			F.MEMBEREMAIL,
 			nvl((select sum((e.fundPrice*d.packageamount)+d.extramoney) from fundinglog d join fundingoption e on d.packageNo = e.packageNo where d.projectNo = a.projectNo),0) as reach,
 			nvl((select sum((e.fundPrice*d.packageamount)+d.extramoney) from fundinglog d join fundingoption e on d.packageNo = e.packageNo where d.projectNo = a.projectNo)/goalprice*100,0) as reachRate,
-			nvl((select count(*) from fundinglog f where f.projectNo = a.projectNo),0) as funderNo
+			nvl((select count(*) from fundinglog f where f.projectNo = a.projectNo),0) as funderNo,
+			G.PROJECTSTATNAME
 			FROM PROJECT A 
 			JOIN MINORCATEGORY B ON A.MINORCODE = B.MINORCODE
 			JOIN MIDCATEGORY C ON B.MIDCODE = C.MIDCODE
 			JOIN MEMBER F ON A.MEMBEREMAIL = F.MEMBEREMAIL
+			JOIN PROJECTSTATUS G ON A.PROJECTSTATCODE = G.PROJECTSTATCODE
 			WHERE 1=1
 		<if test="projectStatCode != null and projectStatCode != ''">
 			AND PROJECTSTATCODE = #{projectStatCode}
@@ -64,14 +66,18 @@
 		<if test="keyword != null and keyword != ''">
 			AND PROJECTTITLE LIKE '%'||#{keyword}||'%' 
 		</if>
+		<if test="memberEmail != null and memberEmail != ''">
+			AND MEMBEREMAIL = #{memberEmail}
+		</if>
 		<if test="orderby != null and orderby != ''">
 			ORDER BY ${orderby} DESC
 		</if>
+		
 	</select>
 	
 	<select id="selectOne" parameterType="map" resultType="project">
 		SELECT A.*, B.MINORNAME, C.*, D.MEMBERPROFILE,
-			(SELECT COUNT(*) FROM FAVORITE WHERE MEMBEREMAIL = #{memberEmail} AND PROJECTNO = #{projectNo}) AS favorited,
+			(SELECT COUNT(*) FROM FAVORITE WHERE MEMBEREMAIL = #{memberEmail} AND PROJECTNO = #{projectNo}) as favorited,
 			nvl((select sum((e.fundPrice*d.packageamount)+d.extramoney) from fundinglog d join fundingoption e on d.packageNo = e.packageNo where d.projectNo = a.projectNo),0) as reach,
 			nvl((select sum((e.fundPrice*d.packageamount)+d.extramoney) from fundinglog d join fundingoption e on d.packageNo = e.packageNo where d.projectNo = a.projectNo)/goalprice*100,0) as reachRate,
 			nvl((select count(*) from fundinglog f where f.projectNo = a.projectNo),0) as funderNo

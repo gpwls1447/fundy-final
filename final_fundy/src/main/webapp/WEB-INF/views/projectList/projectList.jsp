@@ -16,13 +16,13 @@
 	    display: flex;
 	    flex-flow: column nowrap;
 	    align-items: center;
-	    margin-top: 30px;
 	}
 	
 	.proj-search-result
 	{
 	    font-size: 30px;
-	    margin: 20px;
+	    margin-top: 130px;
+	    margin-bottom: 20px;
 	}
 	
 	.proj-category
@@ -35,7 +35,6 @@
 	
 	.proj-list-order
 	{
-		margin-top: 100px;
 	    width: 100%;
 	    display: flex;
 	    justify-content: flex-end;
@@ -137,9 +136,11 @@
 </style>
 <section class="section">
 	<div class="proj-list-wrapper">
-		<c:if test="${keyword != null && keyword eq ''}">
-        	<div class="proj-search-result">[${keyword }] 에 대한 검색 결과</div>
+        <div class="proj-search-result">
+		<c:if test="${keyword ne null && keyword ne ''}">
+			[${keyword }] 에 대한 검색 결과
 		</c:if>
+		</div>
         <div class="proj-list-order">
             <select name="projectStatCode" id="projectStatCode">
                 <option value="PS03" ${projectStatCode eq "PS03" ? "selected" : "" }>진행중</option>
@@ -186,7 +187,7 @@
 	
 	/* 페이지 바 함수 */
 	const fn_paging = cPage => {
-		location.href='${path}/projectList/projectList.do?cPage='+cPage+'&majorCode=${majorCode}&midCode=${midCode}&projectStatCode='+$('#projectStatCode option:selected').val()+'&orderby=${orderby}';
+		location.href='${path}/projectList/projectList.do?cPage='+cPage+'&majorCode=${majorCode}&midCode=${midCode}&projectStatCode='+$('#projectStatCode option:selected').val()+'&orderby=${orderby}&keyword=${keyword}';
 	};
 	
 	/* 프로젝트 카테고리/정렬 이벤트 */

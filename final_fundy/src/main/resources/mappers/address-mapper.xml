@@ -6,8 +6,8 @@
 		insert into ShippingAddr values (shippingaddr_seq.nextval, #{memberEmail}, #{shipAddrTag}, #{shipAddrReceiver}, #{zipCode}, #{shipAddr}, #{shipAddrDetail}, #{phone})
 	</insert>
 	
-	<update id="updateAddress">
-		update ShippingAddr set shipAddrTag=#{shipAddrTag}, shipAddrReceiver=#{shipAddrReceiver}, zipCode=#{zipCode}, shipAddr=#{shipAddr}, shipAddrDetail=#{shipAddrDetail}, phone=#{phone} where memberEmail=#{memberEmail}
+	<update id="updateAddr" parameterType="shippingAddr">
+		update ShippingAddr set shipAddrTag = #{shipAddrTag}, shipAddrReceiver = #{shipAddrReceiver}, zipCode = #{zipCode}, shipAddr = #{shipAddr}, shipAddrDetail = #{shipAddrDetail}, phone = #{phone} where shipAddrNo = #{shipAddrNo}
 	</update>
 	
 	<select id="selectAddrList" parameterType="string" resultType="shippingAddr">
