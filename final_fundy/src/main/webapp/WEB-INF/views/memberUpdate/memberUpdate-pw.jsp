@@ -68,7 +68,7 @@
 
         .memberupdate-wrapper
         {
-            width: 450px;
+            width: 100%;
             display: flex;
             flex-flow: column nowrap;
             align-items: center;
@@ -77,8 +77,9 @@
         .memberupdate-wrapper input
         {
             height: 35px;
+            width: 200px;
             box-sizing: border-box;
-            border-radius: 4px;
+            border-radius: 3px;
             border: 1px solid #ccc;
             padding:0 7px;
         }
@@ -117,38 +118,25 @@
             display: flex;
             margin: 10px 0;
         }
-
-        .memberupdate-wrapper > div > div:first-of-type
-        {
-            width: 110px;
-            font-weight: bold;
-        }
-        .memberupdate-wrapper > div > div:last-of-type{width: 310px;}
-
-        .email{width: 100%;}
-
-        .intro
-        {
-            resize: none;
-            min-width: 308px;
-            min-height: 100px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-        }
-
-        .btn-set
-        {
-            width: 395px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .btn-mod
-        {
-            margin: 0;
-            margin-left: 10px;
-        }
         
+        .memberupdate-wrapper > div > div {display: flex;}
+
+        .memberupdate-wrapper > div > div:first-of-type{font-weight: bold; width: 130px;}
+        .memberupdate-wrapper > div > div:last-of-type{width: 274px;}
+	
+	
+	.btn-set
+	{
+	    width: 255px;
+	    display: flex;
+	    justify-content: flex-end;
+	}
+	
+	.btn-mod
+	{
+	    margin: 0;
+	    margin-left: 10px;
+	}
         
 </style>
 
@@ -169,22 +157,22 @@
 		                	<input type="text" name="memberEmail" class="nick" value="${loggedMember.memberEmail}" readonly>
 		                </div>
 		        </div>
-                <div class="nick-row">
+                <div class="pwcheck-row">
                     <div>기존 비밀번호</div>
                     <div>
-                        <input type="password" name="beforePw" id="beforePw" class="nick" placeholder="기존 비밀번호를 입력해주세요.">
+                        <input type="password" name="beforePw" id="beforePw" placeholder="기존 비밀번호를 입력해주세요.">
                         <button class="basic-btn basic-btn-active btn-mod" id="pwCheckBtn" onclick="return false;">확인</button>
                     </div>
                 </div>
                 
-	                <div class="email-row" id="updatePw" style="display:none">
-	                    <div>비밀번호 수정</div>
-	                    <div><input type="password" name="memberPw" id="memberPw" class="email" placeholder="신규 비밀번호를 입력해주세요."></div>
+	                <div class="new-pw-row" id="updatePw" style="display:none">
+	                    <div>새 비밀번호</div>
+	                    <div><input type="password" name="memberPw" id="memberPw" placeholder="신규 비밀번호를 입력해주세요."></div>
 	                </div>
 	                
-	                <div class="email-row" id="updatePw2" style="display:none">
-	                    <div>비밀번호 확인</div>
-	                    <div><input type="password" name="newPwCheck" id="newPwCheck" class="email" placeholder="비밀번호를 다시 입력해주세요." ></div>
+	                <div class="new-pw-check-row" id="updatePw2" style="display:none">
+	                    <div>새 비밀번호 확인</div>
+	                    <div><input type="password" name="newPwCheck" id="newPwCheck" placeholder="비밀번호를 다시 입력해주세요." ></div>
 	                </div>
 	                <div  id="pwSpan"></div>
 	                
@@ -257,17 +245,15 @@
 				data:{"memberPw":beforePw, "memberEmail":"${loggedMember.memberEmail}"},
 				dataType:"text",
 				success:function(data){
-					console.log(data);
 					if(data=='true'){
 						alert('비밀번호가 일치합니다. 변경을 해주세요');
-						$('#pwCheckBtn').text('확인완료');
+						$('#pwCheckBtn').removeClass('basic-btn-active').css('cursor', 'default').attr('disabled', '');
 						$('#updatePw').show();
 						$('#updatePw2').show();
 						$('#updatePw3').show();
 						
 					} else{
 						alert('비밀번호가 불일치합니다. 다시 입력해주세요.');
-						
 					} 
 				}
 			});

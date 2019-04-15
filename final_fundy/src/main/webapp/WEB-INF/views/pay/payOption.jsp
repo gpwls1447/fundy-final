@@ -232,7 +232,6 @@
     }
 
     .btn-container > button{font-size: 16px; padding: 8px 30px}
-
 </style>
 <section class="section">
     <div class="option-header">
@@ -298,7 +297,8 @@
     //옵션 선택 이벤트 함수
     const options = $('.option-container');
     $(() => {
-    	options[${packageIndex}].classList.add('selected');
+    	if(${packageIndex} != -1) { options[${packageIndex}].classList.add('selected'); }
+    	
         options.on('click', e => {
             if(plusBtn.children().index(e.target) > -1
                 || minusBtn.children().index(e.target) > -1 
@@ -322,7 +322,7 @@
     	var anonymous;
     	if($('#cb')[0].checked) anonymous = 'Y';
     	else anonymous = 'N';
-    	location.href='${path}/pay/payFinal.do?projectNo=${project.projectNo}&projectTitle=${project.projectTitle }&packageIndex='+$('.selected').data('packageIndex')+'&extraMoney='+$('#extra-input').val()+'&packageAmount='+$('.selected').find('.amount-input').val()+'&anonymous='+anonymous;
+    	location.href='${path}/pay/payFinal.do?projectNo=${project.projectNo}&projectTitle=${project.projectTitle }&packageIndex='+$('.selected').data('packageIndex')+'&extraMoney='+$('#extra-input').val()+'&packageAmount='+$('.selected').find('.amount-input').val()+'&anonymous='+anonymous+'&memberEmail=${loggedMember.memberEmail }';
     };
     
    	//수량 이벤트 함수

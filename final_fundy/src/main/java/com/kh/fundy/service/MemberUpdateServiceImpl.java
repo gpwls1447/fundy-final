@@ -21,13 +21,8 @@ public class MemberUpdateServiceImpl implements MemberUpdateService {
 	}
 	
 	@Override
-	public List<ShippingAddr> selectAddrList(String memberEmail) {
-		return dao.selectAddrList(memberEmail);
-	}
-	
-	@Override
-	public int memberAddressInsert(ShippingAddr s) {
-		return dao.memberAddressInsert(s);
+	public int insertAddr(ShippingAddr sa) {
+		return dao.insertAddr(sa);
 	}
 	
 	@Override
@@ -59,10 +54,20 @@ public class MemberUpdateServiceImpl implements MemberUpdateService {
 	public int memberDelete(Member m) {
 		return dao.memberDelete(m);
 	}
+	
+	@Override
+	public List<ShippingAddr> selectAddrList(String memberEmail) {
+		return dao.selectAddrList(memberEmail);
+	}
 
 	@Override
-	public int memberUpdate(Member m, List<Member> list) {
-		return 0;
+	public ShippingAddr selectAddr(ShippingAddr sa) {
+		return dao.selectAddr(sa);
+	}
+
+	@Override
+	public int deleteAddr(ShippingAddr sa) {
+		return dao.deleteAddr(sa);
 	}
 
 }

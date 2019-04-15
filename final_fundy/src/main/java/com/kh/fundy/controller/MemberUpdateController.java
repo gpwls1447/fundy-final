@@ -1,16 +1,17 @@
 package com.kh.fundy.controller;
 
+import static com.kh.fundy.common.RenameTemplate.renameFile;
+
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.fundy.model.vo.Member;
@@ -28,57 +30,75 @@ import com.kh.fundy.service.ProjectListService;
 
 @Controller
 public class MemberUpdateController {
-
+	
+	private Logger logger = LoggerFactory.getLogger(MemberUpdateController.class);
+	
 	@Autowired
 	private MemberUpdateService service;
-	
 	@Autowired
 	private MemberService mService;
-	
 	@Autowired
 	private ProjectListService pService;
-	
 	@Autowired
 	private BCryptPasswordEncoder bcEncoder;
 	
-	
 	//배송지 정보 뷰화면
     @RequestMapping("/member/memberAddressView.do")
-    public ModelAndView memberAddressView(HttpSession session) {
-      ModelAndView mv = new ModelAndView();
-      List<ShippingAddr> list = service.selectAddrList(((Member)session.getAttribute("loggedMember")).getMemberEmail());
-      mv.addObject("list", list);
-      mv.setViewName("memberUpdate/memberUpdate-address");
-      return mv;
+    public ModelAndView memberAddressView(HttpSession session) 
+    {
+    	ModelAndView mv = new ModelAndView();
+    	List<ShippingAddr> list = service.selectAddrList(((Member)session.getAttribute("loggedMember")).getMemberEmail());
+    	mv.addObject("list", list);
+    	mv.setViewName("memberUpdate/memberUpdate-address");
+    	return mv;
     }
     
     //배송지 정보 수정하기
     @RequestMapping("/member/memberAddress.do")
-    public String memberAddress(ShippingAddr s, Model model) {
-      int result = service.memberAddress(s);
-         
-      String msg;
-      if(result>0) {msg="배송지 정보 수정 완료!";} 
-      else {msg="배송지 정보 수정 오류입니다.";}
-         
-      model.addAttribute("msg", msg);
-      model.addAttribute("loc", "/member/memberAddressView.do");
-      return "common/msg";
-   }
+    public String memberAddress(ShippingAddr sa, Model model)
+    {
+    	int result = service.memberAddress(sa);
+    	
+    	String msg;
+    	if(result > 0) {msg = "배송지 정보 수정 완료!";} 
+    	else {msg = "배송지 정보 수정 오류입니다.";}
+ 
+    	model.addAttribute("msg", msg);
+    	model.addAttribute("loc", "/member/memberAddressView.do");
+    	return "common/msg";
+    }
     
     //배송지 정보 동적 조회
-    @RequestMapping("/member/selectShipAddr.ajax")
-    public ModelAndView selectShipAddrAjax(int index, HttpSession session) {
+    @RequestMapping("/memberUpdate/selectShipAddr.ajax")
+    public ModelAndView selectShipAddrAjax(ShippingAddr sa, HttpSession session) 
+    {
     	ModelAndView mv = new ModelAndView();
-    	List<ShippingAddr> list = service.selectAddrList(((Member)session.getAttribute("loggedMember")).getMemberEmail());
+    	sa = service.selectAddr(sa);
+    	
+    	mv.addObject("addr", sa);
+    	mv.setViewName("jsonView");
     	return mv;
     }
     
-   //기본 배송지 없을때 추가하기
-    @RequestMapping("/member/memberAddressInsert.do")
-    public String memberAddressInsert(ShippingAddr sa, Model model, String phone1, String phone2, String phone3) {
+    //배송지 정보 삭제
+	@RequestMapping("/memberUpdate/deleteShipAddr.ajax")
+    public ModelAndView deleteShipAddrAjax(ShippingAddr sa, HttpSession session)
+    {
+    	ModelAndView mv = new ModelAndView();
+    	int result = service.deleteAddr(sa);
+    	
+    	mv.addObject("result", result);
+    	mv.setViewName("jsonView");
+    	return mv;
+    }
+    
+   //배송지 추가
+    @RequestMapping("/memberUpdate/insertShipAddr.do")
+    public String memberAddressInsert(ShippingAddr sa, Model model, String phone1, String phone2, String phone3, HttpSession session) {
+       sa.setMemberEmail(((Member)(session.getAttribute("loggedMember"))).getMemberEmail());
        sa.setPhone(phone1+phone2+phone3);
-       int result = service.memberAddressInsert(sa);
+       
+       int result = service.insertAddr(sa);
        
        String msg;
        if(result > 0) {msg="배송지 정보가  추가되었습니다.";} 
@@ -94,64 +114,35 @@ public class MemberUpdateController {
     public String memberUpdateView(Member m, Model model) {
        return "memberUpdate/memberUpdate-basicUpdate";
     }
-    
-    //기본정보 변경 업데이트
-    @RequestMapping("/member/memberUpdate.do")
-    public String memberUpdate(Member m, Model model, MultipartFile[] upFile, HttpServletRequest re) {
-       ModelAndView mv=new ModelAndView();
-       String saveDir=re.getSession().getServletContext().getRealPath("/resources/memberProfile");
+        
+    //기본 회원정보 변경 업데이트
+    @RequestMapping("/memberUpdate/basicUpdate.do")
+    public ModelAndView memberUpdate(Member m, MultipartHttpServletRequest mr, MultipartFile mf) throws IllegalStateException, IOException {
+    	ModelAndView mv = new ModelAndView();
+    	
+    	String path = mr.getSession().getServletContext().getRealPath("/resources/memberProfile");
+    	File dir = new File(path);
+    	if(!dir.exists()){
+    		dir.mkdirs();
+    	}
+    	
+    	mf = mr.getFile("profileImage");
+    	if(!mf.isEmpty())
+    	{
+    		String changedName = renameFile(mf.getOriginalFilename());
+    		mf.transferTo(new File(dir + File.separator + changedName));
+    	}
+    	
+        String msg;
+        int result = service.memberUpdate(m);
+        if(result > 0) { msg="회원수정이 완료되었습니다."; } 
+        else { msg="오류발생. 다시 시도해주세요."; }
        
-       File dir=new File(saveDir);
-       if(!dir.exists()) {
-          dir.mkdirs();
-       }
-       
-       List<Member> list = new ArrayList<>();
-              
-       for(MultipartFile f : upFile)
-         {
-            if(!f.isEmpty())
-            {
-               String memberProfile=f.getOriginalFilename();
-               String ext=memberProfile.substring(memberProfile.indexOf("."));
-               
-               SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddHHmmssSSS");
-               int rndNum=(int)(Math.random()*10000);
-               
-               String renamedFile=sdf.format(new Date(System.currentTimeMillis()))
-                     +"_"+rndNum+ext;
-               try {
-                  f.transferTo(new File(saveDir+"/"+renamedFile));
-               }
-               catch(IOException e)
-               {
-                  e.printStackTrace();
-               }
-               Member mem=new Member();
-               mem.setMemberProfile(renamedFile);
-               list.add(mem);
-               //list.add(new Attachment(0,0,OriFileName,renamedFile,null,0,null));
-            }
-            
-         }
-       
-       int result = service.memberUpdate(m, list);
-       
-       String loc="";
-       String msg="";
-       
-       if(result>0) {
-          msg="회원수정이 완료되었습니다.";
-          loc="/member/memberUpdateView.do";
-       } else {
-          msg="오류발생. 다시 시도해주세요.";
-          loc="/member/memberUpdateView.do";
-       }
-       
-       model.addAttribute("msg", msg);
-       model.addAttribute("loc", loc);
-       model.addAttribute("loggedMember", m);
-       return "common/msg";
+        mv.addObject("msg", msg);
+        mv.addObject("loc", "/member/memberUpdateView.do");
+        mv.addObject("loggedMember", m);
+        mv.setViewName("common/msg");
+        return mv;
     }
     
     //비밀번호 변경 view
