@@ -719,7 +719,6 @@
             dataType:"json",
             success:function(data){
                if(data==true){
-                  console.log("사용 가능");
                   $(".guide.ok").show()
                   $(".guide.error").hide();
                   $("#nickCheck").val("1");
@@ -743,8 +742,7 @@
             dataType:"json",
             data:{"memberEmail":email},
             success:function(data){
-               console.log(data);
-                  alert("이메일이 발송되었습니다. 인증번호를 적어주세요");
+            	alert("이메일이 발송되었습니다. 인증번호를 적어주세요");
             }
          });
       });
@@ -760,10 +758,7 @@
             dataType:"json",
             data:{"authKey":authKey},
             success:function(data){
-               console.log("인증키확인");
-               console.log(data);
                if(data==true){
-                   console.log("사용 가능");
                    $(".auth.ok").show()
                    $(".auth.error").hide();
                 }
@@ -1017,8 +1012,6 @@
            Kakao.API.request({
              url: '/v1/user/me',
              success: function(res) {
-                console.log("object : "+JSON.stringify(res));
-                console.log(JSON.stringify(res.id));
                 testajax(res);
                 loginModal.toggle();
                 modalOverlay.toggle();
@@ -1035,19 +1028,16 @@
        
        function testajax(res)
        {
-          console.log(res);
            $.ajax({
               url : "${pageContext.request.contextPath }/member/isKakao.do",
               dataType:"json",
               type:"post",
             data : {id:res.id,"email":res.kaccount_email,profile:res.properties['profile_image'], nick:res.properties['nickname']}, 
               success : function(data){
-                 console.log("돌려받은 값 : "+data.val);
                  if(data.val=="y"){
                     location.href="${path}/";
                  }
                  else{
-                    console.log("로그인실패");
                  }
               },
               error:function(re,msg)
