@@ -20,5 +20,7 @@
 		<typeAlias type="com.kh.fundy.model.vo.Attachment" alias="attachment"/>
 		<typeAlias type="com.kh.fundy.model.vo.Comment" alias="comment"/>
 		<typeAlias type="com.kh.fundy.model.vo.CommentReply" alias="commentReply"/>
+   		<typeAlias type="com.kh.fundy.model.vo.Like" alias="like"/>
+   		<typeAlias type="com.kh.fundy.model.vo.Favorite" alias="favorite"/>
    </typeAliases>
 </configuration>

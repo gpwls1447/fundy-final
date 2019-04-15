@@ -58,4 +58,10 @@
       update member set memberQuit=sysdate where memberEmail=#{memberEmail}
    </update>
    
+   <select id="selectCheckNick" parameterType="member" resultType="member">
+   	select * from member where memberNick=#{memberNick}
+   </select>
+   
+   
+   
 </mapper>

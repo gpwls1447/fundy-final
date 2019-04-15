@@ -45,7 +45,7 @@ public class CommentController {
 		ModelAndView mv = new ModelAndView();
 		c.setCommentMod(new Timestamp(System.currentTimeMillis()));
 		service.updateComment(c);
-		mv.setViewName("jasonView");
+		mv.setViewName("jsonView");
 		return mv;
 	}
 	
@@ -57,7 +57,7 @@ public class CommentController {
 		c.setCommentDelete(new Timestamp(System.currentTimeMillis()));	
 		result = service.deleteComment(c);
 		mv.addObject("result", result);
-		mv.setViewName("jasonView");
+		mv.setViewName("jsonView");
 		return mv;
 	}
 	
@@ -68,16 +68,18 @@ public class CommentController {
 		cr.setCommentReplyMod(new Timestamp(System.currentTimeMillis()));
 		System.out.println(cr.getCommentReplyNo());
 		service.updateCommentReply(cr);
-		mv.setViewName("jasonView");
+		mv.setViewName("jsonView");
 		return mv;
 	}
 	@RequestMapping("/comment/commentReplyDelete.do")
 	public ModelAndView deleteCommentReply(CommentReply cr)
 	{
+		int result;
 		ModelAndView mv = new ModelAndView();
 		cr.setCommentReplyDelete(new Timestamp(System.currentTimeMillis()));
-		service.deleteCommentReply(cr);
-		mv.setViewName("jasonView");
+		result = service.deleteCommentReply(cr);
+		mv.addObject("result", result);
+		mv.setViewName("jsonView");
 		return mv;
 	}
 }

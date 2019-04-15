@@ -13,6 +13,10 @@ public class FundingLog {
 	private int extraMoney;
 	private Timestamp funderDate;
 	private String anonymous;
+	private String impUid;
+	private String merchantUid;
+	private String paidAmount;
+	private String applyNum;
 	
 	private String memberNick;
 	private String memberProfile;
@@ -21,8 +25,9 @@ public class FundingLog {
 	public FundingLog() {}
 
 	public FundingLog(int fundingLogNo, String memberEmail, int projectNo, String deliveryStatCode, int packageNo,
-			int packageAmount, int extraMoney, Timestamp funderDate, String anonymous, String memberNick,
-			String memberProfile, int fundPrice) {
+			int packageAmount, int extraMoney, Timestamp funderDate, String anonymous, String impUid,
+			String merchantUid, String paidAmount, String applyNum, String memberNick, String memberProfile,
+			int fundPrice) {
 		super();
 		this.fundingLogNo = fundingLogNo;
 		this.memberEmail = memberEmail;
@@ -33,6 +38,10 @@ public class FundingLog {
 		this.extraMoney = extraMoney;
 		this.funderDate = funderDate;
 		this.anonymous = anonymous;
+		this.impUid = impUid;
+		this.merchantUid = merchantUid;
+		this.paidAmount = paidAmount;
+		this.applyNum = applyNum;
 		this.memberNick = memberNick;
 		this.memberProfile = memberProfile;
 		this.fundPrice = fundPrice;
@@ -108,6 +117,38 @@ public class FundingLog {
 
 	public void setAnonymous(String anonymous) {
 		this.anonymous = anonymous;
+	}
+
+	public String getImpUid() {
+		return impUid;
+	}
+
+	public void setImpUid(String impUid) {
+		this.impUid = impUid;
+	}
+
+	public String getMerchantUid() {
+		return merchantUid;
+	}
+
+	public void setMerchantUid(String merchantUid) {
+		this.merchantUid = merchantUid;
+	}
+
+	public String getPaidAmount() {
+		return paidAmount;
+	}
+
+	public void setPaidAmount(String paidAmount) {
+		this.paidAmount = paidAmount;
+	}
+
+	public String getApplNum() {
+		return applyNum;
+	}
+
+	public void setApplNum(String applyNum) {
+		this.applyNum = applyNum;
 	}
 
 	public String getMemberNick() {

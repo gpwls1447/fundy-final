@@ -12,14 +12,221 @@
 
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <style>
-      /* footer 부분 */
-   .footer
-   {
-       width: 1005px;
-       display: flex;
-       flex-flow: column nowrap;
-       align-items: center;
-   }
+    /* footer 부분 */
+	.footer
+	{
+		margin-top: 100px;
+		border-top: 1px solid #eee;
+		width: 100%;
+		min-width: 1005px;
+	}
+   
+       .footer-top
+    {
+        width: 100%;
+        height: 230px;
+        display: flex;
+        align-items: center;
+        background-color: rgb(19, 79, 105);
+        color: rgba(255, 255, 255, 0.4);
+        box-sizing: border-box;
+        font-size: 13px;
+    }
+
+    .footer-top > div 
+    {
+        flex: 1 1 0;
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+        justify-content: center;
+        padding: 20px 50px;
+        line-height: 25px;
+    }
+
+    .footer-title
+    {
+        margin-bottom: 20px;
+        font-size: 17px;
+        color: #eee;
+    }
+
+    .footer-sub
+    {
+        display: flex;
+        flex-flow : column nowrap;
+    }
+
+    .footer-horiz-line
+    {   
+        display: block;
+        width: 1px;
+        height: 70%;
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+
+
+    .footer-bottom
+    {
+        width: 100%;
+        background-color: rgb(44, 56, 64);
+        color: #666;
+        font-size: 12px;
+        padding: 15px 50px;
+        box-sizing: border-box;
+        display: flex;
+    }
+
+    .footer-bottom > div {flex: 1 1 0;}
+
+    .site-nav
+    {
+        display: flex;
+    }
+
+
+    .site-nav > span
+    {
+        font-weight: bold;
+        margin-right: 20px;
+        display: flex;
+        align-items: center;
+    }
+
+    #footer-logo
+    {
+        font-size: 22px;
+        font-weight: 900;
+    }
+
+    .copyright{margin: 10px 0;}
+
+    #footer-links
+    {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    #footer-links button
+    {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        display: flex;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+
+    #footer-links img
+    {
+        width: 40px;
+        opacity: .6;
+    }
+>>>>>>> refs/heads/feature_jwj
+   
+       .footer-top
+    {
+        width: 100%;
+        height: 230px;
+        display: flex;
+        align-items: center;
+        background-color: rgb(19, 79, 105);
+        color: rgba(255, 255, 255, 0.4);
+        box-sizing: border-box;
+        font-size: 13px;
+    }
+
+    .footer-top > div 
+    {
+        flex: 1 1 0;
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+        justify-content: center;
+        padding: 20px 50px;
+        line-height: 25px;
+    }
+
+    .footer-title
+    {
+        margin-bottom: 20px;
+        font-size: 17px;
+        color: #eee;
+    }
+
+    .footer-sub
+    {
+        display: flex;
+        flex-flow : column nowrap;
+    }
+
+    .footer-horiz-line
+    {   
+        display: block;
+        width: 1px;
+        height: 70%;
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+
+
+    .footer-bottom
+    {
+        width: 100%;
+        background-color: rgb(44, 56, 64);
+        color: #666;
+        font-size: 12px;
+        padding: 15px 50px;
+        box-sizing: border-box;
+        display: flex;
+    }
+
+    .footer-bottom > div {flex: 1 1 0;}
+
+    .site-nav
+    {
+        display: flex;
+    }
+
+
+    .site-nav > span
+    {
+        font-weight: bold;
+        margin-right: 20px;
+        display: flex;
+        align-items: center;
+    }
+
+    #footer-logo
+    {
+        font-size: 22px;
+        font-weight: 900;
+    }
+
+    .copyright{margin: 10px 0;}
+
+    #footer-links
+    {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    #footer-links button
+    {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        display: flex;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+
+    #footer-links img
+    {
+        width: 40px;
+        opacity: .6;
+    }
    
    /* 유저 모달창 부분 */
    
@@ -255,7 +462,7 @@
    .content {
       width: 250px;
       margin: 0 auto;
-      top: 20%;
+      top: 10%;
       position: absolute;
       left: 50%;
       margin-left: -125px;
@@ -393,16 +600,88 @@
       margin-top: 15px;
       width: 100%;
    }
+   
+   .email-group
+   {
+        display : flex;
+   }
+   
+   .email-group >input
+   {
+         
+   }
+   
 </style>
-
-<footer class="footer">
-       <br><br><br><br>
-       <button class="datagen-btn">멤버 생성</button>
-       <button class="projectgen-btn">프로젝트 생성</button>
-       <button class="fundingLogDatagen-btn">후원자로그 생성</button>
-       <button class="commentGen-btn">코멘트 생성</button>
+</div>
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="foundation">
+                <span class="footer-title">Come Visit Us</span>
+                <span>
+                    서울시 강남구<br>테헤란로 14길 6<br>남원빌딩 4층<br>R 클래스
+                </span>
+            </div>
+            <span class="footer-horiz-line"></span>
+            <div>
+                <span class="footer-title">Blah Blah Blah</span>
+                <div class="footer-sub">
+                    <span>Blah Blah</span>
+                    <span>Blah Blah</span>
+                    <span>Blah Blah</span>
+                    <span>Blah Blah</span>
+                </div>
+            </div>
+            <span class="footer-horiz-line"></span>
+            <div>
+                <span class="footer-title">Blah Blah Blah</span>
+                <div class="footer-sub">
+                    <span>Blah Blah</span>
+                    <span>Blah Blah</span>
+                    <span>Blah Blah</span>
+                    <span>Blah Blah</span>
+                </div>
+            </div>
+            <span class="footer-horiz-line"></span>
+            <div>
+                <span class="footer-title">Blah Blah Blah</span>
+                <div class="footer-sub">
+                    <span>Blah Blah</span>
+                    <span>Blah Blah</span>
+                    <span>Blah Blah</span>
+                    <span>Blah Blah</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>
+                <div class="site-nav">
+                    <span id="footer-logo">FUNDY</span>
+                    <span>ABOUT</span>
+                    <span>BLOG</span>
+                    <span>NEWS</span>
+                    <span>CONTACT</span>
+                    <span>SITEMAP</span>
+                </div>
+                <div class="copyright">
+                    (C) 2019-2019 FUNDY. Inc. All rights reserved.
+                </div>
+            </div>
+            <div id="footer-links">
+                <button>
+                    <img src="${path }/resources/images/instagram.png">
+                </button>
+                <button>
+                    <img src="${path }/resources/images/twitter.png">
+                </button>
+                <button>
+                    <img class="datagen-btn" src="${path }/resources/images/youtube.png">
+                </button>
+                <button>
+                    <img src="${path }/resources/images/facebook.png">
+                </button>
+            </div>
+        </div>
     </footer>
-    </div>
     
     <div class="modal-overlay"></div>
     
@@ -476,18 +755,26 @@
                <div class="signup-title form-title"><span class="brand-title">FUNDY</span>회원가입</div>
                <form method="post" action="${path }/member/memberEnrollEnd.do" autocomplete="off">
                   <div class="form-group">
+                  <div class="email-group">
                      <input type="email" class="signup-modal-input" placeholder="이메일" id="memberEmail" name="memberEmail" required />
-                     <input type="button" class="signup-modal-input" id="emailAuth" value="메일인증" />
-                     <input type="text" class="signup-modal-input" id="AuthKey" placeholder="인증번호" />
-                     <input type="password" class="signup-modal-input" placeholder="비밀번호" id="password" name="memberPw" required /> 
-                     <input type="password" class="signup-modal-input" placeholder="비밀번호 확인" id="password-ck" required /> 
-                     <input type="text" class="signup-modal-input" placeholder="닉네임" name="memberNick" required />
+                     <input type="button" class="off login-modal-btn" id="emailAuth" value="메일인증" />
                   </div>
-               <div class="modal-btn-container">
+                  <div class="email-group">  
+                     <input type="text" class="signup-modal-input" id="authKey" name="authKey" placeholder="인증번호" />
+                     <input type="button" class="off login-modal-btn" id="authCheck" value="인증확인" />
+                  </div>   
+                     <input type="password" class="signup-modal-input" placeholder="비밀번호" id="password" name="memberPw" required /> 
+                    <input type="password" class="signup-modal-input" placeholder="비밀번호 확인" id="password-ck" required /> 
+                    <input type="text" class="signup-modal-input" placeholder="닉네임" id="memberNick" name="memberNick" required />
+                    <span class="guide ok">사용 가능</span>
+               <span class="guide error">사용 불가</span>
+               <input type="hidden" name="checkId" id="checkId"/>
+                  </div>
+                  <div class="modal-btn-container">
                   <input type="submit" class="login-modal-btn" value="회원가입">
                   <input type="button" id="goLeft" class="off login-modal-btn" onclick="return false;" value="로그인">
                </div>
-                  </form>
+               </form>
             </div>
          </div>
          <div class="right">
@@ -503,17 +790,46 @@
                   <div class="modal-btn-container">
                      <input type="button" id="goRight" class="off login-modal-btn" onclick="return false;" value="회원가입">
                      <input type="submit" class="off login-modal-btn" value="로그인">
-                      </div>
+                  </div>
                </form>
             </div>
          </div>
       </div>
    </div>
 </div>
+<input type="hidden" id="nickCheck" value="0">
    
 <script>
+
+   //닉네임 중복 체크
+   var checkNick=0;
+   $(".guide").hide();
+   $(() => {
+      $("#memberNick").on("keyup", () => {
+         var memberNick = $('#memberNick').val();
+         $.ajax({
+            url:"${path}/member/chekcMemberNick.do",
+            type:"post",
+            data:{"memberNick":memberNick},
+            dataType:"json",
+            success:function(data){
+               if(data==true){
+                  console.log("사용 가능");
+                  $(".guide.ok").show()
+                  $(".guide.error").hide();
+                  $("#nickCheck").val("1");
+               }
+               else{
+                  $(".guide.ok").hide()
+                  $(".guide.error").show();
+                  $("#nickCheck").val("0");
+               }
+            }
+         });
+      })
+   })
    
-   //이메일 인증
+   //이메일 인증키 보내기
    $(() => {
       $('#emailAuth').on("click", () => {
          var email=$("#memberEmail").val().trim();
@@ -521,13 +837,41 @@
             url:"${path}/member/emailAuth.do",
             dataType:"json",
             data:{"memberEmail":email},
-            suceess:function(data){
-               alert("이메일이 발송되었습니다. 인증번호를 적어주세요");
+            success:function(data){
+               console.log(data);
+                  alert("이메일이 발송되었습니다. 인증번호를 적어주세요");
             }
          });
       });
    });
+   
+   //이메일 인증키 확인
+   $(() => {
+      $('#authCheck').on("click", ()=> {
+         var authKey=$("#authKey").val().trim();
+         $.ajax({
+            url:"${pageContext.request.contextPath}/member/authKey.do",
+            dataType:"json",
+            data:{"authKey":authKey},
+            success:function(data){
+               console.log("인증키확인");
+               console.log(data);
+               if(data==true){
+                  //span태그로 인증키 일치 불일치 여부 띄워주기
+               }
+               else{
+                  
+               }
+            },
+            error:function(e){
+               console.log(e);
+            }
+            
+         });
+      });
+   });
 
+   
    //로그아웃 기능
    $(() => {
       $('.logout-btn').on("click", () => {
@@ -620,8 +964,14 @@
                 $('body').off('mouseup');
             });
         });
-
-    });
+        
+        //검색창 Enter 이벤트
+        searchBar.on('keyup', e => {
+	       	if(e.keyCode == 13)
+	       	{
+	       		location.href='${path}/projectList/projectList.do?keyword='+searchBar.val()+'&majorCode=${majorCode}';
+	       	}
+    	});
 
     //네비게이션 바 토글
     const nav = $('.nav');
@@ -730,48 +1080,16 @@
         userModalBody.fadeToggle(time);
     }
     
-    
-    
-//데이터생성 버튼
-    
     const datagenBtn = $('.datagen-btn');
-    const projectgenBtn = $('.projectgen-btn');
-    const fundinglogBtn = $('.fundingLogDatagen-btn');
-    const commentGenBtn = $('.commentGen-btn');
     $(() => {
        datagenBtn.on('click', () => {
           $.ajax({
-             url: '${pageContext.request.contextPath}/datagen.do',
+             url: '${path}/datagen.do',
              success: data => {
                 alert('결과: ' + data.result);
              }
           });
        });
-       projectgenBtn.on('click', () => {
-          $.ajax({
-             url: '${pageContext.request.contextPath}/projectgen.do',
-             success: data => {
-                alert('결과: ' + data.result);
-             }
-          });
-       });
-       fundinglogBtn.on('click', () => {
-          $.ajax({
-             url: '${pageContext.request.contextPath}/fundingLogDatagen.do',
-             success: data => {
-                alert('결과: ' + data.result);
-             }
-          });
-       });
-       
-       commentGenBtn.on('click', () => {
-           $.ajax({
-              url: '${pageContext.request.contextPath}/commentGen.do',
-              success: data => {
-                 alert('결과: ' + data.result);
-              }
-           });
-        });
     });
     
   //카카오 로그인 

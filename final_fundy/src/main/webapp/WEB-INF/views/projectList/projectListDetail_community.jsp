@@ -6,6 +6,9 @@
 <c:set var="path" value="${pageContext.request.contextPath }" />
 
 <style>
+	
+	#comment-container{width: 100%; display: flex; flex-flow: column nowrap; align-items: center;}
+	
 	.comment-count
 	{
 	    width: 100%;
@@ -41,7 +44,7 @@
 	    height: 1px;
 	    background-color: #444;
 	    margin-top: -1px;
-	    transition: .4s ease;
+	    transition: .5s ease;
 	}
 	
 	.write-btn-set
@@ -81,6 +84,7 @@
 	    height: 50px;
 	    border-radius: 50%;
 	    margin-right: 15px;
+		object-fit: contain;
 	}
 	
 	.comment-nick-date
@@ -239,7 +243,7 @@
 	}
 </style>
 <div id="comment-container">
-<div class="comment-count">댓글 ${totalCount }개</div>
+<div class="comment-count">댓글 <span class="tc">${totalCount }</span>개</div>
 <div class="comment-warning">본 프로젝트와 무관한 글, 광고성, 욕설, 비방, 도배 등의 글은 예고 없이 삭제 등 조치가 취해질 수 있으며. 해당 내용으로 인해 메이커, 후원자, 제3자에게 피해가 가지 않도록 유의하시기 바랍니다.</div>
 <div class="textarea comment-textarea" contenteditable="true"></div>
 <span class="textarea-bar"></span>
@@ -255,7 +259,7 @@
     <div class="comment-header">
         <img class="comment-profile" src="${path }/resources/memberProfile/${list.memberProfile}">
         <div class="comment-nick-date">
-            <div class="comment-nick">${list.memberNick }<i class="material-icons comment-menu-btn">more_vert</i></div>
+            <div class="comment-nick">${list.memberNick }<c:if test="${loggedMember.memberNick == list.memberNick }"><i class="material-icons comment-menu-btn">more_vert</i></c:if></div>
             <fmt:formatDate value="${list.commentDate }" var="cDate" pattern="yyyy.MM.dd mm:ss"/>
             <div class="comment-date">${cDate }</div>
             <div class="comment-menu">
@@ -290,7 +294,7 @@
         <c:forEach items="${list.crList }" var="crList">
         <div data-comment-reply-no="${crList.commentReplyNo }" class="comment-unit reply-unit">
             <div class="comment-header">
-				<img class="comment-profile" src="${path }/memberProfile/${crList.memberProfile">
+				<img class="comment-profile" src="${path }/resources/memberProfile/${crList.memberProfile}">
 				<div class="comment-nick-date">
 				    <div class="comment-nick">${crList.memberNick }<i class="material-icons comment-menu-btn">more_vert</i></div>
 				    <fmt:formatDate value="${crList.commentReplyDate }" var="replyDate" pattern="yyyy.MM.dd hh:mm:ss"/>
@@ -325,8 +329,54 @@ ${pageBar }
 	var fn_paging = cPage => {
 		location.href='${path}/projectList/projectListDetail_community?cPage='+cPage+'&projectNo='+${projectNo};
 	};
-	    //코멘트 메뉴 버튼 토글
+	
+	$(() => {
+		init();
+		
+	    //커멘트작성 버튼 토글
+	    const commentTextArea = $('.comment-textarea');
+	    $(() => {
+	        commentTextArea.on('focus', e => {
+	            $(e.target).next().next().show();
+	        });
+		
+	    	//댓글작성 취소
+	        $('.cancel-comment').on('click', e => {
+	            $(e.target).parent().hide();
+	            commentTextArea.text("");
+	            commentTextArea.blur();
+	        });
+	    });
+	    
+	    //커멘트 등록
+	    const commentWriteBtn = $('.write-comment');
+	    $(() => {
+	    	commentWriteBtn.on('click', e => {
+				const commentText = $('.comment-textarea').html();
+				const parsedText = commentText.replace(/(<([^>]+)>)/g, '<br>');
+	    		
+	    		$.ajax({
+	    			type: 'post',
+	    			url: '${path}/comment/insertComment.do',
+	    			data: {'projectNo' : ${projectNo} , 'memberNick' : '${loggedMember.memberNick}', 'memberEmail' : '${loggedMember.memberEmail}', 'commentContent' : parsedText},
+	    			dataType: 'html',
+	    			success: data => {
+	    				$('.cancel-comment').trigger('click');
+	    				$('#marginer').after(data);
+	    				init();
+	    				
+	    				$('.tc').text(parseInt($('.tc').text()) + 1);
+	    			}
+	    		});
+	    	});
+	    });
+	});
+	
+	var init = () => {
+		
+	    //메뉴 버튼 토글
 	    var commentMenuBtn = $('.comment-menu-btn');
+       	commentMenuBtn.off('mousedown');
 	    $(() => {
 	        commentMenuBtn.on('mousedown', e => {
 	            const commentMenu = $('.comment-menu');
@@ -346,30 +396,11 @@ ${pageBar }
 	                $('body').off('click');
 	            });
 	        });
-	    });  
-	    
-	    //코멘트 작성
-	    var commentWriteBtn = $('.write-comment');
-	    $(() => {
-	    	commentWriteBtn.on('click', e => {
-				const commentText = $('.comment-textarea').html();
-				const parsedText = commentText.replace(/(<([^>]+)>)/g, '<br>');
-	    		
-	    		$.ajax({
-	    			type: 'post',
-	    			url: '${path}/comment/insertComment.do',
-	    			data: {'projectNo' : ${projectNo} , 'memberNick' : '${loggedMember.memberNick}', 'memberEmail' : '${loggedMember.memberEmail}', 'commentContent' : parsedText},
-	    			dataType: 'html',
-	    			success: data => {
-	    				$('.cancel-comment').trigger('click');
-	    				$('#marginer').after(data);
-	    			}
-	    		});
-	    	});
 	    });
 	    
-	    //댓글 작성
+	    //답글 작성
 	    var replyWriteBtn = $('.write-reply');
+   		replyWriteBtn.off('click');
 	    $(() => {
 	    	replyWriteBtn.on('click', e => {
 	    		const replyText = $(e.target).parent().prev().prev().html();
@@ -385,39 +416,15 @@ ${pageBar }
 	    			success: data => {
 	    				$(e.target).prev().trigger('click');
 	    				$(e.target).parent().parent().next().append(data);
+	    				init();
 	    			}
 	    		});
 	    	});
 	    });
 	    
-	    //답글 토글
-	    var replyToggleBtn = $('.toggle-reply');
-	    $(() => {
-	        replyToggleBtn.parent().next().hide();
-	        replyToggleBtn.on('click', e => {
-	            $(e.target).toggle();
-	            $(e.target).siblings().toggle();
-	            $(e.currentTarget).parent().next().toggle();
-	        });
-	    });
-
-	    //댓글작성 버튼 토글
-	    var commentTextArea = $('.comment-textarea');
-	    $(() => {
-	        commentTextArea.on('focus', e => {
-	            $(e.target).next().next().show();
-	        });
-			
-	    //댓글작성 취소
-	        $('.cancel-comment').on('click', e => {
-	            $(e.target).parent().hide();
-	            commentTextArea.text("");
-	            commentTextArea.blur();
-	        });
-	    });
-	    
-	    //코멘트 삭제버튼 작동
+	    //커멘트 삭제
 	    var deleteCommentBtn = $('.delete-comment-btn');
+	    deleteCommentBtn.off('click');
 	    $(() => {
 	    	deleteCommentBtn.on('click', e => {
 	    		$.ajax({
@@ -426,21 +433,28 @@ ${pageBar }
 	    			data: {'commentNo' : $(e.currentTarget).parent().parent().parent().parent().data('commentNo')},
 	    			dataType: 'json',
 	    			success: data => {
-	    				if(date.result == 1)
+	    				console.log(data);
+	    				if(data.result == 1)
 	    				{
-	    					$(e.currentTarget).parent().parent().parent().parent().remove();    					
+	    					$(e.currentTarget).parent().parent().parent().parent().slideToggle(600);
+	    					setTimeout(() => {
+	    						$(e.currentTarget).parent().parent().parent().parent().remove();	
+	    					}, 1000);
+	    					$('.tc').text(parseInt($('.tc').text()) -1 );
+	    					    					
 	    				}
 	    				else
 	    				{
-	    					alert("실패");	
+	    					alert("삭제에 실패하였습니다.");	
 	    				}
 	    			}
 	    		});
 	    	});
 	    });
 	    
-	    //답글 삭제 버튼 바인드
+	    //답글 삭제
 	    var deleteReplyBtn = $('.delete-reply-btn');
+	    deleteReplyBtn.off('click');
 	    $(() => {
 	    	deleteReplyBtn.on('click', e => {
 	    		$.ajax({
@@ -449,13 +463,16 @@ ${pageBar }
 	    			data: {'commentReplyNo' : $(e.currentTarget).parent().parent().parent().parent().data('commentReplyNo')},
 	    			dataType: 'json',
 	    			success: data => {
-	    				if(date.result == 1)
+	    				if(data.result == 1)
 	    				{
-	    					$(e.currentTarget).parent().parent().parent().parent().remove();    					
+	    					$(e.currentTarget).parent().parent().parent().parent().slideToggle(600);
+	    					setTimeout(() => {
+	    						$(e.currentTarget).parent().parent().parent().parent().remove();    					
+	    					}, 2000);
 	    				}
 	    				else
 	    				{
-	    					alert("실패");	
+	    					alert("삭제에 실패하였습니다.");	
 	    				}
 	    			}
 	    		});
@@ -463,6 +480,7 @@ ${pageBar }
 	    });
 
 	    //답글 작성 버튼 토글
+	    $('.reply-btn').off('click');
 	    $(() => {
 	        $('.reply-textarea').hide();
 	        $('.write-btn-set').hide();
@@ -479,15 +497,18 @@ ${pageBar }
 
 	    //좋아요 클릭
 	    var likeBtn = $('.like-btn');
+	    likeBtn.off('click');
 	    $(() => {
 	        likeBtn.on('click', e => {
 	            $(e.target).toggleClass('liked');
 	        });
 	    });
 
-	    //수정, 수정취소버튼 클릭 이벤트 바인드
+	    //수정, 수정취소
 	    var editBtn = $('.edit-btn');
-	    var cancelEditBtn =$('.cancel-edit')
+	    var cancelEditBtn = $('.cancel-edit');
+	    editBtn.off('click');
+	    cancelEditBtn.off('click');
 	    $(() => {
 	        editBtn.on('click', e => {
 	            const target = $(e.currentTarget).parent().parent().parent().next();
@@ -496,7 +517,7 @@ ${pageBar }
 	            target.data('target', target);
 
 	            target.attr('contenteditable', 'true').focus();
-	            target.next().animate({width: 'toggle'}, 200);
+	            target.next().animate({width: 'toggle'}, 400);
 	            editCommon(target);
 	        });
 
@@ -516,8 +537,9 @@ ${pageBar }
 	        target.next().next().next().toggle();
 	    };
 
-	    //답글 수정 저장 버튼 바인드
+	    //답글 수정 저장
 		var saveReplyBtn = $('.save-reply-edit');
+	    saveReplyBtn.off('click');
 	    $(() => {
 	        saveReplyBtn.on('click', e => {
 	            const target = $(e.target).parent().prev().prev();
@@ -533,8 +555,9 @@ ${pageBar }
 	        });
 	    });
 	    
-	    //코멘트 수정 저장 버튼 바인드
+	    //코멘트 수정 저장
 	    var saveCommentBtn = $('.save-comment-edit');
+	    saveCommentBtn.off('click');
 	    $(() => {
 	        saveCommentBtn.on('click', e => {
 	            const target = $(e.target).parent().prev().prev();
@@ -555,4 +578,17 @@ ${pageBar }
 	        target.next().hide();
 	        editCommon(target);
 	    };
+	}
+	
+    //답글 토글
+    var replyToggleBtn = $('.toggle-reply');
+    replyToggleBtn.off('click');
+    $(() => {
+        replyToggleBtn.parent().next().hide();
+        replyToggleBtn.on('click', e => {
+            $(e.target).toggle();
+            $(e.target).siblings().toggle();
+            $(e.currentTarget).parent().next().toggle();
+        });
+    });
 </script>

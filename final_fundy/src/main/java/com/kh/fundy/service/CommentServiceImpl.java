@@ -1,6 +1,7 @@
 package com.kh.fundy.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,5 +61,19 @@ public class CommentServiceImpl implements CommentService {
 	public int deleteCommentReply(CommentReply cr) {
 		return dao.deleteCommentReply(cr);
 	}
+
+	@Override
+	public int insertLike(Map map) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int deleteLike(Map map) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	
 
 }

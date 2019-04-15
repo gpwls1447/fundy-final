@@ -181,13 +181,13 @@ input.h31
 
 /* 툴팁 출력 */
 
-.tooltip {
+.my-tooltip {
     position: relative;
 }
 
-.tooltiptext{font-size: 13px;}
+.my-tooltiptext{font-size: 13px;}
 
-.tooltip .tooltiptext {
+.my-tooltip .my-tooltiptext {
     opacity: 0;
     width: 120px;
     background-color: #666;
@@ -202,7 +202,7 @@ input.h31
     transition: .2s linear;
 }
 
-.tooltip .tooltiptext::after {
+.my-tooltip .my-tooltiptext::after {
     content: "";
     position: absolute;
     top: 37%;
@@ -213,7 +213,7 @@ input.h31
     border-color: transparent #666 transparent transparent;
 }
 
-.tooltip:hover .tooltiptext {
+.my-tooltip:hover .my-tooltiptext {
     opacity: 1;
 }
 
@@ -243,15 +243,7 @@ input.h31
     cursor: pointer;
     transition: 150ms linear;
     box-sizing: border-box;
-}
-
-.pagebar-unit > a
-{
-	display: block;
-	height: 100%;
-	width: 100%;
-	text-decoration: none;
-	color: #444;
+    box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.5);
 }
 
 .pagebar-unit > a
@@ -259,6 +251,11 @@ input.h31
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	height: 100%;
+	width: 100%;
+	text-decoration: none;
+	color: #444;
+	font-weight: bold;
 }
 
 .pagebar-unit:not(.pagebar-unit-active):hover{background-color: #ccc;}
