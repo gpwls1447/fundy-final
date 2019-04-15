@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -27,6 +28,8 @@ import com.kh.fundy.model.vo.ShippingAddr;
 import com.kh.fundy.service.MemberService;
 import com.kh.fundy.service.MemberUpdateService;
 import com.kh.fundy.service.ProjectListService;
+
+@SessionAttributes(value= {"loggedMember"})
 
 @Controller
 public class MemberUpdateController {
@@ -131,12 +134,20 @@ public class MemberUpdateController {
     	{
     		String changedName = renameFile(mf.getOriginalFilename());
     		mf.transferTo(new File(dir + File.separator + changedName));
+    		m.setMemberProfile(changedName);
     	}
     	
         String msg;
+        String loc;
         int result = service.memberUpdate(m);
-        if(result > 0) { msg="회원수정이 완료되었습니다."; } 
-        else { msg="오류발생. 다시 시도해주세요."; }
+        if(result > 0) { 
+        	msg="회원수정이 완료되었습니다."; 
+        	loc="/member/memberUpdateView.do";
+        } 
+        else { 
+        	msg="오류발생. 다시 시도해주세요."; 
+        	loc="/member/memberUpdateView.do";
+        }
        
         mv.addObject("msg", msg);
         mv.addObject("loc", "/member/memberUpdateView.do");

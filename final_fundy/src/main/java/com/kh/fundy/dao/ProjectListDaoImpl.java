@@ -35,8 +35,8 @@ public class ProjectListDaoImpl implements ProjectListDao {
 	}
 
 	@Override
-	public Project selectOne(int projectNo) {
-		return session.selectOne("project.selectOne", projectNo);
+	public Project selectOne(Map map) {
+		return session.selectOne("project.selectOne", map);
 	}
 
 	@Override

@@ -65,7 +65,7 @@
                 <c:if test="${loggedMember!=null }">
                 <div>${loggedMember.memberNick }님</div>
                 <div class="header-last user-btn" >
-                	<img src="${path }/resources/images/user_icon.png">
+                	<img src="${path }/resources/memberProfile/${loggedMember.memberProfile}">
                 </div>
                 </c:if>
                 

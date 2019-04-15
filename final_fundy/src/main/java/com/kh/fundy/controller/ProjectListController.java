@@ -61,12 +61,16 @@ public class ProjectListController {
 	}
 	
 	@RequestMapping("/projectList/projectListDetail.do")
-	public ModelAndView projectListDetail(int projectNo)
+	public ModelAndView projectListDetail(int projectNo, String memberEmail)
 	{
-		Project p = pService.selectOne(projectNo);
+		Map map = new HashMap();
+		map.put("memberEmail", memberEmail);
+		map.put("projectNo", projectNo);
+		Project p = pService.selectOne(map);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("project", p);
 		mv.setViewName("projectList/projectListDetail");
+		
 		return mv;
 	}
 	
