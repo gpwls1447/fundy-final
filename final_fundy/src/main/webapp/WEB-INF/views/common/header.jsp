@@ -51,14 +51,14 @@
         
                 <c:if test="${loggedMember==null }">
                 <div class="header-last login-btn" >
-               <img src="${path }/resources/images/user_icon.png">
+               		<img src="${path }/resources/images/user_icon.png">
                 </div>
                 </c:if>
                 
                 <c:if test="${loggedMember!=null }">
                 <div>${loggedMember.memberNick }님 환영합니다 </div>
                 <div class="header-last user-btn" >
-                  <img src="${path }/resources/images/user_icon.png">
+                	<img src="${path }/resources/images/user_icon.png">
                 </div>
                 </c:if>
                 

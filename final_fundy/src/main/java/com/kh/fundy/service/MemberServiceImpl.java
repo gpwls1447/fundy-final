@@ -61,4 +61,11 @@ public class MemberServiceImpl implements MemberService {
 		return dao.updateUserAuth(memberEmail, key);
 	}
 
+	@Override
+	public Member selectCheckNick(Member m) {
+		return dao.selectCheckNick(m);
+	}
+	
+	
+
 }

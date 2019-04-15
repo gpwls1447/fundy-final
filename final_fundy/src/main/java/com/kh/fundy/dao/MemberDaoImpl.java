@@ -69,4 +69,11 @@ public class MemberDaoImpl implements MemberDao {
 		return session.update("member.updateUserAuth", map);
 	}
 
+	@Override
+	public Member selectCheckNick(Member m) {
+		return session.selectOne("member.selectCheckNick", m);
+	}
+	
+	
+
 }
