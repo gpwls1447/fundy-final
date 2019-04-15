@@ -42,7 +42,7 @@ select#_subCode option.subCtgs {
 						프로젝트의 타이틀을 정해주세요. 띄어쓰기 포함 최대 20글자 내로 작성해주세요.
 					</div>
 					<div>
-						<input type="text" value="" class="form-control inputLong" id="_projectTitle" maxlength="20" placeholder="내용을 입력해주세요." />
+						<input type="text" value="${project.PROJECTTITLE }" class="form-control inputLong" id="_projectTitle" maxlength="20" placeholder="내용을 입력해주세요." />
 					</div>
 				</div>
 			</div>
@@ -56,12 +56,19 @@ select#_subCode option.subCtgs {
 						프로젝트 대표 이미지를 첨부해주세요.
 					</div>
 					<div id="thumnail-drag" style="display:flex; justify-content:center; align-items:center; width:500px; height:281.25px; border: 1px solid #ccc;">
-						<img id="thumnail-img" onclick="fn_uploadThumnail()" src="${path }/resources/images/upload-project-icon.png" width="20%" height="30%" style="display:flex;" />
+					<c:choose>
+						<c:when test="${project.PROJECTTHUMNAIL!=null }">
+							<img id="thumnail-img" onclick="fn_uploadThumnail()" src="${path }/resources/projectRepresent/${project.PROJECTTHUMNAIL }" width="100%" height="100%" style="display:flex;" />
+						</c:when>
+						<c:otherwise>
+							<img id="thumnail-img" onclick="fn_uploadThumnail()" src="${path }/resources/images/upload-project-icon.png" width="20%" height="30%" style="display:flex;" />
+						</c:otherwise>
+					</c:choose>
 						<div style="display:none">
 							<form id="thumnailForm" method="post" action="${path }/upload/projectThumnail.do" enctype="multipart/form-data">
 								<input type="file" class="projectThumnail" id="_projectThumnail" name="projectThumnail" />
 							</form>
-							<input type="hidden" id="projectThumnailCk" value="" />
+							<input type="hidden" id="projectThumnailCk" value="${project.PROJECTTHUMNAIL }" />
 						</div>
 					</div>
 				</div>
@@ -76,7 +83,7 @@ select#_subCode option.subCtgs {
 						진행할 프로젝트에 대해 간략하게 소개해주세요. 차후에 수정 할 수 있습니다.
 					</div>
 					<div>
-						<textarea class="form-control inputLong" id="_projectSummary" rows="6" placeholder="내용을 입력해주세요."></textarea>
+						<textarea class="form-control inputLong" id="_projectSummary" rows="6" placeholder="내용을 입력해주세요.">${project.PROJECTSUMARY }</textarea>
 					</div>
 				</div>
 			</div>

@@ -1,6 +1,6 @@
 package com.kh.fundy.controller;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,12 @@ public class ProjectModifyController {
 	public ModelAndView testModify(int projectNo) {
 		mv = new ModelAndView();
 		
-		Map<String, String> projectMap = new HashMap<String, String>();
+		Map<String, Object> projectMap = service.selectProject(projectNo);
+		List<Map<String, Object>> list = service.selectFundingOption(projectNo);
+		for(int i=0; i<list.size(); i++) {
+			List<Map<String, Object>> optionDetailList = service.selectOptionDetail(projectNo);
+			list.get(i).put("OPTIONDETAILLIST", optionDetailList);
+		}
 		
 		mv.addObject("project", projectMap);
 		mv.setViewName("projectModify/modifyMain");
