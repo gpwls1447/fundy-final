@@ -42,7 +42,7 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 	
 	@Override
-	public List<Map<String, Object>> selectNewSoonProjectList(String midCtg, String condition) {
-		return dao.selectNewSoonProjectList(midCtg, condition);
+	public List<Map<String, Object>> selectNewSoonProjectList(String midCtg, String condition, String majorCode) {
+		return dao.selectNewSoonProjectList(midCtg, condition, majorCode);
 	}
 }

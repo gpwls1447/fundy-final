@@ -621,7 +621,7 @@
 		</article>
 		
 		<article class="write-detail write-summary selected">
-			<c:import url = "writeSummary.jsp"> 
+			<c:import url = "modifySummary.jsp"> 
 				<c:param name = "midCategoryList" value = "${midCategoryList }" /> 
 				<c:param name = "minorCategoryList" value = "${minorCategoryList }" /> 
 				<c:param name="creator" value="${creator }" />
@@ -629,15 +629,15 @@
 		</article>
 		
 		<article class="write-detail fund-reward-option">
-			<jsp:include page="writeFundRewardOption.jsp"></jsp:include>
+			<jsp:include page="modifyFundRewardOption.jsp"></jsp:include>
 		</article>
 		
 		<article class="write-detail intro">
-			<jsp:include page="writeProjectIntro.jsp"></jsp:include>
+			<jsp:include page="modifyProjectIntro.jsp"></jsp:include>
 		</article>
 		
 		<article class="write-detail account-certification">
-			<jsp:include page="writeAccount.jsp"></jsp:include>
+			<jsp:include page="modifyAccount.jsp"></jsp:include>
 		</article>
 		
 		<article id="write-btn-container">

@@ -224,12 +224,14 @@
 <script>
 $(function () {
 	$("#viewLoading").hide();
+	$(".basic-btn").eq(0).addClass("basic-btn-active");
+	$(".basic-btn").eq(0).click();
 });
 
-function fn_loadedList(midCode) {
+function fn_loadedList(midCode, majorCode) {
 	$("#viewLoading").fadeIn(500);
 	$.ajax({
-		url: "${path }/main/changePopCtg.do?midCode=" + midCode,
+		url: "${path }/main/changePopCtg.do?midCode=" + midCode + "&majorCategory=" + majorCode,
 		dataType: "html",
 		success: function(data) {
 			$(".ctg-populerList").html(data);
@@ -271,7 +273,7 @@ function fn_seeProjectView(projectNo) {
             <div class="popular-nav">
             	<c:forEach items="${midCList}" var="mc" varStatus="vs">
                 	<c:if test="${mc.majorCode eq majorCode }">
-	                	<button class="basic-btn <c:if test="${vs.count eq 1 }">basic-btn-active</c:if>" onclick="fn_loadedList('${mc.midCode }')">${mc.midName }</button>                		
+	                	<button class="basic-btn" onclick="fn_loadedList('${mc.midCode }', '${mc.majorCode }')">${mc.midName }</button>                		
 					</c:if>
 				</c:forEach>
             </div>

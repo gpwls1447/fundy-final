@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.kh.fundy.dao.ProjectWriteDao;
 import com.kh.fundy.model.vo.Category;
+import com.kh.fundy.model.vo.FundingOption;
 import com.kh.fundy.model.vo.Member;
+import com.kh.fundy.model.vo.Project;
 
 @Service
 public class ProjectWriteServiceImpl implements ProjectWriteService {
@@ -113,5 +115,17 @@ public class ProjectWriteServiceImpl implements ProjectWriteService {
 	@Override
 	public int selectSavedProjectNo(String memberEmail) {
 		return dao.selectSavedProjectNo(memberEmail);
+	}
+	
+	@Override
+	public Project selectProjectPreview(int projectNo) {
+		Project p = dao.selectProjectPreview(projectNo);
+		List<FundingOption> foList = dao.selectFundingOptionList(p.getProjectNo());
+		for(FundingOption fo : foList)
+		{
+			fo.setOdList(dao.selectOptionDetailList(fo.getPackageNo()));
+		}
+		p.setFoList(foList);
+		return p;
 	}
 }

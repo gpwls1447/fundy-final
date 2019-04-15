@@ -42,10 +42,11 @@ public class CategoryDaoImpl implements CategoryDao {
 	}
 	
 	@Override
-	public List<Map<String, Object>> selectNewSoonProjectList(String midCtg, String condition) {
+	public List<Map<String, Object>> selectNewSoonProjectList(String midCtg, String condition, String majorCode) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("midCtg", midCtg);
 		map.put("condition", condition);
+		map.put("majorCode", majorCode);
 		return session.selectList("category.selectNewSoonProjectList", map);
 	}
 }
