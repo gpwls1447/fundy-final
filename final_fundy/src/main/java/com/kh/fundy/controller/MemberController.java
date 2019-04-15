@@ -168,17 +168,8 @@ import com.kh.fundy.service.ProjectListService;
 			 sendMail.setFrom("fundy@gmail.com", "Fundy ");       
 			 sendMail.setTo(memberEmail);
 			 sendMail.send();
-			 
 			 flag="true";
 			 ckAuthKey=key;
-			 
-			 /*String result=service.selectCountUserAuth(memberEmail);
-			 if(result==null) {
-				 service.insertUserAuth(memberEmail,key); //인증키 db 저장
-			 }
-			 else {
-				 service.updateUserAuth(memberEmail,key);
-			 }*/
 		 }
 		 catch(MessagingException | UnsupportedEncodingException e) {
 			 e.printStackTrace();
