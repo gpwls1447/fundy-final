@@ -35,18 +35,15 @@ import com.kh.fundy.service.ProjectListService;
  @Controller
  public class MemberController {
 	 
+	 @Autowired
+	 private MemberService service;
+	 
 	 //인증키 비교 위한
 	 private String ckAuthKey;
 
 	 //log를 찍기위해 logger객체
 	 private Logger logger=Logger.getLogger(MemberController.class);
 	 
-	 @Autowired
-	 private MemberService service;
-	 
-	 @Autowired
-	 private ProjectListService pService;
-
 	 //암호화
 	 @Autowired
 	 private BCryptPasswordEncoder bcEncoder;
@@ -131,7 +128,6 @@ import com.kh.fundy.service.ProjectListService;
 		return "redirect:/";
 	}
 
-
 	 //회원가입
 	 @RequestMapping("/member/memberEnrollEnd.do")
 	 public String memberEnrollEnd(Member m, Model model) {
@@ -158,7 +154,6 @@ import com.kh.fundy.service.ProjectListService;
 		 String key = new TempKey().getKey(20,false);
 		 Member m = new Member();
 		 model.addAttribute("authKey", key);
-		 //authKey = m.setEmailAuthKey(key);
 		 String flag="";
 		 //메일 전송
 		 try {
@@ -169,6 +164,7 @@ import com.kh.fundy.service.ProjectListService;
 			 sendMail.setTo(memberEmail);
 			 sendMail.send();
 			 flag="true";
+			 //ckAuthKey에 보내느 key를 넣어서 아래 authKey랑 비교
 			 ckAuthKey=key;
 		 }
 		 catch(MessagingException | UnsupportedEncodingException e) {
@@ -201,7 +197,5 @@ import com.kh.fundy.service.ProjectListService;
 		 System.out.println("닉네임 중복 체크 : "+result);
 		 res.getWriter().println(isOk);
 	 }
-	 
-	 
 	 
  }
