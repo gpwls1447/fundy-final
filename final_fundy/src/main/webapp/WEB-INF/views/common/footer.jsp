@@ -503,13 +503,9 @@
         display : flex;
    }
    
-   .email-group >input
-   {
-         
-   }
-   span{
-   		font-size:11px;
-   		color:lavender;
+	#slideBox > span{
+		font-size:11px;
+		color:lavender;
    }
    
 </style>
