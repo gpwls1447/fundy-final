@@ -265,6 +265,8 @@
 		
 		//프로젝트 데이터베이스에 저장하는 함수
 		function projectSaving() {
+			fn_loadedWriteData();
+			
 			var jsonData = JSON.stringify(writeData);
 			$("#viewLoading").fadeIn(500);
 			$.ajax({
