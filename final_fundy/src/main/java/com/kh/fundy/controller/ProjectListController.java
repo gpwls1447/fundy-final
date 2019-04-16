@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.fundy.model.vo.Category;
 import com.kh.fundy.model.vo.Comment;
 import com.kh.fundy.model.vo.FundingLog;
-import com.kh.fundy.model.vo.Member;
 import com.kh.fundy.model.vo.Project;
 import com.kh.fundy.service.CategoryService;
 import com.kh.fundy.service.CommentService;
@@ -64,17 +63,19 @@ public class ProjectListController {
 		return mv;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping("/projectList/projectListDetail.do")
-	public ModelAndView projectListDetail(int projectNo, HttpSession session)
+	public ModelAndView projectListDetail(int projectNo, String memberEmail)
 	{
+		ModelAndView mv = new ModelAndView();
+
+		@SuppressWarnings("rawtypes")
 		Map map = new HashMap();
 		map.put("projectNo", projectNo);
-		Member m = (Member)session.getAttribute("loggedMember");
-		if(m != null) {map.put("memberEmail", m.getMemberEmail());}
+		map.put("memberEmail", memberEmail);
 		
 		Project p = pService.selectOne(map);
 		
-		ModelAndView mv = new ModelAndView();
 		mv.addObject("project", p);
 		mv.setViewName("projectList/projectListDetail");
 		

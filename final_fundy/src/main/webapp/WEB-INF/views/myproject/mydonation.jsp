@@ -276,13 +276,75 @@
 	{
 		font-size: 45px;
 	}
+	
+	        .donation-list
+        {
+            width: 1005px;
+            display: flex;
+            flex-flow: column nowrap;
+            align-items: center;
+        }
+
+        .donation-list-header
+        {
+            width: 100%;
+            display:flex;
+            padding: 20px 0;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            color: rgb(26, 87, 128);
+            box-sizing: border-box;
+        }
+
+        .donation-list-header > div
+        {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .donation-list-header > div:nth-of-type(1){flex: 2 1 0;}
+        .donation-list-header > div:nth-of-type(2){flex: 3 1 0;}
+        .donation-list-header > div:nth-of-type(3){flex: 1 1 0;}
+        .donation-list-header > div:nth-of-type(4){flex: 1 1 0;}
+        .donation-list-header > div:nth-of-type(5){flex: 2 1 0;}
+        .donation-list-header > div:nth-of-type(6){flex: 1 1 0;}
+
+        .donation-list-row
+        {
+            width: 100%;
+            display: flex;
+            border-bottom: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .donation-list-row > div
+        {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .donation-list-row img
+        {
+            object-fit: fill;
+            width: 75%;
+            height: 75%;
+        }
+
+        .donation-list-row > div:nth-of-type(1){flex: 2 1 0;}
+        .donation-list-row > div:nth-of-type(2){flex: 3 1 0;}
+        .donation-list-row > div:nth-of-type(3){flex: 1 1 0;}
+        .donation-list-row > div:nth-of-type(4){flex: 1 1 0;}
+        .donation-list-row > div:nth-of-type(5){flex: 2 1 0;}
+        .donation-list-row > div:nth-of-type(6){flex: 1 1 0;}
 
 </style>    
     <section class="section">
         <div class="memberupdate-header">마이페이지</div>
         <div class="memberupdate-nav">
-            <div>내 프로젝트<span class="indicator"></span></div>
-            <div>내 후원내역</div>
+            <div>내 프로젝트</div>
+            <div>내 후원내역<span class="indicator"></span></div>
         </div>
         <hr id="divider" />
         <div class="mypage-body">
@@ -294,60 +356,46 @@
             </div>
             <div class="proj-list-wrapper">
 				<span class="project-count">총 ${fn:length(list) }건의 프로젝트가 있습니다.</span>
-        			<div class="proj-list-header">        
-	                    <div class="proj-search-container">
-	                        <i class="material-icons">search</i>
-	                        <input type="text" name="" class="proj-search" placeholder="내 프로젝트 검색">
-	                    </div>
-	                    <div class="proj-list-order">
-	                        <select name="projectStatCode" id="project-stat-filter">
-	                        	<option value="" ${map['projectStatCode'] eq null or projectStatCode eq '' ? 'selected' : '' }>전체보기</option>
-	                            <option value="PS01" ${map['projectStatCode'] eq 'PS01' ? 'selected' : ''}>임시저장</option>
-	                            <option value="PS02" ${map['projectStatCode'] eq 'PS02' ? 'selected' : ''}>검토중</option>
-	                            <option value="PS03" ${map['projectStatCode'] eq 'PS03' ? 'selected' : ''}>진행중</option>
-	                            <option value="PS04" ${map['projectStatCode'] eq 'PS04' ? 'selected' : ''}>마감됨</option>
-	                            <option value="PS05" ${map['projectStatCode'] eq 'PS05' ? 'selected' : ''}>반려됨</option>
-	                        </select>
-	                        <select name="orderby" id="orderby">
-				                <option value="null" disabled>정렬</option>
-				                <option value="funderNo" ${map['orderby'] eq "funderNo" ? "selected" : "" }>후원자순</option>
-				                <option value="reachRate" ${map['orderby']  eq "reachRate" ? "selected" : "" }>달성율순</option>
-				                <option value="endDate" ${map['orderby']  eq "endDate" ? "selected" : "" }>마감임박순</option>
-				                <option value="reach" ${map['orderby'] eq "reach" ? "selected" : "" }>달성액순</option>
-				            </select>
-	                    </div>
-	                </div>
-	            <c:if test="${fn:length(list) == 0}">
-	                <div class="info-empty">
-        				<i class="material-icons info-icon">info_outline</i><br>
-        				<span>내 프로젝트가 없습니다.</span>
-        				<span>프로젝트 신청 버튼은 상단에 있습니다.</span>
-        			</div>
-                </c:if>
-        		<c:if test="${fn:length(list) != 0 }">
-				    <div class="donation-list">
-				        <div class="donation-list-header">
-				            <div>프로젝트 사진</div>
-				            <div>프로젝트 이름</div>
-				            <div>상태</div>
-				            <div>마감일</div>
-				            <div>기부일</div>
-				            <div>기부금액</div>
-				        </div>
-	        			<c:forEach items="${list }" var="list" varStatus="vs">
-				        <div class="donation-list-row">
-				            <div>
-				                <img src="images/thumnail_sample_0.jpg">
-				            </div>
-				            <div>후라라라라라라</div>
-				            <div>진행중</div>
-				            <div>19/04/31</div>
-				            <div>19/05/03 12:00</div>
-				            <div>3,000 ￦</div>
-				        </div>
-		        		</c:forEach>
-				    </div>
-        		</c:if>
+				<div class="donation-list">
+			        <div class="donation-list-header">
+			            <div>프로젝트 사진</div>
+			            <div>프로젝트 이름</div>
+			            <div>상태</div>
+			            <div>마감일</div>
+			            <div>기부일</div>
+			            <div>기부금액</div>
+			        </div>
+			        <div class="donation-list-row">
+			            <div>
+			                <img src="images/thumnail_sample_0.jpg">
+			            </div>
+			            <div>후라라라라라라</div>
+			            <div>진행중</div>
+			            <div>19/04/31</div>
+			            <div>19/05/03 12:00</div>
+			            <div>3,000 ￦</div>
+			        </div>
+			        <div class="donation-list-row">
+			            <div>
+			                <img src="images/thumnail_sample_0.jpg">
+			            </div>
+			            <div>후라라라라라라</div>
+			            <div>진행중</div>
+			            <div>19/04/31</div>
+			            <div>19/05/03 12:00</div>
+			            <div>3,000 ￦</div>
+			        </div>
+			        <div class="donation-list-row">
+			            <div>
+			                <img src="images/thumnail_sample_0.jpg">
+			            </div>
+			            <div>후라라라라라라</div>
+			            <div>진행중</div>
+			            <div>19/04/31</div>
+			            <div>19/05/03 12:00</div>
+			            <div>3,000 ￦</div>
+			        </div>
+			    </div>
         		<c:if test="${fn:length(list) != 0}">
 				${pageBar }
 				</c:if>

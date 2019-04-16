@@ -13,6 +13,8 @@ public interface ProjectListService {
 	List<Project> selectList(int cPage, int numPerPage, Map map);
 	Project selectOne(Map map);
 	List<FundingLog> selectFunderList(int projectNo);
-	int memberDelete(String memberEmail);
 	List<FundingOption> selectFundingOptionList(int projectNo);
+	int myDonationCount(String memberEmail);
+	List<Project> myDonationList(String memberEmail);
+	int projectCount(String memberEmail);
 }

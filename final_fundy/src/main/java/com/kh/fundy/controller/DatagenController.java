@@ -36,7 +36,7 @@ public class DatagenController {
 	private CommentService cService;
 		
 	private final int rndTimeMonthlyTerm = 2;
-	private final int targetMemberCount = 300;
+	private final int targetMemberCount = 200;
 	private final int targetProjectCount = 400;
 	private final int targetFundingLogCount = 3500;
 	private final int targetCommentCount = 2500;

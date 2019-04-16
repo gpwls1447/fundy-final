@@ -209,7 +209,7 @@
 	const projBox = $('.proj-list-box');
 	$(() => {
 		projBox.on('click', e => {
-			location.href='${path}/projectList/projectListDetail.do?projectNo='+$(e.currentTarget).data('projectNo');
+			location.href='${path}/projectList/projectListDetail.do?projectNo='+$(e.currentTarget).data('projectNo')+'&memberEmail=${loggedMember.memberEmail}';
 		});
 	});
 	

@@ -45,14 +45,17 @@ public class MyprojectController {
 	}
 	
 	@RequestMapping("/myproject/myDonationList.do")
-	public ModelAndView myprojectList(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage)
+	public ModelAndView myprojectList(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage, String memberEmail)
 	{
 		ModelAndView mv = new ModelAndView();
 		int numPerPage = 10;
-
-		Map<String, String>map = new HashMap<>();
+		int totalCount = pService.myDonationCount(memberEmail);
+		List<Project> list = pService.myDonationList(memberEmail);
 		
+		String pageBar = getPageBar(totalCount, cPage, numPerPage);
 		
+		mv.addObject("list", list);
+		mv.addObject("pageBar", pageBar);		
 		return mv;
 	}
 }

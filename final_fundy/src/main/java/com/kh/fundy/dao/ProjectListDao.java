@@ -17,6 +17,7 @@ public interface ProjectListDao {
 	List<FundingLog> selectFunderList(int projectNo);
 	List<FundingOption> selectFundingOptionList(int projectNo);
 	List<OptionDetail> selectOptionDetailList(int projectNo);
-	int memberDelete(String memberEmail);
-	
+	int myDonationCount(String memberEmail);
+	List<Project> myDonationList(String memberEmail);
+	int projectCount(String memberEmail);
 }
