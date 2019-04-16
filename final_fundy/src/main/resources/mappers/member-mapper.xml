@@ -39,7 +39,14 @@
 	</update>
 	
 	<update id="memberUpdate">
-      update Member set memberNick=#{memberNick}, intro=#{intro}, memberProfile=#{memberProfile} where memberEmail=#{memberEmail} and memberQuit is null
+      update Member set memberNick=#{memberNick}, intro=#{intro}
+      <if test="memberProfile != null and memberProfile !=''">
+      , memberProfile=#{memberProfile} 
+      </if>
+      where memberEmail=#{memberEmail} and memberQuit is null
+		<selectKey keyProperty="memberProfile" resultType="string" order="AFTER" keyColumn="memberProfile">
+			select memberProfile from member where memberEmail=#{memberEmail}
+		</selectKey>
    </update>
    
    <update id="memberPwUpdate">
@@ -57,5 +64,9 @@
    <update id="memberDelete">
       update member set memberQuit=sysdate where memberEmail=#{memberEmail}
    </update>
+   
+   <select id="selectCheckNick" parameterType="member" resultType="member">
+   	select * from member where memberNick=#{memberNick}
+   </select>
    
 </mapper>

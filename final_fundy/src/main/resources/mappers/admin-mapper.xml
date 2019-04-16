@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="admin">
+
+	<select id="selectList" resultType="project" parameterType="string">
+		SELECT M.MEMBERNICK, P.*, PS.PROJECTSTATNAME
+			FROM PROJECT P
+			JOIN MEMBER M ON P.MEMBEREMAIL = M.MEMBEREMAIL
+			JOIN PROJECTSTATUS PS ON P.PROJECTSTATCODE = PS.PROJECTSTATCODE 
+			ORDER BY BEGINDATE DESC
+	</select>
+	
+	<select id="selectCount" resultType="int" parameterType="string">
+		select count(*) from project
+	</select>
+
+
+
+
+</mapper>

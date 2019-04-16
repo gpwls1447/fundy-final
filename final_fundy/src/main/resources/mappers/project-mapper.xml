@@ -27,7 +27,7 @@
 			JOIN MIDCATEGORY C ON B.MIDCODE = C.MIDCODE
 			WHERE 1=1
 		<if test="projectStatCode != null and projectStatCode != ''">
-			AND PROJECTSTATCODE = #{projectStatCode}
+			AND A.PROJECTSTATCODE = #{projectStatCode}
 		</if>
 		<if test="majorCode != null and majorCode != ''">
 			AND C.MAJORCODE = #{majorCode}
@@ -36,14 +36,17 @@
 			AND C.MIDCODE = #{midCode}
 		</if>
 		<if test="keyword != null and keyword != ''">
-			AND PROJECTTITLE LIKE '%'||#{keyword}||'%' 
+			AND A.PROJECTTITLE LIKE '%'||#{keyword}||'%' 
+		</if>
+		<if test="memberEmail != null and memberEmail != ''">
+			AND A.MEMBEREMAIL = #{memberEmail}
 		</if>
 	</select>
 	
 	<select id="selectList" parameterType="map" resultType="project">
 		SELECT A.*, B.MINORNAME, C.*, 
 			F.MEMBERNICK,
-			F.MEMBEREMAIL,
+			G.PROJECTSTATNAME,
 			nvl((select sum((e.fundPrice*d.packageamount)+d.extramoney) from fundinglog d join fundingoption e on d.packageNo = e.packageNo where d.projectNo = a.projectNo),0) as reach,
 			nvl((select sum((e.fundPrice*d.packageamount)+d.extramoney) from fundinglog d join fundingoption e on d.packageNo = e.packageNo where d.projectNo = a.projectNo)/goalprice*100,0) as reachRate,
 			nvl((select count(*) from fundinglog f where f.projectNo = a.projectNo),0) as funderNo
@@ -51,9 +54,10 @@
 			JOIN MINORCATEGORY B ON A.MINORCODE = B.MINORCODE
 			JOIN MIDCATEGORY C ON B.MIDCODE = C.MIDCODE
 			JOIN MEMBER F ON A.MEMBEREMAIL = F.MEMBEREMAIL
+			JOIN PROJECTSTATUS G ON A.PROJECTSTATCODE = G.PROJECTSTATCODE
 			WHERE 1=1
 		<if test="projectStatCode != null and projectStatCode != ''">
-			AND PROJECTSTATCODE = #{projectStatCode}
+			AND A.PROJECTSTATCODE = #{projectStatCode}
 		</if>
 		<if test="majorCode != null and majorCode != ''">
 			AND C.MAJORCODE = #{majorCode}
@@ -62,23 +66,30 @@
 			AND C.MIDCODE = #{midCode}
 		</if>
 		<if test="keyword != null and keyword != ''">
-			AND PROJECTTITLE LIKE '%'||#{keyword}||'%' 
+			AND A.PROJECTTITLE LIKE '%'||#{keyword}||'%' 
+		</if>
+		<if test="memberEmail != null and memberEmail != ''">
+			AND A.MEMBEREMAIL = #{memberEmail}
 		</if>
 		<if test="orderby != null and orderby != ''">
 			ORDER BY ${orderby} DESC
 		</if>
+		
 	</select>
 	
-	<select id="selectOne" parameterType="int" resultType="project">
-		SELECT A.*, B.MINORNAME, C.*,
+	<select id="selectOne" parameterType="map" resultType="project">
+		SELECT A.*, B.MINORNAME, C.*, D.MEMBERPROFILE,
+			<if test="memberEmail != null">
+			(SELECT COUNT(*) FROM FAVORITE WHERE MEMBEREMAIL = #{memberEmail} AND PROJECTNO = #{projectNo}) as favorited,
+			</if>
 			nvl((select sum((e.fundPrice*d.packageamount)+d.extramoney) from fundinglog d join fundingoption e on d.packageNo = e.packageNo where d.projectNo = a.projectNo),0) as reach,
 			nvl((select sum((e.fundPrice*d.packageamount)+d.extramoney) from fundinglog d join fundingoption e on d.packageNo = e.packageNo where d.projectNo = a.projectNo)/goalprice*100,0) as reachRate,
 			nvl((select count(*) from fundinglog f where f.projectNo = a.projectNo),0) as funderNo
 		FROM PROJECT A
 		JOIN MINORCATEGORY B ON A.MINORCODE = B.MINORCODE
 		JOIN MIDCATEGORY C ON B.MIDCODE = C.MIDCODE
+		JOIN MEMBER D ON A.MEMBEREMAIL = D.MEMBEREMAIL
 		WHERE A.PROJECTNO = #{projectNo}
-		
 	</select>
 	
 	<select id="selectFunderList" parameterType="int" resultType="fundingLog">
@@ -97,11 +108,23 @@
 	</select>
 	
 	<select id="selectOptionDetailList" parameterType="int" resultType="optionDetail">
-		SELECT * FROM OPTIONDETAIL WHERE PACKAGENO = #{packageNo}
+		SELECT * FROM OPTIONDETAIL WHERE PACKAGENO = #{packageNo} order by optionseq
 	</select>
 	
 	<select id="memberDelete" parameterType="string" resultType="int">
-      select count(*) from project where memberEmail=#{memberEmail} and projectStatCode='PS03'
+     	select count(*) from project where memberEmail=#{memberEmail} and projectStatCode='PS03'
+  	</select>
+  	
+  	<select id="myDonationCount" parameterType="map" resultType="int">
+  		SELECT A.PROJECTNO FROM FUNDINGLOG A
+  		JOIN PROJECT B ON A.PROJECTNO = B.PROJECTNO
+  		WHERE A.MEMBEREMAIL = #{memberEmail}
+  	</select>
+  	
+  	<select id="myDonationList" parameterType="map" resultType="project">
+  		SELECT A.PROJECTNO FROM FUNDINGLOG A
+  		JOIN PROJECT B ON A.PROJECTNO = B.PROJECTNO
+  		WHERE A.MEMBEREMAIL = #{memberEmail}
   	</select>
 	
 </mapper>

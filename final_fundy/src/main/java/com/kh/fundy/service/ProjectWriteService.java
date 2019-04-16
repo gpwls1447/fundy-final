@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.kh.fundy.model.vo.Category;
 import com.kh.fundy.model.vo.Member;
+import com.kh.fundy.model.vo.Project;
 
 public interface ProjectWriteService {
 	List<Category> selectMidCategorys(String majorCategory);
@@ -24,4 +25,7 @@ public interface ProjectWriteService {
 	int saveFundingOption(Map<String, Object> reward);
 	void deleteRewards(Map<String, Object> reward);
 	int insertOptionDetail (Map<String,Object> option);
+	int projectWritedCnt(String memberEmail);
+	int selectSavedProjectNo(String memberEmail);
+	Project selectProjectPreview(int projectNo);
 }

@@ -205,7 +205,7 @@
 			writeData.projectTitle = $("#_projectTitle").val();
 			writeData.projectThumnail = $("#projectThumnailCk").val();	//프로젝트썸네일 밸류 확인
 			writeData.projectSumary = $("#_projectSummary").val();
-			writeData.memberNick = $("#_memberNick").val();
+			//writeData.memberNick = $("#_memberNick").val();
 			//writeData.memberProfile = $("#memberProfileCk").val();	//창작자 프로필 확인
 			writeData.goalPrice = removeCommas($("#_goalPrice").val());	//콤마를 제거하여 데이터삽입
 			writeData.endDate = $("#_endDate").val();
@@ -240,13 +240,40 @@
 					products[j] = product;
 				}
 				reward.products = products;
+				writeData.rewards = rewards;
 				
 				rewards[i] = reward;
 			}
 			
 			$.each(writeData,function(key,value) {
-				if(value != null && value.length > 0 && percentage < 100 && value != "<p>&nbsp;</p>") {
+				if(value != null && value.length > 0 && percentage < 100 && value != "<p>&nbsp;</p>" && key != 'rewards') {
 					percentage = percentage + ((1/Object.keys(writeData).length) * 100);
+				}
+				else if(key == 'rewards') {
+					var rewardsPercentage = ((1/Object.keys(writeData).length) * 100);
+					var rewardsLength = 0;
+					var rewardsCkNull = 0;
+					for(var i=0; i<value.length; i++) {
+						for(var j=0; j<value[i].products.length; j++) {
+							if(value[i].products[j].rewardName != "") {
+								rewardsCkNull = rewardsCkNull + 1;
+							}
+							if(value[i].products[j].rewardCnt != "") {
+								rewardsCkNull = rewardsCkNull + 1;
+							}
+							rewardsLength = rewardsLength + 2;
+						}
+						if(value[i].rewardMoney != "") {
+							rewardsCkNull = rewardsCkNull + 1;
+						}
+						if(value[i].deliDay != "") {
+							rewardsCkNull = rewardsCkNull + 1;
+						}
+						rewardsLength = rewardsLength + 2;
+					}
+					
+					rewardsPercentage = rewardsPercentage * (rewardsCkNull / rewardsLength);
+					percentage = percentage + rewardsPercentage;
 				}
 			});
 			
@@ -264,6 +291,8 @@
 		
 		//프로젝트 데이터베이스에 저장하는 함수
 		function projectSaving() {
+			fn_loadedWriteData();
+			
 			var jsonData = JSON.stringify(writeData);
 			$("#viewLoading").fadeIn(500);
 			$.ajax({
@@ -273,22 +302,10 @@
 				type: "POST",
 			    contentType:"application/json;charset=UTF-8",
 				success: function(data) {
-					for(var i=0; i<rewards.length; i++) {
-						jsonData = JSON.stringify(rewards[i]);
-						
-						$.ajax({
-							url: "${path }/projectWrite/tempSaveProjectReward.do?projectNo=${projectNo }",
-							data: jsonData,
-							dataType: "html",
-							type: "POST",
-						    contentType:"application/json;charset=UTF-8",
-							success: function(data) {
-								$("#viewLoading").fadeOut(500);
-							}
-						});
-					}
 				}
 			});
+			
+			$("#viewLoading").fadeOut(500);
 		}
 		
 		///////////////////////////////////////////////////////////
@@ -355,7 +372,7 @@
 				});
 			}
 			else {
-				console.log("작성완성률이 100%가 되어야 검토요청이 가능합니다.");
+				alert("작성완성률이 100%가 되어야 검토요청이 가능합니다.");
 			}
 		});
 		
@@ -364,6 +381,22 @@
 		$("#projectSaveTemp-btn").click(function() {
 			projectSaving();
 		});
+		
+		/* 프로젝트 미리보기 */
+		$("#project-preview-btn").click(function() {
+			$("#viewLoading").fadeIn(500);
+			projectSaving();
+			$.ajax({
+				url: "${path }/projectWrite/projectPreview.do?projectNo=${projectNo }",
+				dataType: "html",
+				success: function(data) {
+					$("#project-preview-body").html(data);
+				}
+			});
+			$("#viewLoading").fadeOut(500);
+			
+			$("#preview-modal").modal();
+		})
 	});
 	
 	
@@ -580,7 +613,7 @@
 						<span id="progress-span">0%</span>
 					</div>
 					<div>
-						<button class="btn btn-primary" style="background-color: #126196; border: 0px; margin-right: 5px;">미리보기</button>
+						<button id="project-preview-btn" class="btn btn-primary" style="background-color: #126196; border: 0px; margin-right: 5px;">미리보기</button>
 						<button id="project-entry-btn" class="btn btn-primary disabled" style="background-color: #FF8C00; border: 0px;">검토 요청하기</button>
 					</div>
 				</div>
@@ -615,4 +648,28 @@
 		<input type="hidden" id="tabCnt" value="0" />
 	</section>
 <div id='viewLoading' class="spinner-border" style="width:150px; height:150px; position: fixed; top: 250px;"></div>
+
+<!-- The Modal -->
+<div class="modal" id="preview-modal">
+  <div class="modal-dialog" style="min-width:1010px; height:90%; padding:0;">
+  	<div style="display:flex; width:100%; padding-top:15px; padding-bottom:20px;"><button type="button" class="close" data-dismiss="modal" style="margin:auto; font-weight: bold; font-size: 50px; color:white;">&times;</button></div>
+    <div class="modal-content">
+
+      <!-- ModalHeader -->
+      <!-- <div class="modal-header" style="">
+        
+      </div> -->
+      <!-- Modal body -->
+      <div class="modal-body" id="project-preview-body" style="padding:0; margin: auto;">
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" style="margin:auto;">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

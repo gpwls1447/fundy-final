@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.kh.fundy.model.vo.Category;
+import com.kh.fundy.model.vo.FundingOption;
 import com.kh.fundy.model.vo.Member;
+import com.kh.fundy.model.vo.OptionDetail;
+import com.kh.fundy.model.vo.Project;
 
 public interface ProjectWriteDao {
 	List<Category> selectMidCategorys(String majorCategory);
@@ -25,4 +28,9 @@ public interface ProjectWriteDao {
 	int saveFundingOption(Map<String, Object> reward);
 	void deleteRewards(Map<String, Object> reward);
 	int insertOptionDetail(Map<String,Object> option);
+	int projectWritedCnt(String memberEmail);
+	int selectSavedProjectNo(String memberEmail);
+	Project selectProjectPreview(int projectNo);
+	List<FundingOption> selectFundingOptionList(int projectNo);
+	List<OptionDetail> selectOptionDetailList(int projectNo);
 }

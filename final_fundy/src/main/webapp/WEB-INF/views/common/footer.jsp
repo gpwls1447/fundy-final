@@ -32,7 +32,6 @@
         box-sizing: border-box;
         font-size: 13px;
     }
-
     .footer-top > div 
     {
         flex: 1 1 0;
@@ -43,20 +42,17 @@
         padding: 20px 50px;
         line-height: 25px;
     }
-
     .footer-title
     {
         margin-bottom: 20px;
         font-size: 17px;
         color: #eee;
     }
-
     .footer-sub
     {
         display: flex;
         flex-flow : column nowrap;
     }
-
     .footer-horiz-line
     {   
         display: block;
@@ -64,8 +60,6 @@
         height: 70%;
         background-color: rgba(255, 255, 255, 0.2);
     }
-
-
     .footer-bottom
     {
         width: 100%;
@@ -76,15 +70,11 @@
         box-sizing: border-box;
         display: flex;
     }
-
     .footer-bottom > div {flex: 1 1 0;}
-
     .site-nav
     {
         display: flex;
     }
-
-
     .site-nav > span
     {
         font-weight: bold;
@@ -92,22 +82,18 @@
         display: flex;
         align-items: center;
     }
-
     #footer-logo
     {
         font-size: 22px;
         font-weight: 900;
     }
-
     .copyright{margin: 10px 0;}
-
     #footer-links
     {
         display: flex;
         justify-content: flex-end;
         align-items: center;
     }
-
     #footer-links button
     {
         background-color: transparent;
@@ -117,7 +103,6 @@
         margin-left: 10px;
         cursor: pointer;
     }
-
     #footer-links img
     {
         width: 40px;
@@ -505,9 +490,13 @@
         display : flex;
    }
    
-   .span{
+	.span{
       font-size:11px;
       color:lavender;
+   }
+   
+   .join{
+   		height:70px;
    }
    
 </style>
@@ -591,19 +580,26 @@
             <div class="close-btn">
                 <i class="material-icons">clear</i>
             </div>
-            <img class ="user-profile-pic" src="${path }/resources/memberProfile/${loggedMember.memberProfile}">
+            <div class="header-last user-btn" >
+                	<c:if test="${loggedMember.kakaoId==null }">
+                		<img src="${path }/resources/memberProfile/${loggedMember.memberProfile}" >
+                	</c:if>
+ 					<c:if test="${loggedMember.kakaoId!=null }">               	
+                		<img src="${loggedMember.memberProfile}" style="width: 100px; height: 100px;">
+                	</c:if>
+                </div>
             <div class="user-nick">
                 ${loggedMember.memberNick }
             </div>
         </div>
         <div class="user-modal-body">
-            <div class="user-menu-box">
+            <div class="user-menu-box myproject-btn">
                 <span class="bar vertical-bar"></span>
                 <span class="bar horizontal-bar"></span>
                 <i class="material-icons">work_outline</i>
                 <span class="user-menu-text">내프로젝트</span>
             </div>
-            <div class="user-menu-box">
+            <div class="user-menu-box donnorList-btn">
                 <span class="bar horizontal-bar"></span>
                 <i class="material-icons">card_giftcard</i>
                 <span class="user-menu-text">후원내역</span>
@@ -651,44 +647,28 @@
          <div class="left">
             <div class="content">
                
-               <div class="signup-title form-title"><span class="brand-title">FUNDY</span>회원가입</div>
+               <div class="signup-title form-title"><img src="${path }/resources/images/join.png" class="join"></div>
                <form method="post" action="${path }/member/memberEnrollEnd.do" autocomplete="off">
                   <div class="form-group">
                   <div class="email-group">
                      <input type="email" class="signup-modal-input" placeholder="이메일" id="memberEmail" name="memberEmail" required />
                      <input type="button" class="off login-modal-btn" id="emailAuth" value="인증" 
-                           style="margin-top: 15px;
-                           padding-top: 0px;
-                           padding-bottom: 0px;
-                           width: 62px;
-                           height: 35px;
-                           padding-left: 4px;
-                           padding-right: 4px;
-                           border-radius : 50px;
-                           margin-right: 0px;"/>
+                     		style="border-radius: 50px;margin-top: 15px;padding-top: 2px;padding-bottom: 2px;width: 65px;height: 35px;padding-left: 4px;border-right-width: 4px;margin-right: 0px;padding-right: 4px;"/>
                   </div>
                   <div class="email-group">  
                     <input type="text" class="signup-modal-input" id="authKey" name="authKey" placeholder="인증번호" />
                     <input type="button" class="off login-modal-btn " id="authCheck" value="확인" 
-                            style="margin-top: 15px;
-                           padding-top: 0px;
-                           padding-bottom: 0px;
-                           width: 62px;
-                           height: 35px;
-                           padding-left: 4px;
-                           padding-right: 4px;
-                           border-radius : 50px;
-                           margin-right: 0px;"/>
+                   			style="border-radius: 50px;margin-top: 15px;padding-top: 2px;padding-bottom: 2px;width: 65px;height: 35px;padding-left: 4px;border-right-width: 4px;margin-right: 0px;padding-right: 4px;"/>
                   </div>   
                     <span class="span auth ok">인증키가 일치합니다.</span>
-                    <span class="span auth error">인증키가 일치하지 않습니다.</span>
-                   <input type="hidden" name="chekcAuth" id="checkAuth"/>
+              		<span class="span auth error">인증키가 일치하지 않습니다.</span>
+             		<input type="hidden" name="chekcAuth" id="checkAuth"/>
                     <input type="password" class="signup-modal-input" placeholder="비밀번호" id="password" name="memberPw" required /> 
                     <input type="password" class="signup-modal-input" placeholder="비밀번호 확인" id="password-ck" required /> 
                     <input type="text" class="signup-modal-input" placeholder="닉네임" id="memberNick" name="memberNick" required />
                     <span class="span guide ok">사용 가능</span>
-                    <span class="span guide error">사용 불가</span>
-                   <input type="hidden" name="checkId" id="checkId"/>
+              		<span class="span guide error">사용 불가</span>
+             		<input type="hidden" name="checkId" id="checkId"/>
                   </div>
                   <div class="modal-btn-container">
                   <input type="submit" class="login-modal-btn" value="회원가입">
@@ -699,7 +679,7 @@
          </div>
          <div class="right">
             <div class="content">
-               <div class="login-title form-title"><span class="brand-title">FUNDY</span>로그인</div>
+               <div class="login-title form-title"><img src="${path }/resources/images/login.png" class="join"></div>
                <form method="post" action="${path }/member/memberlogin.do" autocomplete="off">
                   <div class="form-group">
                      <input type="email" placeholder="email" name="memberEmail" class="signup-modal-input login-modal-input"/> 
@@ -720,7 +700,6 @@
 <input type="hidden" id="nickCheck" value="0">
 <input type="hidden" id="authCheck" value="0">
 <script>
-
    //닉네임 중복 체크
    $(".guide").hide();
    $(() => {
@@ -756,7 +735,7 @@
             dataType:"json",
             data:{"memberEmail":email},
             success:function(data){
-               alert("이메일이 발송되었습니다. 인증번호를 적어주세요");
+            	alert("이메일이 발송되었습니다. 인증번호를 적어주세요");
             }
          });
       });
@@ -788,33 +767,35 @@
          });
       });
    });
-
    
-   //로그아웃 기능
-   $(() => {
-      $('.logout-btn').on("click", () => {
-         location.href="${path}/member/LogOut.do";   
-      });
+   //모달 유저메뉴 링크 바인드
+   	$(() => {
+		//로그아웃
+		$('.logout-btn').on("click", () => {
+        	location.href="${path}/member/LogOut.do";   
+		});
+		//정보수정
+	    $('.memberUpdate-btn').on("click", ()=> {
+	        location.href="${path}/member/memberUpdateView.do";
+	    });
+	    //찜바구니
+	    $('.favorite-btn').on("click", ()=> {
+	      	location.href="${path}/favorite/favoriteList.do";
+	   	});
+	   	//마이프로젝트
+	   	$('.myproject-btn').on('click', () => {
+	   		location.href='${path}/myproject/myprojectList.do?memberEmail=${loggedMember.memberEmail}';
+	   	});
+	   	//메시지
+	    $('.message-btn').on("click", ()=> {
+	           location.href="${path}/messageMain.do?receiverEmail=${loggedMember.memberEmail}";
+	    });
    });
-   
-   //정보수정 기능
-   $(() => {
-      $('.memberUpdate-btn').on("click", ()=> {
-         location.href="${path}/member/memberUpdateView.do";
-      })
-   })
    
  //찜바구니 기능
    $(() => {
       $('.favorite-btn').on("click", ()=> {
          location.href="${path}/favorite/favoriteList.do";
-      })
-   })
-   
-   //메세지 기능
-   $(() => {
-      $('.message-btn').on("click", ()=> {
-         location.href="${path}/messageMain.do?receiverEmail=${loggedMember.memberEmail}";
       })
    })
 
@@ -830,12 +811,8 @@
             $("#password").focus();
          }
       });
-        //정규화적용
-      
-      
-      
    }); 
-
+ 
    //로그인 모달
    const loginBtn = $('.login-btn');
    const loginModal = $('.login-modal');
@@ -875,7 +852,6 @@
             });
          });
       });
-
     //검색창 토글
     const searchBtn = $('.search-btn');
     const searchBar = $('.search-bar');
@@ -888,7 +864,6 @@
                 return;
             }
             searchBar.toggle(200);
-
             $('body').on('mouseup', e => {
                 if (searchBar.is(':animated') || e.target == searchBar[0] || $('header')[0].contains(e.target)) return;
                 searchBar.toggle(200);
@@ -903,9 +878,7 @@
               location.href='${path}/projectList/projectList.do?keyword='+searchBar.val()+'&majorCode=${majorCode}';
            }
         });
-
     });
-
     //네비게이션 바 토글
     const nav = $('.nav');
     const categoryBtn = $('.category-btn');
@@ -915,45 +888,38 @@
             nav.css('display', 'flex');
         });
     });
-
     //메인 슬라이드
     const slideLeftBtn = $('.main-slide-btn--left');
     const slideRightBtn = $('.main-slide-btn--right');
     const slideImageTrack = $('.main-image-track');
     const navbar = $('.main-slide-navbar > ul');
     const dots = navbar.children();
-
     //이동 버튼 함수 바인드
     $(() => {
         slideLeftBtn.on('click', moveSlidePrev);
         slideRightBtn.on('click', moveSlideNext);
     });
-
     //이전 슬라이드 이동 함수
     const moveSlidePrev = () => {
         const targetSlide = slideImageTrack.children().last(); 
         slideImageTrack.prepend(targetSlide);
         moveDot('prev');
     }
-
     //다음 슬라이드 이동 함수
     const moveSlideNext = () => {
         const currentSlide = slideImageTrack.children().first();
         slideImageTrack.append(currentSlide);
         moveDot('next');
     }
-
     //점 이동 함수
     const moveDot = (direction) => {
         const firstDot = navbar.children().first();
         const lastDot = navbar.children().last();
-
         switch(direction) {
             case 'prev' : firstDot.appendTo(navbar); break;
             case 'next' : lastDot.prependTo(navbar); break;
         }
     };
-
     //점 클릭 동작 함수
     $(() => {
         dots.on('click', e => {
@@ -975,7 +941,6 @@
             }
         });
     });
-
     //인기 카테고리 클릭 시 클래스 변동
     const popCategBtns = $('.popular-nav').children();
     $(() => {
@@ -984,14 +949,12 @@
             $(e.currentTarget).addClass('basic-btn-active');
         });
     });
-
     //유저모달창 토글
     const userModal = $('.user-modal');
     const userBtn = $('.user-btn');
     const modalOverlay = $('.modal-overlay');
     const userModalBody = $('.user-modal-body');
     const userModalHeader = $('.user-modal-header');
-
     $(() => {
         userModalBody.hide();
         userModalHeader.hide();
@@ -1006,7 +969,6 @@
             userModal.animate({width: 'toggle'}, 300);
         });
     });
-
     //유저모달창 내부 요소 Fade효과함수
     const fadeToggleUser = (time) => {
         userModalHeader.fadeToggle(time);

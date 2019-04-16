@@ -16,13 +16,13 @@
 	    display: flex;
 	    flex-flow: column nowrap;
 	    align-items: center;
-	    margin-top: 30px;
 	}
 	
 	.proj-search-result
 	{
 	    font-size: 30px;
-	    margin: 20px;
+	    margin-top: 130px;
+	    margin-bottom: 20px;
 	}
 	
 	.proj-category
@@ -35,7 +35,6 @@
 	
 	.proj-list-order
 	{
-		margin-top: 100px;
 	    width: 100%;
 	    display: flex;
 	    justify-content: flex-end;
@@ -77,8 +76,8 @@
 	
 	.proj-list-thumnail > img
 	{
-	    width: 97%;
-	    height: 97%;
+		width: 100%;
+		height: 100%;
 	}
 	
 	.proj-list-title
@@ -137,9 +136,11 @@
 </style>
 <section class="section">
 	<div class="proj-list-wrapper">
-		<c:if test="${keyword != null && keyword eq ''}">
-        	<div class="proj-search-result">[${keyword }] 에 대한 검색 결과</div>
+        <div class="proj-search-result">
+		<c:if test="${keyword ne null && keyword ne ''}">
+			[${keyword }] 에 대한 검색 결과
 		</c:if>
+		</div>
         <div class="proj-list-order">
             <select name="projectStatCode" id="projectStatCode">
                 <option value="PS03" ${projectStatCode eq "PS03" ? "selected" : "" }>진행중</option>
@@ -157,7 +158,7 @@
         <c:forEach items="${list }" var="list">
         <div data-project-no="${list.projectNo }" class="proj-list-box">
             <div class="proj-list-thumnail">
-                <img src="${path }/resources/projectIntroImages/${list.projectThumnail}">
+                <img src="${path }/resources/projectRepresent/${list.projectThumnail}">
             </div>
             <div class="proj-list-body">
                 <div class="proj-list-title">${list.projectTitle }</div>
@@ -173,7 +174,10 @@
 						<c:set var="endDate" value="${list.endDate }"/>
 						<fmt:formatDate var="endTime" value="${endDate }" pattern="yyyyMMdd"/>
 						<fmt:parseNumber value="${endDate.time / (1000*60*60*24)}" integerOnly="true" var="parsedEnd"/>
-                        <span>${parsedNow - parsedEnd + -2*(parsedNow - parsedEnd) > -1 ? parsedNow - parsedEnd + -2*(parsedNow - parsedEnd) : "0"}일 </span>
+                        <span>
+                        	<c:if test="${parsedEnd - parsedNow > 0 }">${parsedEnd - parsedNow}일 남음</c:if>
+							<c:if test="${parsedEnd - parsedNow <= 0 }">종료</c:if>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -186,21 +190,20 @@
 	
 	/* 페이지 바 함수 */
 	const fn_paging = cPage => {
-		location.href='${path}/projectList/projectList.do?cPage='+cPage+'&majorCode=${majorCode}&midCode=${midCode}&projectStatCode='+$('#projectStatCode option:selected').val()+'&orderby=${orderby}';
+		location.href='${path}/projectList/projectList.do?cPage='+cPage+'&majorCode=${majorCode}&midCode=${midCode}&projectStatCode='+$('#projectStatCode option:selected').val()+'&orderby=${orderby}&keyword=${keyword}';
 	};
 	
 	/* 프로젝트 카테고리/정렬 이벤트 */
 	
 	$(() => {
 		$('#projectStatCode').on('change', () => {
-			location.href='${path}/projectList/projectList.do?majorCode=${majorCode}&midCode=${midCode}&projectStatCode='+$('#projectStatCode option:selected').val()+'&orderby=${orderby}';
+			location.href='${path}/projectList/projectList.do?majorCode=${majorCode}&midCode=${midCode}&projectStatCode='+$('#projectStatCode option:selected').val()+'&orderby=${orderby}&keyword=${keyword}';
 		});
-	});
-	
-	$(() => {
+		
 		$('#orderby').on('change', () => {
-			location.href='${path}/projectList/projectList.do?majorCode=${majorCode}&midCode=${midCode}&projectStatCode='+$('#projectStatCode option:selected').val()+'&orderby='+$('#orderby option:selected').val();
+			location.href='${path}/projectList/projectList.do?majorCode=${majorCode}&midCode=${midCode}&projectStatCode='+$('#projectStatCode option:selected').val()+'&orderby='+$('#orderby option:selected').val()+'&keyword=${keyword}';
 		});
+	
 	});
 	
 	const projBox = $('.proj-list-box');
@@ -211,6 +214,7 @@
 	});
 	
 	$(() => {
+		$('.nav').show();
 		$('.nav').css('display', 'flex');
 	});
 

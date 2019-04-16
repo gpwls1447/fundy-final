@@ -11,19 +11,11 @@ public interface MemberDao {
 	int memberDeleteAll();
 	int insertOne(Member m);
 	Member login(Member m);
-	int memberAddress(ShippingAddr s);
-	List<ShippingAddr> memberAddressView(ShippingAddr s);
 	List<Member> selectList();
 	Member selectOneKakao(Member m);
-	int memberAddressInsert(ShippingAddr s);
-	int memberUpdate(Member m);
-	List<Member> memberUpdateView(Member m);
 	String selectCountUserAuth(String memberEmail);
 	int insertUserAuth(String memberEmail, String key);
 	int updateUserAuth(String memberEmail, String key);
-	int memberPwUpdate(Member m);
-	int memberPwCheck(Member m);
-	int memberNickCheck(String memberNick);
-	int memberDelete(Member m);
-
+	Member selectCheckNick(Member m);
+	
 }

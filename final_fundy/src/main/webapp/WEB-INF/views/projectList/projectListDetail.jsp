@@ -5,6 +5,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="path" value="${pageContext.request.contextPath }" />
+<c:set var="now" value="<%=new java.util.Date()%>"/>
+<fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="parsedNow"/>
 <style>
 	.proj-category
 	{
@@ -126,14 +128,19 @@
 	.proj-main-btn-box > button:last-of-type
 	{
 	    flex: 2 1 0;
-	    color: var(--basic-color);
+	    color: red;
 	}
 	
-	.proj-main-btn-box > button > i {transform: translateY(4px);}
+	.proj-main-btn-box > button > i {transform: translateY(1.5px);}
 	
 	.btn-modify
 	{
 	    margin: 0;
+	    display:flex;
+	    align-items:center;
+	    justify-content:center;
+	    /* line-height:15px; */
+	    padding-bottom:10px !important;
 	}
 	
 	.total-money
@@ -231,7 +238,7 @@
 	
 	.proj-detail-bottom{width: 100%; display: flex;}
 	
-	.proj-detail-bottom-left{flex: 7 1 0; margin-right: 25px; display: flex; flex-flow: column }
+	.proj-detail-bottom-left{flex: 7 1 0; margin-right: 25px; display: flex; flex-flow: column; width: 100%;}
 	.proj-detail-bottom-right{flex: 4 1 0;}
 	
 	.creator-info-box
@@ -257,10 +264,11 @@
 	
 	.profile-pic
 	{
-	    width: 90px;
+	    width: 80px;
 	    height: 80px;
 	    border-radius: 50%;
 	    margin-right: 20px;
+	    object-fit: contain;
 	}
 	
 	.creator-info-rest
@@ -366,6 +374,11 @@
 	    font-size: 16px;
 	            border-radius: 3px;
 	}
+	
+	.favorited
+	{
+		background-color: #ffbfaa;
+	}
 
 </style>
     <section class="section">
@@ -386,7 +399,13 @@
                     <div class="progbar-filled" style="width:${project.reachRate < 100 ? project.reachRate : 100}%"></div>
                     <div class="progbar-info">
                         <span>${project.reachRate }% 달성</span>
-                        <span>17일 남음</span>
+						<c:set var="endDate" value="${project.endDate }"/>
+						<fmt:formatDate var="endTime" value="${endDate }" pattern="yyyyMMdd"/>
+						<fmt:parseNumber value="${endDate.time / (1000*60*60*24)}" integerOnly="true" var="parsedEnd"/>
+                        <span>
+                        	<c:if test="${parsedEnd - parsedNow > 0 }">${parsedEnd - parsedNow}일 남음</c:if>
+							<c:if test="${parsedEnd - parsedNow <= 0 }">종료</c:if>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -396,8 +415,8 @@
                 <div class="proj-period">펀딩기간<span class="divider-2">|</span><span><fmt:formatDate value="${project.beginDate }" pattern="yyyy.MM.dd"/> - <fmt:formatDate value="${project.endDate }" pattern="yyyy.MM.dd"/></span></div>
                 <div class="goal-money">목표금액<span class="divider-2">|</span><span>${project.goalPrice } 원</span></div>
                 <div class="proj-main-btn-box">
-                    <button class="basic-btn basic-btn-active btn-modify ripple">후원하기</button>
-                    <button class="basic-btn ripple btn-modify"><i class="material-icons">favorite</i></button>
+                    <button class="basic-btn basic-btn-active btn-modify ripple" onclick="location.href='${path}/pay/optionSelect.do?projectNo=${project.projectNo }';">후원하기</button>
+                    <button class="basic-btn ripple btn-modify ${project.favorited == 1 ? 'favorited' : ''}" onclick="favorite();" id="favoriteBtn"><i class="material-icons favorite">${project.favorited == 1 ? 'favorite' : 'favorite_border'}</i><span style="font-size:17px; line-height:10px;">&nbsp;찜하기</span></button>
                 </div>
             </div>
         </div>
@@ -414,15 +433,13 @@
         </div>
         <div class="proj-detail-bottom">
             <div class="proj-detail-bottom-left">
-    
-    		${project.projectContent }
-    
+   			${project.favorited } 
             </div>
             <div class="proj-detail-bottom-right">
                 <div class="creator-info-box">
                     <div>창작자 정보</div>
                     <div class="creator-name-profile-pic">
-                        <img class="profile-pic" src="${path }/resources/images/memberProfile/${project.memberProfile }">
+                        <img class="profile-pic" src="${path }/resources/memberProfile/${project.memberProfile }">
                         <div class="creator-name">${project.memberNick }</div>
                     </div>
                     <div class="creator-info-rest">
@@ -506,11 +523,40 @@
     	});
     });
     
-    new daum.Postcode({
-        oncomplete: data => {
-        	
-        }
-    }).open();
-    
+  //찜바구니 추가 및 제거
+    function favorite(){
+    	const favoriteText = $('.favorite').text(); 
+    	const favoriteBtn = $('#favoriteBtn');
+    	
+    	//찜바구니에 추가하려고 할때
+    	if(favoriteText=='favorite_border'){
+    		$('.favorite').text('favorite');
+    	
+			$.ajax({
+				url:'${path}/projectList/insert_favorite',
+				type:'post',
+				data:{'memberEmail':'${loggedMember.memberEmail}', 'projectNo':'${project.projectNo}'},
+				success:function(data){
+					alert('찜바구니에 등록되었습니다.');
+					favoriteBtn.toggleClass('favorited');
+				}
+			});
+    	}
+    	//찜바구니에서 빼려고 할때
+    	else {
+    		$('.favorite').text('favorite_border');
+    		
+    		$.ajax({
+    			url:'${path}/projectList/delete_favorite',
+    			type:'post',
+    			data:{'memberEmail':'${loggedMember.memberEmail}', 'projectNo':'${project.projectNo}'},
+    			success:function(data){
+    				alert('찜바구니에서 제거되었습니다.');
+    				favoriteBtn.toggleClass('favorited');
+    			}
+    		});
+    	}
+    }
+
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

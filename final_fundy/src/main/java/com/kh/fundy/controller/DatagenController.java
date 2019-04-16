@@ -38,14 +38,23 @@ public class DatagenController {
 	private final int rndTimeMonthlyTerm = 2;
 	private final int targetMemberCount = 300;
 	private final int targetProjectCount = 400;
-	private final int targetFundingLogCount = 4000;
-	private final int targetCommentCount = 2000;
+	private final int targetFundingLogCount = 3500;
+	private final int targetCommentCount = 2500;
 
-	@RequestMapping("/commentGen.do")
-	public ModelAndView commentGen()
+	@RequestMapping("/datagen.do")
+	public ModelAndView run()
 	{
 		ModelAndView mv = new ModelAndView();
-		
+		mv.addObject("mResult", memberDatagen());
+		mv.addObject("pResult", projectDatagen());
+		mv.addObject("flResult", fundingLogDatagen());
+		mv.addObject("cResult", commentGen());
+		mv.setViewName("jsonView");
+		return mv;
+	}
+	
+	public int commentGen()
+	{	
 		String[] contents = {"물건 잘 받았습니다. 생각했던 것보다 좋네요.", "별로없입니다. 재구매는 없을 것 같네요.", "좋은 일에 동참할 수 있어 기쁩니다.", "조금이나마 도움이 되었으면 좋겠습니다.", "물건 정말 기대되네요." };
 		String[] replies = {"동감합니다.", "저는 그렇게 생각하지 않습니다.", "저는 그저 그렇네요", "맞습니다.", "인정"};
 		
@@ -80,16 +89,11 @@ public class DatagenController {
 			}
 		}
 		
-		mv.addObject("result", result);
-		mv.setViewName("jasonView");
-		return mv;
+		return result;
 	}
 	
-	@RequestMapping("/fundingLogDatagen.do")
-	public ModelAndView fundingLogDatagen()
-	{
-		ModelAndView mv = new ModelAndView();
-		
+	public int fundingLogDatagen()
+	{	
 		FundingLog fl = new FundingLog();
 		Member m;
 		
@@ -112,35 +116,21 @@ public class DatagenController {
 			if((int)(Math.random()*51)>49) {fl.setExtraMoney(10000);}
 			else {fl.setExtraMoney(0);}
 			
-			fl.setFunderDate(new Timestamp(rp.getEndDate().getTime() - ((int)(Math.random()*30)*86400000L)));
+			fl.setFunderDate(new Timestamp(System.currentTimeMillis() - ((int)(Math.random()*30)*86400000L)));
 			fl.setAnonymous("N");
 			result += pService.insertFundingLog(fl);
 		}
 		
-		mv.addObject("result", result);
-		mv.setViewName("jsonView");
-		return mv;
+		return result;
 	}
 	
-	@RequestMapping("/datagen.do")
-	public ModelAndView run()
+	public int projectDatagen()
 	{
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("result", memberDatagen());
-		mv.setViewName("jsonView");
-		return mv;
-	}
-	
-	@RequestMapping("/projectgen.do")
-	public ModelAndView projectDatagen()
-	{
-		ModelAndView mv = new ModelAndView();
-		
 		Project p = new Project();
 		Member m;
 		
-		String[] rndTitle = {"노인 돕기 프로젝트", "오지는 제품을 만나보시겠습니까?", "필수 인싸옷, 갑옷 후드 ", "댕댕이 사진전", "시집 \"얼음과 불의 노래\"", "아동 구호 모금"};
-		String[] rndSumary = {"사각지대에 놓인 노인분들을 돕고자 합니다.", "운동화에 스카이콩콩이 달렸다! X이젝스.", "갑옷 후드, 강력한 방한성에 어그로는 덤으로", "인간을 뛰어넘는 감성 표현력", "유노우낫띵 존스노우", "어린이가 살기 좋은 세상이 좋은 세상입니다."};
+		String[] rndTitle = {"잠이 솔솔 '아로마' 향초", "우리아이를 위한 '민들레 아기씨'", "뚠뚜니양이 ", "차오름향초", "멍멍이 에코백", "혀 살살녹 디저트", "한국의 이상한 식물사전 [괴초록]", "자매는 처음이라 사진전시회", "너말고 다 있다 키링", "몰랑이 쫀득 복숭아 슬리퍼와 인형", "자몽디퓨저 '잠옴'", "장애묘 입양", "시장을 통해 알아보는 [도시인류학]"};
+		String[] rndSumary = {"잠이 솔솔 옵니다.", "민들레 아가씨는 예뻐요.", "고양이 봉제인형 '뚠뚜니냥이'를 만나보세.요", "내 곁에 머무르는 차내음 차오름향초.", "강아지 집사들 필수템!", "프랑스 음식 만나보실래요?", "정말 괴상합니다.", "정말로 처음입니다.", "없으면 아싸됨.", "너무 쫀득해서 먹고싶음.", "맨날 좋은 꿈 꾸게 해줄게요.", "장애 유기묘를 입양하세요", "꿀잼입니다."};
 		
 		StringBuilder sb = new StringBuilder();
 		
@@ -150,7 +140,7 @@ public class DatagenController {
 		int result = 0;
 		while(result < targetProjectCount)
 		{
-			rndIndex = (int)(Math.random()*5);
+			rndIndex = (int)(Math.random()*12);
 			m = dService.selectRndMember((int)(Math.random()*targetMemberCount)+1);
 			Timestamp rndBeginDate = getRandomTime();
 			Timestamp endDate = new Timestamp(rndBeginDate.getTime() + 2629800000L);
@@ -165,7 +155,7 @@ public class DatagenController {
 			p.setBeginDate(rndBeginDate);
 			p.setEndDate(endDate);
 			p.setGoalPrice(10000*((int)(Math.random()*100)+1));
-			
+				
 			if(endDate.getTime() > System.currentTimeMillis()){p.setProjectStatCode("PS03");}
 			else {p.setProjectStatCode("PS04");}
 			
@@ -178,9 +168,8 @@ public class DatagenController {
 			p.setProjectFormDate(rndBeginDate);
 			result += dService.insertProject(p);
 		}
-		mv.addObject("result", result);
-		mv.setViewName("jsonView");
-		return mv;
+		
+		return result;
 	}
 	
 	public int memberDatagen()
@@ -226,15 +215,6 @@ public class DatagenController {
 			m.setLastLoggedIn(tempTime);
 			
 			result += mService.insertOne(m);
-		}
-
-		
-		if(result == targetMemberCount)
-		{
-			System.out.println("회원데이터 생성 완료");
-		}
-		else {
-			System.out.println("회원데이터 생성중 오류 발생");
 		}
 		
 		return result;

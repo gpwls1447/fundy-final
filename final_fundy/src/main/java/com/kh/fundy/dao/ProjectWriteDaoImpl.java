@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.fundy.model.vo.Category;
+import com.kh.fundy.model.vo.FundingOption;
 import com.kh.fundy.model.vo.Member;
+import com.kh.fundy.model.vo.OptionDetail;
+import com.kh.fundy.model.vo.Project;
 
 @Repository
 public class ProjectWriteDaoImpl implements ProjectWriteDao {
@@ -105,5 +108,30 @@ public class ProjectWriteDaoImpl implements ProjectWriteDao {
 	@Override
 	public int insertOptionDetail(Map<String, Object> option) {
 		return session.insert("projectWrite.insertOptionDetail", option);
+	}
+	
+	@Override
+	public int projectWritedCnt(String memberEmail) {
+		return session.selectOne("projectWrite.projectWritedCnt", memberEmail);
+	}
+	
+	@Override
+	public int selectSavedProjectNo(String memberEmail) {
+		return session.selectOne("projectWrite.selectSavedProjectNo", memberEmail);
+	}
+	
+	@Override
+	public Project selectProjectPreview(int projectNo) {
+		return session.selectOne("projectWrite.selectProjectPreview", projectNo);
+	}
+	
+	@Override
+	public List<FundingOption> selectFundingOptionList(int projectNo) {
+		return session.selectList("project.selectFundingOptionList", projectNo);
+	}
+
+	@Override
+	public List<OptionDetail> selectOptionDetailList(int projectNo) {
+		return session.selectList("project.selectOptionDetailList", projectNo);
 	}
 }

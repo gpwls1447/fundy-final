@@ -101,7 +101,7 @@
 						<div style="width: 80%;">
 							<span>후원자들에게 드릴 리워드 내용을 입력하세요.</span>
 						</div>
-						<button onclick="fn_addReward()" style="background-color: white; border: 0;">
+						<button id="add-reward-btn" onclick="fn_addReward()" style="background-color: white; border: 0;">
 							<div class="add-btn-area">
 								<div class="material-icons">add_circle
 								</div>

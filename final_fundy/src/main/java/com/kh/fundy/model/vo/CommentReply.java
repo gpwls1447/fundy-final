@@ -13,11 +13,13 @@ public class CommentReply {
 	private Timestamp commentReplyDelete;
 	
 	private String memberNick;
+	private String memberProfile;
 	
 	public CommentReply() {}
 
 	public CommentReply(int commentReplyNo, int commentNo, String memberEmail, String commentReplyContent,
-			Timestamp commentReplyDate, Timestamp commentReplyMod, Timestamp commentReplyDelete, String memberNick) {
+			Timestamp commentReplyDate, Timestamp commentReplyMod, Timestamp commentReplyDelete, String memberNick,
+			String memberProfile) {
 		super();
 		this.commentReplyNo = commentReplyNo;
 		this.commentNo = commentNo;
@@ -27,6 +29,7 @@ public class CommentReply {
 		this.commentReplyMod = commentReplyMod;
 		this.commentReplyDelete = commentReplyDelete;
 		this.memberNick = memberNick;
+		this.memberProfile = memberProfile;
 	}
 
 	public int getCommentReplyNo() {
@@ -91,6 +94,14 @@ public class CommentReply {
 
 	public void setMemberNick(String memberNick) {
 		this.memberNick = memberNick;
+	}
+
+	public String getMemberProfile() {
+		return memberProfile;
+	}
+
+	public void setMemberProfile(String memberProfile) {
+		this.memberProfile = memberProfile;
 	}
 	
 }
