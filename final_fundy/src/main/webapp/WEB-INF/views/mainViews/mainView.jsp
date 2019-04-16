@@ -148,9 +148,14 @@
         .proj-box
         {
             margin: 0 10px;
-            border-bottom: 1px solid rgb(224, 224, 224); 
-            padding-bottom: 30px;
+            border: 1px solid rgb(224, 224, 224); 
             cursor: pointer;
+            transition: 0.2s linear;
+        }
+        
+        .proj-box:hover
+        {
+         	box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.1);
         }
 
         .proj-box:first-of-type{margin-left: 0;}
@@ -158,17 +163,26 @@
 
         .proj-thumnail
         {
-            width:231px;
+            width: 100%;
             height:145px;
         }
+        
+        .proj-body
+        {
+        	padding: 15px;
+        	display: flex;
+        	flex-flow: column nowrap;
+        	justify-content: flex-end;
+        }
+        
 
         .proj-title
         {
+        	width: 199.250px;
             font-weight: bold;
-            margin-top: 5px;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             font-size: 16px;
-            white-space: wrap;
+            white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
         }
@@ -181,9 +195,10 @@
 
         .proj-creator
         {
-            font-size: 15px;
-            color: gray;
+            font-size: 14px;
+            color: #999;
             display: flex;
+            margin-bottom: 25px;
         }
 
         .proj-progbar-container
@@ -191,13 +206,17 @@
             display: flex; flex-flow: column;
             position: relative;
         }
+        
+        .progress
+        {
+        	margin: 10px 0;
+        }
 
         .progbar-empty
         {
             width: 100%;
             height: 3px;
             background-color: #bbb;
-            margin: 10px 0;
         }
 
         .progbar-filled
@@ -207,7 +226,6 @@
             width: 87%;
             height: 3px;
             background-color: var(--basic-color);
-            margin: 10px 0;
         }
 
         .progbar-info
@@ -221,6 +239,7 @@
             display: block;
             font-size: 13px;
         }
+        
         .proj-section-header-text-area {
         	width:25%;
         }

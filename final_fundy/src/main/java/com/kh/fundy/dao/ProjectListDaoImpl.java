@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.fundy.model.vo.FundingLog;
 import com.kh.fundy.model.vo.FundingOption;
+import com.kh.fundy.model.vo.MyDonation;
 import com.kh.fundy.model.vo.OptionDetail;
 import com.kh.fundy.model.vo.Project;
 
@@ -60,8 +61,8 @@ public class ProjectListDaoImpl implements ProjectListDao {
 	}
 
 	@Override
-	public List<Project> myDonationList(String memberEmail) {
-		return session.selectList("project.myDonationList", memberEmail);
+	public List<MyDonation> myDonationList(String memberEmail, int cPage, int numPerPage) {
+		return session.selectList("project.myDonationList", memberEmail, new RowBounds(((cPage-1)*numPerPage)+1, numPerPage));
 	}
 
 	@Override

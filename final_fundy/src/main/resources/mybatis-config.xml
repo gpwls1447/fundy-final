@@ -23,5 +23,6 @@
    		<typeAlias type="com.kh.fundy.model.vo.Like" alias="like"/>
    		<typeAlias type="com.kh.fundy.model.vo.Favorite" alias="favorite"/>
 		<typeAlias type="com.kh.fundy.model.vo.Message" alias="message"/>
+		<typeAlias type="com.kh.fundy.model.vo.MyDonation" alias="myDonation"/>
    </typeAliases>
 </configuration>

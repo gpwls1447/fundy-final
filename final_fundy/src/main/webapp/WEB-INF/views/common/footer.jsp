@@ -591,13 +591,13 @@
             </div>
         </div>
         <div class="user-modal-body">
-            <div class="user-menu-box myproject-btn">
+            <div class="user-menu-box myProject-btn">
                 <span class="bar vertical-bar"></span>
                 <span class="bar horizontal-bar"></span>
                 <i class="material-icons">work_outline</i>
                 <span class="user-menu-text">내프로젝트</span>
             </div>
-            <div class="user-menu-box donnorList-btn">
+            <div class="user-menu-box myDonation-btn">
                 <span class="bar horizontal-bar"></span>
                 <i class="material-icons">card_giftcard</i>
                 <span class="user-menu-text">후원내역</span>
@@ -769,33 +769,18 @@
    //모달 유저메뉴 링크 바인드
    	$(() => {
 		//로그아웃
-		$('.logout-btn').on("click", () => {
-        	location.href="${path}/member/LogOut.do";   
-		});
+		$('.logout-btn').on('click', () => {location.href='${path}/member/LogOut.do';});
 		//정보수정
-	    $('.memberUpdate-btn').on("click", ()=> {
-	        location.href="${path}/member/memberUpdateView.do";
-	    });
+	    $('.memberUpdate-btn').on('click', () => {location.href='${path}/member/memberUpdateView.do';});
+		//도네목록
+		$('.myDonation-btn').on('click', () => {location.href='${path}/myPage/myDonationList.do?memberEmail=${loggedMember.memberEmail}';});
 	    //찜바구니
-	    $('.favorite-btn').on("click", ()=> {
-	      	location.href="${path}/favorite/favoriteList.do";
-	   	});
+	    $('.favorite-btn').on("click", () => {location.href='${path}/favorite/favoriteList.do?memberEmail=${loggedMember.memberEmail}';});
 	   	//마이프로젝트
-	   	$('.myproject-btn').on('click', () => {
-	   		location.href='${path}/myproject/myprojectList.do?memberEmail=${loggedMember.memberEmail}';
-	   	});
+	   	$('.myProject-btn').on('click', () => {location.href='${path}/myPage/myProjectList.do?memberEmail=${loggedMember.memberEmail}';});
 	   	//메시지
-	    $('.message-btn').on("click", ()=> {
-	           location.href="${path}/messageMain.do?receiverEmail=${loggedMember.memberEmail}";
-	    });
+	    $('.message-btn').on("click", () => {location.href="${path}/messageMain.do?receiverEmail=${loggedMember.memberEmail}";});
    });
-   
- //찜바구니 기능
-   $(() => {
-      $('.favorite-btn').on("click", ()=> {
-         location.href="${path}/favorite/favoriteList.do";
-      })
-   })
 
     //패스워드 일치 확인
      $(function(){
@@ -829,7 +814,6 @@
          modalOverlay.toggle();
       });
    });
-   
    
    //로그인 회원가입 전환 기능
     $(document).ready(function() {

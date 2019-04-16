@@ -6,29 +6,29 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <style>
-	/* 마이페이지 시작 */
-	.memberupdate-header
+	.mypage-header
 	{
 	    width: 100%;
 	    display: flex;
 	    justify-content: center;
-	    font-size: 27px;
+	    font-size: 30px;
 	    font-weight: bold;
 	    margin: 30px 0;
 	}
 	
-	.memberupdate-nav
+	.mypage-nav
 	{
 	    width: 100%;
 	    display: flex;
 	    justify-content: center;
 	}
 	
-	.memberupdate-nav > div
+	.mypage-nav > div
 	{
 	    margin: 0 20px;
 	    font-size: 17px;
 	    position: relative;
+	    cursor: pointer;
 	}
 	
 	#divider
@@ -277,74 +277,79 @@
 		font-size: 45px;
 	}
 	
-	        .donation-list
-        {
-            width: 1005px;
-            display: flex;
-            flex-flow: column nowrap;
-            align-items: center;
-        }
-
-        .donation-list-header
-        {
-            width: 100%;
-            display:flex;
-            padding: 20px 0;
-            border-top: 1px solid #ccc;
-            border-bottom: 1px solid #ccc;
-            color: rgb(26, 87, 128);
-            box-sizing: border-box;
-        }
-
-        .donation-list-header > div
-        {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .donation-list-header > div:nth-of-type(1){flex: 2 1 0;}
-        .donation-list-header > div:nth-of-type(2){flex: 3 1 0;}
-        .donation-list-header > div:nth-of-type(3){flex: 1 1 0;}
-        .donation-list-header > div:nth-of-type(4){flex: 1 1 0;}
-        .donation-list-header > div:nth-of-type(5){flex: 2 1 0;}
-        .donation-list-header > div:nth-of-type(6){flex: 1 1 0;}
-
-        .donation-list-row
-        {
-            width: 100%;
-            display: flex;
-            border-bottom: 1px solid #ccc;
-            box-sizing: border-box;
-        }
-
-        .donation-list-row > div
-        {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .donation-list-row img
-        {
-            object-fit: fill;
-            width: 75%;
-            height: 75%;
-        }
-
-        .donation-list-row > div:nth-of-type(1){flex: 2 1 0;}
-        .donation-list-row > div:nth-of-type(2){flex: 3 1 0;}
-        .donation-list-row > div:nth-of-type(3){flex: 1 1 0;}
-        .donation-list-row > div:nth-of-type(4){flex: 1 1 0;}
-        .donation-list-row > div:nth-of-type(5){flex: 2 1 0;}
-        .donation-list-row > div:nth-of-type(6){flex: 1 1 0;}
+	.donation-list
+	{
+		width: 100%;
+	    display: flex;
+	    flex-flow: column nowrap;
+	    align-items: center;
+	    margin-bottom: 20px;
+	}
+	
+	.donation-list-header
+	{
+	    width: 100%;
+	    display:flex;
+	    border-top: 1px solid #ccc;
+	    border-bottom: 1px solid #ccc;
+	    color: rgb(26, 87, 128);
+	    padding: 20px 0;
+	    box-sizing: border-box;
+	}
+	
+	.donation-list-header > div
+	{
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	}
+	
+	.donation-list-header > div:nth-of-type(1){flex: 2 1 0;}
+	.donation-list-header > div:nth-of-type(2){flex: 3 1 0;}
+	.donation-list-header > div:nth-of-type(3){flex: 1 1 0;}
+	.donation-list-header > div:nth-of-type(4){flex: 1 1 0;}
+	.donation-list-header > div:nth-of-type(5){flex: 2 1 0;}
+	.donation-list-header > div:nth-of-type(6){flex: 1 1 0;}
+	
+	.donation-list-row
+	{
+	    width: 100%;
+	    display: flex;
+	    border-bottom: 1px solid #ccc;
+	    box-sizing: border-box;
+	}
+	
+	.donation-list-row > div
+	{
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	}
+	
+	.donation-list-row img
+	{
+	    object-fit: fill;
+	    width: 70%;
+	    height: 70%;
+	}
+	
+	.donation-list-row > div:nth-of-type(1){flex: 2 1 0;}
+	.donation-list-row > div:nth-of-type(2){flex: 3 1 0;}
+	.donation-list-row > div:nth-of-type(3){flex: 1 1 0;}
+	.donation-list-row > div:nth-of-type(4){flex: 1 1 0;}
+	.donation-list-row > div:nth-of-type(5){flex: 2 1 0;}
+	.donation-list-row > div:nth-of-type(6){flex: 1 1 0;}
 
 </style>    
     <section class="section">
-        <div class="memberupdate-header">마이페이지</div>
-        <div class="memberupdate-nav">
-            <div>내 프로젝트</div>
-            <div>내 후원내역<span class="indicator"></span></div>
+        <div class="mypage-header">마이페이지</div>
+        <div class="mypage-nav">
+            <div onclick="location.href='${path}/myPage/myProjectList.do?memberEmail=${loggedMember.memberEmail }'">
+            	내 프로젝트
+            </div>
+            <div onclick="location.href='${path}/myPage/myDonationList.do?memberEmail=${loggedMember.memberEmail }'">
+            	내 후원내역<span class="indicator"></span>
+            </div>
         </div>
         <hr id="divider" />
         <div class="mypage-body">
@@ -355,7 +360,7 @@
                 <span class="indicator-2"></span>
             </div>
             <div class="proj-list-wrapper">
-				<span class="project-count">총 ${fn:length(list) }건의 프로젝트가 있습니다.</span>
+				<span class="project-count">총 ${totalCount }건 후원하셨습니다.</span>
 				<div class="donation-list">
 			        <div class="donation-list-header">
 			            <div>프로젝트 사진</div>
@@ -365,36 +370,20 @@
 			            <div>기부일</div>
 			            <div>기부금액</div>
 			        </div>
+			       	<c:forEach items="${list }" var="list">
 			        <div class="donation-list-row">
 			            <div>
-			                <img src="images/thumnail_sample_0.jpg">
+			                <img src="${path}/resources/projectRepresent/${list.projectThumnail }">
 			            </div>
-			            <div>후라라라라라라</div>
-			            <div>진행중</div>
-			            <div>19/04/31</div>
-			            <div>19/05/03 12:00</div>
-			            <div>3,000 ￦</div>
+			            <div>${list.projectTitle }</div>
+			            <div>${list.projectStatName }</div>
+			            <fmt:formatDate value="${list.endDate }" var="endDate" pattern="yyyy/MM/dd"/>
+			            <div>${endDate }</div>
+			            <fmt:formatDate value="${list.funderDate}" var="funderDate" pattern="yyyy/MM/dd hh:mm"/>			            
+			            <div>${funderDate }</div>
+			            <div>${list.fundPrice * list.packageAmount + list.extraMoney}￦</div>
 			        </div>
-			        <div class="donation-list-row">
-			            <div>
-			                <img src="images/thumnail_sample_0.jpg">
-			            </div>
-			            <div>후라라라라라라</div>
-			            <div>진행중</div>
-			            <div>19/04/31</div>
-			            <div>19/05/03 12:00</div>
-			            <div>3,000 ￦</div>
-			        </div>
-			        <div class="donation-list-row">
-			            <div>
-			                <img src="images/thumnail_sample_0.jpg">
-			            </div>
-			            <div>후라라라라라라</div>
-			            <div>진행중</div>
-			            <div>19/04/31</div>
-			            <div>19/05/03 12:00</div>
-			            <div>3,000 ￦</div>
-			        </div>
+			       	</c:forEach>
 			    </div>
         		<c:if test="${fn:length(list) != 0}">
 				${pageBar }
@@ -402,4 +391,18 @@
             </div>
         </div>
     </section>
+<script>
+	/* 페이지 바 함수 */
+	const fn_paging = cPage => {
+		location.href='${path}//myPage/myDonationList.do?cPage='+cPage+'&memberEmail=${loggedMember.memberEmail}';
+	};
+	
+	//후원/펀딩 옵션 토글
+	const majorCategoryBtn = $('.major-category-toggle > div');
+    $(() => {
+        majorCategoryBtn.on('click', e => {
+            $('.indicator-2').css('top', e.currentTarget.offsetTop);
+        });
+    });
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

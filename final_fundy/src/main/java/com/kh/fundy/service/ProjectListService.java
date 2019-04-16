@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.kh.fundy.model.vo.FundingLog;
 import com.kh.fundy.model.vo.FundingOption;
+import com.kh.fundy.model.vo.MyDonation;
 import com.kh.fundy.model.vo.Project;
 
 public interface ProjectListService {
@@ -15,6 +16,6 @@ public interface ProjectListService {
 	List<FundingLog> selectFunderList(int projectNo);
 	List<FundingOption> selectFundingOptionList(int projectNo);
 	int myDonationCount(String memberEmail);
-	List<Project> myDonationList(String memberEmail);
+	List<MyDonation> myDonationList(String memberEmail, int cPage, int numPerPage);
 	int projectCount(String memberEmail);
 }
