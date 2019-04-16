@@ -159,29 +159,35 @@
                     <option value="">읽은 메시지</option>
                 </select>
             </div>
+             <c:set var="sendEmail" value=""/>
+            
             <c:forEach items="${list }" var="mg">
-            <div class="msg-unit">
-                <div class="thumnail-container">
-                    <img class="msg-thumnail" src="images/default_profile_1.png">
-                    <span class="unread-mark">
-                    <c:if test="${mg.hasRead==null }">
-                    	N
-                    </c:if>
-                    </span>
-                </div>
-                <div class="msg-body">
-                    <div class="msg-nick">${mg.senderEmail }</div>
-                <a href="${pageContext.request.contextPath}/messageView.do?senderEmail=${mg.senderEmail}">
-                    <div class="proj-title">${mg.projectTitle }</div>
-                </a>
-                    <div class="msg-content">${mg.messageContent }</div>
-                </div>
-                <div class="msg-date">
-                <fmt:formatDate value="${mg.messageDate }" pattern="yyyy/MM/dd hh:mm"/>
-                </div>
-            </div>
+            <c:if test="${mg.senderEmail != sendEmail}">
+            <c:set var="sendEmail" value="${mg.senderEmail}"/>
+	            <div class="msg-unit">
+	                <div class="thumnail-container">
+	                    <img class="msg-thumnail" src="images/default_profile_1.png">
+	                    <span class="unread-mark">
+	                    <c:if test="${mg.hasRead==null }">
+	                    	N
+	                    </c:if>
+	                    </span>
+	                </div>
+	                <div class="msg-body">
+	                    <div class="msg-nick">${mg.senderEmail }</div>
+	                <a href="${pageContext.request.contextPath}/messageView.do?senderEmail=${mg.senderEmail}&receiverEmail=${loggedMember.memberEmail}">
+	                    <div class="proj-title">${mg.projectTitle }</div>
+	                </a>
+	                    <div class="msg-content">${mg.messageContent }</div>
+	                </div>
+	                <div class="msg-date">
+	                <fmt:formatDate value="${mg.messageDate }" pattern="yyyy/MM/dd hh:mm"/>
+	                </div>
+	            </div>
+            </c:if>
+
             </c:forEach>
-       
+
           
         </div>
 

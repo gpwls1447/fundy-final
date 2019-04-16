@@ -1,5 +1,6 @@
 package com.kh.fundy.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,30 @@ public class MessagController {
 		return mv;
 	}
 	
+	//메세지 상세보기
+	@RequestMapping("/messageView.do")
+	public ModelAndView messageView(String senderEmail,String receiverEmail,Message ms)
+	{
+		
+		ModelAndView mv=new ModelAndView();
+		ms.setReceiverEmail(receiverEmail);
+		ms.setSenderEmail(senderEmail);
+		List<Message> reList=service.reMessageList(ms);
+		List<Message> seList=service.seMessageList(ms);
+		System.out.println(reList);
+		System.out.println(seList);
+	
+		List<Message> allList=new ArrayList<Message>();
+		allList.addAll(seList);
+		allList.addAll(reList);
+		System.out.println(allList);
+		mv.addObject("allList",allList);
+		mv.addObject("reList",reList);
+		mv.addObject("seList",seList);
+		mv.setViewName("/message/messageView");
+		return mv;
+	}
+	
 	//관리자메세지 리스트로 보내기
 	@RequestMapping("/adminMessage.do")
 	public ModelAndView adminMessage()
@@ -50,16 +75,7 @@ public class MessagController {
 		return mv;
 	}
 	
-	//메세지 상세보기
-	@RequestMapping("/messageView.do")
-	public ModelAndView messageView()
-	{
-		ModelAndView mv=new ModelAndView();
-		
-		
-		mv.setViewName("/message/messageView");
-		return mv;
-	}
+
 	
 	//관리자 메세지 상세보기
 		@RequestMapping("/adminMessageView.do")
