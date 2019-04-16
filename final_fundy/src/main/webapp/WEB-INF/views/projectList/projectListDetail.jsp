@@ -407,7 +407,7 @@
                 <div class="proj-period">펀딩기간<span class="divider-2">|</span><span><fmt:formatDate value="${project.beginDate }" pattern="yyyy.MM.dd"/> - <fmt:formatDate value="${project.endDate }" pattern="yyyy.MM.dd"/></span></div>
                 <div class="goal-money">목표금액<span class="divider-2">|</span><span>${project.goalPrice } 원</span></div>
                 <div class="proj-main-btn-box">
-                    <button class="basic-btn basic-btn-active btn-modify ripple" >후원하기</button>
+                    <button class="basic-btn basic-btn-active btn-modify ripple" onclick="location.href='${path}/pay/optionSelect.do?projectNo=${project.projectNo }';">후원하기</button>
                     <button class="basic-btn ripple btn-modify ${project.favorited == 1 ? 'favorited' : ''}" onclick="favorite();" id="favoriteBtn"><i class="material-icons favorite">${project.favorited == 1 ? 'favorite' : 'favorite_border'}</i><span style="font-size:17px; line-height:10px;">&nbsp;찜하기</span></button>
                 </div>
             </div>
@@ -551,6 +551,6 @@
     		});
     	}
     }
-    
+
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

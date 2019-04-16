@@ -14,4 +14,6 @@ public interface FavoriteDao {
 
 	int deleteFavorite(Favorite f);
 
+	int deleteFavoriteList(Favorite f);
+
 }

@@ -1,7 +1,8 @@
 package com.kh.fundy.controller;
 
-import java.util.HashMap;
+import static com.kh.fundy.common.PageBarTemplate.getPageBar;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -19,9 +21,7 @@ import com.kh.fundy.model.vo.Favorite;
 import com.kh.fundy.model.vo.Member;
 import com.kh.fundy.model.vo.Project;
 import com.kh.fundy.service.FavoriteService;
-import com.kh.fundy.service.ProjectListService;
-
-import static com.kh.fundy.common.PageBarTemplate.getPageBar; 
+import com.kh.fundy.service.ProjectListService; 
 
 @SessionAttributes(value= {"loggedMember"})
 @Controller
@@ -80,6 +80,19 @@ public class FavoriteController {
 		
 		mv.addObject("result", result);
 		mv.setViewName("jsonView");
+		return mv;
+	}
+	
+	//찜바구니에서 X버튼 눌러서 제거하기
+	@RequestMapping("/favorite/deleteFavoriteList.do")
+	public ModelAndView deleteFavoriteList(Favorite f, Model model) {
+		
+		ModelAndView mv = new ModelAndView();
+		int result = fService.deleteFavoriteList(f);
+		
+		mv.addObject("result", result);
+		mv.setViewName("jsonView");
+		
 		return mv;
 	}
 	
