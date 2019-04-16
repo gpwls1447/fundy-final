@@ -21,7 +21,7 @@
 									join midcategory using(midcode) 
 									join majorcategory using(majorcode)
 									join member using(memberemail)
-							        left outer join (select FUNDINGOPTION.PROJECTNO, sum(nvl(fundprice,0)*nvl(packageamount,0)) + sum(nvl(extramoney,0)) as reach, count(fundinglogno) as funderno
+							        left outer join (select FUNDINGOPTION.PROJECTNO, TO_CHAR( (sum(nvl(fundprice,0)*nvl(packageamount,0)) + sum(nvl(extramoney,0))) , '999,999,999,999,999') as reach, count(fundinglogno) as funderno
 							                from FUNDINGLOG 
 							                right outer join fundingoption on fundinglog.projectno=fundingoption.projectno group by FUNDINGOPTION.PROJECTNO)
 							            using(projectno)

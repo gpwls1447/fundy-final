@@ -228,6 +228,15 @@ public class ProjectWriteController {
         	
         	List<Category> midList = service.selectMidCategorys(majorCategory);
         	List<Category> list = service.selectMinorCategorys(majorCategory);
+        	List<String> bankList = new ArrayList<String>();
+        	bankList.add("국민은행");
+        	bankList.add("NH농협은행");
+        	bankList.add("우리은행");
+        	bankList.add("신한은행");
+        	bankList.add("KEB하나은행");
+        	bankList.add("카카오뱅크");
+        	
+        	mv.addObject("bankList", bankList);
         	mv.addObject("midCategoryList", midList);
         	mv.addObject("minorCategoryList", list);
         	mv.addObject("projectNo", projectNo);
@@ -276,6 +285,7 @@ public class ProjectWriteController {
             	List<Map<String,Object>> products = new ArrayList<Map<String,Object>>();
             	products = JSONArray.fromObject(rewardsMap.get(i).get("products"));
             	for(int j=0; j<products.size(); j++) {
+            		System.out.println(products.get(j).toString());
             		service.insertOptionDetail(products.get(j));
             	}
         	}

@@ -71,7 +71,7 @@ public class MainConroller {
 		List<Map<String, Object>> projectListCtg = service.selectProjectList(ctgMap);
 		model.addAttribute("projectListCtg", projectListCtg);
 		
-		mv.setViewName("mainViews/projMainFrame");
+		mv.setViewName("mainViews/popFrame");
 		
 		return mv;
 	}

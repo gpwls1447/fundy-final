@@ -4,26 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="path" value="${pageContext.request.contextPath }" />
-<c:choose>
-	<c:when test="${param.cho == null }">
-		<c:set var="list" value="${projectListCtg}"></c:set>
-	</c:when>
-	<c:otherwise>
-		 <c:choose>
-			<c:when test="${param.cho == 'pop' }">
-				<c:set var="list" value="${projectListCtg}"></c:set>
-			</c:when>
-			<c:when test="${param.cho == 'new' }">
-				<c:set var="list" value="${newProjectList}"></c:set>
-			</c:when>
-			<c:when test="${param.cho == 'soon' }">
-				<c:set var="list" value="${soonProjectList}"></c:set>
-			</c:when>
-		</c:choose>
-	</c:otherwise>
-</c:choose>
-
-<c:forEach items="${list }" var="proj">
+<c:forEach items="${projectListCtg}" var="proj">
 <div class="proj-box" onclick="fn_seeProjectView('${proj.PROJECTNO}')">
 	<img class="proj-thumnail" src="${path }/resources/projectRepresent/${proj.PROJECTTHUMNAIL}" alt="">
 	<div class="proj-body">

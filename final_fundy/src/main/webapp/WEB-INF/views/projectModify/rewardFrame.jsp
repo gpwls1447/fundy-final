@@ -66,15 +66,7 @@
 				</button>
 			</div>
 		</div>
-	</div><!-- 
-	<div class="reward-detail-container">
-		<div>
-			<span>선물 설명</span>
-		</div>
-		<div>
-			<input type="text" class="form-control inputLong rewardContent" id="" placeholder="예) 배송비 포함, 얼리버드, (선물세트 A) 등" />
-		</div>
-	</div> -->
+	</div>
 	<div class="reward-deli-container">
 		<div>
 			<span>예상 발송일</span>
@@ -84,15 +76,6 @@
 			<input type="text" class="form-control inputDay deliveryPicker rewardDeli" onchange="calDeliDays(0)" /> 에 리워드를 전달하겠습니다.
 		</div>
 	</div>
-	<!-- <div class="reward-isdeli-container">
-		<span>배송 여부</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-		<form name='selDeliFrm' class="selDeliFrmC">
-			<input id="isDeli" type="radio" class="isDeli selDeli" name="selDeli" value="" />
-			<label for="isDeli" class="isDeliLa">배송하는 상품입니다.</label>
-			<input id="isNotDeli" type="radio" class="isNotDeli selDeli" name="selDeli" value="" />
-			<label for="isNotDeli" class="isDeliNotLa">배송하지않는 상품입니다.</label>
-		</form>
-	</div> -->
 	<div class="reward-delete-container">
 		<button onclick="fn_removeReward(0)" class="reward-delete-button remove-btn">
 			<div class="remove-btn-area">
