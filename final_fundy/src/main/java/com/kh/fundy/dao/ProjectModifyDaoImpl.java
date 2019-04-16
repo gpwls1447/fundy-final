@@ -23,7 +23,13 @@ public class ProjectModifyDaoImpl implements ProjectModifyDao {
 	}
 	
 	@Override
-	public List<Map<String, Object>> selectOptionDetail(int projectNo) {
-		return session.selectList("projectModify.selectOptionDetail", projectNo);
+	public List<Map<String, Object>> selectOptionDetail(Object packageNum) {
+		int packageNo = Integer.parseInt((String.valueOf(packageNum)));
+		return session.selectList("projectModify.selectOptionDetail", packageNo);
+	}
+	
+	@Override
+	public String selectMajorCode(String minorCode) {
+		return session.selectOne("projectModify.selectMajorCode", minorCode);
 	}
 }

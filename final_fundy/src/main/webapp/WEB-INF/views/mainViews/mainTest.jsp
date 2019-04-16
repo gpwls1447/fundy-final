@@ -129,6 +129,7 @@
 
         .proj-section-header
         {
+        	display:flex;
             padding: 30px 10px 20px 10px;
             font-size: 21px;
             color: var(--basic-color);
@@ -220,6 +221,22 @@
             display: block;
             font-size: 13px;
         }
+        .proj-section-header-text-area {
+        	width:25%;
+        }
+        .proj-section-header-pagination-area {
+        	width:75%;
+        }
+        div.proj-section-header-pagination-area a.paging {
+        	padding-left: 12px;
+        	padding-right: 12px;
+        	color:black;
+        }
+        div.proj-section-header-pagination-area span.paging {
+        	padding-left: 12px;
+        	padding-right: 12px;
+        	color:black;
+        }
 </style>
 <script>
 $(function () {
@@ -243,6 +260,10 @@ function fn_loadedList(midCode, majorCode) {
 function fn_seeProjectView(projectNo) {
 	location.href="${path}/projectList/projectListDetail.do?projectNo=" + projectNo;
 }
+
+function fn_paging(condition) {
+	console.log($(event.target).parent().parent().parent().children($('.cPage')));
+};
 </script>
 <section class="section">
 	<div class="main-slide-header">
@@ -269,7 +290,9 @@ function fn_seeProjectView(projectNo) {
             </div>
         </div>
         <div class="proj-section-wrapper popular-proj">
-            <div class="proj-section-header">카테고리별 인기 프로젝트</div>
+            <div class="proj-section-header">
+            	<div>카테고리별 인기 프로젝트</div>
+            </div>
             <div class="popular-nav">
             	<c:forEach items="${midCList}" var="mc" varStatus="vs">
                 	<c:if test="${mc.majorCode eq majorCode }">
@@ -278,26 +301,20 @@ function fn_seeProjectView(projectNo) {
 				</c:forEach>
             </div>
 			<div class="proj-container ctg-populerList">
-			<c:import url="projMainFrame.jsp">
+			<c:import url="popFrame.jsp">
 				<c:param name="cho" value="pop"></c:param>
 			</c:import>
 			</div>
         </div>
         <div class="proj-section-wrapper">
-            <div class="proj-section-header">새 프로젝트</div>
-            <div class="proj-container">
-	            <c:import url="projMainFrame.jsp">
-					<c:param name="cho" value="new"></c:param>
-				</c:import>
-            </div>
+			<c:import url="frame.jsp">
+				<c:param name="cho" value="new"></c:param>
+			</c:import>
         </div>
         <div class="proj-section-wrapper">
-            <div class="proj-section-header">임박 프로젝트</div>
-            <div class="proj-container">
-                <c:import url="projMainFrame.jsp">
-					<c:param name="cho" value="soon"></c:param>
-				</c:import>
-            </div>
+			<c:import url="frame.jsp">
+				<c:param name="cho" value="soon"></c:param>
+			</c:import>
         </div>
 </section>
 <div id='viewLoading' class="spinner-border" style="width:150px; height:150px; position: fixed; top: 250px;"></div>

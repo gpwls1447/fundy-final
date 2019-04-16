@@ -98,14 +98,7 @@
 		///////////////////////////////////////////////////////
 		/* 목표금액 입력시 수수료 계산및 공제금액과 실제 프로젝트창작자에게 들어가는 금액 계산 */
 		$("#_goalPrice").keyup(function () {
-			var goalPrice = Number(removeCommas($("#_goalPrice").val().replace(/[^0-9]/g,"")));
-			var payfee = Number($("#payfee").val());
-			var platfee = Number($("#platfee").val());
-			realGoal = goalPrice - (goalPrice*payfee) - (goalPrice*platfee);
-			$("#pay-fee-cal").text((Math.round(goalPrice*payfee)).toLocaleString());
-			$("#plat-fee-cal").text((Math.round(goalPrice*platfee)).toLocaleString());
-			$("#total-fee").text((Math.round(goalPrice*payfee + goalPrice*platfee)).toLocaleString());
-			$("#actually-goal-price").text((goalPrice - Math.round(goalPrice*payfee + goalPrice*platfee)).toLocaleString());
+			goalPriceComma();
 		});
 		/* 목표금액 입력시 콤마추가 */
 		$(".inputMoney").on("keyup", function() {
@@ -136,7 +129,11 @@
 			//자동결제 종료일 출력
 			payEndDate($("#_endDate").val());
 		});
-		
+		var today = formatDate(new Date());
+		$("#seeEndDays").val(dateDiff($("#_endDate").val(), today));
+		$(".deliveryPicker").datepicker( "option", "minDate", payEndDate($("#_endDate").val()) );
+		//자동결제 종료일 출력
+		payEndDate($("#_endDate").val());
 		
 		
 		///////////////////////////////////////////////////////
@@ -307,6 +304,21 @@
 			
 			$("#viewLoading").fadeOut(500);
 		}
+		
+		/* 목표금액 콤마변환 함수 */
+		function goalPriceComma() {
+			/* 목표금액 콤마변환 */
+			var goalPrice = Number(removeCommas($("#_goalPrice").val().replace(/[^0-9]/g,"")));
+			var payfee = Number($("#payfee").val());
+			var platfee = Number($("#platfee").val());
+			realGoal = goalPrice - (goalPrice*payfee) - (goalPrice*platfee);
+			$("#pay-fee-cal").text((Math.round(goalPrice*payfee)).toLocaleString());
+			$("#plat-fee-cal").text((Math.round(goalPrice*platfee)).toLocaleString());
+			$("#total-fee").text((Math.round(goalPrice*payfee + goalPrice*platfee)).toLocaleString());
+			$("#actually-goal-price").text((goalPrice - Math.round(goalPrice*payfee + goalPrice*platfee)).toLocaleString());
+		}
+		goalPriceComma();
+		$("#_goalPrice").val(addCommas($("#_goalPrice").val().replace(/[^0-9]/g,"")));
 		
 		///////////////////////////////////////////////////////////
 		/* 프로젝트 대표이미지 */

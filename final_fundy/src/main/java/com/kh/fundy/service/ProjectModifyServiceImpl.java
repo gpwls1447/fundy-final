@@ -24,7 +24,12 @@ public class ProjectModifyServiceImpl implements ProjectModifyService {
 	}
 	
 	@Override
-	public List<Map<String, Object>> selectOptionDetail(int projectNo) {
-		return dao.selectOptionDetail(projectNo);
+	public List<Map<String, Object>> selectOptionDetail(Object packageNo) {
+		return dao.selectOptionDetail(packageNo);
+	}
+
+	@Override
+	public String selectMajorCode(String minorCode) {
+		return dao.selectMajorCode(minorCode);
 	}
 }

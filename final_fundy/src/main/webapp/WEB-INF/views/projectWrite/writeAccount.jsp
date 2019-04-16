@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<c:set var="path" value="${pageContext.request.contextPath }" />
 		<!-- 신청서영역 -->
 		
 			<div class="write-section">
@@ -20,7 +23,7 @@
 							<input type="tel" class="form-control input25Per" id="_projectTelE" min="0000" max="9999" maxlength="4" oninput="maxLengthCheck(this)" />
 						</div>
 						<div>
-							<button class="btn btn-primary" style="background-color: #126196; border: 0px;">인증 문자 받기</button>
+							<!-- <button class="btn btn-primary" style="background-color: #126196; border: 0px;">인증 문자 받기</button> -->
 						</div>
 					</div>
 				</div>
@@ -60,11 +63,11 @@
 									<span>거래은행</span>
 								</div>
 								<div class="content-row">
-									<select class="form-control inputShort" id="_bank">
+									<select class="form-control" id="_bank" style="display:inline-block; width:156px;">
 										<option disabled="disabled" selected="selected" value="">은행</option>
-										<option class="" value="bankA">은행A</option>
-										<option class="" value="bankB">은행B</option>
-										<option class="" value="bankC">은행C</option>
+										<c:forEach items="${bankList }" var="bank">
+											<option class="" value="${bank }">${bank }</option>
+										</c:forEach>
 									</select>
 								</div>
 							</div>

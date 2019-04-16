@@ -9,6 +9,14 @@ select#_subCode option.subCtgs {
 	display: none;
 }
 </style>	
+<script>
+$(function() {
+	var mainCtg = $("#_mainCtg").val();	//중분류 카테고리 코드값 가져오기
+	mainCtg = "." + mainCtg;	//중분류 카테고리 선택자로 초기화
+	$(".subCtgs").css("display", "none");	//소분류 카테고리 display 설정 none
+	$(mainCtg).css("display", "block");	//(중분류 카테고리 코드값을 클래스로가지는 소분류카테고리) display 설정
+})
+</script>
 			<div class="write-section">
 				<div class="write-category">
 					<span>카테고리 설정</span>
@@ -17,16 +25,16 @@ select#_subCode option.subCtgs {
 					<div>카테고리를 설정해주세요.</div>
 					<div>
 						<select class="form-control inputShort" id="_mainCtg">
-							<option disabled="disabled" selected="selected">중분류 카테고리</option>
-							<c:forEach var="midCtg" items="${midCategoryList }" varStatus="status">
-								<option id="${midCtg.getMidCode() }" value="${midCtg.getMidCode() }">${midCtg.getMidName() }</option>
+							<option disabled="disabled" <c:if test="${project.MIDCODE == null }">selected="selected"</c:if> >중분류 카테고리</option>
+							<c:forEach var="midCtg" items="${midList }" varStatus="status">
+								<option class="midCtgs" id="${midCtg.getMidCode() }" value="${midCtg.getMidCode() }" <c:if test="${project.MIDCODE == midCtg.getMidCode() }">selected="selected"</c:if> >${midCtg.getMidName() }</option>
 							</c:forEach>
 						</select>
 						&nbsp;&nbsp;&nbsp;
 						<select class="form-control inputShort" id="_subCode">
-							<option id="subCtgs" disabled="disabled" selected="selected" value="">소분류 카테고리</option>
-							<c:forEach var="minorCtg" items="${minorCategoryList }" varStatus="status">
-								<option class="subCtgs ${minorCtg.getMidCode() }" value="${minorCtg.getMinorCode() }">${minorCtg.getMinorName() }</option>
+							<option id="subCtgs" disabled="disabled" <c:if test="${project.MINORCODE == null }">selected="selected"</c:if> value="">소분류 카테고리</option>
+							<c:forEach var="minorCtg" items="${minorList }" varStatus="status">
+								<option class="subCtgs ${minorCtg.getMidCode() }" value="${minorCtg.getMinorCode() }" <c:if test="${project.MINORCODE == minorCtg.getMinorCode() }">selected="selected"</c:if> >${minorCtg.getMinorName() }</option>
 							</c:forEach>
 						</select>
 					</div>
@@ -97,7 +105,7 @@ select#_subCode option.subCtgs {
 						프로젝트를 진행하는 창작자 이름을 적어주세요. 팀이 있으시다면 팀명으로 적어주셔도 됩니다.
 					</div>
 					<div>
-						<input type="text" value="${creator.getMemberNick() }"
+						<input type="text" value="${project.MEMBERNICK }"
 						 class="form-control" id="_memberNick" maxlength="20" placeholder="내용을 입력해주세요." style="display: inline-block; width: 97.5%;" />
 					</div>
 				</div>
@@ -113,8 +121,8 @@ select#_subCode option.subCtgs {
 					</div>
 					<div class="creator-profile-img">
 						<c:choose>
-							<c:when test="${creator.memberProfile != null }">
-								<img id="profile-image" alt="" onclick="fn_uploadProfile()" src="${path }/resources/memberProfile/${creator.memberProfile }" width="100%" height="100%">
+							<c:when test="${project.MEMBERPROFILE != null }">
+								<img id="profile-image" alt="" onclick="fn_uploadProfile()" src="${path }/resources/memberProfile/${project.MEMBERPROFILE }" width="100%" height="100%">
 							</c:when>
 							<c:otherwise>
 								<img id="profile-image" alt="" onclick="fn_uploadProfile()" src="${path }/resources/images/user_icon.png" width="100%" height="100%">
@@ -124,7 +132,7 @@ select#_subCode option.subCtgs {
 							<form id="FILE_FORM-PROFILE" method="post" enctype="multipart/form-data">
 								<input type="file" name="memberProfile" id="_memberProfile" />
 							</form>
-							<input type="hidden" id="memberProfileCk" value="" />
+							<input type="hidden" id="memberProfileCk" value="${project.MEMBERPROFILE }" />
 						</div>
 					</div>
 				</div>

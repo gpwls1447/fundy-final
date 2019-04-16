@@ -6,5 +6,6 @@ import java.util.Map;
 public interface ProjectModifyService {
 	Map<String, Object> selectProject(int projectNo);
 	List<Map<String, Object>> selectFundingOption(int projectNo);
-	List<Map<String, Object>> selectOptionDetail(int projectNo);
+	List<Map<String, Object>> selectOptionDetail(Object packageNo);
+	String selectMajorCode(String minorCode);
 }
