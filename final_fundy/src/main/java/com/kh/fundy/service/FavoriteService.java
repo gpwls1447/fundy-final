@@ -15,4 +15,6 @@ public interface FavoriteService {
 
 	int deleteFavorite(Favorite f);
 
+	int deleteFavoriteList(Favorite f);
+
 }

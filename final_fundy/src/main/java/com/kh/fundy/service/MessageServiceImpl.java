@@ -19,6 +19,19 @@ public class MessageServiceImpl implements MessageService {
 	public List<Message> messageList(String receiverEmail) {
 		return dao.messageList(receiverEmail);
 	}
+
+	//받은메세지 불러오기
+	@Override
+	public List<Message> reMessageList(Message ms) {
+		return dao.reMessageList(ms);
+	}
+
+	//보낸메세지 불러오기
+	@Override
+	public List<Message> seMessageList(Message ms) {
+		return dao.seMessageList(ms);
+	}
+	
 	
 	
 	

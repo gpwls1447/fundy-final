@@ -51,6 +51,13 @@ public class FavoriteServiceImpl implements FavoriteService {
 	public int deleteFavorite(Favorite f) {
 		return dao.deleteFavorite(f);
 	}
+
+	@Override
+	public int deleteFavoriteList(Favorite f) {
+		return dao.deleteFavoriteList(f);
+	}
+	
+	
 	
 	
 	

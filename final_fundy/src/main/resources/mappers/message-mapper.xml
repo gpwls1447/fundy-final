@@ -2,7 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="message">
   
+  <!-- 메세지 리스트 불러오기 -->
   <select id="messageList" resultType="message">
-  Select * from message m join project p on m.projectno=p.projectno where receiveremail = #{receiverEmail} order by messageDate desc
+  select * from message m join project p on m.projectno=p.projectno where senderemail in (select memberemail from member) and receiveremail = #{receiverEmail} order by messagedate desc
+  </select>
+  
+  <!-- 받은메세지 불러오기 -->
+  <select id="reMessageList" resultType="message">
+  Select * from message m join project p on m.projectno=p.projectno where senderemail = #{senderEmail} and receiveremail = #{receiverEmail} order by messagedate asc
+  </select>
+  
+  <!-- 보낸메세지 불러오기 -->
+  <select id="seMessageList" resultType="message">
+  Select * from message m join project p on m.projectno=p.projectno where senderemail = #{receiverEmail} and receiveremail = #{senderEmail} order by messagedate asc
   </select>
 </mapper>

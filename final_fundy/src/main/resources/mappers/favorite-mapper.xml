@@ -16,5 +16,9 @@
 	<delete id="deleteFavorite" parameterType="favorite">
 		delete from favorite where memberEmail=#{memberEmail} and projectNo=#{projectNo}
 	</delete>
+	
+	<delete id="deleteFavoriteList" parameterType="favorite">
+		delete from favorite where projectNo=#{projectNo}
+	</delete>
 
 </mapper>

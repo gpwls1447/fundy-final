@@ -34,6 +34,13 @@ public class FavoriteDaoImpl implements FavoriteDao {
 	public int deleteFavorite(Favorite f) {
 		return session.delete("favorite.deleteFavorite", f);
 	}
+
+	@Override
+	public int deleteFavoriteList(Favorite f) {
+		return session.delete("favorite.deleteFavoriteList", f);
+	}
+	
+	
 	
 	
 	

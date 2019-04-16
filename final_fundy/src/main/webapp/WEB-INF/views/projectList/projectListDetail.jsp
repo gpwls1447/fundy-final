@@ -407,7 +407,7 @@
                 <div class="proj-period">펀딩기간<span class="divider-2">|</span><span><fmt:formatDate value="${project.beginDate }" pattern="yyyy.MM.dd"/> - <fmt:formatDate value="${project.endDate }" pattern="yyyy.MM.dd"/></span></div>
                 <div class="goal-money">목표금액<span class="divider-2">|</span><span>${project.goalPrice } 원</span></div>
                 <div class="proj-main-btn-box">
-                    <button class="basic-btn basic-btn-active btn-modify ripple" >후원하기</button>
+                    <button class="basic-btn basic-btn-active btn-modify ripple" onclick="location.href='${path}/pay/optionSelect.do?projectNo=${project.projectNo }';">후원하기</button>
                     <button class="basic-btn ripple btn-modify ${project.favorited == 1 ? 'favorited' : ''}" onclick="favorite();" id="favoriteBtn"><i class="material-icons favorite">${project.favorited == 1 ? 'favorite' : 'favorite_border'}</i><span style="font-size:17px; line-height:10px;">&nbsp;찜하기</span></button>
                 </div>
             </div>
@@ -425,8 +425,6 @@
         </div>
         <div class="proj-detail-bottom">
             <div class="proj-detail-bottom-left">
-    
-    		${project.projectContent }
    			${project.favorited } 
             </div>
             <div class="proj-detail-bottom-right">
@@ -519,12 +517,12 @@
     
   //찜바구니 추가 및 제거
     function favorite(){
-    	var favoriteText = $('.favorite').text(); 
+    	const favoriteText = $('.favorite').text(); 
+    	const favoriteBtn = $('#favoriteBtn');
     	
     	//찜바구니에 추가하려고 할때
     	if(favoriteText=='favorite_border'){
     		$('.favorite').text('favorite');
-    		$('#favoriteBtn')
     	
 			$.ajax({
 				url:'${path}/projectList/insert_favorite',
@@ -532,14 +530,13 @@
 				data:{'memberEmail':'${loggedMember.memberEmail}', 'projectNo':'${project.projectNo}'},
 				success:function(data){
 					alert('찜바구니에 등록되었습니다.');
+					favoriteBtn.toggleClass('favorited');
 				}
 			});
     	}
-    	
     	//찜바구니에서 빼려고 할때
     	else {
     		$('.favorite').text('favorite_border');
-    		$('#favoriteBtn')
     		
     		$.ajax({
     			url:'${path}/projectList/delete_favorite',
@@ -547,10 +544,11 @@
     			data:{'memberEmail':'${loggedMember.memberEmail}', 'projectNo':'${project.projectNo}'},
     			success:function(data){
     				alert('찜바구니에서 제거되었습니다.');
+    				favoriteBtn.toggleClass('favorited');
     			}
     		});
     	}
     }
-    
+
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
