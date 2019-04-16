@@ -408,7 +408,35 @@
 			$("#viewLoading").fadeOut(500);
 			
 			$("#preview-modal").modal();
-		})
+		});
+		
+		
+		/* 메일 인증 및 키입력감지 */
+		$("#projectEmailAuth").keyup(function() {
+			$("#_projectEmail").val("");
+			$(".auth-btn").removeClass("disabled");
+			$("#auth-btn-text").text("인증 메일 받기")
+			$(".authMessage").css("color", "orange");
+			$(".authMessage").text("인증번호를 입력해주세요.");
+			fn_loadedWriteData();
+		});
+		
+		$("#email-auth-input").keyup(function() {
+			var authKey = $("#email-auth-input").val();
+			$.ajax({
+		       url:"${path}/project/authKey.do?projectNo=${projectNo}",
+		       dataType:"text",
+		       data:{"authKey":authKey},
+		       success:function(data){
+		    	   if(data == "true"){
+		    		   console.log(data);
+		    		   $("#_projectEmail").val($("#projectEmailAuth").val().trim());
+		    		   $(".authMessage").css("color", "green");
+		    		   $(".authMessage").text("인증되었습니다.");
+		    	   }
+		       }
+		    });
+		});
 	});
 	
 	
