@@ -578,7 +578,7 @@
             </div>
             <div class="header-last user-btn" >
                 	<c:if test="${loggedMember.kakaoId==null }">
-                		<img src="${path }/resources/memberProfile/${loggedMember.memberProfile}">
+                		<img src="${path }/resources/memberProfile/${loggedMember.memberProfile}" >
                 	</c:if>
  					<c:if test="${loggedMember.kakaoId!=null }">               	
                 		<img src="${loggedMember.memberProfile}" style="width: 100px; height: 100px;">
@@ -788,9 +788,6 @@
 	    });
    });
    
-   
-<<<<<<< HEAD
-=======
  //찜바구니 기능
    $(() => {
       $('.favorite-btn').on("click", ()=> {
@@ -798,7 +795,6 @@
       })
    })
 
->>>>>>> branch 'feature_kyo' of https://github.com/jwj3955/fundy-final.git
     //패스워드 일치 확인
      $(function(){
         $("#password-ck").blur(function(){
