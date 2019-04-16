@@ -10,7 +10,7 @@
 	</select>
 	
 	<insert id="insertFavorite" parameterType="favorite">
-		insert into favorite values(#{memberEmail}, #{projectNo}, favoriteno_seq.nextval)
+		insert into favorite values(favorite_seq.nextval, #{memberEmail}, #{projectNo})
 	</insert>
 	
 	<delete id="deleteFavorite" parameterType="favorite">
@@ -20,5 +20,4 @@
 	<delete id="deleteFavoriteList" parameterType="favorite">
 		delete from favorite where projectNo=#{projectNo}
 	</delete>
-
 </mapper>

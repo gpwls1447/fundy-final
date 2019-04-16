@@ -55,8 +55,18 @@ public class ProjectListDaoImpl implements ProjectListDao {
 	}
 
 	@Override
-	public int memberDelete(String memberEmail) {
-		return session.selectOne("project.memberDelete", memberEmail);
+	public int myDonationCount(String memberEmail) {
+		return session.selectOne("project.myDonationCount", memberEmail);
+	}
+
+	@Override
+	public List<Project> myDonationList(String memberEmail) {
+		return session.selectList("project.myDonationList", memberEmail);
+	}
+
+	@Override
+	public int projectCount(String memberEmail) {
+		return session.selectOne("project.projectCount", memberEmail);
 	}
 	
 }

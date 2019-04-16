@@ -1,6 +1,8 @@
 package com.kh.fundy.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,13 +25,18 @@ public class AdminMemberController {
 	private MemberUpdateService mService;
 	
 	@RequestMapping("/admin/memberListView.do")
-	public ModelAndView memberListView(Member m) {
-		
+	public ModelAndView memberListView(String orderby) {
+		System.out.println("orderby : "+orderby);
 		ModelAndView mv = new ModelAndView();
-		List<Member> list = amService.memberListView(m);
+		Map<String, String> map = new HashMap<>();
+		map.put("orderby", orderby);
+		
+		List<Member> list = amService.memberListView(map);
+		
 		
 		mv.addObject("list", list);
 		mv.setViewName("admin/memberList");
+		mv.addObject("map", map);
 		return mv;
 		
 	}

@@ -386,7 +386,7 @@
                 </div>
             </div>
             <c:forEach items="${allList }" var="al">
-            <div class="msg-container">
+           <!--  <div class="msg-container"> -->
             <c:if test="${al.senderEmail eq senderEmail }">
                 <div class="msg-unit">
                     <div class="msg-content incoming-content">
@@ -403,11 +403,11 @@
                       ${al.messageContent }
                     </div>
                     <div class="msg-date msg-date-sent">
-                       <fmt:formatDate value="${mg.messageDate }" pattern="yyyy/MM/dd hh:mm"/>
+                       <fmt:formatDate value="${al.messageDate }" pattern="yyyy/MM/dd hh:mm"/>
                     </div>
                 </div>
           </c:if>
-            </div>
+           <!--  </div> -->
            </c:forEach> 
            
             <div class="write-container">

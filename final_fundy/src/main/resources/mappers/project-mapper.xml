@@ -17,7 +17,7 @@
 	</insert>
 	
 	<insert id="insertOptionDetail" parameterType="optionDetail">
-		INSERT INTO OPTIONDETAIL VALUES(#{packageNo}, #{packageName}, #{packageAmount})
+		INSERT INTO OPTIONDETAIL VALUES(OPTIONDETAIL_SEQ.NEXTVAL, #{packageNo}, #{packageName}, #{packageAmount})
 	</insert>
 	
 	<select id="selectCount" parameterType="map" resultType="int">
@@ -108,10 +108,10 @@
 	</select>
 	
 	<select id="selectOptionDetailList" parameterType="int" resultType="optionDetail">
-		SELECT * FROM OPTIONDETAIL WHERE PACKAGENO = #{packageNo} order by optionseq
+		SELECT * FROM OPTIONDETAIL WHERE PACKAGENO = #{packageNo} order by optiondetailno
 	</select>
 	
-	<select id="memberDelete" parameterType="string" resultType="int">
+	<select id="projectCount" parameterType="string" resultType="int">
      	select count(*) from project where memberEmail=#{memberEmail} and projectStatCode='PS03'
   	</select>
   	
@@ -122,8 +122,9 @@
   	</select>
   	
   	<select id="myDonationList" parameterType="map" resultType="project">
-  		SELECT A.PROJECTNO FROM FUNDINGLOG A
+  		SELECT A.PROJECTNO, C.PROJECTSTATNAME FROM FUNDINGLOG A
   		JOIN PROJECT B ON A.PROJECTNO = B.PROJECTNO
+  		JOIN PROJECTSTATUS C ON B.PROJECTSTATUS = C.PROJECTSTATUS
   		WHERE A.MEMBEREMAIL = #{memberEmail}
   	</select>
 	

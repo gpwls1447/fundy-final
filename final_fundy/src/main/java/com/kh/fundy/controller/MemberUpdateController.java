@@ -133,22 +133,17 @@ public class MemberUpdateController {
     	if(!mf.isEmpty())
     	{
     		String changedName = renameFile(mf.getOriginalFilename());
-    		System.out.println("dddd : "+mf.getOriginalFilename());
-    		System.out.println("aaaa : "+changedName);
     		mf.transferTo(new File(dir + File.separator + changedName));
     		m.setMemberProfile(changedName);
     	} 
     	
         String msg;
-        String loc;
         int result = service.memberUpdate(m);
         if(result > 0) { 
         	msg="회원수정이 완료되었습니다."; 
-        	loc="/member/memberUpdateView.do";
         } 
         else { 
         	msg="오류발생. 다시 시도해주세요."; 
-        	loc="/member/memberUpdateView.do";
         }
        
         mv.addObject("msg", msg);
@@ -240,17 +235,17 @@ public class MemberUpdateController {
        
        System.out.println("이메일 들어오나? : "+m.getMemberEmail());
        String msg="";
-       String loc="";
-       int projectResult = pService.memberDelete(memberEmail); //프로젝트 진행 여부
+       String loc;
        
-       System.out.println("프로젝트 진행여부 : "+projectResult);
+       int projectCount = pService.projectCount(memberEmail); //프로젝트 진행 여부
+       
        Member pwResult = mService.login(m); //비밀번호 일치 여부
        pwResult.getMemberPw();
        
        boolean isSame;
        if(bcEncoder.matches(memberPw, pwResult.getMemberPw())) {
           isSame = true; //일치하면 true
-          if(projectResult==0) {
+          if(projectCount==0) {
              int result = service.memberDelete(m);
              msg="회원탈퇴가 완료되었습니다.";
              
@@ -266,7 +261,7 @@ public class MemberUpdateController {
        }
        else
        {
-          isSame = false; //불일치하면 false
+          isSame = false;
           msg="비밀번호가 불일치합니다!!!!.";
           loc="/member/memberDeleteView.do";
        }

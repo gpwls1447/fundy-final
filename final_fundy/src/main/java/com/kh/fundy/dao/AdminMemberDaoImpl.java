@@ -1,6 +1,7 @@
 package com.kh.fundy.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,8 @@ public class AdminMemberDaoImpl implements AdminMemberDao {
 	private SqlSessionTemplate session;
 
 	@Override
-	public List<Member> memberListView(Member m) {
-		return session.selectList("adminMember.selectList", m);
+	public List<Member> memberListView(Map<String, String> map) {
+		return session.selectList("adminMember.selectList", map);
 	}
 	
 	

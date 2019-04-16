@@ -330,13 +330,17 @@ body {
 	background-color:rgba(255, 255, 255, 0.1);
 	color:white;
 }
+.admin{
+	height:50px;
+	cursor: pointer;
+}
 </style>
 </head>
 <body>
 	<nav class="nav">
 		<div class="nav-wrapper">
 			<div class="nav-header">
-				<div class="logo"><img src="${path }/resources/images/adminsenter.png" class="admin"></div>
+				<div class="logo" onclick="location.href='${path}/main.do';"><img src="${path }/resources/images/adminsenter.png" class="admin"></div>
 				<span class="divider"></span>
 			</div>
 			<div class="nav-body">
@@ -352,12 +356,7 @@ body {
 				<div class="nav-menu project">
 					<div>프로젝트</div>
 				</div>
-				<div class="nav-menu">
-					<div>게시판</div>
-				</div>
-				<div class="nav-menu">
-					<div>정산</div>
-				</div>
+				
 				<div>&nbsp;</div>
 			</div>
 			<div class="nav-footer"></div>
@@ -375,9 +374,9 @@ body {
 		<section class="section">
 			<div class="section-wrapper">
 				<div class="poroject-table-top">
-					<select class="selectMember">
-						<option>가입날짜 순</option>
-						<option>이름 순</option>
+					<select class="orderby" name="orderby">
+						<option value="enrollDate" ${map['orderby'] =='enrollDate' ? 'selected':'' }>가입날짜 순</option>
+						<option value="memberNick" ${map['orderby'] =='memberNick' ? 'selected':'' }>닉네임 순</option>
 					</select>
 				</div>
 				<div class="project-table">
@@ -413,22 +412,6 @@ body {
 					</div>
 					</c:forEach>
 				</div>
-
-				<!-- 페이지바 -->
-
-				<!-- <div class="pagebar">
-					<div class="pagebar-unit">
-						<img class="pagebar-nav" src="images/sharp_navigate_prev_black.png">
-					</div>
-					<div class="pagebar-unit pagebar-unit-active">1</div>
-					<div class="pagebar-unit">2</div>
-					<div class="pagebar-unit">3</div>
-					<div class="pagebar-unit">4</div>
-					<div class="pagebar-unit">5</div>
-					<div class="pagebar-unit">
-						<img class="pagebar-nav" src="images/sharp_navigate_next_black.png">
-					</div>
-				</div> -->
 			</div>
 			${map['pageBar'] }
 		</section>
@@ -436,16 +419,16 @@ body {
 </body>
 <script>
 
-//paging
-/* const fn_paging = cPage => {
-    location.href='${path}/myproject/myproject.do?cPage='+cPage+'&keyword=${keyword}'+'&memberEmail=${loggedMember.memberEmail}';
- }; */
- 
 	$(() => {
 		$(".project").on("click", () => {
-			location.href="${path}/admin/adminPage";
+			location.href="${path}/admin/adminPage.do";
 		})
 	})
  
+	//동적쿼리
+	$('.orderby').on('change', function(){
+		console.log($('.orderby option:selected').val());
+		location.href="${path}/admin/memberListView.do?orderby="+$('.orderby option:selected').val();
+	})
 </script>
 </html>
