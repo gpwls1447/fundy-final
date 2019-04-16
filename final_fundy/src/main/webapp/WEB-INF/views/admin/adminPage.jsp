@@ -302,6 +302,7 @@ body {
 	margin-left: 10px;
 }
 
+
 .denial-btn {
 	background-color: rgb(192, 65, 97);
 }
@@ -310,21 +311,24 @@ body {
 	background-color: rgb(39, 174, 96);
 }
 
+
+
 .open {
 	background-color: rgb(39, 174, 96);
 }
 
-.finished {
+.closed {
 	background-color: rgb(127, 127, 127);
 }
 
-.applied {
+.examining {
 	background-color: rgb(220, 177, 7);
 }
 
 .denied {
 	background-color: rgb(192, 65, 97);
 }
+
 </style>
 </head>
 <body>
@@ -370,8 +374,8 @@ body {
 				<div class="project-table">
 					<div class="project-table-header">
 						<div>
-							<input type="checkbox" name="cb" id="cb1" class="cb"> 
-							<label for="cb1"><span></span></label>
+							<input type="checkbox" name="cb" id="cb" class="cb"> 
+							<label for="cb"><span></span></label>
 						</div>
 						<div>
 							<a href="#">제목</a>
@@ -394,33 +398,33 @@ body {
 					</div>
 					<!-- for문으로 리스트 출력 -->
 					
-					<c:forEach items="${map['list'] }" var="list">
+					<c:forEach items="${map['list'] }" var="list" varStatus="vs">
 					<div class="project-table-row">
 						<div>
-							<input type="checkbox" name="cb" id="cb2" class="cb"> 
-							<label for="cb2"><span></span></label>
+							<input type="checkbox" name="cb" id="cb${vs.index }" class="cb"> 
+							<label for="cb${vs.index}" ><span></span></label>
 						</div>
 						<div>${list.projectTitle}</div>
 						<div>${list.memberNick }</div>
 						<div>${list.projectPhone }</div>
 						<div>${list.beginDate }</div>
 						<div>${list.endDate }</div>
-						<div>
-							<button class="proj-status open">진행중</button>
-						</div>
-					</div>
-					<div class="project-table-row">
-						<div>
-							<input type="checkbox" name="cb" id="cb3" class="cb"> 
-							<label for="cb3"><span></span></label>
-						</div>
-						<div>'꼬마백조' 날개찾기</div>
-						<div>21kyo</div>
-						<div>010-47330-7342</div>
-						<div>19/03/08</div>
-						<div>19/03/08</div>
-						<div>
-							<button class="proj-status denied">반려됨</button>
+							<c:choose>
+								<c:when test="${list.projectStatCode eq 'PS02'}">
+									<c:set value="examining" var="status" />
+								</c:when>
+								<c:when test="${list.projectStatCode eq 'PS03'}">
+									<c:set value="open" var="status" />
+								</c:when>
+								<c:when test="${list.projectStatCode eq 'PS04'}">
+									<c:set value="closed" var="status" />
+								</c:when>
+								<c:when test="${list.projectStatCode eq 'PS05'}">
+									<c:set value="denied" var="status" />
+								</c:when>
+							</c:choose>
+							<div>
+							<button class="proj-status ${status }">${list.projectStatName }</button>
 						</div>
 					</div>
 					</c:forEach>
@@ -431,38 +435,26 @@ body {
 					<button class="project-btn denial-btn">선택반려</button>
 				</div>
 
-				<!-- 페이지바 -->
 
-				<!-- <div class="pagebar">
-					<div class="pagebar-unit">
-						<img class="pagebar-nav" src="images/sharp_navigate_prev_black.png">
-					</div>
-					<div class="pagebar-unit pagebar-unit-active">1</div>
-					<div class="pagebar-unit">2</div>
-					<div class="pagebar-unit">3</div>
-					<div class="pagebar-unit">4</div>
-					<div class="pagebar-unit">5</div>
-					<div class="pagebar-unit">
-						<img class="pagebar-nav" src="images/sharp_navigate_next_black.png">
-					</div>
-				</div> -->
 			</div>
+			<!-- 페이지바 -->
 			${map['pageBar'] }
 		</section>
 	</div>
 </body>
 <script>
 
-//paging
-/* const fn_paging = cPage => {
-    location.href='${path}/myproject/myproject.do?cPage='+cPage+'&keyword=${keyword}'+'&memberEmail=${loggedMember.memberEmail}';
- }; */
+	//paging
+	const fn_paging = cPage => {
+		location.href='${path}/admin/adminPage.do?cPage='+cPage;
+	}; 
  
+ 	
 	$(() => {
 		$(".project").on("click", () => {
-			location.href="${path}/admin/adminPage";
+			location.href="${path}/admin/adminPage.do";
 		})
-	})
+	});
  
 </script>
 </html>
