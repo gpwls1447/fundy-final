@@ -27,7 +27,7 @@
 			JOIN MIDCATEGORY C ON B.MIDCODE = C.MIDCODE
 			WHERE 1=1
 		<if test="projectStatCode != null and projectStatCode != ''">
-			AND PROJECTSTATCODE = #{projectStatCode}
+			AND A.PROJECTSTATCODE = #{projectStatCode}
 		</if>
 		<if test="majorCode != null and majorCode != ''">
 			AND C.MAJORCODE = #{majorCode}
@@ -36,18 +36,20 @@
 			AND C.MIDCODE = #{midCode}
 		</if>
 		<if test="keyword != null and keyword != ''">
-			AND PROJECTTITLE LIKE '%'||#{keyword}||'%' 
+			AND A.PROJECTTITLE LIKE '%'||#{keyword}||'%' 
+		</if>
+		<if test="memberEmail != null and memberEmail != ''">
+			AND A.MEMBEREMAIL = #{memberEmail}
 		</if>
 	</select>
 	
 	<select id="selectList" parameterType="map" resultType="project">
 		SELECT A.*, B.MINORNAME, C.*, 
 			F.MEMBERNICK,
-			F.MEMBEREMAIL,
+			G.PROJECTSTATNAME,
 			nvl((select sum((e.fundPrice*d.packageamount)+d.extramoney) from fundinglog d join fundingoption e on d.packageNo = e.packageNo where d.projectNo = a.projectNo),0) as reach,
 			nvl((select sum((e.fundPrice*d.packageamount)+d.extramoney) from fundinglog d join fundingoption e on d.packageNo = e.packageNo where d.projectNo = a.projectNo)/goalprice*100,0) as reachRate,
-			nvl((select count(*) from fundinglog f where f.projectNo = a.projectNo),0) as funderNo,
-			G.PROJECTSTATNAME
+			nvl((select count(*) from fundinglog f where f.projectNo = a.projectNo),0) as funderNo
 			FROM PROJECT A 
 			JOIN MINORCATEGORY B ON A.MINORCODE = B.MINORCODE
 			JOIN MIDCATEGORY C ON B.MIDCODE = C.MIDCODE
@@ -55,7 +57,7 @@
 			JOIN PROJECTSTATUS G ON A.PROJECTSTATCODE = G.PROJECTSTATCODE
 			WHERE 1=1
 		<if test="projectStatCode != null and projectStatCode != ''">
-			AND PROJECTSTATCODE = #{projectStatCode}
+			AND A.PROJECTSTATCODE = #{projectStatCode}
 		</if>
 		<if test="majorCode != null and majorCode != ''">
 			AND C.MAJORCODE = #{majorCode}
@@ -64,10 +66,10 @@
 			AND C.MIDCODE = #{midCode}
 		</if>
 		<if test="keyword != null and keyword != ''">
-			AND PROJECTTITLE LIKE '%'||#{keyword}||'%' 
+			AND A.PROJECTTITLE LIKE '%'||#{keyword}||'%' 
 		</if>
 		<if test="memberEmail != null and memberEmail != ''">
-			AND MEMBEREMAIL = #{memberEmail}
+			AND A.MEMBEREMAIL = #{memberEmail}
 		</if>
 		<if test="orderby != null and orderby != ''">
 			ORDER BY ${orderby} DESC
@@ -77,7 +79,9 @@
 	
 	<select id="selectOne" parameterType="map" resultType="project">
 		SELECT A.*, B.MINORNAME, C.*, D.MEMBERPROFILE,
+			<if test="memberEmail != null">
 			(SELECT COUNT(*) FROM FAVORITE WHERE MEMBEREMAIL = #{memberEmail} AND PROJECTNO = #{projectNo}) as favorited,
+			</if>
 			nvl((select sum((e.fundPrice*d.packageamount)+d.extramoney) from fundinglog d join fundingoption e on d.packageNo = e.packageNo where d.projectNo = a.projectNo),0) as reach,
 			nvl((select sum((e.fundPrice*d.packageamount)+d.extramoney) from fundinglog d join fundingoption e on d.packageNo = e.packageNo where d.projectNo = a.projectNo)/goalprice*100,0) as reachRate,
 			nvl((select count(*) from fundinglog f where f.projectNo = a.projectNo),0) as funderNo
@@ -105,7 +109,7 @@
 	</select>
 	
 	<select id="selectOptionDetailList" parameterType="int" resultType="optionDetail">
-		SELECT * FROM OPTIONDETAIL WHERE PACKAGENO = #{packageNo}
+		SELECT * FROM OPTIONDETAIL WHERE PACKAGENO = #{packageNo} order by optionseq
 	</select>
 	
 	<select id="memberDelete" parameterType="string" resultType="int">

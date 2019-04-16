@@ -597,13 +597,13 @@
             </div>
         </div>
         <div class="user-modal-body">
-            <div class="user-menu-box">
+            <div class="user-menu-box myproject-btn">
                 <span class="bar vertical-bar"></span>
                 <span class="bar horizontal-bar"></span>
                 <i class="material-icons">work_outline</i>
                 <span class="user-menu-text">내프로젝트</span>
             </div>
-            <div class="user-menu-box">
+            <div class="user-menu-box donnorList-btn">
                 <span class="bar horizontal-bar"></span>
                 <i class="material-icons">card_giftcard</i>
                 <span class="user-menu-text">후원내역</span>
@@ -774,27 +774,26 @@
    });
 
    
-   //로그아웃 기능
-   $(() => {
-      $('.logout-btn').on("click", () => {
-         location.href="${path}/member/LogOut.do";   
-      });
+   //모달 유저메뉴 링크 바인드
+   	$(() => {
+		//로그아웃
+		$('.logout-btn').on("click", () => {
+        	location.href="${path}/member/LogOut.do";   
+		});
+		//정보수정
+	    $('.memberUpdate-btn').on("click", ()=> {
+	        location.href="${path}/member/memberUpdateView.do";
+	    });
+	    //찜바구니
+	    $('.favorite-btn').on("click", ()=> {
+	      	location.href="${path}/favorite/favoriteList.do";
+	   	});
+	   	//마이프로젝트
+	   	$('.myproject-btn').on('click', () => {
+	   		location.href='${path}/myproject/myprojectList.do?memberEmail=${loggedMember.memberEmail}';
+	   	});
    });
-   
-   //정보수정 기능
-   $(() => {
-      $('.memberUpdate-btn').on("click", ()=> {
-         location.href="${path}/member/memberUpdateView.do";
-      })
-   })
-   
- //찜바구니 기능
-   $(() => {
-      $('.favorite-btn').on("click", ()=> {
-         location.href="${path}/favorite/favoriteList.do";
-      })
-   })
-   
+
 
     //패스워드 일치 확인
      $(function(){
@@ -809,9 +808,7 @@
          }
       });
         //정규화적용
-      
-      
-      
+        
    }); 
 
    //로그인 모달
