@@ -133,9 +133,11 @@ public class MemberUpdateController {
     	if(!mf.isEmpty())
     	{
     		String changedName = renameFile(mf.getOriginalFilename());
+    		System.out.println("dddd : "+mf.getOriginalFilename());
+    		System.out.println("aaaa : "+changedName);
     		mf.transferTo(new File(dir + File.separator + changedName));
     		m.setMemberProfile(changedName);
-    	}
+    	} 
     	
         String msg;
         String loc;
