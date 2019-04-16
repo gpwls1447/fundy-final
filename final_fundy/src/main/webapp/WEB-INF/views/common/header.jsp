@@ -36,15 +36,19 @@
                 <div>
                     <i class="material-icons category-btn">more_horiz</i>
                 </div>
-                <c:if test="${loggedMember.memberNick eq 'admin' }">
+                <c:if test="${loggedMember ne null }">
+                <c:choose>
+                <c:when test="${loggedMember.memberNick eq 'admin' }">
                 	<div>
                 		<button class="proposal-btn" onclick="location.href='${path}/admin/adminPage.do'">관리자 페이지</button>
                 	</div>
-                </c:if>
-                <c:if test="${loggedMember.memberNick !=null  }">
+                </c:when>
+                <c:otherwise>
 	                <div>
 	                	<button class="proposal-btn" onclick="location.href='${path }/project/projectWrite.do?majorCategory=A01'">프로젝트 신청</button>
 	                </div>
+                </c:otherwise>
+                </c:choose>
                 </c:if>
                 <div>
                    <a href="${path }/askBoardMain.do">게시판</a>
@@ -82,4 +86,3 @@
 		    </c:forEach>
     	</div>
     </nav>
-    

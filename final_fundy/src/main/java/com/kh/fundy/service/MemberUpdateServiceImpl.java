@@ -15,15 +15,6 @@ public class MemberUpdateServiceImpl implements MemberUpdateService {
 	@Autowired
 	private MemberUpdateDao dao;
 	
-	@Override
-	public int memberAddress(ShippingAddr s) {
-		return dao.memberAddress(s);
-	}
-	
-	@Override
-	public int insertAddr(ShippingAddr sa) {
-		return dao.insertAddr(sa);
-	}
 	
 	@Override
 	public int memberUpdate(Member m) {
@@ -53,6 +44,16 @@ public class MemberUpdateServiceImpl implements MemberUpdateService {
 	@Override
 	public int memberDelete(Member m) {
 		return dao.memberDelete(m);
+	}
+	
+	@Override
+	public int updateAddr(ShippingAddr sa) {
+		return dao.updateAddr(sa);
+	}
+	
+	@Override
+	public int insertAddr(ShippingAddr sa) {
+		return dao.insertAddr(sa);
 	}
 	
 	@Override

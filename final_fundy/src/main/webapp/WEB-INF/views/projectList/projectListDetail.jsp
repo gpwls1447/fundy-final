@@ -425,8 +425,6 @@
         </div>
         <div class="proj-detail-bottom">
             <div class="proj-detail-bottom-left">
-    
-    		${project.projectContent }
    			${project.favorited } 
             </div>
             <div class="proj-detail-bottom-right">
@@ -519,12 +517,12 @@
     
   //찜바구니 추가 및 제거
     function favorite(){
-    	var favoriteText = $('.favorite').text(); 
+    	const favoriteText = $('.favorite').text(); 
+    	const favoriteBtn = $('#favoriteBtn');
     	
     	//찜바구니에 추가하려고 할때
     	if(favoriteText=='favorite_border'){
     		$('.favorite').text('favorite');
-    		$('#favoriteBtn')
     	
 			$.ajax({
 				url:'${path}/projectList/insert_favorite',
@@ -532,14 +530,13 @@
 				data:{'memberEmail':'${loggedMember.memberEmail}', 'projectNo':'${project.projectNo}'},
 				success:function(data){
 					alert('찜바구니에 등록되었습니다.');
+					favoriteBtn.toggleClass('favorited');
 				}
 			});
     	}
-    	
     	//찜바구니에서 빼려고 할때
     	else {
     		$('.favorite').text('favorite_border');
-    		$('#favoriteBtn')
     		
     		$.ajax({
     			url:'${path}/projectList/delete_favorite',
@@ -547,6 +544,7 @@
     			data:{'memberEmail':'${loggedMember.memberEmail}', 'projectNo':'${project.projectNo}'},
     			success:function(data){
     				alert('찜바구니에서 제거되었습니다.');
+    				favoriteBtn.toggleClass('favorited');
     			}
     		});
     	}

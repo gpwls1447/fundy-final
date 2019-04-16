@@ -34,6 +34,7 @@ public class PayController {
 	{
 		ModelAndView mv = new ModelAndView();
 		Map<String, Integer> map = new HashMap<>();
+		map.put("projectNo", projectNo);
 		Project p = projService.selectOne(map);
 		mv.addObject("project", p);
 		mv.addObject("packageIndex", packageIndex);

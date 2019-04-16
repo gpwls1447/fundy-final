@@ -46,12 +46,12 @@ public class MemberUpdateDaoImpl implements MemberUpdateDao {
 		return session.update("member.memberDelete", m);
 	}
 	
+
 	@Override
-	public int memberAddress(ShippingAddr s) {
-		return session.update("shippingAddr.updateAddress", s);
+	public int updateAddr(ShippingAddr sa) {
+		return session.update("shippingAddr.updateAddr", sa);
 	}
 	
-
 	@Override
 	public int insertAddr(ShippingAddr sa) {
 		return session.insert("shippingAddr.insertAddr", sa);

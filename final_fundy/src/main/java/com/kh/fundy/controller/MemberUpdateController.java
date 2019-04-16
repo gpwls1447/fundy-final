@@ -57,10 +57,11 @@ public class MemberUpdateController {
     }
     
     //배송지 정보 수정하기
-    @RequestMapping("/member/memberAddress.do")
-    public String memberAddress(ShippingAddr sa, Model model)
-    {
-    	int result = service.memberAddress(sa);
+    @RequestMapping("/memberUpdate/updateShipAddr.do")
+    public String memberAddress(ShippingAddr sa, String phone1, String phone2, String phone3, Model model)
+    {	
+    	sa.setPhone(phone1 + phone2 + phone3);
+    	int result = service.updateAddr(sa);
     	
     	String msg;
     	if(result > 0) {msg = "배송지 정보 수정 완료!";} 
@@ -73,7 +74,7 @@ public class MemberUpdateController {
     
     //배송지 정보 동적 조회
     @RequestMapping("/memberUpdate/selectShipAddr.ajax")
-    public ModelAndView selectShipAddrAjax(ShippingAddr sa, HttpSession session) 
+    public ModelAndView selectShipAddrAjax(ShippingAddr sa) 
     {
     	ModelAndView mv = new ModelAndView();
     	sa = service.selectAddr(sa);
@@ -85,7 +86,7 @@ public class MemberUpdateController {
     
     //배송지 정보 삭제
 	@RequestMapping("/memberUpdate/deleteShipAddr.ajax")
-    public ModelAndView deleteShipAddrAjax(ShippingAddr sa, HttpSession session)
+    public ModelAndView deleteShipAddrAjax(ShippingAddr sa)
     {
     	ModelAndView mv = new ModelAndView();
     	int result = service.deleteAddr(sa);
@@ -98,7 +99,6 @@ public class MemberUpdateController {
    //배송지 추가
     @RequestMapping("/memberUpdate/insertShipAddr.do")
     public String memberAddressInsert(ShippingAddr sa, Model model, String phone1, String phone2, String phone3, HttpSession session) {
-       sa.setMemberEmail(((Member)(session.getAttribute("loggedMember"))).getMemberEmail());
        sa.setPhone(phone1+phone2+phone3);
        
        int result = service.insertAddr(sa);

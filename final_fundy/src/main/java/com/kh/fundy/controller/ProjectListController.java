@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.fundy.model.vo.Category;
 import com.kh.fundy.model.vo.Comment;
 import com.kh.fundy.model.vo.FundingLog;
+import com.kh.fundy.model.vo.Member;
 import com.kh.fundy.model.vo.Project;
 import com.kh.fundy.service.CategoryService;
 import com.kh.fundy.service.CommentService;
@@ -31,7 +34,7 @@ public class ProjectListController {
 	private CategoryService categService;
 	
 	@RequestMapping("/projectList/projectList.do")
-	public ModelAndView projectList(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, String majorCode, String midCode, String keyword, @RequestParam(value = "projectStatCode", required = false, defaultValue = "PS03") String projectStatCode, String orderby)
+	public ModelAndView projectList(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, String majorCode, String midCode, String keyword, @RequestParam(value = "projectStatCode", required = false, defaultValue = "PS03") String projectStatCode, String orderby, HttpSession session)
 	{
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("majorCode", majorCode);
@@ -39,6 +42,9 @@ public class ProjectListController {
 		map.put("keyword", keyword);
 		map.put("projectStatCode", projectStatCode);
 		map.put("orderby", orderby);
+		Member m = (Member)session.getAttribute("loggedMember");
+		if(m != null) map.put("memberEmail", m.getMemberEmail());
+		
 		
 		int numPerPage = 10;
 		int totalCount = pService.selectCount(map);
@@ -61,12 +67,15 @@ public class ProjectListController {
 	}
 	
 	@RequestMapping("/projectList/projectListDetail.do")
-	public ModelAndView projectListDetail(int projectNo, String memberEmail)
+	public ModelAndView projectListDetail(int projectNo, HttpSession session)
 	{
 		Map map = new HashMap();
-		map.put("memberEmail", memberEmail);
 		map.put("projectNo", projectNo);
+		Member m = (Member)session.getAttribute("loggedMember");
+		if(m != null) {map.put("memberEmail", m.getMemberEmail());}
+		
 		Project p = pService.selectOne(map);
+		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("project", p);
 		mv.setViewName("projectList/projectListDetail");
