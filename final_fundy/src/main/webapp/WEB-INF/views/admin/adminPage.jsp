@@ -444,12 +444,28 @@ body {
 </body>
 <script>
 
+	//체크박스 선택시 전체 체크 or 해제
+	const cb = $('#cb');
+	$(() => {
+		$("#cb").on("click", (e) => {
+			if($('.cb[checked="checked"]').length > 5)
+			{
+				$('.cb').removeAttr('checked');
+			}
+			else
+			{
+				$('.cb').attr('checked', 'checked');			
+			}
+		});
+	});
+	
+
 	//paging
 	const fn_paging = cPage => {
 		location.href='${path}/admin/adminPage.do?cPage='+cPage;
 	}; 
  
- 	
+ 	//왼쪽 메뉴에 프로젝트 눌렀을 때 페이지 이동
 	$(() => {
 		$(".project").on("click", () => {
 			location.href="${path}/admin/adminPage.do";

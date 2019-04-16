@@ -807,9 +807,8 @@
             $("#password").focus();
          }
       });
-        //정규화적용
-        
    }); 
+ 
    //로그인 모달
    const loginBtn = $('.login-btn');
    const loginModal = $('.login-modal');
