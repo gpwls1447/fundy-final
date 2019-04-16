@@ -46,6 +46,7 @@ body {
 	height: 100%;
 	border-radius: 5px;
 	background-color: rgba(255, 255, 255, 0.1);
+	display: flex;
 }
 
 .title {
@@ -200,6 +201,8 @@ body {
 .project-table-header {
 	display: flex;
 	border-bottom: 1px solid #666;
+	font-size: 18px;
+	background-color:rgba(200, 200, 200, 0.1);
 }
 
 .project-table-header>div {
@@ -215,31 +218,23 @@ body {
 }
 
 .project-table-header>div:nth-of-type(1) {
-	flex: 1 1 0;
+	flex: 2 1 0;
 }
 
 .project-table-header>div:nth-of-type(2) {
-	flex: 7 1 0;
-}
-
-.project-table-header>div:nth-of-type(3) {
 	flex: 1 1 0;
 }
 
+.project-table-header>div:nth-of-type(3) {
+	flex: 2 1 0;
+}
+
 .project-table-header>div:nth-of-type(4) {
-	flex: 3 1 0;
+	flex: 2 1 0;
 }
 
 .project-table-header>div:nth-of-type(5) {
-	flex: 2 1 0;
-}
-
-.project-table-header>div:nth-of-type(6) {
-	flex: 2 1 0;
-}
-
-.project-table-header>div:nth-of-type(7) {
-	flex: 2 1 0;
+	flex: 1 1 0;
 }
 
 .project-table-row {
@@ -255,31 +250,23 @@ body {
 }
 
 .project-table-row>div:nth-of-type(1) {
-	flex: 1 1 0;
+	flex: 2 1 0;
 }
 
 .project-table-row>div:nth-of-type(2) {
-	flex: 7 1 0;
-}
-
-.project-table-row>div:nth-of-type(3) {
 	flex: 1 1 0;
 }
 
+.project-table-row>div:nth-of-type(3) {
+	flex: 2 1 0;
+}
+
 .project-table-row>div:nth-of-type(4) {
-	flex: 3 1 0;
+	flex: 2 1 0;
 }
 
 .project-table-row>div:nth-of-type(5) {
-	flex: 2 1 0;
-}
-
-.project-table-row>div:nth-of-type(6) {
-	flex: 2 1 0;
-}
-
-.project-table-row>div:nth-of-type(7) {
-	flex: 2 1 0;
+	flex: 1 1 0;
 }
 
 .proj-status {
@@ -302,7 +289,6 @@ body {
 	margin-left: 10px;
 }
 
-
 .denial-btn {
 	background-color: rgb(192, 65, 97);
 }
@@ -311,17 +297,15 @@ body {
 	background-color: rgb(39, 174, 96);
 }
 
-
-
 .open {
 	background-color: rgb(39, 174, 96);
 }
 
-.closed {
+.finished {
 	background-color: rgb(127, 127, 127);
 }
 
-.examining {
+.applied {
 	background-color: rgb(220, 177, 7);
 }
 
@@ -333,6 +317,19 @@ body {
 	height:50px;
 }
 
+.poroject-table-top {
+	width:100%;
+	display: flex;
+	justify-content: flex-end;
+	padding-bottom:20px;
+}
+
+.selectMember {
+	width:150px;
+	height:30px;
+	background-color:rgba(255, 255, 255, 0.1);
+	color:white;
+}
 </style>
 </head>
 <body>
@@ -346,10 +343,10 @@ body {
 				<div class="">
 					<div class="dummy-menu">메뉴</div>
 				</div>
-				<div class="nav-menu current-menu">
+				<div class="nav-menu">
 					<div>메인</div>
 				</div>
-				<div class="nav-menu" id="memberList">
+				<div class="nav-menu current-menu">
 					<div>회원</div>
 				</div>
 				<div class="nav-menu project">
@@ -369,116 +366,86 @@ body {
 	<div class="header-section-wrapper">
 		<header class="header">
 			<div class="header-wrapper">
-				<div class="title">Overview</div>
+				<div class="title">전체보기</div>
+				<div class="title">활동회원</div>
+				<div class="title">탈퇴회원</div>
+				<div class="title">블랙회원</div>
 			</div>
 		</header>
 		<section class="section">
 			<div class="section-wrapper">
-				<div class="poroject-table-top"></div>
+				<div class="poroject-table-top">
+					<select class="selectMember">
+						<option>가입날짜 순</option>
+						<option>이름 순</option>
+					</select>
+				</div>
 				<div class="project-table">
 					<div class="project-table-header">
 						<div>
-							<input type="checkbox" name="cb" id="cb" class="cb"> 
-							<label for="cb"><span></span></label>
-						</div>
-						<div>
-							<a href="#">제목</a>
+							<a href="#">이메일</a>
 						</div>
 						<div>
 							<a href="#">닉네임</a>
 						</div>
 						<div>
-							<a href="#">연락처</a>
+							<a href="#">가입일시</a>
 						</div>
 						<div>
-							<a href="#">신청일</a>
+							<a href="#">탈퇴일시</a>
 						</div>
 						<div>
-							<a href="#">마감일</a>
-						</div>
-						<div>
-							<a href="#">상태</a>
+							<a href="#"><i class="material-icons">block</i></a>
 						</div>
 					</div>
 					<!-- for문으로 리스트 출력 -->
 					
-					<c:forEach items="${map['list'] }" var="list" varStatus="vs">
+					<c:forEach items="${list}" var="list">
 					<div class="project-table-row">
-						<div>
-							<input type="checkbox" name="cb" id="cb${vs.index }" class="cb"> 
-							<label for="cb${vs.index}" ><span></span></label>
-						</div>
-						<div>${list.projectTitle}</div>
+
+						<div>${list.memberEmail}</div>
 						<div>${list.memberNick }</div>
-						<div>${list.projectPhone }</div>
-						<div>${list.beginDate }</div>
-						<div>${list.endDate }</div>
-							<c:choose>
-								<c:when test="${list.projectStatCode eq 'PS02'}">
-									<c:set value="examining" var="status" />
-								</c:when>
-								<c:when test="${list.projectStatCode eq 'PS03'}">
-									<c:set value="open" var="status" />
-								</c:when>
-								<c:when test="${list.projectStatCode eq 'PS04'}">
-									<c:set value="closed" var="status" />
-								</c:when>
-								<c:when test="${list.projectStatCode eq 'PS05'}">
-									<c:set value="denied" var="status" />
-								</c:when>
-							</c:choose>
-							<div>
-							<button class="proj-status ${status }">${list.projectStatName }</button>
+						<div>${list.enrollDate }</div>
+						<div>${list.memberQuit }</div>
+						<div>
+							<i class="material-icons">block</i>
 						</div>
 					</div>
 					</c:forEach>
 				</div>
-			
-				<div class="project-btn-container">
-					<button class="project-btn approve-btn">선택승인</button>
-					<button class="project-btn denial-btn">선택반려</button>
-				</div>
 
+				<!-- 페이지바 -->
 
+				<!-- <div class="pagebar">
+					<div class="pagebar-unit">
+						<img class="pagebar-nav" src="images/sharp_navigate_prev_black.png">
+					</div>
+					<div class="pagebar-unit pagebar-unit-active">1</div>
+					<div class="pagebar-unit">2</div>
+					<div class="pagebar-unit">3</div>
+					<div class="pagebar-unit">4</div>
+					<div class="pagebar-unit">5</div>
+					<div class="pagebar-unit">
+						<img class="pagebar-nav" src="images/sharp_navigate_next_black.png">
+					</div>
+				</div> -->
 			</div>
-			<!-- 페이지바 -->
 			${map['pageBar'] }
 		</section>
 	</div>
 </body>
 <script>
 
-	//체크박스 선택시 전체 체크 or 해제
-	const cb = $('#cb');
-	$(() => {
-		$("#cb").on("click", (e) => {
-			if($('.cb[checked="checked"]').length > 5)
-			{
-				$('.cb').removeAttr('checked');
-			}
-			else
-			{
-				$('.cb').attr('checked', 'checked');			
-			}
-		});
-	});
-	
-
-	//paging
-	const fn_paging = cPage => {
-		location.href='${path}/admin/adminPage.do?cPage='+cPage;
-	}; 
+//paging
+/* const fn_paging = cPage => {
+    location.href='${path}/myproject/myproject.do?cPage='+cPage+'&keyword=${keyword}'+'&memberEmail=${loggedMember.memberEmail}';
+ }; */
  
- 	//왼쪽 메뉴에 프로젝트 눌렀을 때 페이지 이동
 	$(() => {
 		$(".project").on("click", () => {
-			location.href="${path}/admin/adminPage.do";
+			location.href="${path}/admin/adminPage";
 		})
-		
-		$("#memberList").on("click", () => {
-			location.href="${path}/admin/memberListView.do";
-		})
-	});
+	})
  
 </script>
 </html>

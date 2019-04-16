@@ -495,6 +495,10 @@
       color:lavender;
    }
    
+   .join{
+   		height:70px;
+   }
+   
 </style>
 </div>
     <footer class="footer">
@@ -643,7 +647,7 @@
          <div class="left">
             <div class="content">
                
-               <div class="signup-title form-title"><span class="brand-title">FUNDY</span>회원가입</div>
+               <div class="signup-title form-title"><img src="${path }/resources/images/join.png" class="join"></div>
                <form method="post" action="${path }/member/memberEnrollEnd.do" autocomplete="off">
                   <div class="form-group">
                   <div class="email-group">
@@ -675,7 +679,7 @@
          </div>
          <div class="right">
             <div class="content">
-               <div class="login-title form-title"><span class="brand-title">FUNDY</span>로그인</div>
+               <div class="login-title form-title"><img src="${path }/resources/images/login.png" class="join"></div>
                <form method="post" action="${path }/member/memberlogin.do" autocomplete="off">
                   <div class="form-group">
                      <input type="email" placeholder="email" name="memberEmail" class="signup-modal-input login-modal-input"/> 
