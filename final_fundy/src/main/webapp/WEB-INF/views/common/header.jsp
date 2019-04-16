@@ -26,7 +26,9 @@
     <header class="header">
         <div class="header-wrapper">
             <div class="header-group">
-                <div class="logo"><a href="${path }/main.do">FUNDY</a></div>
+                <div class="logo"><a href="${path }/main.do">
+                <img src="${path }/resources/images/fundify.png" class="fundify"/>
+                </a></div>
                 <div>
                    <a href="${path }/main.do?majorCode=A02" class="<c:if test="${majorCode eq 'A02' }">current-div</c:if>">후원</a>
                 </div>
