@@ -789,6 +789,16 @@
    });
    
    
+<<<<<<< HEAD
+=======
+ //찜바구니 기능
+   $(() => {
+      $('.favorite-btn').on("click", ()=> {
+         location.href="${path}/favorite/favoriteList.do";
+      })
+   })
+
+>>>>>>> branch 'feature_kyo' of https://github.com/jwj3955/fundy-final.git
     //패스워드 일치 확인
      $(function(){
         $("#password-ck").blur(function(){
