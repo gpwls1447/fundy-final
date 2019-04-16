@@ -41,7 +41,7 @@
                 		<button class="proposal-btn" onclick="location.href='${path}/admin/adminPage.do'">관리자 페이지</button>
                 	</div>
                 </c:if>
-                <c:if test="${loggedMember.memberNick != 'admin'} ">
+                <c:if test="${loggedMember.memberNick !=null  }">
 	                <div>
 	                	<button class="proposal-btn" onclick="location.href='${path }/project/projectWrite.do?majorCategory=A01'">프로젝트 신청</button>
 	                </div>
