@@ -28,6 +28,7 @@ public class MessagController {
 		ModelAndView mv=new ModelAndView();
 		List<Message> list=service.messageList(receiverEmail);
 		/*List<Message> senderList=service.msgMemberList();*/
+
 		System.out.println(list);
 		mv.addObject("list",list);
 		mv.addObject("receiverEmail",receiverEmail);

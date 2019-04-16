@@ -580,14 +580,12 @@
             <div class="close-btn">
                 <i class="material-icons">clear</i>
             </div>
-            <div class="header-last user-btn" >
-                	<c:if test="${loggedMember.kakaoId==null }">
-                		<img src="${path }/resources/memberProfile/${loggedMember.memberProfile}" >
-                	</c:if>
- 					<c:if test="${loggedMember.kakaoId!=null }">               	
-                		<img src="${loggedMember.memberProfile}" style="width: 100px; height: 100px;">
-                	</c:if>
-                </div>
+                <c:if test="${loggedMember.kakaoId==null }">
+                	<img class ="user-profile-pic" src="${path }/resources/memberProfile/${loggedMember.memberProfile}" >
+                </c:if>
+ 				<c:if test="${loggedMember.kakaoId!=null }">               	
+                	<img class ="user-profile-pic" src="${loggedMember.memberProfile}">
+                </c:if>
             <div class="user-nick">
                 ${loggedMember.memberNick }
             </div>
