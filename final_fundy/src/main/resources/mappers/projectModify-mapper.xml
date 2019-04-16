@@ -18,7 +18,7 @@
 	</select>
 	
 	<select id="selectOptionDetail" parameterType="_int" resultType="map">
-		select * from fundingoption join optiondetail using(packageno) where packageNo=#{packageNo} order by packageno, optionseq
+		select * from fundingoption join optiondetail using(packageno) where packageNo=#{packageNo} order by packageno, optiondetailno
 	</select>
 	
 	<select id="selectMajorCode" parameterType="string" resultType="string">

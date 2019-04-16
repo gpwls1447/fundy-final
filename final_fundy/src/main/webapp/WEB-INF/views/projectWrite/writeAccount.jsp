@@ -8,6 +8,7 @@
 function sendAuthEmail() {
 	$("#emailAuth-area").fadeIn(100);
 	var email=$("#projectEmailAuth").val().trim();
+	$("#_projectEmail").val("");
     $.ajax({
        url:"${path}/project/emailAuth.do?projectNo=${projectNo}",
        dataType:"json",
