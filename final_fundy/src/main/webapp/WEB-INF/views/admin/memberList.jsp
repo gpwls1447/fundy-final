@@ -330,6 +330,10 @@ body {
 	background-color:rgba(255, 255, 255, 0.1);
 	color:white;
 }
+.admin{
+	height:50px;
+	cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -352,12 +356,7 @@ body {
 				<div class="nav-menu project">
 					<div>프로젝트</div>
 				</div>
-				<div class="nav-menu">
-					<div>게시판</div>
-				</div>
-				<div class="nav-menu">
-					<div>정산</div>
-				</div>
+				
 				<div>&nbsp;</div>
 			</div>
 			<div class="nav-footer"></div>
@@ -436,16 +435,19 @@ body {
 </body>
 <script>
 
-//paging
-/* const fn_paging = cPage => {
-    location.href='${path}/myproject/myproject.do?cPage='+cPage+'&keyword=${keyword}'+'&memberEmail=${loggedMember.memberEmail}';
- }; */
- 
 	$(() => {
 		$(".project").on("click", () => {
-			location.href="${path}/admin/adminPage";
+			location.href="${path}/admin/adminPage.do";
 		})
 	})
+	
+	//logo누를 시 메인페이지
+ 	$(() => {
+ 		$(".logo").on("click", () => {
+ 			location.href="${path}/main.do";
+ 		})	
+ 		
+ 	})
  
 </script>
 </html>

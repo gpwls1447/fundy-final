@@ -331,6 +331,7 @@ body {
 
 .admin{
 	height:50px;
+	cursor: pointer;
 }
 
 </style>
@@ -355,12 +356,7 @@ body {
 				<div class="nav-menu project">
 					<div>프로젝트</div>
 				</div>
-				<div class="nav-menu">
-					<div>게시판</div>
-				</div>
-				<div class="nav-menu">
-					<div>정산</div>
-				</div>
+				
 				<div>&nbsp;</div>
 			</div>
 			<div class="nav-footer"></div>
@@ -473,12 +469,20 @@ body {
 	$(() => {
 		$(".project").on("click", () => {
 			location.href="${path}/admin/adminPage.do";
-		})
+		});
 		
 		$("#memberList").on("click", () => {
 			location.href="${path}/admin/memberListView.do";
-		})
+		});
 	});
+ 	
+ 	//logo누를 시 메인페이지
+ 	$(() => {
+ 		$(".logo").on("click", () => {
+ 			location.href="${path}/main.do";
+ 		})	
+ 		
+ 	})
  
 </script>
 </html>
