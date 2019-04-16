@@ -33,7 +33,7 @@
       <property name="host" value="smtp.gmail.com" />
       <property name="port" value="587" />
       <property name="username" value="kein0924@gmail.com" />
-      <property name="password" value="tkfkdgo1645!" />
+      <property name="password" value="" />
     
 
       <!-- email 요청시는 SMTP -->

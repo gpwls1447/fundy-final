@@ -2,11 +2,21 @@ package com.kh.fundy.model.vo;
 
 import java.sql.Timestamp;
 
+import javax.persistence.Column;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.Entity;
+
+@Entity
 public class Member {
 	
+	@Column
+	@NotNull
 	private String memberEmail;
 	private String memberPw;
 	private String memberName;
+	@Column
+	@NotNull
 	private String memberNick;
 	private String memberProfile;
 	private int shipAddrNo;
