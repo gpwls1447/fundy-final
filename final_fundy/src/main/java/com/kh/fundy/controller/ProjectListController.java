@@ -34,7 +34,7 @@ public class ProjectListController {
 	private CategoryService categService;
 	
 	@RequestMapping("/projectList/projectList.do")
-	public ModelAndView projectList(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, String majorCode, String midCode, String keyword, @RequestParam(value = "projectStatCode", required = false, defaultValue = "PS03") String projectStatCode, String orderby, HttpSession session)
+	public ModelAndView projectList(@RequestParam(value = "cPage", required = false, defaultValue = "1") int cPage, String majorCode, String midCode, String keyword, @RequestParam(value = "projectStatCode", required = false, defaultValue = "PS03") String projectStatCode, String orderby, HttpSession session, String memberEmail)
 	{
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("majorCode", majorCode);
@@ -42,9 +42,7 @@ public class ProjectListController {
 		map.put("keyword", keyword);
 		map.put("projectStatCode", projectStatCode);
 		map.put("orderby", orderby);
-		Member m = (Member)session.getAttribute("loggedMember");
-		if(m != null) map.put("memberEmail", m.getMemberEmail());
-		
+		map.put("memberEmail", memberEmail);
 		
 		int numPerPage = 10;
 		int totalCount = pService.selectCount(map);

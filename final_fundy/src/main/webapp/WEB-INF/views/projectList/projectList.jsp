@@ -174,7 +174,10 @@
 						<c:set var="endDate" value="${list.endDate }"/>
 						<fmt:formatDate var="endTime" value="${endDate }" pattern="yyyyMMdd"/>
 						<fmt:parseNumber value="${endDate.time / (1000*60*60*24)}" integerOnly="true" var="parsedEnd"/>
-                        <span>${parsedNow - parsedEnd + -2*(parsedNow - parsedEnd) > -1 ? parsedNow - parsedEnd + -2*(parsedNow - parsedEnd) : "0"}일 </span>
+                        <span>
+                        	<c:if test="${parsedEnd - parsedNow > 0 }">${parsedEnd - parsedNow}일 남음</c:if>
+							<c:if test="${parsedEnd - parsedNow <= 0 }">종료</c:if>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -194,14 +197,13 @@
 	
 	$(() => {
 		$('#projectStatCode').on('change', () => {
-			location.href='${path}/projectList/projectList.do?majorCode=${majorCode}&midCode=${midCode}&projectStatCode='+$('#projectStatCode option:selected').val()+'&orderby=${orderby}';
+			location.href='${path}/projectList/projectList.do?majorCode=${majorCode}&midCode=${midCode}&projectStatCode='+$('#projectStatCode option:selected').val()+'&orderby=${orderby}&keyword=${keyword}';
 		});
-	});
-	
-	$(() => {
+		
 		$('#orderby').on('change', () => {
-			location.href='${path}/projectList/projectList.do?majorCode=${majorCode}&midCode=${midCode}&projectStatCode='+$('#projectStatCode option:selected').val()+'&orderby='+$('#orderby option:selected').val();
+			location.href='${path}/projectList/projectList.do?majorCode=${majorCode}&midCode=${midCode}&projectStatCode='+$('#projectStatCode option:selected').val()+'&orderby='+$('#orderby option:selected').val()+'&keyword=${keyword}';
 		});
+	
 	});
 	
 	const projBox = $('.proj-list-box');

@@ -90,7 +90,6 @@
 		JOIN MIDCATEGORY C ON B.MIDCODE = C.MIDCODE
 		JOIN MEMBER D ON A.MEMBEREMAIL = D.MEMBEREMAIL
 		WHERE A.PROJECTNO = #{projectNo}
-		
 	</select>
 	
 	<select id="selectFunderList" parameterType="int" resultType="fundingLog">
@@ -113,7 +112,19 @@
 	</select>
 	
 	<select id="memberDelete" parameterType="string" resultType="int">
-      select count(*) from project where memberEmail=#{memberEmail} and projectStatCode='PS03'
+     	select count(*) from project where memberEmail=#{memberEmail} and projectStatCode='PS03'
+  	</select>
+  	
+  	<select id="myDonationCount" parameterType="map" resultType="int">
+  		SELECT A.PROJECTNO FROM FUNDINGLOG A
+  		JOIN PROJECT B ON A.PROJECTNO = B.PROJECTNO
+  		WHERE A.MEMBEREMAIL = #{memberEmail}
+  	</select>
+  	
+  	<select id="myDonationList" parameterType="map" resultType="project">
+  		SELECT A.PROJECTNO FROM FUNDINGLOG A
+  		JOIN PROJECT B ON A.PROJECTNO = B.PROJECTNO
+  		WHERE A.MEMBEREMAIL = #{memberEmail}
   	</select>
 	
 </mapper>

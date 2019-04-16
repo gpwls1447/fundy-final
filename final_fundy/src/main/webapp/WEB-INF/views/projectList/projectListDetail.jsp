@@ -5,6 +5,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="path" value="${pageContext.request.contextPath }" />
+<c:set var="now" value="<%=new java.util.Date()%>"/>
+<fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="parsedNow"/>
 <style>
 	.proj-category
 	{
@@ -397,7 +399,13 @@
                     <div class="progbar-filled" style="width:${project.reachRate < 100 ? project.reachRate : 100}%"></div>
                     <div class="progbar-info">
                         <span>${project.reachRate }% 달성</span>
-                        <span>17일 남음</span>
+						<c:set var="endDate" value="${project.endDate }"/>
+						<fmt:formatDate var="endTime" value="${endDate }" pattern="yyyyMMdd"/>
+						<fmt:parseNumber value="${endDate.time / (1000*60*60*24)}" integerOnly="true" var="parsedEnd"/>
+                        <span>
+                        	<c:if test="${parsedEnd - parsedNow > 0 }">${parsedEnd - parsedNow}일 남음</c:if>
+							<c:if test="${parsedEnd - parsedNow <= 0 }">종료</c:if>
+                        </span>
                     </div>
                 </div>
             </div>

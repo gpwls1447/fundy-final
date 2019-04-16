@@ -5,10 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="path" value="${pageContext.request.contextPath }" />
-<c:set var="now" value="<%=new java.util.Date()%>"/>
-<fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="parsedNow"/>
 <style>
-
 	/* 마이페이지 시작 */
 	.memberupdate-header
 	{
@@ -98,8 +95,6 @@
 	    background-color: rgb(76, 168, 228);
 	    transition: .3s ease;
 	}
-	
-	
 	
 	/* 프로젝트 리스트 부분 */
 	
@@ -330,50 +325,28 @@
         			</div>
                 </c:if>
         		<c:if test="${fn:length(list) != 0 }">
-	        		<c:forEach items="${list }" var="list" varStatus="vs">
-		            	<div class="proj-list-box" data-project-no="${list.projectNo }" data-project-stat-code="${list.projectStatCode }" >
-		                    <div class="proj-list-thumnail">
-		                        <img src="${path }/resources/projectRepresent/${list.projectThumnail}">
-		                    </div>
-		                    <div class="proj-list-body">
-		                        <div class="proj-list-title">${list.projectTitle }</div>
-		                        <div class="proj-creator">${list.memberNick }</div>
-		                        <hr>
-		                        <div class="proj-brief">${list.projectSumary }</div>
-		                        <div class="proj-progbar-container">
-		                            <div class="proj-progbar-emtpy"></div>
-		                            <div class="proj-progbar-filled" style="width:${list.reachRate > 100 ? 100 : list.reachRate}%"></div>
-		                            <div class="proj-progbar-info">
-		                                <span>${list.reachRate }%</span>
-		                                <span>${list.reach } ￦</span>
-		                        		<c:set var="endDate" value="${list.endDate }"/>
-										<fmt:formatDate var="endTime" value="${endDate }" pattern="yyyyMMdd"/>
-										<fmt:parseNumber value="${endDate.time / (1000*60*60*24)}" integerOnly="true" var="parsedEnd"/>
-		                                <span>
-											<c:if test="${parsedEnd - parsedNow > 0 }">${parsedEnd - parsedNow}일 남음</c:if>
-											<c:if test="${parsedEnd - parsedNow <= 0 }">종료</c:if>
-		                                </span>
-		                            </div>
-		                        </div>
-		                        <c:choose>
-		                        	<c:when test="${list.projectStatCode eq 'PS02'}">
-		                        		<c:set value="examining" var="status"/>
-		                        	</c:when>
-		                        	<c:when test="${list.projectStatCode eq 'PS03'}">
-		                        		<c:set value="open" var="status"/>
-		                        	</c:when>
-		                        	<c:when test="${list.projectStatCode eq 'PS04'}">
-		                        		<c:set value="closed" var="status"/>
-		                        	</c:when>
-		                        	<c:when test="${list.projectStatCode eq 'PS05'}">
-		                        		<c:set value="denied" var="status"/>
-		                        	</c:when>
-		                        </c:choose>
-		                        
-		                        <span class="status-tag ${status }">${list.projectStatName }</span>
-		                    </div>
-		                </div>
-		        	</c:forEach>
+				    <div class="donation-list">
+				        <div class="donation-list-header">
+				            <div>프로젝트 사진</div>
+				            <div>프로젝트 이름</div>
+				            <div>상태</div>
+				            <div>마감일</div>
+				            <div>기부일</div>
+				            <div>기부금액</div>
+				        </div>
+	        			<c:forEach items="${list }" var="list" varStatus="vs">
+				        <div class="donation-list-row">
+				            <div>
+				                <img src="images/thumnail_sample_0.jpg">
+				            </div>
+				            <div>후라라라라라라</div>
+				            <div>진행중</div>
+				            <div>19/04/31</div>
+				            <div>19/05/03 12:00</div>
+				            <div>3,000 ￦</div>
+				        </div>
+		        		</c:forEach>
+				    </div>
         		</c:if>
         		<c:if test="${fn:length(list) != 0}">
 				${pageBar }
@@ -381,44 +354,4 @@
             </div>
         </div>
     </section>
-<script>
-
-	//페이지바
-	const fn_paging = cPage => {
-		location.href='${path}/myproject/myproject.do?cPage='+cPage+'&keyword=${keyword}'+'&memberEmail=${loggedMember.memberEmail}';
-	};
-	
-	//후원/펀딩 옵션 토글
-	const majorCategoryBtn = $('.major-category-toggle > div');
-    $(() => {
-        majorCategoryBtn.on('click', e => {
-            $('.indicator-2').css('top', e.currentTarget.offsetTop);
-        });
-    });
-    
-    //프로젝트박스 상세페이지 링크
-    const projectBox = $('.proj-list-box');
-    projectBox.on('click', e => {
-    	if($(e.currentTarget).data('projectStatCode') == 'PS01')
-    	{
-    		location.href='${path}/project/projectmodify.do?projectNo='+$(e.currentTarget).data('projectNo');
-    		return;
-    	}
-    	
-    	location.href='${path}/projectList/projectListDetail.do?memberEmail=${loggedMember.memberEmail}&projectNo='+$(e.currentTarget).data('projectNo');
-    });
-
-    //카테고리/
-	$(() => {
-		//프로젝트상태 필터
-		$('#project-stat-filter').on('change', () => {
-			location.href='${path}/myproject/myprojectList.do?projectStatCode='+$('#project-stat-filter option:selected').val()+'&keyword=${map['keyword']}&orderby=${map['orderby']}&memberEmail=${loggedMember.memberEmail}';
-		});
-		
-		//정렬 카테고리
-		$('#orderby').on('change', () => {
-			location.href='${path}/myproject/myprojectList.do?orderby='+$('#orderby option:selected').val()+'&keyword=${map['keyword']}&projectStatCode=${map['projectStatCode']}&memberEmail=${loggedMember.memberEmail}';
-		});
-	});
-</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

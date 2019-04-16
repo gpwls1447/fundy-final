@@ -22,20 +22,36 @@ public class MyprojectController {
 	private ProjectListService pService;
 	
 	@RequestMapping("/myproject/myprojectList.do")
-	public ModelAndView myprojectList(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage, String memberEmail)
+	public ModelAndView myprojectList(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage, String memberEmail, String keyword, String projectStatCode, String orderby)
 	{
 		ModelAndView mv = new ModelAndView();
 		int numPerPage = 10;
 		
-		Map map = new HashMap();
+		Map<String, String> map = new HashMap<>();
 		map.put("memberEmail", memberEmail);
+		map.put("keyword", keyword);
+		map.put("projectStatCode", projectStatCode);
+		map.put("orderby", orderby);
 		
 		int totalCount = pService.selectCount(map);
 		List<Project> list = pService.selectList(cPage, numPerPage, map);
 		String pageBar = getPageBar(totalCount, cPage, numPerPage);
+		mv.addObject("map", map);
 		mv.addObject("list", list);
 		mv.addObject("pageBar", pageBar);
 		mv.setViewName("myproject/myproject");
+		
+		return mv;
+	}
+	
+	@RequestMapping("/myproject/myDonationList.do")
+	public ModelAndView myprojectList(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage)
+	{
+		ModelAndView mv = new ModelAndView();
+		int numPerPage = 10;
+
+		Map<String, String>map = new HashMap<>();
+		
 		
 		return mv;
 	}

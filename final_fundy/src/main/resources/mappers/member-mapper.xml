@@ -69,6 +69,4 @@
    	select * from member where memberNick=#{memberNick}
    </select>
    
-   
-   
 </mapper>
