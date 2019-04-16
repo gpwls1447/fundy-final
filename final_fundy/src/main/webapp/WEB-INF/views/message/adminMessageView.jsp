@@ -344,39 +344,16 @@
 <section class="section">
    <div class="message-header">메시지</div>
         <div class="message-nav">
-           <div><a href="${pageContext.request.contextPath}/messageMain.do">일반 메시지</a></div>
+           <div><a href="${pageContext.request.contextPath}/messageMain.do?receiverEmail=${loggedMember.memberEmail}">일반 메시지</a></div>
             <div><a href="${pageContext.request.contextPath}/myProjectMessage.do">내 프로젝트 메시지</a></div>
             <div><a href="${pageContext.request.contextPath}/adminMessage.do">운영자 메시지</a><span class="indicator"></span></div>
         </div>
         <hr id="divider"/>
         <div class="message-body">
             <div class="message-view-header">
-                <div class="go-back"><i class="material-icons">chevron_left</i>메세지함으로 돌아가기</div>
+                <div class="go-back" onclick="history.back(-1);"><i class="material-icons">chevron_left</i>메세지함으로 돌아가기</div>
                 <div class="message-title">'꼬마백조' 날개찾기</div>
-                <div class="option-info-toggle">후원정보 보기 <i class="material-icons">arrow_drop_up</i></div>
-            </div>
-            <div class="option-container">
-                <div class="option-unit">
-                    <div>
-                        <div class="option-sub">옵션 정보 N</div>
-                        <div>
-                            · 실버 목걸이 1개<br>
-                            · 엽서 1개
-                        </div>
-                    </div>
-                    <div>
-                        <div class="option-sub">
-                            수량
-                        </div>
-                        <div>
-                            2개
-                        </div>
-                    </div>
-                    <div>
-                        <div class="option-sub">예상 발송일</div>
-                        <div>2019년 4월 26일</div>
-                    </div>
-                </div>
+                
             </div>
             <div class="contact-container">
                 <div class="contact-thumnail"><img src="images/default_profile_1.png"></div>
@@ -388,37 +365,25 @@
             <div class="msg-container">
                 <div class="msg-unit">
                     <div class="msg-content incoming-content">
-                        이거는 어떻게 사는건가요? 제가 이거 어버이날에 사야하는데
-                        언제쯤 배송이 올까요?
+                        프로젝트 신청하는데 따로 자격이 필요한가요???
                     </div>
                     <div class="msg-date">
                         19/03/24 19:20:54
                     </div>
                 </div>
-                <div class="msg-unit">
+                <div class="msg-unit sent-msg">
+                    <div class="msg-content sent-content">
+                        아니요 신청 양식에 맞게 작성 해주시면 되요ㅎㅎ
+                    </div>
+                    <div class="msg-date msg-date-sent">
+                        19/03/24 19:20:54
+                    </div>
+                </div>
+                   <div class="msg-unit">
                     <div class="msg-content incoming-content">
-                        이거는 어떻게 사는건가요? 제가 이거 어버이날에 사야하는데
-                        언제쯤 배송이 올까요?
+                        감사합니다ㅎㅎㅎ
                     </div>
                     <div class="msg-date">
-                        19/03/24 19:20:54
-                    </div>
-                </div>
-                <div class="msg-unit sent-msg">
-                    <div class="msg-content sent-content">
-                        이거는 어떻게 사는건가요? 제가 이거 어버이날에 사야하는데
-                        언제쯤 배송이 올까요?
-                    </div>
-                    <div class="msg-date msg-date-sent">
-                        19/03/24 19:20:54
-                    </div>
-                </div>
-                <div class="msg-unit sent-msg">
-                    <div class="msg-content sent-content">
-                        이거는 어떻게 사는건가요? 제가 이거 어버이날에 사야하는데
-                        언제쯤 배송이 올까요?
-                    </div>
-                    <div class="msg-date msg-date-sent">
                         19/03/24 19:20:54
                     </div>
                 </div>

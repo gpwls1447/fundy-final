@@ -175,7 +175,7 @@
 	                </div>
 	                <div class="msg-body">
 	                    <div class="msg-nick">${mg.senderEmail }</div>
-	                <a href="${pageContext.request.contextPath}/messageView.do?senderEmail=${mg.senderEmail}&receiverEmail=${loggedMember.memberEmail}&projectNo=${mg.projectNo}">
+	                <a href="${pageContext.request.contextPath}/messageView.do?senderEmail=${mg.senderEmail}&receiverEmail=${loggedMember.memberEmail}&projectNo=${mg.projectNo}&projectTitle=${mg.projectTitle }">
 	                    <div class="proj-title">${mg.projectTitle }</div>
 	                </a>
 	                    <div class="msg-content">${mg.messageContent }</div>

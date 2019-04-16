@@ -351,37 +351,18 @@
         <hr id="divider"/>
         <div class="message-body">
             <div class="message-view-header">
-                <div class="go-back"><i class="material-icons">chevron_left</i>메세지함으로 돌아가기</div>
-                <div class="message-title">'꼬마백조' 날개찾기</div>
-                <div class="option-info-toggle">후원정보 보기 <i class="material-icons">arrow_drop_up</i></div>
+                <div class="go-back" onclick="fn_goBackBtn();"><i class="material-icons">chevron_left</i>메세지함으로 돌아가기</div>
+                <div class="message-title">${projectTitle }</div>
+               
             </div>
-            <div class="option-container">
-                <div class="option-unit">
-                    <div>
-                        <div class="option-sub">옵션 정보 N</div>
-                        <div>
-                            · 실버 목걸이 1개<br>
-                            · 엽서 1개
-                        </div>
-                    </div>
-                    <div>
-                        <div class="option-sub">
-                            수량
-                        </div>
-                        <div>
-                            2개
-                        </div>
-                    </div>
-                    <div>
-                        <div class="option-sub">예상 발송일</div>
-                        <div>2019년 4월 26일</div>
-                    </div>
-                </div>
-            </div>
+     
             <div class="contact-container">
-                <div class="contact-thumnail"><img src="images/default_profile_1.png"></div>
+                <c:forEach items="${sml }" var="sml">
+                <div class="contact-thumnail"><img src="/resources/images/${sml.memberProfile }"></div>
+                <!-- 사진 불러오는 경로 못찾음 -->
                 <div class="contact-body">
-                    <div class="contact-nick">21Kyo</div>
+                    <div class="contact-nick">${sml.memberNick}</div>
+                 </c:forEach>
                     <div class="contact-email">${senderEmail }</div>
                 </div>
             </div>
@@ -423,21 +404,20 @@
         
         
 <script>
-	
-            
-	/*$(document).ready(function(){
- 		$(".send-btn").click(function(){
-			var messageContent=$("parsedText").val();	
-		});
-	}); */
-
 	function fn_sendBtn()
 	{
 		const msgText = $('.msg-textarea').html();
 		const parsedText = msgText.replace(/(<([^>]+)>)/g, '<br>');
 		location.href="${path}/insertMsg.do?senderEmail=${senderEmail}&receiverEmail=${receiverEmail}&messageContent="+parsedText+"&projectNo=${projectNo}"
 	}
+	
+	function fn_goBackBtn()
+	{
+		location.href="${path}/messageMain.do?receiverEmail=${loggedMember.memberEmail}"
+	}
 </script>
+
+t>
             
             
 </section>
