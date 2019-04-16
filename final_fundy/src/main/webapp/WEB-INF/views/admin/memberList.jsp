@@ -375,9 +375,9 @@ body {
 		<section class="section">
 			<div class="section-wrapper">
 				<div class="poroject-table-top">
-					<select class="selectMember">
-						<option>가입날짜 순</option>
-						<option>이름 순</option>
+					<select class="orderby" name="orderby">
+						<option value="enrollDate" ${map['orderby'] =='enrollDate' ? 'selected':'' }>가입날짜 순</option>
+						<option value="memberNick" ${map['orderby'] =='memberNick' ? 'selected':'' }>닉네임 순</option>
 					</select>
 				</div>
 				<div class="project-table">
@@ -446,6 +446,11 @@ body {
 			location.href="${path}/admin/adminPage";
 		})
 	})
- 
+	
+	//동적쿼리
+	$('.orderby').on('change', function(){
+		console.log($('.orderby option:selected').val());
+		location.href="${path}/admin/memberListView.do?orderby="+$('.orderby option:selected').val();
+	})
 </script>
 </html>
