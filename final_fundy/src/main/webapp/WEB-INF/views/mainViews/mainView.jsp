@@ -263,20 +263,22 @@ function fn_seeProjectView(projectNo) {
 
 function fn_paging(condition) {
 	$("#viewLoading").fadeIn(125);
-	console.log(condition);
 	var cPage = Number($(event.target).parents().children(".cPage").val());
 	var choice = $(event.target).parents().children(".choice").val();
-	console.log(cPage+1);
-	console.log(choice);
-	console.log($(event.target).parents(".proj-section-wrapper"));
-	
-	/* $.ajax({
-		url: "${path }/main/changePaging,
+	var index;
+	if(choice=='new') {
+		index = 1;
+	}
+	else if(choice=='soon'){
+		index = 2;
+	}
+	$.ajax({
+		url: "${path }/main/changePaging.do?choice=" + choice + "&cPage=" + cPage + "&condition=" + condition + "&majorCode=${majorCode }",
 		dataType: "html",
 		success: function(data) {
-			$(event.target).parents(".proj-section-wrapper").html(data);
+			$(".proj-section-wrapper").eq(index).html(data);
 		}
-	}); */
+	});
 	$("#viewLoading").fadeOut(125);
 };
 </script>
