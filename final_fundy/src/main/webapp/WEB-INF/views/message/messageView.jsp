@@ -344,7 +344,7 @@
 <section class="section">
    <div class="message-header">메시지</div>
         <div class="message-nav">
-           <div><a href="${pageContext.request.contextPath}/messageMain.do">일반 메시지</a><span class="indicator"></span></div>
+           <div><a href="${pageContext.request.contextPath}/messageMain.do?receiverEmail=${loggedMember.memberEmail}">일반 메시지</a><span class="indicator"></span></div>
             <div><a href="${pageContext.request.contextPath}/myProjectMessage.do">내 프로젝트 메시지</a></div>
             <div><a href="${pageContext.request.contextPath}/adminMessage.do">운영자 메시지</a></div>
         </div>
@@ -382,55 +382,63 @@
                 <div class="contact-thumnail"><img src="images/default_profile_1.png"></div>
                 <div class="contact-body">
                     <div class="contact-nick">21Kyo</div>
-                    <div class="contact-email">21kyo@kh.or.kr</div>
+                    <div class="contact-email">${senderEmail }</div>
                 </div>
             </div>
+            <c:forEach items="${allList }" var="al">
             <div class="msg-container">
+            <c:if test="${al.senderEmail eq senderEmail }">
                 <div class="msg-unit">
                     <div class="msg-content incoming-content">
-                        이거는 어떻게 사는건가요? 제가 이거 어버이날에 사야하는데
-                        언제쯤 배송이 올까요?
+                        ${al.messageContent }
                     </div>
                     <div class="msg-date">
-                        19/03/24 19:20:54
+                        <fmt:formatDate value="${al.messageDate }" pattern="yyyy/MM/dd hh:mm"/>
                     </div>
                 </div>
-                <div class="msg-unit">
-                    <div class="msg-content incoming-content">
-                        이거는 어떻게 사는건가요? 제가 이거 어버이날에 사야하는데
-                        언제쯤 배송이 올까요?
-                    </div>
-                    <div class="msg-date">
-                        19/03/24 19:20:54
-                    </div>
-                </div>
+            </c:if>
+           <c:if test="${al.senderEmail eq receiverEmail }">
                 <div class="msg-unit sent-msg">
                     <div class="msg-content sent-content">
-                        이거는 어떻게 사는건가요? 제가 이거 어버이날에 사야하는데
-                        언제쯤 배송이 올까요?
+                      ${al.messageContent }
                     </div>
                     <div class="msg-date msg-date-sent">
-                        19/03/24 19:20:54
+                       <fmt:formatDate value="${mg.messageDate }" pattern="yyyy/MM/dd hh:mm"/>
                     </div>
                 </div>
-                <div class="msg-unit sent-msg">
-                    <div class="msg-content sent-content">
-                        이거는 어떻게 사는건가요? 제가 이거 어버이날에 사야하는데
-                        언제쯤 배송이 올까요?
-                    </div>
-                    <div class="msg-date msg-date-sent">
-                        19/03/24 19:20:54
-                    </div>
-                </div>
+          </c:if>
             </div>
+           </c:forEach> 
+           
             <div class="write-container">
-                <div class="msg-textarea" contenteditable="true">메시지를 입력하세요</div>
-                <svg class="send-btn" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve">
+                <div class="msg-textarea" contenteditable="true">
+                
+                </div>
+                <svg class="send-btn" onclick="fn_sendBtn();" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve">
                 <g><path d="M745,990L500,806.3L316.2,990V683.8l490-490L157,549L10,438.8L990,10L745,990z"/></g>
                 </svg>
             </div>
         </div>
+        
+        
+        
+<script>
+	
+            
+	/*$(document).ready(function(){
+ 		$(".send-btn").click(function(){
+			var messageContent=$("parsedText").val();	
+		});
+	}); */
 
-
+	function fn_sendBtn()
+	{
+		const msgText = $('.msg-textarea').html();
+		const parsedText = msgText.replace(/(<([^>]+)>)/g, '<br>');
+		location.href="${path}/insertMsg.do?senderEmail=${senderEmail}&receiverEmail=${receiverEmail}&messageContent="+parsedText+"&projectNo=${projectNo}"
+	}
+</script>
+            
+            
 </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

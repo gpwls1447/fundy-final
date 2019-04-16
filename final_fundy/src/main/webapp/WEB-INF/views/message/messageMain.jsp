@@ -146,7 +146,7 @@
 <section class="section">
     <div class="message-header">메시지</div>
         <div class="message-nav">
-          <div><a href="${pageContext.request.contextPath}/messageMain.do">일반 메시지</a><span class="indicator"></span></div>
+          <div><a href="${pageContext.request.contextPath}/messageMain.do?receiverEmail=${loggedMember.memberEmail}">일반 메시지</a><span class="indicator"></span></div>
             <div><a href="${pageContext.request.contextPath}/myProjectMessage.do">내 프로젝트 메시지</a></div>
             <div><a href="${pageContext.request.contextPath}/adminMessage.do">운영자 메시지</a></div>
 
@@ -175,7 +175,7 @@
 	                </div>
 	                <div class="msg-body">
 	                    <div class="msg-nick">${mg.senderEmail }</div>
-	                <a href="${pageContext.request.contextPath}/messageView.do?senderEmail=${mg.senderEmail}&receiverEmail=${loggedMember.memberEmail}">
+	                <a href="${pageContext.request.contextPath}/messageView.do?senderEmail=${mg.senderEmail}&receiverEmail=${loggedMember.memberEmail}&projectNo=${mg.projectNo}">
 	                    <div class="proj-title">${mg.projectTitle }</div>
 	                </a>
 	                    <div class="msg-content">${mg.messageContent }</div>

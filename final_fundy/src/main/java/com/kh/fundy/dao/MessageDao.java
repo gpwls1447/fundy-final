@@ -12,5 +12,6 @@ public interface MessageDao {
 	List<Message> reMessageList(Message ms);
 	//보낸 메세지 불러오기
 	List<Message> seMessageList(Message ms);
-	
+	//메세지 입력하기
+	int insertMsg(Message ms);
 }

@@ -31,6 +31,13 @@ public class MessageDaoImpl implements MessageDao {
 	public List<Message> seMessageList(Message ms) {
 		return session.selectList("message.seMessageList",ms);
 	}
+
+	//메세지 입력
+	@Override
+	public int insertMsg(Message ms) {
+		return session.insert("message.insertMsg",ms);
+	}
+	
 	
 	
 }

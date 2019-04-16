@@ -31,6 +31,12 @@ public class MessageServiceImpl implements MessageService {
 	public List<Message> seMessageList(Message ms) {
 		return dao.seMessageList(ms);
 	}
+
+	//메세지 입력하기
+	@Override
+	public int insertMsg(Message ms) {
+		return dao.insertMsg(ms);
+	}
 	
 	
 	

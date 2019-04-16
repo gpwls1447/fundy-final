@@ -16,4 +16,14 @@
   <select id="seMessageList" resultType="message">
   Select * from message m join project p on m.projectno=p.projectno where senderemail = #{receiverEmail} and receiveremail = #{senderEmail} order by messagedate asc
   </select>
+  
+  <!-- 메세지 입력하기 -->
+  <insert id="insertMsg">
+
+  INSERT INTO MESSAGE VALUES(#{receiverEmail},#{senderEmail},#{messageContent},#{messageDate},#{projectNo},null)
+  </insert>
+  
+  <select id="msgMemberList" resultType="member">
+  select * from member m join message msg on m.memberemail = msg.senderemail where senderemail = #{senderEmail} and rownum = 1 order by messagedate desc
+  </select>
 </mapper>
