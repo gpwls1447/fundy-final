@@ -870,29 +870,45 @@
             nav.css('display', 'flex');
         });
     });
+    
     //메인 슬라이드
     const slideLeftBtn = $('.main-slide-btn--left');
     const slideRightBtn = $('.main-slide-btn--right');
     const slideImageTrack = $('.main-image-track');
     const navbar = $('.main-slide-navbar > ul');
     const dots = navbar.children();
+    
     //이동 버튼 함수 바인드
     $(() => {
         slideLeftBtn.on('click', moveSlidePrev);
         slideRightBtn.on('click', moveSlideNext);
     });
+    
     //이전 슬라이드 이동 함수
-    const moveSlidePrev = () => {
+    const moveSlidePrev = (e, isDot) => {
         const targetSlide = slideImageTrack.children().last(); 
+        if(slideImageTrack.is(':animated')) return;
         slideImageTrack.prepend(targetSlide);
+        if(!isDot) {
+	        slideImageTrack.css('left', '-200%');
+	        slideImageTrack.animate({left: '-100%'}, 200);
+        }
         moveDot('prev');
     }
+
     //다음 슬라이드 이동 함수
-    const moveSlideNext = () => {
+    const moveSlideNext = (e, isDot) => {
         const currentSlide = slideImageTrack.children().first();
+        
+        if(slideImageTrack.is(':animated')) return;
         slideImageTrack.append(currentSlide);
+        if(!isDot) {
+	        slideImageTrack.css('left', '0');
+	        slideImageTrack.animate({left: '-100%'}, 200);        	
+        }
         moveDot('next');
     }
+    
     //점 이동 함수
     const moveDot = (direction) => {
         const firstDot = navbar.children().first();
@@ -902,6 +918,7 @@
             case 'next' : lastDot.prependTo(navbar); break;
         }
     };
+    
     //점 클릭 동작 함수
     $(() => {
         dots.on('click', e => {
@@ -911,18 +928,23 @@
             {
                 for(let i = 0 ; i < Math.abs(indexGap) ; i++)
                 {
-                    moveSlidePrev();
+                    moveSlidePrev(e, true);
                 }
             }
             else
             {
                 for(let i = 0 ; i < Math.abs(indexGap) ; i++)
                 {
-                    moveSlideNext();
+                    moveSlideNext(e, true);
                 }
             }
         });
     });
+    
+    setInterval(()=> {
+    	slideRightBtn.trigger('click');
+    }, 4000);
+    
     //인기 카테고리 클릭 시 클래스 변동
     const popCategBtns = $('.popular-nav').children();
     $(() => {

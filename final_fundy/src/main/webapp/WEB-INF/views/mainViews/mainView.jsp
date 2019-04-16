@@ -308,12 +308,12 @@ function fn_paging(condition) {
         <div class="main-slide">
             <div class="main-slide-container">
                 <img src="${path }/resources/images/slide_nav_left_white.png" class="main-slide-btn main-slide-btn--left">
-                <div class="main-image-track">
-	                <img src="${path }/resources/images/main_slide_01.jpg" alt="" class="main-current-slide">
-	                <img src="${path }/resources/images/main_slide_02.jpg" alt="">
-	                <img src="${path }/resources/images/main_slide_03.jpg" alt="">
-	                <img src="${path }/resources/images/main_slide_04.jpg" alt="">
-                </div>
+                <div class="main-image-track"
+                	><img src="${path }/resources/images/main_slide_01.jpg" alt="" class="main-current-slide"
+	                ><img src="${path }/resources/images/main_slide_02.jpg" alt=""
+	                ><img src="${path }/resources/images/main_slide_03.jpg" alt=""
+	                ><img src="${path }/resources/images/main_slide_04.jpg" alt=""
+	                ></div>
                 <img src="${path }/resources/images/slide_nav_right_white.png" class="main-slide-btn main-slide-btn--right">
             </div>
             <div class="main-slide-navbar">
