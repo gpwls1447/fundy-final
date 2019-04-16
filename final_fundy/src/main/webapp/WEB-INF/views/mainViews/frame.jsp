@@ -11,27 +11,41 @@
 	<c:when test="${param.cho == 'soon' }">
 		<c:set var="list" value="${soonProjectList}"></c:set>
 	</c:when>
-	<c:otherwise>
-		<c:set var="list" value="${projectList}"></c:set>
-	</c:otherwise>
 </c:choose>
 <div class="proj-section-header">
     <div class="proj-section-header-text-area">
 		<c:choose>
-			<c:when test="${param.cho == 'new' }">
+			<c:when test="${param.cho == 'new' || cho == 'new' }">
 				새 프로젝트
+				<c:set var="cho" value="new" />
 			</c:when>
-			<c:when test="${param.cho == 'soon' }">
+			<c:when test="${param.cho == 'soon' || cho == 'soon' }">
 				임박 프로젝트
+				<c:set var="cho" value="soon" />
 			</c:when>
 		</c:choose>
     </div>
     <div class="proj-section-header-pagination-area">
-		<ul class="pagination pagination-sm justify-content-end">
-		<li class="page-item"><a class="page-link paging" onclick="fn_paging('previous')">&laquo;</a></li>
-		<li class="page-item"><a class="page-link paging" onclick="fn_paging('next')">&raquo;</a></li>
-		</ul>
-		<input type="hidden" class="cPage" value="1" />
+    	<c:choose>
+    		<c:when test="${pageBtn == null }">
+    			<ul class="pagination pagination-sm justify-content-end">
+				<li class="page-item disabled"><a class="page-link paging" onclick="fn_paging('previous')">&laquo;</a></li>
+				<li class="page-item"><a class="page-link paging" onclick="fn_paging('next')">&raquo;</a></li>
+				</ul>
+    		</c:when>
+    		<c:otherwise>
+    			${pageBtn }
+    		</c:otherwise>
+    	</c:choose>
+    	<c:choose>
+    		<c:when test="${cPage == null || cPage == 0 }">
+    			<input type="hidden" class="cPage" value="1" />
+    		</c:when>
+    		<c:otherwise>
+    			<input type="hidden" class="cPage" value="${cPage }" />
+    		</c:otherwise>
+    	</c:choose>
+		<input type="hidden" class="choice" value="${cho }" />
 	</div>
 </div>
 <div class="proj-container">
@@ -47,7 +61,7 @@
 					</div>
 					<div class="progbar-info">
 						<span>${proj.REACHRATE }%</span>
-						<span class="goalPrice-span">${proj.REACH } 원</span>
+						<span class="goalPrice-span"><fmt:formatNumber type="number" maxFractionDigits="3" value="${proj.REACH }" /> 원</span>
 						<span>${proj.REMAINDATE }일 남음</span>
 					</div>
 				</div>

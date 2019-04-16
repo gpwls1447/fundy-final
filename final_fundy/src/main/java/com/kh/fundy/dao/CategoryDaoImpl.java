@@ -1,8 +1,6 @@
 package com.kh.fundy.dao;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,22 +29,4 @@ public class CategoryDaoImpl implements CategoryDao {
 		return session.selectList("category.selectAllMinor");
 	}
 	
-	@Override
-	public List<Map<String, Object>> selectProjectList(Map<String, String> ctgMap) {
-		return session.selectList("category.selectProjectList", ctgMap);
-	}
-
-	@Override
-	public List<Map<String, Object>> selectEditorProjectList(Map<String, String> ctgMap) {
-		return session.selectList("category.selectEditorProjectList", ctgMap);
-	}
-	
-	@Override
-	public List<Map<String, Object>> selectNewSoonProjectList(String midCtg, String condition, String majorCode) {
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("midCtg", midCtg);
-		map.put("condition", condition);
-		map.put("majorCode", majorCode);
-		return session.selectList("category.selectNewSoonProjectList", map);
-	}
 }

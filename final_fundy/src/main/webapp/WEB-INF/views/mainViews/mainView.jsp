@@ -246,13 +246,13 @@ $(function () {
 });
 
 function fn_loadedList(midCode, majorCode) {
-	$("#viewLoading").fadeIn(500);
+	$("#viewLoading").fadeIn(125);
 	$.ajax({
 		url: "${path }/main/changePopCtg.do?midCode=" + midCode + "&majorCategory=" + majorCode,
 		dataType: "html",
 		success: function(data) {
 			$(".ctg-populerList").html(data);
-			$("#viewLoading").fadeOut(500);
+			$("#viewLoading").fadeOut(125);
 		}
 	});
 }
@@ -262,7 +262,24 @@ function fn_seeProjectView(projectNo) {
 }
 
 function fn_paging(condition) {
-	console.log($(event.target).parent().parent().parent().children($('.cPage')));
+	$("#viewLoading").fadeIn(125);
+	var cPage = Number($(event.target).parents().children(".cPage").val());
+	var choice = $(event.target).parents().children(".choice").val();
+	var index;
+	if(choice=='new') {
+		index = 1;
+	}
+	else if(choice=='soon'){
+		index = 2;
+	}
+	$.ajax({
+		url: "${path }/main/changePaging.do?choice=" + choice + "&cPage=" + cPage + "&condition=" + condition + "&majorCode=${majorCode }",
+		dataType: "html",
+		success: function(data) {
+			$(".proj-section-wrapper").eq(index).html(data);
+		}
+	});
+	$("#viewLoading").fadeOut(125);
 };
 </script>
 <section class="section">
