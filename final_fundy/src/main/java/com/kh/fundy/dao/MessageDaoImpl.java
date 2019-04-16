@@ -19,6 +19,18 @@ public class MessageDaoImpl implements MessageDao {
 	public List<Message> messageList(String receiverEmail) {
 		return session.selectList("message.messageList",receiverEmail);
 	}
+
+	//받은메세지 불러오기
+	@Override
+	public List<Message> reMessageList(Message ms) {
+		return session.selectList("message.reMessageList",ms);
+	}
+
+	//보낸메세지 불러오기
+	@Override
+	public List<Message> seMessageList(Message ms) {
+		return session.selectList("message.seMessageList",ms);
+	}
 	
 	
 }
