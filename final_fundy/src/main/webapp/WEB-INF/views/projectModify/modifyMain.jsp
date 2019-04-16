@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script>
 	$(function() {
+		$("#emailAuth-area").hide();
 		$('#viewLoading').hide();
 		///////////////////////////////
 		/* 스마트에디터 로드*/
@@ -429,7 +430,6 @@
 		       data:{"authKey":authKey},
 		       success:function(data){
 		    	   if(data == "true"){
-		    		   console.log(data);
 		    		   $("#_projectEmail").val($("#projectEmailAuth").val().trim());
 		    		   $(".authMessage").css("color", "green");
 		    		   $(".authMessage").text("인증되었습니다.");

@@ -6,6 +6,7 @@
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <script>
 function sendAuthEmail() {
+	$("#emailAuth-area").fadeIn(100);
 	var email=$("#projectEmailAuth").val().trim();
     $.ajax({
        url:"${path}/project/emailAuth.do?projectNo=${projectNo}",
@@ -56,7 +57,7 @@ function sendAuthEmail() {
 							<input type="email" class="form-control inputLong" id="projectEmailAuth" maxlength="40" placeholder="내용을 입력해주세요." value="${project.PROJECTEMAIL }" />
 						</div>
 						<div>
-							<button class="btn btn-primary auth-btn disabled" onclick="sendAuthEmail()" style="background-color: #126196; border: 0px;"><span id="auth-btn-text">인증 메일 받기</span></button>
+							<button class="btn btn-primary auth-btn <c:if test="project.PROJECTEMAIL != null">disabled</c:if>" onclick="sendAuthEmail()" style="background-color: #126196; border: 0px;"><span id="auth-btn-text">인증 메일 받기</span></button>
 						</div>
 					</div>
 					<div id="emailAuth-area" style="display:block;">
