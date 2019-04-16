@@ -88,8 +88,6 @@ public class MainConroller {
 		int endNo = cPage * numPerPage;
 		paraMap.put("startNo", String.valueOf(startNo));
 		paraMap.put("endNo", String.valueOf(endNo));
-		System.out.println(startNo);
-		System.out.println(endNo);
 		
 		String pageBtn = "<ul class='pagination pagination-sm justify-content-end'>";
 		//이전버튼 만들기
