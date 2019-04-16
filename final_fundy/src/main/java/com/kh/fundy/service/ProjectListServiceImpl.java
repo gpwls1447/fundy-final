@@ -44,11 +44,6 @@ public class ProjectListServiceImpl implements ProjectListService {
 	public List<FundingLog> selectFunderList(int projectNo) {
 		return dao.selectFunderList(projectNo);
 	}
-
-	@Override
-	public int memberDelete(String memberEmail) {
-		return dao.memberDelete(memberEmail);
-	}
 	
 	public List<FundingOption> selectFundingOptionList(int projectNo) {
 		List<FundingOption> foList = dao.selectFundingOptionList(projectNo);
@@ -59,4 +54,19 @@ public class ProjectListServiceImpl implements ProjectListService {
 		return foList;
 	}
 
+	@Override
+	public int myDonationCount(String memberEmail) {
+		return dao.myDonationCount(memberEmail);
+	}
+
+	@Override
+	public List<Project> myDonationList(String memberEmail) {
+		return dao.myDonationList(memberEmail);
+	}
+
+	@Override
+	public int projectCount(String memberEmail) {
+		return dao.projectCount(memberEmail);
+	}
+	
 }
