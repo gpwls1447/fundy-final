@@ -3,9 +3,10 @@
 <mapper namespace="admin">
 
 	<select id="selectList" resultType="project" parameterType="string">
-		SELECT M.MEMBERNICK, P.*
+		SELECT M.MEMBERNICK, P.*, PS.PROJECTSTATNAME
 			FROM PROJECT P
 			JOIN MEMBER M ON P.MEMBEREMAIL = M.MEMBEREMAIL
+			JOIN PROJECTSTATUS PS ON P.PROJECTSTATCODE = PS.PROJECTSTATCODE 
 			ORDER BY BEGINDATE DESC
 	</select>
 	

@@ -576,7 +576,14 @@
             <div class="close-btn">
                 <i class="material-icons">clear</i>
             </div>
-            <img class ="user-profile-pic" src="${path }/resources/memberProfile/${loggedMember.memberProfile}">
+            <div class="header-last user-btn" >
+                	<c:if test="${loggedMember.kakaoId==null }">
+                		<img src="${path }/resources/memberProfile/${loggedMember.memberProfile}" >
+                	</c:if>
+ 					<c:if test="${loggedMember.kakaoId!=null }">               	
+                		<img src="${loggedMember.memberProfile}" style="width: 100px; height: 100px;">
+                	</c:if>
+                </div>
             <div class="user-nick">
                 ${loggedMember.memberNick }
             </div>
@@ -641,22 +648,22 @@
                   <div class="form-group">
                   <div class="email-group">
                      <input type="email" class="signup-modal-input" placeholder="이메일" id="memberEmail" name="memberEmail" required />
-                     <input type="button" class="off login-modal-btn" id="emailAuth" value="메일인증" 
-                     		style="margin-top: 10px; padding-top: 0px; padding-bottom: 0px; width: 65px; height: 35px;"/>
+                     <input type="button" class="off login-modal-btn" id="emailAuth" value="인증" 
+                     		style="border-radius: 50px;margin-top: 15px;padding-top: 2px;padding-bottom: 2px;width: 65px;height: 35px;padding-left: 4px;border-right-width: 4px;margin-right: 0px;padding-right: 4px;"/>
                   </div>
                   <div class="email-group">  
                     <input type="text" class="signup-modal-input" id="authKey" name="authKey" placeholder="인증번호" />
-                    <input type="button" class="off login-modal-btn " id="authCheck" value="인증확인" 
-                   			style="margin-top: 10px; padding-top: 0px; padding-bottom: 0px; width: 65px; height: 35px;"/>
+                    <input type="button" class="off login-modal-btn " id="authCheck" value="확인" 
+                   			style="border-radius: 50px;margin-top: 15px;padding-top: 2px;padding-bottom: 2px;width: 65px;height: 35px;padding-left: 4px;border-right-width: 4px;margin-right: 0px;padding-right: 4px;"/>
                   </div>   
-                    <span class="auth ok">인증키가 일치합니다.</span>
-              		<span class="auth error">인증키가 일치하지 않습니다.</span>
+                    <span class="span auth ok">인증키가 일치합니다.</span>
+              		<span class="span auth error">인증키가 일치하지 않습니다.</span>
              		<input type="hidden" name="chekcAuth" id="checkAuth"/>
                     <input type="password" class="signup-modal-input" placeholder="비밀번호" id="password" name="memberPw" required /> 
                     <input type="password" class="signup-modal-input" placeholder="비밀번호 확인" id="password-ck" required /> 
                     <input type="text" class="signup-modal-input" placeholder="닉네임" id="memberNick" name="memberNick" required />
-                    <span class="guide ok">사용 가능</span>
-              		<span class="guide error">사용 불가</span>
+                    <span class="span guide ok">사용 가능</span>
+              		<span class="span guide error">사용 불가</span>
              		<input type="hidden" name="checkId" id="checkId"/>
                   </div>
                   <div class="modal-btn-container">
@@ -781,7 +788,13 @@
 	    });
    });
    
-   
+ //찜바구니 기능
+   $(() => {
+      $('.favorite-btn').on("click", ()=> {
+         location.href="${path}/favorite/favoriteList.do";
+      })
+   })
+
     //패스워드 일치 확인
      $(function(){
         $("#password-ck").blur(function(){
@@ -794,9 +807,8 @@
             $("#password").focus();
          }
       });
-        //정규화적용
-        
    }); 
+ 
    //로그인 모달
    const loginBtn = $('.login-btn');
    const loginModal = $('.login-modal');

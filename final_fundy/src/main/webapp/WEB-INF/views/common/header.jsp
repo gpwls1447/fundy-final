@@ -69,7 +69,12 @@
                 <c:if test="${loggedMember!=null }">
                 <div>${loggedMember.memberNick }님</div>
                 <div class="header-last user-btn" >
-                	<img src="${path }/resources/memberProfile/${loggedMember.memberProfile}">
+                	<c:if test="${loggedMember.kakaoId==null }">
+                		<img src="${path }/resources/memberProfile/${loggedMember.memberProfile}">
+                	</c:if>
+ 					<c:if test="${loggedMember.kakaoId!=null }">               	
+                		<img src="${loggedMember.memberProfile}">
+                	</c:if>
                 </div>
                 </c:if>
                 
