@@ -45,6 +45,10 @@
 							<button class="btn btn-primary" style="background-color: #126196; border: 0px;">인증 메일 받기</button>
 						</div>
 					</div>
+					<div id="emailAuth-area" style="display:block;">
+						<input type="text" class="form-control input25Per" /><span class="authMessage" style="margin-left:15px; color: orange;">인증번호를 입력해주세요.</span>
+						<input type="hidden" id="_projectEmail" value="${project.PROJECTEMAIL }" />
+					</div>
 				</div>
 			</div>
 			
