@@ -246,13 +246,13 @@ $(function () {
 });
 
 function fn_loadedList(midCode, majorCode) {
-	$("#viewLoading").fadeIn(500);
+	$("#viewLoading").fadeIn(125);
 	$.ajax({
 		url: "${path }/main/changePopCtg.do?midCode=" + midCode + "&majorCategory=" + majorCode,
 		dataType: "html",
 		success: function(data) {
 			$(".ctg-populerList").html(data);
-			$("#viewLoading").fadeOut(500);
+			$("#viewLoading").fadeOut(125);
 		}
 	});
 }
@@ -262,7 +262,22 @@ function fn_seeProjectView(projectNo) {
 }
 
 function fn_paging(condition) {
-	console.log($(event.target).parent().parent().parent().children($('.cPage')));
+	$("#viewLoading").fadeIn(125);
+	console.log(condition);
+	var cPage = Number($(event.target).parents().children(".cPage").val());
+	var choice = $(event.target).parents().children(".choice").val();
+	console.log(cPage+1);
+	console.log(choice);
+	console.log($(event.target).parents(".proj-section-wrapper"));
+	
+	/* $.ajax({
+		url: "${path }/main/changePaging,
+		dataType: "html",
+		success: function(data) {
+			$(event.target).parents(".proj-section-wrapper").html(data);
+		}
+	}); */
+	$("#viewLoading").fadeOut(125);
 };
 </script>
 <section class="section">

@@ -16,7 +16,7 @@
 			</div>
 			<div class="progbar-info">
 				<span>${proj.REACHRATE }%</span>
-				<span class="goalPrice-span">${proj.REACH } 원</span>
+				<span class="goalPrice-span"><fmt:formatNumber type="number" maxFractionDigits="3" value="${proj.REACH }" /> 원</span>
 				<span>${proj.REMAINDATE }일 남음</span>
 			</div>
 		</div>
