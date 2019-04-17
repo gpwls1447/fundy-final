@@ -147,7 +147,7 @@
 <section class="section">
     <div class="message-header">메시지</div>
         <div class="message-nav">
-            <div><a href="${pageContext.request.contextPath}/messageMain.do">일반 메시지</a></div>
+            <div><a href="${pageContext.request.contextPath}/messageMain.do?receiverEmail=${loggedMember.memberEmail}">일반 메시지</a></div>
             <div><a href="${pageContext.request.contextPath}/myProjectMessage.do">내 프로젝트 메시지</a><span class="indicator"></span></div>
             <div><a href="${pageContext.request.contextPath}/adminMessage.do">운영자 메시지</a></div>
         </div>
@@ -167,8 +167,20 @@
                 <div class="msg-body">
                     <div class="msg-nick">21kyo</div>
                      <a href="${pageContext.request.contextPath}/myProjectMessageView.do">
-                    <div class="proj-title">'꼬마백조' 날개찾기</div>
+                    <div class="proj-title">댕댕이 사진 전시회</div>
                     </a>
+                    <div class="msg-content">  네!! 감사합니다!!</div>
+                </div>
+                <div class="msg-date">19/03/24     19:20:54</div>
+            </div>
+            <div class="msg-unit">
+                <div class="thumnail-container">
+                    <img class="msg-thumnail" src="images/default_profile_1.png">
+                    <span class="unread-mark">N</span>
+                </div>
+                <div class="msg-body">
+                    <div class="msg-nick">hjy1369</div>
+                    <div class="proj-title">오지는 제품을 만나보시겠습니까?</div>
                     <div class="msg-content">감사합니다!! 다시 주문해볼게요~~~~~~~~~~~!</div>
                 </div>
                 <div class="msg-date">19/03/24     19:20:54</div>
@@ -179,21 +191,9 @@
                     <span class="unread-mark">N</span>
                 </div>
                 <div class="msg-body">
-                    <div class="msg-nick">21kyo</div>
-                    <div class="proj-title">'꼬마백조' 날개찾기</div>
-                    <div class="msg-content">감사합니다!! 다시 주문해볼게요~~~~~~~~~~~!</div>
-                </div>
-                <div class="msg-date">19/03/24     19:20:54</div>
-            </div>
-            <div class="msg-unit">
-                <div class="thumnail-container">
-                    <img class="msg-thumnail" src="images/default_profile_1.png">
-                    <span class="unread-mark">N</span>
-                </div>
-                <div class="msg-body">
-                    <div class="msg-nick">21kyo</div>
-                    <div class="proj-title">'꼬마백조' 날개찾기</div>
-                    <div class="msg-content">감사합니다!! 다시 주문해볼게요~~~~~~~~~~~!</div>
+                    <div class="msg-nick">kjw4074</div>
+                    <div class="proj-title">댕댕이 사진 전시회</div>
+                    <div class="msg-content">넵!! 알겠습니다ㅎㅎ</div>
                 </div>
                 <div class="msg-date">19/03/24     19:20:54</div>
             </div>

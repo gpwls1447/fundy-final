@@ -28,7 +28,7 @@ public class MessagController {
 		ModelAndView mv=new ModelAndView();
 
 		List<Message> list=service.messageList(receiverEmail);
-		//List<Message> senderList=service.msgMemberList();
+		
 		System.out.println(list);
 		mv.addObject("list",list);
 		mv.addObject("receiverEmail",receiverEmail);
@@ -38,7 +38,7 @@ public class MessagController {
 	
 	//메세지 상세보기
 	@RequestMapping("/messageView.do")
-	public ModelAndView messageView(String senderEmail,String receiverEmail,Message ms)
+	public ModelAndView messageView(String senderEmail,String receiverEmail,Message ms,String projectTitle)
 	{
 		
 		ModelAndView mv=new ModelAndView();
@@ -46,9 +46,8 @@ public class MessagController {
 		ms.setSenderEmail(senderEmail);
 		List<Message> reList=service.reMessageList(ms);
 		List<Message> seList=service.seMessageList(ms);
-/*		System.out.println(reList);
-		System.out.println(seList);*/
-	
+
+		List<Message> senderList=service.msgMemberList(ms);
 		List<Message> allList=new ArrayList<Message>();
 		allList.addAll(seList);
 		allList.addAll(reList);
@@ -56,6 +55,8 @@ public class MessagController {
 		Collections.sort(allList,new DescDate());
 		System.out.println(allList);
 		
+		mv.addObject("projectTitle",projectTitle);
+		mv.addObject("sml", senderList);
 		mv.addObject("projectNo", ms.getProjectNo());
 		mv.addObject("senderEmail",senderEmail);
 		mv.addObject("receiverEmail",receiverEmail);
