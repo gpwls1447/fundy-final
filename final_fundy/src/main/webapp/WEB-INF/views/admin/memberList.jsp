@@ -200,7 +200,6 @@ body {
 
 .project-table-header {
 	display: flex;
-	border-bottom: 1px solid #666;
 	font-size: 18px;
 	background-color:rgba(200, 200, 200, 0.1);
 }
@@ -322,14 +321,20 @@ body {
 	display: flex;
 	justify-content: flex-end;
 	padding-bottom:20px;
+	
 }
 
-.selectMember {
+.orderby {
 	width:150px;
 	height:30px;
 	background-color:rgba(255, 255, 255, 0.1);
 	color:white;
 }
+
+.orderby option {
+	color:black;
+}
+
 .admin{
 	height:50px;
 	cursor: pointer;
@@ -365,10 +370,7 @@ body {
 	<div class="header-section-wrapper">
 		<header class="header">
 			<div class="header-wrapper">
-				<div class="title">전체보기</div>
-				<div class="title">활동회원</div>
-				<div class="title">탈퇴회원</div>
-				<div class="title">블랙회원</div>
+				<div class="title">회원정보</div>
 			</div>
 		</header>
 		<section class="section">
@@ -393,9 +395,6 @@ body {
 						<div>
 							<a href="#">탈퇴일시</a>
 						</div>
-						<div>
-							<a href="#"><i class="material-icons">block</i></a>
-						</div>
 					</div>
 					<!-- for문으로 리스트 출력 -->
 					
@@ -406,9 +405,6 @@ body {
 						<div>${list.memberNick }</div>
 						<div>${list.enrollDate }</div>
 						<div>${list.memberQuit }</div>
-						<div>
-							<i class="material-icons">block</i>
-						</div>
 					</div>
 					</c:forEach>
 				</div>

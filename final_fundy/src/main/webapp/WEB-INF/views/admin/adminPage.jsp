@@ -365,7 +365,7 @@ body {
 	<div class="header-section-wrapper">
 		<header class="header">
 			<div class="header-wrapper">
-				<div class="title">Overview</div>
+				<div class="title">&nbsp프로젝트 관리</div>
 			</div>
 		</header>
 		<section class="section">
