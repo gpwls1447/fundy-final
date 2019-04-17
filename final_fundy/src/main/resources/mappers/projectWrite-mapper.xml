@@ -66,7 +66,7 @@
 	</insert>
 	
 	<insert id="insertOptionDetail" parameterType="map">
-		INSERT INTO OPTIONDETAIL VALUES(FUNDINGOPTION_SEQ.CURRVAL, #{rewardName}, #{rewardCnt}, OptionDetail_SEQ.NEXTVAL)
+		INSERT INTO OPTIONDETAIL VALUES(OptionDetail_SEQ.NEXTVAL, FUNDINGOPTION_SEQ.CURRVAL, #{rewardName}, #{rewardCnt})
 	</insert>
 	
 	<update id="updateThumnail" parameterType="map">

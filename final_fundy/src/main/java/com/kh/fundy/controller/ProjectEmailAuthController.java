@@ -30,25 +30,29 @@ public class ProjectEmailAuthController {
 	@Autowired
 	private BCryptPasswordEncoder bcEncoder;
 	
+	private Map<String, Object> authMap = new HashMap<String, Object>();
+	
 	//메일 인증
 	 @RequestMapping("/project/emailAuth.do")
 	 @ResponseBody
-	 public Map<String, Object> emailAuth(String projectEmail, Model model, HttpSession session) {
+	 public Map<String, Object> emailAuth(String projectEmail, Model model, HttpSession session, String projectNo) {
 		 String key = new TempKey().getKey(20,false);
 		 model.addAttribute("authKey", key);
 		 String flag="";
-		 //메일 전송
+		 flag="true";
+		 
+		 ckAuthKey=key;
+		 String encrptedKey = bcEncoder.encode(ckAuthKey);
+		 authMap.put(projectNo, encrptedKey);
+		 
 		 try {
 			 MailHandler sendMail = new MailHandler(mailSender);
 			 sendMail.setSubject("FUNDY  서비스 이메일 인증]");
-			 sendMail.setText(new StringBuffer().append("<h1>메일인증</h1>"+key).append("<a href='http://localhost:9090/fundy/").append(" '\n\n target='_blank'>Fundy 사이트로 이동하기</a>").toString());
+			 sendMail.setText(new StringBuffer().append("<h1>메일인증</h1><br><br><br>인증값: "+key).toString());
 			 sendMail.setFrom("fundy@gmail.com", "Fundy ");       
 			 sendMail.setTo(projectEmail);
 			 sendMail.send();
 			 flag="true";
-			 
-			 ckAuthKey=key;
-			 session.setAttribute("ckAuthKey", ckAuthKey);
 		 }
 		 catch(MessagingException | UnsupportedEncodingException e) {
 			 e.printStackTrace();
@@ -60,11 +64,12 @@ public class ProjectEmailAuthController {
 		 return map;
 	 }
 	 
-	 //인증키 확인
+	 //인증키 확인 ajax
 	 @RequestMapping("/project/authKey.do")
-	 public void AuthKey(String authKey, HttpServletResponse res, HttpSession session) throws IOException {
+	 public void AuthKey(String authKey, HttpServletResponse res, HttpSession session, String projectNo) throws IOException {
+		 String sessionAuthKey = (String)authMap.get(projectNo);
+		 boolean isOk = bcEncoder.matches(authKey, sessionAuthKey);
 		 
-		 boolean isOk=(ckAuthKey.equals(authKey))?true:false;
-		 res.getWriter().println(isOk);
+		 res.getWriter().print(isOk);
 	 }
 }

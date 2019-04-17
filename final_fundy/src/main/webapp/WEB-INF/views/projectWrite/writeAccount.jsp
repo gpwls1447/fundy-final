@@ -4,6 +4,22 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="path" value="${pageContext.request.contextPath }" />
+<script>
+function sendAuthEmail() {
+	$("#emailAuth-area").fadeIn(100);
+	var email=$("#projectEmailAuth").val().trim();
+	$("#_projectEmail").val("");
+    $.ajax({
+       url:"${path}/project/emailAuth.do?projectNo=${projectNo}",
+       dataType:"json",
+       data:{"projectEmail":email},
+       success:function(data){
+    	   $("#auth-btn-text").text("메일 발송 완료!");
+    	   $(".auth-btn").addClass("disabled");
+       }
+    });
+}
+</script>
 		<!-- 신청서영역 -->
 		
 			<div class="write-section">
@@ -39,15 +55,15 @@
 					</div>
 					<div style="display: flex">
 						<div style="width: 50%; padding-right: 15px;">
-							<input type="email" class="form-control inputLong" id="_projectEmail" maxlength="40" placeholder="내용을 입력해주세요." />
+							<input type="email" class="form-control inputLong" id="projectEmailAuth" maxlength="40" placeholder="내용을 입력해주세요." value="" />
 						</div>
 						<div>
-							<button class="btn btn-primary" style="background-color: #126196; border: 0px;">인증 메일 받기</button>
+							<button class="btn btn-primary auth-btn" onclick="sendAuthEmail()" style="background-color: #126196; border: 0px;"><span id="auth-btn-text">인증 메일 받기</span></button>
 						</div>
 					</div>
 					<div id="emailAuth-area" style="display:block;">
-						<input type="text" class="form-control input25Per" /><span class="authMessage" style="margin-left:15px; color: orange;">인증번호를 입력해주세요.</span>
-						<input type="hidden" id="_projectEmail" value="${project.PROJECTEMAIL }" />
+						<input type="text" id="email-auth-input" class="form-control input25Per" /><span class="authMessage" style="margin-left:15px; color: orange;">인증번호를 입력해주세요.</span>
+						<input type="hidden" id="_projectEmail" value="" />
 					</div>
 				</div>
 			</div>
