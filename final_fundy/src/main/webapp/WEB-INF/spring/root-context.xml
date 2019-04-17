@@ -10,7 +10,6 @@
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
  
-	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
 	<!-- Mybatis Bean 설정 -->
@@ -54,4 +53,5 @@
          </props>
       </property>
    </bean>
+
 </beans>
