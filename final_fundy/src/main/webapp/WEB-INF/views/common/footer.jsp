@@ -646,7 +646,7 @@
             <div class="content">
                
                <div class="signup-title form-title"><img src="${path }/resources/images/join.png" class="join"></div>
-               <form method="post" action="${path }/member/memberEnrollEnd.do" autocomplete="off">
+               <form onsubmit="return validate();" method="post" action="${path }/member/memberEnrollEnd.do" autocomplete="off">
                   <div class="form-group">
                   <div class="email-group">
                      <input type="email" class="signup-modal-input" placeholder="이메일" id="memberEmail" name="memberEmail" required />
@@ -654,7 +654,7 @@
                      		style="border-radius: 50px;margin-top: 15px;padding-top: 2px;padding-bottom: 2px;width: 65px;height: 35px;padding-left: 4px;border-right-width: 4px;margin-right: 0px;padding-right: 4px;"/>
                   </div>
                   <div class="email-group">  
-                    <input type="text" class="signup-modal-input" id="authKey" name="authKey" placeholder="인증번호" />
+                    <input type="text" class="signup-modal-input" id="authKey" name="authKey" placeholder="인증번호" required/>
                     <input type="button" class="off login-modal-btn " id="authCheck" value="확인" 
                    			style="border-radius: 50px;margin-top: 15px;padding-top: 2px;padding-bottom: 2px;width: 65px;height: 35px;padding-left: 4px;border-right-width: 4px;margin-right: 0px;padding-right: 4px;"/>
                   </div>   
@@ -698,9 +698,37 @@
 <input type="hidden" id="nickCheck" value="0">
 <input type="hidden" id="authCheck" value="0">
 <script>
-   //닉네임 중복 체크
-   $(".guide").hide();
-   $(() => {
+	
+	//비밀번호 정규식
+	var password =$("#password").val();
+	$(() => {
+		$("#password").on("blur", () => {
+			var pw = $("#password").val();
+			var num = pw.search(/[0-9]/g);
+			var eng = pw.search(/[a-z]/ig);
+			var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+			if(pw.length<8||pw.length>20){
+			  	alert("8자리 ~ 20자리 이내로 입력해주세요.");
+			  	$("#password").val("");
+			  	return false;
+			}
+			if(pw.search(/₩s/) != -1){
+			  	alert("비밀번호는 공백업이 입력해주세요.");
+			  	$("#password").val("");
+				return false;
+			} 
+			if(num < 0 || eng < 0 || spe < 0 ){
+				alert("영문,숫자, 특수문자를 혼합하여 입력해주세요.");
+				$("#password").val("");
+				return false;
+			}
+			return true;
+		})
+	});
+
+	//닉네임 중복 체크
+   	$(".guide").hide();
+   	$(() => {
       $("#memberNick").on("keyup", () => {
          var memberNick = $('#memberNick').val();
          $.ajax({
