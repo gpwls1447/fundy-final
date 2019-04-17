@@ -459,36 +459,34 @@
     const IMP = window.IMP;
     IMP.init('imp40348442');
     
-    const callPayModule = () => {
-    	$('#settle-frm').submit();
-    	
-//     	IMP.request_pay({
-//             pg : 'inicis', 
-//             pay_method : 'card',
-//             merchant_uid : 'merchant_' + new Date().getTime(),
-//             name : '주문명:결제테스트',
-//             amount : parseInt($('#final-price-value').text()),
-//             buyer_email : '${loggedMember.memberEmail}',
-//             buyer_name : '${loggedMember.memberNick}',
-//             buyer_addr : '서울특별시 강남구 삼성동',
-//             buyer_postcode : '123-456',
-//             m_redirect_url : ''
-//         }, rsp => {
-//             if ( rsp.success ) {
-//                 var msg = '결제가 완료되었습니다.';
-//                 $('#imp-uid').val(rsp.imp_uid);
-//                 $('#merchant-uid').val(rsp.merchant_uid);
-//                 $('#paid-amount').val(rsp.paid_amount);
-//                 $('#apply_num').val(rsp.apply_num);
+    const callPayModule = () => {  	
+    	IMP.request_pay({
+            pg : 'inicis', 
+            pay_method : 'card',
+            merchant_uid : 'merchant_' + new Date().getTime(),
+            name : '주문명:결제테스트',
+            amount : parseInt($('#final-price-value').text()),
+            buyer_email : '${loggedMember.memberEmail}',
+            buyer_name : '${loggedMember.memberNick}',
+            buyer_addr : '서울특별시 강남구 삼성동',
+            buyer_postcode : '123-456',
+            m_redirect_url : ''
+        }, rsp => {
+            if ( rsp.success ) {
+                var msg = '결제가 완료되었습니다.';
+                $('#imp-uid').val(rsp.imp_uid);
+                $('#merchant-uid').val(rsp.merchant_uid);
+                $('#paid-amount').val(rsp.paid_amount);
+                $('#apply_num').val(rsp.apply_num);
 
-//                 $('#settle-frm').submit();
+                $('#settle-frm').submit();
                 
-//             } else {
-//                 var msg = '결제에 실패하였습니다.';
-//                 msg += '에러내용 : ' + rsp.error_msg;
-//             }
-//             alert(msg);
-//         });
+            } else {
+                var msg = '결제에 실패하였습니다.';
+                msg += '에러내용 : ' + rsp.error_msg;
+            }
+            alert(msg);
+        });
     };
     
     const loadDaumPost = () => {

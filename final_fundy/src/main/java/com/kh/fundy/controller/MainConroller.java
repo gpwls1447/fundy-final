@@ -37,6 +37,7 @@ public class MainConroller {
 		List<Map<String, Object>> soonProjectList = service.selectNewSoonProjectList("all", "soon", majorCode);
 		
 		List<Category> midCList = cService.selectAllMid();
+		System.out.println(midCList.get(2).getMidImage());
 		
 		model.addAttribute("majorCode", majorCode);
 		model.addAttribute("midCList", midCList);

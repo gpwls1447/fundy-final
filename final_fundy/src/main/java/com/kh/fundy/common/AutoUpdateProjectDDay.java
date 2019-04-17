@@ -14,7 +14,7 @@ public class AutoUpdateProjectDDay {
 	@Autowired
 	SqlSessionTemplate session;
 	
-	@Scheduled(cron="* /10 * * * *")	//테스트로 10초마다, 401번 프로젝트 업데이트문 실행
+	@Scheduled(cron="0 0/10 * * * *")	//10분마다 메소드 실행
 	public void autoUpdate() {
 		session.update("autoUpdate.projectEndUpdate");
 	}

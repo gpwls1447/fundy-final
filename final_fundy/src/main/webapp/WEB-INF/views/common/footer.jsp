@@ -488,6 +488,7 @@
    .email-group
    {
         display : flex;
+        align-items: flex-end;
    }
    
 	.span{
@@ -497,6 +498,20 @@
    
    .join{
    		height:70px;
+   }
+   
+   .auth-input
+   {
+   	width: 70%;
+   }
+   
+   .auth-group{display: none;}
+   
+   .auth-btn
+   {
+		padding: 7px 10px;
+		margin-left: 5px;
+		margin-right: 0;
    }
    
 </style>
@@ -649,16 +664,13 @@
                <form onsubmit="return validate();" method="post" action="${path }/member/memberEnrollEnd.do" autocomplete="off">
                   <div class="form-group">
                   <div class="email-group">
-                     <input type="email" class="signup-modal-input" placeholder="이메일" id="memberEmail" name="memberEmail" required />
-                     <input type="button" class="off login-modal-btn" id="emailAuth" value="인증" 
-                     		style="border-radius: 50px;margin-top: 15px;padding-top: 2px;padding-bottom: 2px;width: 65px;height: 35px;padding-left: 4px;border-right-width: 4px;margin-right: 0px;padding-right: 4px;"/>
+                     <input type="email" class="signup-modal-input auth-input" placeholder="이메일" id="memberEmail" name="memberEmail" required />
+                     <input type="button" class="off login-modal-btn auth-btn" id="emailAuth" value="인증" />
                   </div>
-                  <div class="email-group">  
-                    <input type="text" class="signup-modal-input" id="authKey" name="authKey" placeholder="인증번호" required/>
-                    <input type="button" class="off login-modal-btn " id="authCheck" value="확인" 
-                   			style="border-radius: 50px;margin-top: 15px;padding-top: 2px;padding-bottom: 2px;width: 65px;height: 35px;padding-left: 4px;border-right-width: 4px;margin-right: 0px;padding-right: 4px;"/>
+                  <div class="email-group auth-group">  
+                    <input type="text" class="signup-modal-input auth-input" id="authKey" name="authKey" placeholder="인증번호" required/>
+                    <input type="button" class="off login-modal-btn auth-btn" id="authCheck" value="확인" />
                   </div>   
-                    <span class="span auth ok">인증키가 일치합니다.</span>
               		<span class="span auth error">인증키가 일치하지 않습니다.</span>
              		<input type="hidden" name="chekcAuth" id="checkAuth"/>
                     <input type="password" class="signup-modal-input" placeholder="비밀번호" id="password" name="memberPw" required /> 
@@ -700,10 +712,11 @@
 <script>
 	
 	//비밀번호 정규식
-	var password =$("#password").val();
+	const pwInput = $("#password");
 	$(() => {
 		$("#password").on("blur", () => {
-			var pw = $("#password").val();
+			if(pwInput.val().trim() == 0) return;
+			const pwVal = $("#password").val();
 			var num = pw.search(/[0-9]/g);
 			var eng = pw.search(/[a-z]/ig);
 			var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
@@ -762,6 +775,8 @@
             data:{"memberEmail":email},
             success:function(data){
             	alert("이메일이 발송되었습니다. 인증번호를 적어주세요");
+            	$('.auth-group').fadeIn(500);
+            	$('.auth-group').css('display', 'flex');
             }
          });
       });
@@ -778,11 +793,14 @@
             data:{"authKey":authKey},
             success:function(data){
                if(data==true){
-                   $(".auth.ok").show()
-                   $(".auth.error").hide();
+            	   $(".auth.error").hide();
+            	   $('.auth-group').fadeToggle(500);
+            	   $('.auth-input').css('border-bottom', '1px solid rgb(91, 180, 143)');
+            	   $('.auth-input').css('width', '100%');
+            	   $('.auth-btn').hide();
+            	   
                 }
                 else{
-                   $(".auth.ok").hide()
                    $(".auth.error").show();
                 }
             },

@@ -87,10 +87,10 @@
     </header>
     <nav class="nav">
 		<div class="nav-wrapper">
-			<div><a href="${path }/projectList/projectList.do?majorCode=${majorCode}"><img class="current-category" src="${path }/resources/images/category-sample.jpg">전체보기</a></div>
+			<div><a href="${path }/projectList/projectList.do?majorCode=${majorCode}"><img class="current-category" src="${path }/resources/midImages/all.jpg">전체보기</a></div>
 		    <c:forEach items="${midCList}" var="mc">
 				<c:if test="${mc.majorCode eq majorCode }">
-					<div><a href="${path }/projectList/projectList.do?midCode=${mc.midCode}"><img src="${path }/resources/images/category-sample.jpg">${mc.midName }</a></div>
+					<div><a href="${path }/projectList/projectList.do?midCode=${mc.midCode}"><img src="${path }/resources/midImages/${mc.midImage}">${mc.midName }</a></div>
 		    	</c:if>
 		    </c:forEach>
     	</div>

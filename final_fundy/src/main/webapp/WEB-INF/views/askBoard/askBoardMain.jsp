@@ -83,7 +83,7 @@
             margin: 30px 0;
         }
         
-          .memberupdate-nav
+        .memberupdated-nav
         {
             width: 100%;
             display: flex;
@@ -141,27 +141,17 @@
 		}
 		#askCom
 		{
-			/* border-radius:15px 15px 15px 15px; */
 			color: rgb(18, 97, 149);
-			/* background-color: rgb(18, 97, 149);
-			border:1px solid rgb(18, 97, 149); 
-			margin: 0; */
 		}
 		#askRd
 		{
-			/* border-radius:15px 15px 15px 15px; */
 			color: #ccc;
-			/* width: 60px;
-            height: 50px;
-			background-color: #ccc;
-			border:1px solid #ccc; 
-			margin: 0; */
 		}
 </style>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <section class="section">
-       <div class="memberupdate-header">게시판</div>
-        <div class="memberupdate-nav">
+       <div class="board-header">게시판</div>
+        <div class="board-nav">
             <div><a href="${pageContext.request.contextPath}/askBoardMain.do">1대1게시판</a><span class="indicator"></span></div>
             <div><a href="${pageContext.request.contextPath}/noticeMain.do">공지사항</a></div>
         </div>

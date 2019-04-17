@@ -7,11 +7,11 @@
 	</select>
 	
 	<select id="selectAllMid" resultType="category">
-		select majorCode, majorname, midcode, midname from majorCategory join midCategory using (majorCode) order by midcode
+		select majorCode, majorname, midcode, midname, mc.midImage from majorCategory join midCategory mc using (majorCode) order by midcode
 	</select>
 	
 	<select id="selectAllMinor" resultType="category">
-		select * from (select majorCode, majorname, midcode, midname from majorCategory join midCategory using (majorCode)) join minorCategory using (midCode) order by minorcode
+		select * from (select majorCode, majorname, midcode, midname, mc.midImage from majorCategory mc join midCategory using (majorCode)) join minorCategory using (midCode) order by minorcode
 	</select>
 
 </mapper>

@@ -332,9 +332,7 @@
             <div class="notice-form-image-upload">
                 <div>이미지</div>
                 <div>
-                    <div class="added-image-box">
-                        <img src="images/order_sample_5.jpg">
-                    </div>
+                    
                     <div class="image-upload-container">
                         <span>+</span><input type="file" name="originalFile" id="originalFile">
                     </div>

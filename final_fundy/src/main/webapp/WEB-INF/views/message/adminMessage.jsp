@@ -161,7 +161,7 @@
             </div>
             <div class="msg-unit">
                 <div class="thumnail-container">
-                    <img class="msg-thumnail" src="images/default_profile_1.png">
+                    <img class="msg-thumnail" src="images/default_profile.png">
                     <span class="unread-mark">N</span>
                 </div>
                 <div class="msg-body">

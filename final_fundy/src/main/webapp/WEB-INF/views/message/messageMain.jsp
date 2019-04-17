@@ -166,7 +166,7 @@
             <c:set var="sendEmail" value="${mg.senderEmail}"/>
 	            <div class="msg-unit">
 	                <div class="thumnail-container">
-	                    <img class="msg-thumnail" src="images/default_profile_1.png">
+	                    <img class="msg-thumnail" src="${path }/resources/memberProfile/${mg.memberProfile}">
 	                    <span class="unread-mark">
 	                    <c:if test="${mg.hasRead==null }">
 	                    	N
@@ -175,10 +175,10 @@
 	                </div>
 	                <div class="msg-body">
 	                    <div class="msg-nick">${mg.senderEmail }</div>
-	                <a href="${pageContext.request.contextPath}/messageView.do?senderEmail=${mg.senderEmail}&receiverEmail=${loggedMember.memberEmail}&projectNo=${mg.projectNo}&projectTitle=${mg.projectTitle }">
 	                    <div class="proj-title">${mg.projectTitle }</div>
-	                </a>
+	                <a href="${pageContext.request.contextPath}/messageView.do?senderEmail=${mg.senderEmail}&receiverEmail=${loggedMember.memberEmail}&projectNo=${mg.projectNo}&projectTitle=${mg.projectTitle }">
 	                    <div class="msg-content">${mg.messageContent }</div>
+	                </a>
 	                </div>
 	                <div class="msg-date">
 	                <fmt:formatDate value="${mg.messageDate }" pattern="yyyy/MM/dd hh:mm"/>

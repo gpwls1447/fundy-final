@@ -7,212 +7,206 @@
 
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <style>
-   .support-notice-view-wrapper
-        {
-            width: 1024px;
-            font-family: 'Noto Sans KR';
-            font-size: 14px;
-        }
+.support-notice-view-wrapper
+{
+    width: 1024px;
+    font-family: 'Noto Sans KR';
+    font-size: 14px;
+}
 
-        .support-notice-view-wrapper input[type="button"]
-        {
-            font-family: 'Noto Sans KR';
-            font-size: 12px;
-            width: 120px;
-            height: 40px;
-            margin: 0;
-            border: none;
-            background-color: rgb(18, 97, 149);
-            color: white;
-            margin: 0 10px;
-            border-radius: 2px;
-            cursor: pointer;
-        }
-        
-         .support-notice-view-wrapper input[type="submit"]
-        {
-            font-family: 'Noto Sans KR';
-            font-size: 12px;
-            width: 120px;
-            height: 40px;
-            margin: 0;
-            border: none;
-            background-color: rgb(18, 97, 149);
-            color: white;
-            margin: 0 10px;
-            border-radius: 2px;
-            cursor: pointer;
-        }
-        
-        #reDelBtn
-        {
-         	font-family: 'Noto Sans KR';
-            font-size: 12px;
-            width: 120px;
-            height: 40px;
-            margin: 0;
-            border: none;
-            background-color:rgb(230, 126, 34);
-            color: white;
-            margin: 0 10px;
-            border-radius: 2px;
-            cursor: pointer;
-        }
-        
-        #boardDeleteBtn
-        {
-        	font-family: 'Noto Sans KR';
-            font-size: 12px;
-            width: 120px;
-            height: 40px;
-            margin: 0;
-            border: none;
-            background-color:rgb(230, 126, 34);
-            color: white;
-            margin: 0 10px;
-            border-radius: 2px;
-            cursor: pointer;
-        }
+.support-notice-view-wrapper input[type="button"]
+{
+    font-family: 'Noto Sans KR';
+    font-size: 12px;
+    width: 120px;
+    height: 40px;
+    margin: 0;
+    border: none;
+    background-color: rgb(18, 97, 149);
+    color: white;
+    margin: 0 10px;
+    border-radius: 2px;
+    cursor: pointer;
+}
 
-        .support-notice-view-wrapper input:focus
-        {
-            outline: none;
-        }
+ .support-notice-view-wrapper input[type="submit"]
+{
+    font-family: 'Noto Sans KR';
+    font-size: 12px;
+    width: 120px;
+    height: 40px;
+    margin: 0;
+    border: none;
+    background-color: rgb(18, 97, 149);
+    color: white;
+    margin: 0 10px;
+    border-radius: 2px;
+    cursor: pointer;
+}
 
-        .support-notice-view-title p
-        {
-            font-size: 21px;
-            display: inline-block;
-        }
+#reDelBtn
+{
+ 	font-family: 'Noto Sans KR';
+    font-size: 12px;
+    width: 120px;
+    height: 40px;
+    margin: 0;
+    border: none;
+    background-color:rgb(230, 126, 34);
+    color: white;
+    margin: 0 10px;
+    border-radius: 2px;
+    cursor: pointer;
+}
 
-        .support-notice-view-title span
-        {
-            margin-left: 10px;
-        }
+#boardDeleteBtn
+{
+	font-family: 'Noto Sans KR';
+    font-size: 12px;
+    width: 120px;
+    height: 40px;
+    margin: 0;
+    border: none;
+    background-color:rgb(230, 126, 34);
+    color: white;
+    margin: 0 10px;
+    border-radius: 2px;
+    cursor: pointer;
+}
 
-        .support-notice-view
-        {
-            display: flex;
-            flex-flow: column nowrap;
-           border-top: 2px solid rgb(42, 71, 114);
-            border-bottom: 1px solid rgb(42, 71, 114);
-        }
+.support-notice-view-wrapper input:focus
+{
+    outline: none;
+}
 
-        .support-notice-view > div
-        {
-            display: flex;  
-            border-bottom: 1px solid #eee;
-        }
+.support-notice-view-title p
+{
+    font-size: 21px;
+    display: inline-block;
+}
 
-        .support-notice-view > div > div
-        {
-            display: flex;
-            justify-items: flex-start;
-            padding: 15px;
-        }
+.support-notice-view-title span
+{
+    margin-left: 10px;
+}
 
-        .support-notice-view > div > div:nth-of-type(1){flex: 1 1 0;  background-color: rgb(245, 245, 245);}
-        .support-notice-view > div > div:nth-of-type(2){flex: 9 1 0;}
+.support-notice-view
+{
+    display: flex;
+    flex-flow: column nowrap;
+   border-top: 2px solid rgb(42, 71, 114);
+    border-bottom: 1px solid rgb(42, 71, 114);
+}
 
-        .support-notice-view-date-hit > div:nth-of-type(1){flex: 1 1 0 !important;padding-right: 21px !important;}
-        .support-notice-view-date-hit > div:nth-of-type(2){flex: 4 1 0 !important;}        
-        .support-notice-view-date-hit > div:nth-of-type(3){flex: 1 1 0; background-color: rgb(245, 245, 245) !important;}
-        .support-notice-view-date-hit > div:nth-of-type(4){flex: 4 1 0;}
+.support-notice-view > div
+{
+    display: flex;  
+    border-bottom: 1px solid #eee;
+}
+
+.support-notice-view > div > div
+{
+    display: flex;
+    justify-items: flex-start;
+    padding: 15px;
+}
+
+.support-notice-view > div > div:nth-of-type(1){flex: 1 1 0;  background-color: rgb(245, 245, 245);}
+.support-notice-view > div > div:nth-of-type(2){flex: 9 1 0;}
+
+.support-notice-view-date-hit > div:nth-of-type(1){flex: 1 1 0 !important;padding-right: 21px !important;}
+.support-notice-view-date-hit > div:nth-of-type(2){flex: 4 1 0 !important;}
+.support-notice-view-date-hit > div:nth-of-type(3){flex: 1 1 0; background-color: rgb(245, 245, 245) !important;}
+.support-notice-view-date-hit > div:nth-of-type(4){flex: 4 1 0;}
 
 
-        .support-notice-view-content > div
-        {
-            background-color: white !important;
-            
-        }
+.support-notice-view-content > div
+{
+    background-color: white !important;
+    
+}
 
-        .support-notice-view-btns
-        {
-            display: flex;
-            justify-content: flex-end;
-            padding: 10px 0;
-        }
+.support-notice-view-btns
+{
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 0;
+}
 
-        .support-notice-prev > div, .support-notice-next > div
-        {
-            background-color: white !important;
-            padding: 5px 5px !important;
-        }
+.support-notice-prev > div, .support-notice-next > div
+{
+    background-color: white !important;
+    padding: 5px 5px !important;
+}
 
-        .support-notice-prev > div > img, .support-notice-next > div > img
-        {
-            width: 13px;
-            height: 13px;
-            margin-right: 5px;
-            margin-top: 4px;
-        }
-        
-             .memberupdate-header
-        {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            font-size: 27px;
-            font-weight: bold;
-            margin: 30px 0;
-        }
-        
-          .memberupdate-nav
-        {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
-          .memberupdate-nav > div
-        {
-            margin: 0 20px;
-            font-size: 17px;
-            position: relative;
-        }
-        
-         #divider
-        {
-            position: absolute;
-            display: block;
-            height: 1px;
-            border: none;
-            border-top: 1px solid #ccc;
-            left: 0;
-            width: 100vw;
-        }
-         .indicator
-        {
-            display: block;
-            bottom: -8px;
-            position: absolute;
-            width: 100%;
-            height: 5px;
-            background-color: rgb(76, 168, 228);
-        }
-        
-        a:link { color: black; text-decoration: none;}
-	 	a:visited { color: black; text-decoration: none;}
-	 	a:hover { color: black; text-decoration: none;}
+.support-notice-prev > div > img, .support-notice-next > div > img
+{
+    width: 13px;
+    height: 13px;
+    margin-right: 5px;
+    margin-top: 4px;
+}
+
+     .memberupdate-header
+{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: 27px;
+    font-weight: bold;
+    margin: 30px 0;
+}
+
+  .memberupdate-nav
+{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+  .memberupdate-nav > div
+{
+    margin: 0 20px;
+    font-size: 17px;
+    position: relative;
+}
+
+ #divider
+{
+    position: absolute;
+    display: block;
+    height: 1px;
+    border: none;
+    border-top: 1px solid #ccc;
+    left: 0;
+    width: 100vw;
+}
+ .indicator
+{
+    display: block;
+    bottom: -8px;
+    position: absolute;
+    width: 100%;
+    height: 5px;
+    background-color: rgb(76, 168, 228);
+}
+
+a:link { color: black; text-decoration: none;}
+a:visited { color: black; text-decoration: none;}
+a:hover { color: black; text-decoration: none;}
 		
-		#replyTable{border-spacing:10px;
-					border-collapse:separate;
-		}
-		
-		#reply-container{display: inline-block; margin: 1em; width: 100%;}
-		o
-      /*   .reply-container input[type="text"]
-        {
-        	width:600px;
-        
-        } */
-        
+#replyTable{border-spacing:10px;
+		border-collapse:separate;
+}
+
+#reply-container{display: inline-block; margin: 1em; width: 100%;}        
+
 </style>
 <section class="section">
  <div class="notice-form-wrapper">
  <div class="memberupdate-header">게시판</div>
         <div class="memberupdate-nav">
             <div><a href="${pageContext.request.contextPath}/askBoardMain.do">1대1게시판</a><span class="indicator"></span></div>
-            <div><a href="${pageContext.request.contextPath}/noticeMain.do">공지사항</a></div>
+            <div><a href="${pageContext.request.contextPiceMain.do">공지사항</a></div>
           
         </div>
 

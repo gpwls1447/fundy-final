@@ -11,15 +11,14 @@ public class Message {
 	private int projectNo;
 	private String hasRead;
 	private String projectTitle;
+	private String memberProfile;
 	
 	
-	public Message() {
-		// TODO Auto-generated constructor stub
-	}
+	public Message() {}
 
 
 	public Message(String senderEmail, String receiverEmail, String messageContent, Date messageDate, int projectNo,
-			String hasRead, String projectTitle) {
+			String hasRead, String projectTitle, String memberProfile) {
 		super();
 		this.senderEmail = senderEmail;
 		this.receiverEmail = receiverEmail;
@@ -28,6 +27,7 @@ public class Message {
 		this.projectNo = projectNo;
 		this.hasRead = hasRead;
 		this.projectTitle = projectTitle;
+		this.memberProfile = memberProfile;
 	}
 
 
@@ -101,12 +101,13 @@ public class Message {
 	}
 
 
-	@Override
-	public String toString() {
-		return "Message [senderEmail=" + senderEmail + ", receiverEmail=" + receiverEmail + ", messageContent="
-				+ messageContent + ", messageDate=" + messageDate + ", projectNo=" + projectNo + ", hasRead=" + hasRead
-				+ ", projectTitle=" + projectTitle + "]";
+	public String getMemberProfile() {
+		return memberProfile;
 	}
 
-	
+
+	public void setMemberProfile(String memberProfile) {
+		this.memberProfile = memberProfile;
+	}
+
 }

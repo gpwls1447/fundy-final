@@ -2,6 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="autoUpdate">
 	<update id="projectEndUpdate">
-		UPDATE PROJECT SET PROJECTSTATCODE='PS04' WHERE where projectstatcode='PS03' AND (enddate-sysdate) like '-%00'
+		UPDATE PROJECT SET PROJECTSTATCODE='PS04' WHERE projectstatcode='PS03' AND (enddate-sysdate) like '-%00'
 	</update>
 </mapper>
