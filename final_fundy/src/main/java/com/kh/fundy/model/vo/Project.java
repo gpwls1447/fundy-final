@@ -36,9 +36,7 @@ public class Project {
 	private int favorited;
 	private String projectStatName;
 	
-	
 	public Project() {}
-
 
 	public Project(int projectNo, String memberNick, String projectTitle, String projectThumnail, String projectContent,
 			Timestamp beginDate, Timestamp endDate, int goalPrice, String recommended, String recImageName,

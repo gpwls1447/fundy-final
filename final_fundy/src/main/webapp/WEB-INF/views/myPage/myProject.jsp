@@ -8,9 +8,7 @@
 <c:set var="now" value="<%=new java.util.Date()%>"/>
 <fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="parsedNow"/>
 <style>
-
-	/* 마이페이지 시작 */
-	.memberupdate-header
+	.mypage-header
 	{
 	    width: 100%;
 	    display: flex;
@@ -20,18 +18,19 @@
 	    margin: 30px 0;
 	}
 	
-	.memberupdate-nav
+	.mypage-nav
 	{
 	    width: 100%;
 	    display: flex;
 	    justify-content: center;
 	}
 	
-	.memberupdate-nav > div
+	.mypage-nav > div
 	{
 	    margin: 0 20px;
 	    font-size: 17px;
 	    position: relative;
+	    cursor: pointer;
 	}
 	
 	#divider
@@ -164,7 +163,7 @@
 	.proj-list-order > select
 	{
 	    padding: 3px 8px;
-	    margin-right: 10px;
+	    margin-left: 10px;
 	}
 	
 	.proj-list-box
@@ -284,10 +283,14 @@
 
 </style>    
     <section class="section">
-        <div class="memberupdate-header">마이페이지</div>
-        <div class="memberupdate-nav">
-            <div>내 프로젝트<span class="indicator"></span></div>
-            <div>내 후원내역</div>
+        <div class="mypage-header">마이페이지</div>
+        <div class="mypage-nav">
+            <div onclick="location.href='${path}/myPage/myProjectList.do?memberEmail=${loggedMember.memberEmail }'">
+            	내 프로젝트<span class="indicator"></span>
+            </div>
+            <div onclick="location.href='${path}/myPage/myDonationList.do?memberEmail=${loggedMember.memberEmail }'">
+            	내 후원내역
+            </div>
         </div>
         <hr id="divider" />
         <div class="mypage-body">
@@ -310,7 +313,7 @@
 	                            <option value="PS01" ${map['projectStatCode'] eq 'PS01' ? 'selected' : ''}>임시저장</option>
 	                            <option value="PS02" ${map['projectStatCode'] eq 'PS02' ? 'selected' : ''}>검토중</option>
 	                            <option value="PS03" ${map['projectStatCode'] eq 'PS03' ? 'selected' : ''}>진행중</option>
-	                            <option value="PS04" ${map['projectStatCode'] eq 'PS04' ? 'selected' : ''}>마감됨</option>
+	                            <option value="PS04" ${map['projectStatCode'] eq 'PS04' ? 'selected' : ''}>종료됨</option>
 	                            <option value="PS05" ${map['projectStatCode'] eq 'PS05' ? 'selected' : ''}>반려됨</option>
 	                        </select>
 	                        <select name="orderby" id="orderby">
@@ -385,7 +388,7 @@
 
 	//페이지바
 	const fn_paging = cPage => {
-		location.href='${path}/myproject/myproject.do?cPage='+cPage+'&keyword=${keyword}'+'&memberEmail=${loggedMember.memberEmail}';
+		location.href='${path}/myproject/myproject.do?cPage='+cPage+'&keyword=${keyword}'+'&memberEmail=${loggedMember.memberEmail}&orderby=${map['orderby']}';
 	};
 	
 	//후원/펀딩 옵션 토글
@@ -401,24 +404,30 @@
     projectBox.on('click', e => {
     	if($(e.currentTarget).data('projectStatCode') == 'PS01')
     	{
-    		location.href='${path}/project/projectmodify.do?projectNo='+$(e.currentTarget).data('projectNo');
+    		location.href='${path}/project/projectModify.do?projectNo='+$(e.currentTarget).data('projectNo');
     		return;
     	}
     	
     	location.href='${path}/projectList/projectListDetail.do?memberEmail=${loggedMember.memberEmail}&projectNo='+$(e.currentTarget).data('projectNo');
     });
 
-    //카테고리/
+    //카테고리/필터
 	$(() => {
 		//프로젝트상태 필터
 		$('#project-stat-filter').on('change', () => {
-			location.href='${path}/myproject/myprojectList.do?projectStatCode='+$('#project-stat-filter option:selected').val()+'&keyword=${map['keyword']}&orderby=${map['orderby']}&memberEmail=${loggedMember.memberEmail}';
+			location.href='${path}/myPage/myProjectList.do?projectStatCode='+$('#project-stat-filter option:selected').val()+'&keyword=${map['keyword']}&orderby=${map['orderby']}&memberEmail=${loggedMember.memberEmail}';
 		});
 		
 		//정렬 카테고리
 		$('#orderby').on('change', () => {
-			location.href='${path}/myproject/myprojectList.do?orderby='+$('#orderby option:selected').val()+'&keyword=${map['keyword']}&projectStatCode=${map['projectStatCode']}&memberEmail=${loggedMember.memberEmail}';
+			location.href='${path}/myPage/myProjectList.do?orderby='+$('#orderby option:selected').val()+'&keyword=${map['keyword']}&projectStatCode=${map['projectStatCode']}&memberEmail=${loggedMember.memberEmail}';
 		});
 	});
+    
+    //프로젝트 검색
+    $('.proj-search').on('keyup', e => {
+    	if(e.keyCode == 13)
+    	{location.href='${path}/myPage/myProjectList.do?projectStatCode=${map['projectStatCode']}&orderby=${map['orderby']}&memberEmail=${loggedMember.memberEmail}&keyword='+$('.proj-search').val();}
+    });
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

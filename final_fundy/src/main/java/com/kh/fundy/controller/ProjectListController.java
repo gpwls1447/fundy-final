@@ -90,7 +90,6 @@ public class ProjectListController {
 		int totalCount = cService.selectCommentCount(projectNo);
 		
 		List<Comment> list = cService.selectCommentList(cPage, numPerPage, projectNo);
-		System.out.println(list.size());
 		String pageBar = getPageBar(totalCount, cPage, numPerPage);
 		
 		mv.addObject("list", list);

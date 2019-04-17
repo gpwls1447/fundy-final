@@ -147,7 +147,7 @@
         .proj-box
         {
             margin: 0 10px;
-            border-bottom: 1px solid rgb(224, 224, 224); 
+            border: 1px solid rgb(224, 224, 224); 
             padding-bottom: 30px;
         }
 
@@ -178,12 +178,14 @@
             font-size: 15px;
             color: gray;
             display: flex;
+            justify-content: flex-end;
         }
 
         .proj-progbar-container
         {
             display: flex; flex-flow: column;
             position: relative;
+            margin: 10px 0;
         }
 
         .progbar-empty
@@ -191,7 +193,6 @@
             width: 100%;
             height: 3px;
             background-color: #bbb;
-            margin: 10px 0;
         }
 
         .progbar-filled
@@ -201,7 +202,6 @@
             width: 87%;
             height: 3px;
             background-color: var(--basic-color);
-            margin: 10px 0;
         }
 
         .progbar-info

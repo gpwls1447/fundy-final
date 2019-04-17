@@ -28,7 +28,7 @@ public class CommentDaoImpl implements CommentDao {
 
 	@Override
 	public List<Comment> selectCommentList(int cPage, int numPerPage, int projectNo) {
-		return session.selectList ("comment.selectCommentList", projectNo, new RowBounds((cPage-1)*numPerPage+1, numPerPage));
+		return session.selectList ("comment.selectCommentList", projectNo, new RowBounds(((cPage-1)*numPerPage)+1, numPerPage));
 	}
 
 	@Override

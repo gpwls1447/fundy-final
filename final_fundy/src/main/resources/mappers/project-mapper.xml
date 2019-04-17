@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="project">
-
+	
 	<insert id="insertOne" parameterType="project">
 		INSERT INTO PROJECT VALUES(PROJECT_SEQ.NEXTVAL, #{projectThumnail}, #{projectTitle}, #{projectContent}, #{beginDate}, #{endDate}, #{goalPrice}, 'N', NULL, #{anchorCount}, #{projectStatCode}, #{projectSumary}, #{projectEmail}, #{projectPhone}, #{memberEmail}, #{minorCode}, #{projectFormDate})
 		<selectKey keyProperty="projectNo" resultType="int" order="AFTER" keyColumn="projectNo">
@@ -116,15 +116,17 @@
   	</select>
   	
   	<select id="myDonationCount" parameterType="map" resultType="int">
-  		SELECT A.PROJECTNO FROM FUNDINGLOG A
+  		SELECT count(*) FROM FUNDINGLOG A
   		JOIN PROJECT B ON A.PROJECTNO = B.PROJECTNO
   		WHERE A.MEMBEREMAIL = #{memberEmail}
   	</select>
   	
-  	<select id="myDonationList" parameterType="map" resultType="project">
-  		SELECT A.PROJECTNO, C.PROJECTSTATNAME FROM FUNDINGLOG A
+  	<select id="myDonationList" parameterType="map" resultType="myDonation">
+  		SELECT A.PROJECTNO, A.PACKAGEAMOUNT, A.EXTRAMONEY, A.FUNDERDATE, B.PROJECTTITLE, B.PROJECTTHUMNAIL, B.ENDDATE, C.PROJECTSTATNAME, D.FUNDPRICE 
+  		FROM FUNDINGLOG A
   		JOIN PROJECT B ON A.PROJECTNO = B.PROJECTNO
-  		JOIN PROJECTSTATUS C ON B.PROJECTSTATUS = C.PROJECTSTATUS
+  		JOIN PROJECTSTATUS C ON B.PROJECTSTATCODE = C.PROJECTSTATCODE
+  		JOIN FUNDINGOPTION D ON B.PROJECTNO = D.PROJECTNO
   		WHERE A.MEMBEREMAIL = #{memberEmail}
   	</select>
 	

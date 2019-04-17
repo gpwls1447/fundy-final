@@ -591,13 +591,13 @@
             </div>
         </div>
         <div class="user-modal-body">
-            <div class="user-menu-box myproject-btn">
+            <div class="user-menu-box myProject-btn">
                 <span class="bar vertical-bar"></span>
                 <span class="bar horizontal-bar"></span>
                 <i class="material-icons">work_outline</i>
                 <span class="user-menu-text">내프로젝트</span>
             </div>
-            <div class="user-menu-box donnorList-btn">
+            <div class="user-menu-box myDonation-btn">
                 <span class="bar horizontal-bar"></span>
                 <i class="material-icons">card_giftcard</i>
                 <span class="user-menu-text">후원내역</span>
@@ -769,33 +769,18 @@
    //모달 유저메뉴 링크 바인드
    	$(() => {
 		//로그아웃
-		$('.logout-btn').on("click", () => {
-        	location.href="${path}/member/LogOut.do";   
-		});
+		$('.logout-btn').on('click', () => {location.href='${path}/member/LogOut.do';});
 		//정보수정
-	    $('.memberUpdate-btn').on("click", ()=> {
-	        location.href="${path}/member/memberUpdateView.do";
-	    });
+	    $('.memberUpdate-btn').on('click', () => {location.href='${path}/member/memberUpdateView.do';});
+		//도네목록
+		$('.myDonation-btn').on('click', () => {location.href='${path}/myPage/myDonationList.do?memberEmail=${loggedMember.memberEmail}';});
 	    //찜바구니
-	    $('.favorite-btn').on("click", ()=> {
-	      	location.href="${path}/favorite/favoriteList.do";
-	   	});
+	    $('.favorite-btn').on("click", () => {location.href='${path}/favorite/favoriteList.do?memberEmail=${loggedMember.memberEmail}';});
 	   	//마이프로젝트
-	   	$('.myproject-btn').on('click', () => {
-	   		location.href='${path}/myproject/myprojectList.do?memberEmail=${loggedMember.memberEmail}';
-	   	});
+	   	$('.myProject-btn').on('click', () => {location.href='${path}/myPage/myProjectList.do?memberEmail=${loggedMember.memberEmail}';});
 	   	//메시지
-	    $('.message-btn').on("click", ()=> {
-	           location.href="${path}/messageMain.do?receiverEmail=${loggedMember.memberEmail}";
-	    });
+	    $('.message-btn').on("click", () => {location.href="${path}/messageMain.do?receiverEmail=${loggedMember.memberEmail}";});
    });
-   
- //찜바구니 기능
-   $(() => {
-      $('.favorite-btn').on("click", ()=> {
-         location.href="${path}/favorite/favoriteList.do";
-      })
-   })
 
     //패스워드 일치 확인
      $(function(){
@@ -829,7 +814,6 @@
          modalOverlay.toggle();
       });
    });
-   
    
    //로그인 회원가입 전환 기능
     $(document).ready(function() {
@@ -886,29 +870,45 @@
             nav.css('display', 'flex');
         });
     });
+    
     //메인 슬라이드
     const slideLeftBtn = $('.main-slide-btn--left');
     const slideRightBtn = $('.main-slide-btn--right');
     const slideImageTrack = $('.main-image-track');
     const navbar = $('.main-slide-navbar > ul');
     const dots = navbar.children();
+    
     //이동 버튼 함수 바인드
     $(() => {
         slideLeftBtn.on('click', moveSlidePrev);
         slideRightBtn.on('click', moveSlideNext);
     });
+    
     //이전 슬라이드 이동 함수
-    const moveSlidePrev = () => {
+    const moveSlidePrev = (e, isDot) => {
         const targetSlide = slideImageTrack.children().last(); 
+        if(slideImageTrack.is(':animated')) return;
         slideImageTrack.prepend(targetSlide);
+        if(!isDot) {
+	        slideImageTrack.css('left', '-200%');
+	        slideImageTrack.animate({left: '-100%'}, 200);
+        }
         moveDot('prev');
     }
+
     //다음 슬라이드 이동 함수
-    const moveSlideNext = () => {
+    const moveSlideNext = (e, isDot) => {
         const currentSlide = slideImageTrack.children().first();
+        
+        if(slideImageTrack.is(':animated')) return;
         slideImageTrack.append(currentSlide);
+        if(!isDot) {
+	        slideImageTrack.css('left', '0');
+	        slideImageTrack.animate({left: '-100%'}, 200);        	
+        }
         moveDot('next');
     }
+    
     //점 이동 함수
     const moveDot = (direction) => {
         const firstDot = navbar.children().first();
@@ -918,6 +918,7 @@
             case 'next' : lastDot.prependTo(navbar); break;
         }
     };
+    
     //점 클릭 동작 함수
     $(() => {
         dots.on('click', e => {
@@ -927,18 +928,23 @@
             {
                 for(let i = 0 ; i < Math.abs(indexGap) ; i++)
                 {
-                    moveSlidePrev();
+                    moveSlidePrev(e, true);
                 }
             }
             else
             {
                 for(let i = 0 ; i < Math.abs(indexGap) ; i++)
                 {
-                    moveSlideNext();
+                    moveSlideNext(e, true);
                 }
             }
         });
     });
+    
+    setInterval(()=> {
+    	slideRightBtn.trigger('click');
+    }, 4000);
+    
     //인기 카테고리 클릭 시 클래스 변동
     const popCategBtns = $('.popular-nav').children();
     $(() => {

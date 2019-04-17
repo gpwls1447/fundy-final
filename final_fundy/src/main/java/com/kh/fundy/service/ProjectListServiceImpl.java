@@ -1,6 +1,5 @@
 package com.kh.fundy.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.fundy.dao.ProjectListDao;
 import com.kh.fundy.model.vo.FundingLog;
 import com.kh.fundy.model.vo.FundingOption;
+import com.kh.fundy.model.vo.MyDonation;
 import com.kh.fundy.model.vo.Project;
 
 @Service
@@ -60,8 +60,8 @@ public class ProjectListServiceImpl implements ProjectListService {
 	}
 
 	@Override
-	public List<Project> myDonationList(String memberEmail) {
-		return dao.myDonationList(memberEmail);
+	public List<MyDonation> myDonationList(String memberEmail, int cPage, int numPerPage) {
+		return dao.myDonationList(memberEmail, cPage, numPerPage);
 	}
 
 	@Override

@@ -12,16 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.fundy.model.vo.MyDonation;
 import com.kh.fundy.model.vo.Project;
 import com.kh.fundy.service.ProjectListService;
 
 @Controller
-public class MyprojectController {
+public class MyPageController {
 
 	@Autowired
 	private ProjectListService pService;
 	
-	@RequestMapping("/myproject/myprojectList.do")
+	@RequestMapping("/myPage/myProjectList.do")
 	public ModelAndView myprojectList(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage, String memberEmail, String keyword, String projectStatCode, String orderby)
 	{
 		ModelAndView mv = new ModelAndView();
@@ -39,23 +40,26 @@ public class MyprojectController {
 		mv.addObject("map", map);
 		mv.addObject("list", list);
 		mv.addObject("pageBar", pageBar);
-		mv.setViewName("myproject/myproject");
+		mv.setViewName("myPage/myProject");
 		
 		return mv;
 	}
 	
-	@RequestMapping("/myproject/myDonationList.do")
+	@RequestMapping("/myPage/myDonationList.do")
 	public ModelAndView myprojectList(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage, String memberEmail)
 	{
 		ModelAndView mv = new ModelAndView();
-		int numPerPage = 10;
+		int numPerPage = 5;
 		int totalCount = pService.myDonationCount(memberEmail);
-		List<Project> list = pService.myDonationList(memberEmail);
+		List<MyDonation> list = pService.myDonationList(memberEmail, cPage, numPerPage);
 		
 		String pageBar = getPageBar(totalCount, cPage, numPerPage);
 		
 		mv.addObject("list", list);
-		mv.addObject("pageBar", pageBar);		
+		mv.addObject("cPage", cPage);
+		mv.addObject("totalCount", totalCount);
+		mv.addObject("pageBar", pageBar);
+		mv.setViewName("myPage/myDonation");
 		return mv;
 	}
 }
