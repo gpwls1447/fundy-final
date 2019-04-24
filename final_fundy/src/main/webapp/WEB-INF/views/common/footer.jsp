@@ -295,7 +295,7 @@
       left: 0;
       width: 50%;
       height: 100%;
-      background-image : url(${path}/resources/images/loginPicture_dog.jpg);
+      background-image : url(${path}/resources/images/loginPicure_building.jpg);
       background-size: cover;
       background-position: 50% 50%;
    }
@@ -488,6 +488,7 @@
    .email-group
    {
         display : flex;
+        align-items: flex-end;
    }
    
 	.span{
@@ -497,6 +498,20 @@
    
    .join{
    		height:70px;
+   }
+   
+   .auth-input
+   {
+   	width: 70%;
+   }
+   
+   .auth-group{display: none;}
+   
+   .auth-btn
+   {
+		padding: 7px 10px;
+		margin-left: 5px;
+		margin-right: 0;
    }
    
 </style>
@@ -591,13 +606,13 @@
             </div>
         </div>
         <div class="user-modal-body">
-            <div class="user-menu-box myproject-btn">
+            <div class="user-menu-box myProject-btn">
                 <span class="bar vertical-bar"></span>
                 <span class="bar horizontal-bar"></span>
                 <i class="material-icons">work_outline</i>
                 <span class="user-menu-text">내프로젝트</span>
             </div>
-            <div class="user-menu-box donnorList-btn">
+            <div class="user-menu-box myDonation-btn">
                 <span class="bar horizontal-bar"></span>
                 <i class="material-icons">card_giftcard</i>
                 <span class="user-menu-text">후원내역</span>
@@ -646,19 +661,16 @@
             <div class="content">
                
                <div class="signup-title form-title"><img src="${path }/resources/images/join.png" class="join"></div>
-               <form method="post" action="${path }/member/memberEnrollEnd.do" autocomplete="off">
+               <form onsubmit="return validate();" method="post" action="${path }/member/memberEnrollEnd.do" autocomplete="off">
                   <div class="form-group">
                   <div class="email-group">
-                     <input type="email" class="signup-modal-input" placeholder="이메일" id="memberEmail" name="memberEmail" required />
-                     <input type="button" class="off login-modal-btn" id="emailAuth" value="인증" 
-                     		style="border-radius: 50px;margin-top: 15px;padding-top: 2px;padding-bottom: 2px;width: 65px;height: 35px;padding-left: 4px;border-right-width: 4px;margin-right: 0px;padding-right: 4px;"/>
+                     <input type="email" class="signup-modal-input auth-input" placeholder="이메일" id="memberEmail" name="memberEmail" required />
+                     <input type="button" class="off login-modal-btn auth-btn" id="emailAuth" value="인증" />
                   </div>
-                  <div class="email-group">  
-                    <input type="text" class="signup-modal-input" id="authKey" name="authKey" placeholder="인증번호" />
-                    <input type="button" class="off login-modal-btn " id="authCheck" value="확인" 
-                   			style="border-radius: 50px;margin-top: 15px;padding-top: 2px;padding-bottom: 2px;width: 65px;height: 35px;padding-left: 4px;border-right-width: 4px;margin-right: 0px;padding-right: 4px;"/>
+                  <div class="email-group auth-group">  
+                    <input type="text" class="signup-modal-input auth-input" id="authKey" name="authKey" placeholder="인증번호" required/>
+                    <input type="button" class="off login-modal-btn auth-btn" id="authCheck" value="확인" />
                   </div>   
-                    <span class="span auth ok">인증키가 일치합니다.</span>
               		<span class="span auth error">인증키가 일치하지 않습니다.</span>
              		<input type="hidden" name="chekcAuth" id="checkAuth"/>
                     <input type="password" class="signup-modal-input" placeholder="비밀번호" id="password" name="memberPw" required /> 
@@ -698,9 +710,38 @@
 <input type="hidden" id="nickCheck" value="0">
 <input type="hidden" id="authCheck" value="0">
 <script>
-   //닉네임 중복 체크
-   $(".guide").hide();
-   $(() => {
+	
+	//비밀번호 정규식
+	const pwInput = $("#password");
+	$(() => {
+		$("#password").on("blur", () => {
+			if(pwInput.val().trim() == 0) return;
+			const pwVal = $("#password").val();
+			var num = pw.search(/[0-9]/g);
+			var eng = pw.search(/[a-z]/ig);
+			var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+			if(pw.length<8||pw.length>20){
+			  	alert("8자리 ~ 20자리 이내로 입력해주세요.");
+			  	$("#password").val("");
+			  	return false;
+			}
+			if(pw.search(/₩s/) != -1){
+			  	alert("비밀번호는 공백업이 입력해주세요.");
+			  	$("#password").val("");
+				return false;
+			} 
+			if(num < 0 || eng < 0 || spe < 0 ){
+				alert("영문,숫자, 특수문자를 혼합하여 입력해주세요.");
+				$("#password").val("");
+				return false;
+			}
+			return true;
+		})
+	});
+
+	//닉네임 중복 체크
+   	$(".guide").hide();
+   	$(() => {
       $("#memberNick").on("keyup", () => {
          var memberNick = $('#memberNick').val();
          $.ajax({
@@ -734,6 +775,8 @@
             data:{"memberEmail":email},
             success:function(data){
             	alert("이메일이 발송되었습니다. 인증번호를 적어주세요");
+            	$('.auth-group').fadeIn(500);
+            	$('.auth-group').css('display', 'flex');
             }
          });
       });
@@ -750,11 +793,14 @@
             data:{"authKey":authKey},
             success:function(data){
                if(data==true){
-                   $(".auth.ok").show()
-                   $(".auth.error").hide();
+            	   $(".auth.error").hide();
+            	   $('.auth-group').fadeToggle(500);
+            	   $('.auth-input').css('border-bottom', '1px solid rgb(91, 180, 143)');
+            	   $('.auth-input').css('width', '100%');
+            	   $('.auth-btn').hide();
+            	   
                 }
                 else{
-                   $(".auth.ok").hide()
                    $(".auth.error").show();
                 }
             },
@@ -769,33 +815,18 @@
    //모달 유저메뉴 링크 바인드
    	$(() => {
 		//로그아웃
-		$('.logout-btn').on("click", () => {
-        	location.href="${path}/member/LogOut.do";   
-		});
+		$('.logout-btn').on('click', () => {location.href='${path}/member/LogOut.do';});
 		//정보수정
-	    $('.memberUpdate-btn').on("click", ()=> {
-	        location.href="${path}/member/memberUpdateView.do";
-	    });
+	    $('.memberUpdate-btn').on('click', () => {location.href='${path}/member/memberUpdateView.do';});
+		//도네목록
+		$('.myDonation-btn').on('click', () => {location.href='${path}/myPage/myDonationList.do?memberEmail=${loggedMember.memberEmail}';});
 	    //찜바구니
-	    $('.favorite-btn').on("click", ()=> {
-	      	location.href="${path}/favorite/favoriteList.do";
-	   	});
+	    $('.favorite-btn').on("click", () => {location.href='${path}/favorite/favoriteList.do?memberEmail=${loggedMember.memberEmail}';});
 	   	//마이프로젝트
-	   	$('.myproject-btn').on('click', () => {
-	   		location.href='${path}/myproject/myprojectList.do?memberEmail=${loggedMember.memberEmail}';
-	   	});
+	   	$('.myProject-btn').on('click', () => {location.href='${path}/myPage/myProjectList.do?memberEmail=${loggedMember.memberEmail}';});
 	   	//메시지
-	    $('.message-btn').on("click", ()=> {
-	           location.href="${path}/messageMain.do?receiverEmail=${loggedMember.memberEmail}";
-	    });
+	    $('.message-btn').on("click", () => {location.href="${path}/messageMain.do?receiverEmail=${loggedMember.memberEmail}";});
    });
-   
- //찜바구니 기능
-   $(() => {
-      $('.favorite-btn').on("click", ()=> {
-         location.href="${path}/favorite/favoriteList.do";
-      })
-   })
 
     //패스워드 일치 확인
      $(function(){
@@ -829,7 +860,6 @@
          modalOverlay.toggle();
       });
    });
-   
    
    //로그인 회원가입 전환 기능
     $(document).ready(function() {
@@ -886,29 +916,45 @@
             nav.css('display', 'flex');
         });
     });
+    
     //메인 슬라이드
     const slideLeftBtn = $('.main-slide-btn--left');
     const slideRightBtn = $('.main-slide-btn--right');
     const slideImageTrack = $('.main-image-track');
     const navbar = $('.main-slide-navbar > ul');
     const dots = navbar.children();
+    
     //이동 버튼 함수 바인드
     $(() => {
         slideLeftBtn.on('click', moveSlidePrev);
         slideRightBtn.on('click', moveSlideNext);
     });
+    
     //이전 슬라이드 이동 함수
-    const moveSlidePrev = () => {
+    const moveSlidePrev = (e, isDot) => {
         const targetSlide = slideImageTrack.children().last(); 
+        if(slideImageTrack.is(':animated')) return;
         slideImageTrack.prepend(targetSlide);
+        if(!isDot) {
+	        slideImageTrack.css('left', '-200%');
+	        slideImageTrack.animate({left: '-100%'}, 200);
+        }
         moveDot('prev');
     }
+
     //다음 슬라이드 이동 함수
-    const moveSlideNext = () => {
+    const moveSlideNext = (e, isDot) => {
         const currentSlide = slideImageTrack.children().first();
+        
+        if(slideImageTrack.is(':animated')) return;
         slideImageTrack.append(currentSlide);
+        if(!isDot) {
+	        slideImageTrack.css('left', '0');
+	        slideImageTrack.animate({left: '-100%'}, 200);        	
+        }
         moveDot('next');
     }
+    
     //점 이동 함수
     const moveDot = (direction) => {
         const firstDot = navbar.children().first();
@@ -918,6 +964,7 @@
             case 'next' : lastDot.prependTo(navbar); break;
         }
     };
+    
     //점 클릭 동작 함수
     $(() => {
         dots.on('click', e => {
@@ -927,18 +974,23 @@
             {
                 for(let i = 0 ; i < Math.abs(indexGap) ; i++)
                 {
-                    moveSlidePrev();
+                    moveSlidePrev(e, true);
                 }
             }
             else
             {
                 for(let i = 0 ; i < Math.abs(indexGap) ; i++)
                 {
-                    moveSlideNext();
+                    moveSlideNext(e, true);
                 }
             }
         });
     });
+    
+    setInterval(()=> {
+    	slideRightBtn.trigger('click');
+    }, 4000);
+    
     //인기 카테고리 클릭 시 클래스 변동
     const popCategBtns = $('.popular-nav').children();
     $(() => {
