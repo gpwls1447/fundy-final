@@ -11,12 +11,11 @@ import org.hibernate.annotations.Entity;
 public class Member {
 	
 	@Column
-	@NotNull
+	private int memberNo;
 	private String memberEmail;
 	private String memberPw;
 	private String memberName;
 	@Column
-	@NotNull
 	private String memberNick;
 	private String memberProfile;
 	private int shipAddrNo;
@@ -30,10 +29,11 @@ public class Member {
 	
 	public Member() {}
 
-	public Member(String memberEmail, String memberPw, String memberName, String memberNick, String memberProfile,
-			int shipAddrNo, String intro, String emailAuthKey, String phoneAuthKey, Timestamp lastLoggedIn,
-			Timestamp enrollDate, Timestamp memberQuit, String kakaoId) {
+	public Member(int memberNo, String memberEmail, String memberPw, String memberName, String memberNick,
+			String memberProfile, int shipAddrNo, String intro, String emailAuthKey, String phoneAuthKey,
+			Timestamp lastLoggedIn, Timestamp enrollDate, Timestamp memberQuit, String kakaoId) {
 		super();
+		this.memberNo = memberNo;
 		this.memberEmail = memberEmail;
 		this.memberPw = memberPw;
 		this.memberName = memberName;
@@ -47,6 +47,14 @@ public class Member {
 		this.enrollDate = enrollDate;
 		this.memberQuit = memberQuit;
 		this.kakaoId = kakaoId;
+	}
+
+	public int getMemberNo() {
+		return memberNo;
+	}
+
+	public void setMemberNo(int memberNo) {
+		this.memberNo = memberNo;
 	}
 
 	public String getMemberEmail() {
@@ -151,15 +159,6 @@ public class Member {
 
 	public void setKakaoId(String kakaoId) {
 		this.kakaoId = kakaoId;
-	}
-
-	@Override
-	public String toString() {
-		return "Member [memberEmail=" + memberEmail + ", memberPw=" + memberPw + ", memberName=" + memberName
-				+ ", memberNick=" + memberNick + ", memberProfile=" + memberProfile + ", shipAddrNo=" + shipAddrNo
-				+ ", intro=" + intro + ", emailAuthKey=" + emailAuthKey + ", phoneAuthKey=" + phoneAuthKey
-				+ ", lastLoggedIn=" + lastLoggedIn + ", enrollDate=" + enrollDate + ", memberQuit=" + memberQuit
-				+ ", kakaoId=" + kakaoId + "]";
 	}
 
 }

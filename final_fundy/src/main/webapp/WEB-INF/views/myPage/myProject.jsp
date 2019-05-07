@@ -13,9 +13,9 @@
 	    width: 100%;
 	    display: flex;
 	    justify-content: center;
-	    font-size: 27px;
+	    font-size: 30px;
 	    font-weight: bold;
-	    margin: 30px 0;
+	    margin: 40px 0;
 	}
 	
 	.mypage-nav

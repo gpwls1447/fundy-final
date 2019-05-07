@@ -16,10 +16,11 @@
   <!-- 공지사항 입력 -->
   <insert id="insertNotice" parameterType="notice">
   	insert into notice values(Notice_SEQ.nextval,#{noticeTitle},#{noticeContent},#{noticeDate},null,null)
+  	<selectKey keyColumn="noticeNo" keyProperty="noticeNo" order="AFTER">
+  		select notice_seq.currval from dual
+  	</selectKey>
   </insert>
   <!-- 날짜입력 바꿔주기 -->
-  
-  
   
   <!-- 공지사항 파일입력 -->
   <insert id="insertAttachment" parameterType="attachment">

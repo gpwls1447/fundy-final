@@ -194,7 +194,6 @@
 	};
 	
 	/* 프로젝트 카테고리/정렬 이벤트 */
-	
 	$(() => {
 		$('#projectStatCode').on('change', () => {
 			location.href='${path}/projectList/projectList.do?majorCode=${majorCode}&midCode=${midCode}&projectStatCode='+$('#projectStatCode option:selected').val()+'&orderby=${orderby}&keyword=${keyword}';
@@ -209,7 +208,7 @@
 	const projBox = $('.proj-list-box');
 	$(() => {
 		projBox.on('click', e => {
-			location.href='${path}/projectList/projectListDetail.do?projectNo='+$(e.currentTarget).data('projectNo')+'&memberEmail=${loggedMember.memberEmail}';
+			location.href='${path}/projectList/projectListDetail.do?projectNo='+$(e.currentTarget).data('projectNo')+'&memberEmail=${loggedMember.memberEmail}&majorCode=${majorCode}';
 		});
 	});
 	

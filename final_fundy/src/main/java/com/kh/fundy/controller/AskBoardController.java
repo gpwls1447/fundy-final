@@ -31,7 +31,6 @@ public class AskBoardController {
 		return "askBoard/askBoardForm";
 	}
 	
-	
 	/*1대1게시판 작성 입력*/
 	@RequestMapping("/askBoardFormEnd.do")
 	public ModelAndView askBoardFormEnd(AskBoard askBoard){
@@ -112,33 +111,24 @@ public class AskBoardController {
 		askBoard.setAskMod(new Timestamp(System.currentTimeMillis()));
 		ModelAndView mv=new ModelAndView();
 		int result=service.askBoardUpdate(askBoard);
-		if(result>0)
+		String msg;
+		if(result > 0)
 		{
-			AskBoard ab=service.askBoardView(askNo);
-			String msg="수정 성공하였습니다";
-			String loc="/askBoardView.do?askNo="+askNo;
-			mv.addObject("ab",ab);
-			mv.addObject("msg",msg);
-			mv.addObject("loc",loc);
+			msg="수정 성공하였습니다";
 			mv.setViewName("common/msg");
 		}
 		else
 		{
-			AskBoard ab=service.askBoardView(askNo);
-			String msg="수정 실패하였습니다.";
-			String loc="/askBoardView.do?askNo="+askNo;
-			mv.addObject("ab",ab);
-			mv.addObject("msg",msg);
-			mv.addObject("loc",loc);
+			msg="수정 실패하였습니다.";
 			mv.setViewName("common/msg");
 		}
+
+		mv.addObject("msg", msg);
+		mv.addObject("loc","/askBoardView.do?askNo="+askNo);
 		return mv;
-		
-	
 	}
 	
-	
-	
+
 	/*1대1게시판 리스트*/
 	@RequestMapping("/askBoardMain.do")
 	public String askBoardMain(@RequestParam(value="cPage",required=false, defaultValue="1")int cPage,Model model)

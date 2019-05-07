@@ -14,6 +14,7 @@
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
 	<dependencies>
+	
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -33,18 +34,19 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 		
-		<!-- Simple Mail Transfer Protocol  -->
+		<!-- Simple Mail Transfer Protocol -->
 		<dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
             <version>1.4.7</version>
         </dependency>
+        
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
             <version>${org.springframework-version}</version>
         </dependency>
-		
+        
 		<!-- Mybatis -->
 		<dependency>
 		    <groupId>org.mybatis</groupId>
@@ -114,7 +116,7 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>${org.aspectj-version}</version>
 		</dependency>
-					
+		
 		<!-- Commons-io -->
 		<dependency>
 		    <groupId>commons-io</groupId>
@@ -130,22 +132,15 @@
 		</dependency>
 		
 		<!--reload-->			
-		<!-- https://mvnrepository.com/artifact/org.springframework/springloaded -->
 		<dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>springloaded</artifactId>
 		    <version>1.2.8.RELEASE</version>
-		</dependency>				
-		
-		<!--jackson-databind -->
-		<dependency>
-		    <groupId>com.fasterxml.jackson.core</groupId>
-		    <artifactId>jackson-databind</artifactId>
-		    <version>2.9.8</version>
-		</dependency>
-		
+		</dependency>	
+					
 		<!-- 유효성검사 -->
-		 <!-- hibernate -->
+		
+		<!-- hibernate -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-annotations</artifactId>
@@ -208,19 +203,13 @@
 			</exclusions>
 		</dependency>
 		
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+		<!--Jackson-Databind -->
 		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>
 		    <artifactId>jackson-databind</artifactId>
-		    <version>2.9.5</version>
+		    <version>2.9.8</version>
 		</dependency>
 		
-		
-		
-		
-		
-		
-
 		<!-- @Inject -->
 		<dependency>
 			<groupId>javax.inject</groupId>

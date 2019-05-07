@@ -1,6 +1,7 @@
 package com.kh.fundy.controller;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,15 +11,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.fundy.model.vo.Attachment;
 import com.kh.fundy.model.vo.Comment;
 import com.kh.fundy.model.vo.CommentReply;
 import com.kh.fundy.model.vo.FundingLog;
 import com.kh.fundy.model.vo.Member;
+import com.kh.fundy.model.vo.Notice;
 import com.kh.fundy.model.vo.Project;
 import com.kh.fundy.model.vo.RndPackage;
 import com.kh.fundy.service.CommentService;
 import com.kh.fundy.service.DatagenService;
 import com.kh.fundy.service.MemberService;
+import com.kh.fundy.service.NoticeService;
 import com.kh.fundy.service.PayService;
 
 @Controller
@@ -31,15 +35,19 @@ public class DatagenController {
 	@Autowired
 	private PayService pService;
 	@Autowired
-	private BCryptPasswordEncoder pwEncoder;
-	@Autowired
 	private CommentService cService;
+	@Autowired
+	private NoticeService nService;
+	
+	@Autowired
+	private BCryptPasswordEncoder pwEncoder;
 		
 	private final int rndTimeMonthlyTerm = 2;
 	private final int targetMemberCount = 200;
 	private final int targetProjectCount = 400;
 	private final int targetFundingLogCount = 3500;
 	private final int targetCommentCount = 2500;
+	private final int targetNoticeCount = 120;
 
 	@RequestMapping("/datagen.do")
 	public ModelAndView run()
@@ -88,7 +96,6 @@ public class DatagenController {
 				}
 			}
 		}
-		
 		return result;
 	}
 	
@@ -145,7 +152,7 @@ public class DatagenController {
 			Timestamp rndBeginDate = getRandomTime();
 			Timestamp endDate = new Timestamp(rndBeginDate.getTime() + 2629800000L);
 
-			rndCodeNo = (int)(Math.random()*30)+1;
+			rndCodeNo = (int)(Math.random()*35)+1;
 			if(rndCodeNo < 10) sb.append("C0"+rndCodeNo);
 			else sb.append("C"+rndCodeNo);
 			
@@ -183,7 +190,6 @@ public class DatagenController {
 		
 		int cCount = mService.memberCount();
 		if(cCount != 0) {mService.memberDeleteAll();}
-		System.out.println("회원데이터 생성 시작");
 	
 		int result = 0;
 		
@@ -220,12 +226,25 @@ public class DatagenController {
 		return result;
 	}
 	
+	public int noticeGen()
+	{
+		int count = 0;
+		while(count < targetNoticeCount)
+		{
+			Notice n = new Notice();
+			n.setNoticeTitle("공지사항");
+			n.setNoticeContent("공지사항입니다.");
+			n.setNoticeDate(new Timestamp(System.currentTimeMillis()));
+			count += nService.insertNotice(n, new ArrayList<Attachment>());
+		}
+		return count;
+	}
+	
 	public Timestamp getRandomTime()
 	{
 		long ctm = System.currentTimeMillis();
 		long rm = (long)(Math.random()*2629800000L*rndTimeMonthlyTerm);
-		Timestamp timestamp = new Timestamp(ctm-rm);
-		return timestamp;
+		return new Timestamp(ctm-rm);
 	}
 	
 	public String encrpyt(String pw)

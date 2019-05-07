@@ -187,9 +187,7 @@ public class MemberUpdateController {
     public void memberPwCheck(Member m, Model model, String memberPw, HttpServletResponse res) throws IOException{
        
        ModelAndView mv = new ModelAndView();
-       System.out.println(m.getMemberEmail());
-       System.out.println(m.getMemberPw());
-       Member result = mService.login(m);
+       Member result = mService.selectOne(m);
        result.getMemberPw();
        
        boolean isSame;
@@ -239,7 +237,7 @@ public class MemberUpdateController {
        
        int projectCount = pService.projectCount(memberEmail); //프로젝트 진행 여부
        
-       Member pwResult = mService.login(m); //비밀번호 일치 여부
+       Member pwResult = mService.selectOne(m); //비밀번호 일치 여부
        pwResult.getMemberPw();
        
        boolean isSame;

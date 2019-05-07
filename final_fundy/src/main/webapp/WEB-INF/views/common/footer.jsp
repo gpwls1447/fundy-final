@@ -3,25 +3,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
-<meta charset="utf-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-
-
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <style>
     /* footer 부분 */
-   .footer
-   {
-      margin-top: 100px;
-      border-top: 1px solid #eee;
-      width: 100%;
-      min-width: 1005px;
-   }
-   
-       .footer-top
+	.footer
+	{
+		margin-top: 100px;
+		border-top: 1px solid #eee;
+		width: 100%;
+		min-width: 1005px;
+	}
+
+	.footer-top
     {
         width: 100%;
         height: 230px;
@@ -32,6 +26,7 @@
         box-sizing: border-box;
         font-size: 13px;
     }
+    
     .footer-top > div 
     {
         flex: 1 1 0;
@@ -42,17 +37,20 @@
         padding: 20px 50px;
         line-height: 25px;
     }
+    
     .footer-title
     {
         margin-bottom: 20px;
         font-size: 17px;
         color: #eee;
     }
+    
     .footer-sub
     {
         display: flex;
         flex-flow : column nowrap;
     }
+    
     .footer-horiz-line
     {   
         display: block;
@@ -60,6 +58,7 @@
         height: 70%;
         background-color: rgba(255, 255, 255, 0.2);
     }
+    
     .footer-bottom
     {
         width: 100%;
@@ -70,11 +69,14 @@
         box-sizing: border-box;
         display: flex;
     }
+    
     .footer-bottom > div {flex: 1 1 0;}
+    
     .site-nav
     {
         display: flex;
     }
+    
     .site-nav > span
     {
         font-weight: bold;
@@ -82,18 +84,22 @@
         display: flex;
         align-items: center;
     }
+    
     #footer-logo
     {
         font-size: 22px;
         font-weight: 900;
     }
+    
     .copyright{margin: 10px 0;}
+    
     #footer-links
     {
         display: flex;
         justify-content: flex-end;
         align-items: center;
     }
+    
     #footer-links button
     {
         background-color: transparent;
@@ -103,29 +109,29 @@
         margin-left: 10px;
         cursor: pointer;
     }
+    
     #footer-links img
     {
         width: 40px;
         opacity: .6;
     }
    
-   /* 유저 모달창 부분 */
+	/* 유저 모달창 부분 */
+	.user-modal
+	{
+		position: fixed;
+		top: 0;
+		right: 0;
+		width: 250px;
+		height: 100%;
+		background-color: white;
+		display: none;
+		font-family: 'Noto Sans KR';
+		z-index: 3;
+	}
    
-   .user-modal
-   {
-       position: fixed;
-       top: 0;
-       right: 0;
-       width: 250px;
-       height: 100%;
-       background-color: white;
-       display: none;
-       font-family: 'Noto Sans KR';
-       z-index: 3;
-   }
-   
-   .modal-overlay
-   {
+	.modal-overlay
+	{
        position: fixed;
        top: 0;
        width: 100vw;
@@ -134,10 +140,10 @@
        opacity: 0.4;
        display: none;
        z-index: 2;
-   }
+	}
    
-   .close-btn
-   {
+	.close-btn
+	{
        position: absolute;
        top: 0;
        left: 0;
@@ -145,10 +151,10 @@
        height: 32px;
        background-color: white;
        overflow: hidden;
-   }
-   
-   .close-btn > i
-   {
+	}
+	
+	.close-btn > i
+	{
        width: 100%;
        height: 100%;
        font-size: 35px;
@@ -157,46 +163,46 @@
        margin-top: 3px;
        margin-left: 3px;
        cursor: pointer;
-   }
+	}
    
-   .close-btn > i:hover
-   {
+	.close-btn > i:hover
+	{
        opacity: .9;
-   }
+	}
    
-   .user-modal-header
-   {
+	.user-modal-header
+	{
        height: 250px;
        display: flex;
        flex-flow: column nowrap;
        align-items: center;
        padding-top: 90px;
        padding-bottom: 10px;
-   }
+	}
    
-   .user-modal-header > img
-   {
+	.user-modal-header > img
+	{
        width: 100px;
        height: 100px;
        border-radius: 50%;
        border: 1px solid #eee;
-   }
+	}
    
-   .user-nick
-   {
+	.user-nick
+	{
        font-size: 25px;
        font-weight: bold;
-   }
+	}
    
-   .user-modal-body
-   {
+	.user-modal-body
+	{
        background-color: rgb(70, 70, 85);
        display: flex;
        flex-wrap: wrap;
-   }
+	}
    
-   .user-menu-box
-   {
+	.user-menu-box
+	{
        width: 50%;
        padding: 12.5% 0;
        display: flex;
@@ -205,315 +211,324 @@
        justify-content: center;
        position: relative;
        cursor: pointer;
-   }
+	}
    
-   .user-menu-box > i
-   {
+	.user-menu-box > i
+	{
        font-size: 38px;
        color: white;
        opacity: .7;
-   }
+	}
    
-   .user-menu-box:hover > i
-   {
+	.user-menu-box:hover > i
+	{
+       opacity: 1;
+	}
+   
+	.user-menu-box:hover .user-menu-text
+	{
        opacity: 1;
        transform: scale(1.1);
-   }
+	}
    
-   .user-menu-box:hover .user-menu-text
-   {
-       opacity: 1;
-       transform: scale(1.1);
-   }
-   
-   .user-menu-text
-   {
+	.user-menu-text
+	{
        margin-top: 3px;
        color: white;
        opacity: .7;
        font-size: 13px;
-   }
+	}
    
-   .bar
-   {
+	.bar
+	{
        position: absolute;
        display: block;
        background-color: rgba(255, 255, 255, .2);
-   }
+	}
    
-   .vertical-bar
-   {
+	.vertical-bar
+	{
        width: 1px;
        height: 65%;
        right: 0;
-   }
+	}
    
-   .horizontal-bar
-   {
+	.horizontal-bar
+	{
        width: 65%;
        height: 1px;
        bottom: 0;
-   }
+	}
    
-   .user-modal-footer
-   {
-       height: 100%;
-       background-color: rgb(70, 70, 85);
-   }
+	.user-modal-footer
+	{
+		height: 100%;
+		background-color: rgb(70, 70, 85);
+	}
    
-   /* 로그인 회원가입 모달창 */
+	/* 로그인 회원가입 모달창 */
+	.login-modal{
+		display: none;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 3;
+		width: 75%;
+		width: 700px;
+		height: 600px;
+	}
    
-   .login-trans-btn
-   {
-      
-   }
+	.backRight {
+		position: absolute;
+		right: 0;
+		width: 50%;
+		height: 100%;
+		background-image : url(${path}/resources/images/loginPicture_love.jpg);
+		background-size: cover;
+		background-position: 50% 50%;
+	}
    
-   .login-modal{
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 3;
-      width: 75%;
-      width: 700px;
-      height: 600px;
-   }
+	.backLeft {
+		position: absolute;
+		left: 0;
+		width: 50%;
+		height: 100%;
+		background-image : url(${path}/resources/images/loginPicture_dog.jpg);
+		background-size: cover;
+		background-position: 50% 50%;
+	}
    
-   .backRight {
-      position: absolute;
-      right: 0;
-      width: 50%;
-      height: 100%;
-      background-image : url(${path}/resources/images/loginPicture_love.jpg);
-      background-size: cover;
-      background-position: 50% 50%;
-   }
+	#back {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		z-index: -999;
+	}
    
-   .backLeft {
-      position: absolute;
-      left: 0;
-      width: 50%;
-      height: 100%;
-      background-image : url(${path}/resources/images/loginPicture_dog.jpg);
-      background-size: cover;
-      background-position: 50% 50%;
-   }
+	#slideBox {
+		width: 50%;
+		max-height: 100%;
+		height: 100%;
+		overflow: hidden;
+		margin-left: 50%;
+		position: absolute;
+		box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px
+		rgba(0, 0, 0, 0.22);
+	}
    
-   #back {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      z-index: -999;
-   }
+	.topLayer {
+		width: 200%;
+		height: 100%;
+		position: relative;
+		left: 0;
+		left: -100%;
+	}
    
-   #slideBox {
-      width: 50%;
-      max-height: 100%;
-      height: 100%;
-      overflow: hidden;
-      margin-left: 50%;
-      position: absolute;
-      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px
-         rgba(0, 0, 0, 0.22);
-   }
+	.left {
+		width: 50%;
+		height: 100%;
+		background: #2C3034;
+		left: 0;
+		position: absolute;
+	}
    
-   .topLayer {
-      width: 200%;
-      height: 100%;
-      position: relative;
-      left: 0;
-      left: -100%;
-   }
+	.right {
+		width: 50%;
+		height: 100%;
+		background: #f9f9f9;
+		right: 0;
+		position: absolute;
+	}
    
-   .left {
-      width: 50%;
-      height: 100%;
-      background: #2C3034;
-      left: 0;
-      position: absolute;
-   }
+	.content {
+		width: 250px;
+		margin: 0 auto;
+		top: 12%;
+		position: absolute;
+		left: 50%;
+		margin-left: -125px;
+	}
    
-   .right {
-      width: 50%;
-      height: 100%;
-      background: #f9f9f9;
-      right: 0;
-      position: absolute;
-   }
+	.off {
+		background: none;
+		color: #999;
+		box-shadow: none;
+		border: 1px solid #999 !important;
+	}
    
-   .content {
-      width: 250px;
-      margin: 0 auto;
-      top: 10%;
-      position: absolute;
-      left: 50%;
-      margin-left: -125px;
-   }
+	.right .off:hover {
+		background: #eee;
+		color: #444;
+		box-shadow: none;
+	}
    
-   .off {
-      background: none;
-      color: #999;
-      box-shadow: none;
-      border: 1px solid #999 !important;
-      
-   }
+	.left .off:hover {
+		box-shadow: none;
+		color: #03A9F4;
+		background: #363A3D;
+	} 
+
+	.login-close-btn{
+		border: none;
+		outline: none;
+		position: absolute;
+		right: -40px;
+		top: 0;
+		width : 40px;
+		height : 40px;
+		background-color: rgba(255, 255, 255, 0.4);
+		z-index: 1;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
    
-   .right .off:hover {
-      background: #eee;
-      color: #444;
-      box-shadow: none;
-   }
+	.login-close-icon{
+		font-size : 30px;
+		color: #444;
+	}
    
-   .left .off:hover {
-      box-shadow: none;
-      color: #03A9F4;
-      background: #363A3D;
-   } 
-      
-   .login-close-btn{
-      border: none;
-      outline: none;
-      position: absolute;
-      right: -40px;
-      top: 0;
-      width : 40px;
-      height : 40px;
-      background-color: rgba(255, 255, 255, 0.4);
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-   }
+	.signup-modal-input
+	{
+		width: 100%;
+		background-color: transparent;
+		border: 0;
+		outline: 0;
+		border-bottom: 1px solid #45494C;
+		font-size: 14px;
+		padding: 4px 0;
+		margin-top: 20px;
+		border-radius:0;
+		color: #eee;
+		transition: 0.5s linear;
+	}
    
-   .login-close-icon{
-      font-size : 30px;
-      color: #444;
-   }
+	.login-modal-input
+	{
+		color: #444;
+	}
    
-   .signup-modal-input
-   {
-      width: 100%;
-      background-color: transparent;
-      border: 0;
-      outline: 0;
-      border-bottom: 1px solid #45494C;
-      font-size: 14px;
-      padding: 4px 0;
-      margin-top: 20px;
-      border-radius:0;
-      color: #eee;
-      transition: 0.3s linear;
-   }
+	.form-title
+	{
+		height: 70px;
+		margin-bottom: 50px;
+		margin-left: 5px;
+	}
    
-   .login-modal-input
-   {
-      color: #444;
-   }
+	.signup-modal-input::placeholder
+	{
+		font-size: 13px;
+		color : #777;
+		padding: 4px 0;
+		margin-top: 10px;
+	}
    
-   .form-title
-   {
-      width: 100%;
-      font-weight: 300;
-/*       color: #03A9F4; */
-      color: #888;
-      font-size: 20px;
-      margin-bottom: 50px;
-   }
+	.signup-modal-input:focus
+	{
+		background-color : transparent;
+		color: #ccc;
+		border-color: #ccc;
+	}
    
-   .signup-modal-input::placeholder
-   {
-      font-size: 13px;
-      color : #777;
-      padding: 4px 0;
-      margin-top: 10px;
-   }
+	.login-modal-input
+	{
+		color: #999;
+		border-bottom: 1px solid #999;
+	}
    
-   .signup-modal-input:focus
-   {
-      background-color : transparent;
-      color: #ccc;
-      border-color: #ccc;
-   }
+	.login-modal-input::placeholder{
+		color : #999;
+	}
    
+	.login-modal-input:focus
+	{
+		border-bottom: 1px solid #444;
+		color: #444;
+	}
    
-   .login-modal-input
-   {
-      color: #999;
-      border-bottom: 1px solid #999;
-   }
+	.brand-title
+	{
+		font-weight: 600;
+		font-size: 40px;
+	}
+	.modal-btn-container
+	{
+		display: flex;
+		margin-top: 25px;
+	}
    
-   .login-modal-input::placeholder{
-      color : #999;
-   }
+	.modal-btn-container > input:last-of-type{margin-right: 0;}
    
-   .login-modal-input:focus
-   {
-      border-bottom: 1px solid #444;
-      color: #444;
-   }
+	.login-modal-btn
+	{
+		margin-right: 5px;
+		flex: 1 1 0;
+		border: none;
+		outline: none;
+		padding: 10px 0;
+		font-size: 13px;
+		cursor: pointer;
+	}
+  	
+   	.third-party-btn
+   	{
+   		width: 100%;
+		height: 45px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-weight: bold;
+		font-size: 14px;
+   		position: relative;
+   		cursor: pointer;
+   	}
+   	
+   	.third-party-icon
+   	{
+   		height: 22px;
+   		position: absolute;
+   		left: 30px;
+   	}
+   	
+	#kakao-login-btn
+	{
+		background-color: #FFEB00;
+		margin-top: 25px;
+   	}
+   	
+   	#naver-login-btn
+   	{
+   		background-color: white;
+		margin: 15px 0;
+   	}
    
-   .brand-title
-   {
-      font-weight: 600;
-      font-size: 40px;
-   }
-   .modal-btn-container
-   {
-      display: flex;
-      margin: 15px 0;
-   }
+	.email-group
+	{
+		display : flex;
+		align-items: flex-end;
+	}
    
-   .modal-btn-container > input:last-of-type{margin-right: 0;}
-   {
-   }
+	.msg
+	{
+		font-size:11px;
+		color: #ccc;
+   	}
    
-   .login-modal-btn
-   {
-      margin-right: 5px;
-      flex: 1 1 0;
-      border: none;
-      outline: none;
-      padding: 10px 0;
-      font-size: 13px;
-      cursor: pointer;
-   }
+   	.auth-input
+   	{
+   		width: 70%;
+   	}
    
-   #kakao-login-btn
-   {
-      margin-top: 15px;
-      width: 100%;
-   }
+   	.auth-group{display: none;}
    
-   .email-group
-   {
-        display : flex;
-        align-items: flex-end;
-   }
-   
-	.span{
-      font-size:11px;
-      color:lavender;
-   }
-   
-   .join{
-   		height:70px;
-   }
-   
-   .auth-input
-   {
-   	width: 70%;
-   }
-   
-   .auth-group{display: none;}
-   
-   .auth-btn
-   {
+   	.auth-btn
+   	{
 		padding: 7px 10px;
 		margin-left: 5px;
 		margin-right: 0;
-   }
-   
+   	}
+   	
 </style>
 </div>
     <footer class="footer">
@@ -521,7 +536,7 @@
             <div class="foundation">
                 <span class="footer-title">Come Visit Us</span>
                 <span>
-                    서울시 강남구<br>테헤란로 14길 6<br>남원빌딩 4층<br>R 클래스
+					서울시 강남구<br>테헤란로 14길 6<br>남원빌딩 4층<br>R 클래스
                 </span>
             </div>
             <span class="footer-horiz-line"></span>
@@ -641,9 +656,7 @@
         <div class="user-modal-footer"></div>
     </div>
     
-    
     <!-- 로그인 모달 -->
-    
     <div class="login-modal">
    
    <button class="login-close-btn">
@@ -660,7 +673,7 @@
          <div class="left">
             <div class="content">
                
-               <div class="signup-title form-title"><img src="${path }/resources/images/join.png" class="join"></div>
+               <img src="${path }/resources/images/join.png" class="login-title form-title">
                <form onsubmit="return validate();" method="post" action="${path }/member/memberEnrollEnd.do" autocomplete="off">
                   <div class="form-group">
                   <div class="email-group">
@@ -668,16 +681,16 @@
                      <input type="button" class="off login-modal-btn auth-btn" id="emailAuth" value="인증" />
                   </div>
                   <div class="email-group auth-group">  
-                    <input type="text" class="signup-modal-input auth-input" id="authKey" name="authKey" placeholder="인증번호" required/>
-                    <input type="button" class="off login-modal-btn auth-btn" id="authCheck" value="확인" />
+                    <input type="text" class="signup-modal-input auth-input" id="auth-ck" name="authKeyCk" placeholder="인증번호" required/>
+                    <input type="button" class="off login-modal-btn auth-btn" id="auth-ck-btn" value="확인" />
                   </div>   
-              		<span class="span auth error">인증키가 일치하지 않습니다.</span>
-             		<input type="hidden" name="chekcAuth" id="checkAuth"/>
+              		<span class="msg auth error">인증키가 일치하지 않습니다.</span>
+             		<input type="hidden" name="checkAuth" id="checkAuth"/>
                     <input type="password" class="signup-modal-input" placeholder="비밀번호" id="password" name="memberPw" required /> 
                     <input type="password" class="signup-modal-input" placeholder="비밀번호 확인" id="password-ck" required /> 
                     <input type="text" class="signup-modal-input" placeholder="닉네임" id="memberNick" name="memberNick" required />
-                    <span class="span guide ok">사용 가능</span>
-              		<span class="span guide error">사용 불가</span>
+                    <span class="msg guide ok">사용 가능</span>
+              		<span class="msg guide error">사용 불가</span>
              		<input type="hidden" name="checkId" id="checkId"/>
                   </div>
                   <div class="modal-btn-container">
@@ -689,14 +702,17 @@
          </div>
          <div class="right">
             <div class="content">
-               <div class="login-title form-title"><img src="${path }/resources/images/login.png" class="join"></div>
+               <img src="${path }/resources/images/login.png" class="login-title form-title">
                <form method="post" action="${path }/member/memberlogin.do" autocomplete="off">
                   <div class="form-group">
                      <input type="email" placeholder="email" name="memberEmail" class="signup-modal-input login-modal-input"/> 
                      <input type="password" placeholder="password" name="memberPw" class="signup-modal-input login-modal-input"/>
                   </div>
                   <!-- 카카오로그인 -->
-                  <a id="kakao-login-btn"></a>
+				<div class="third-party-btn" id="kakao-login-btn">
+					<img class="third-party-icon" src="${path }/resources/images/kakao_bubble.png">
+					카카오 로그인
+				</div>
                   <div class="modal-btn-container">
                      <input type="button" id="goRight" class="off login-modal-btn" onclick="return false;" value="회원가입">
                      <input type="submit" class="off login-modal-btn" value="로그인">
@@ -710,7 +726,7 @@
 <input type="hidden" id="nickCheck" value="0">
 <input type="hidden" id="authCheck" value="0">
 <script>
-	
+
 	//비밀번호 정규식
 	const pwInput = $("#password");
 	$(() => {
@@ -743,14 +759,13 @@
    	$(".guide").hide();
    	$(() => {
       $("#memberNick").on("keyup", () => {
-         var memberNick = $('#memberNick').val();
          $.ajax({
-            url:"${path}/member/chekcMemberNick.do",
+            url:"${path}/member/checkMemberNick.do",
             type:"post",
-            data:{"memberNick":memberNick},
-            dataType:"json",
-            success:function(data){
-               if(data==true){
+            data:{"memberNick" : $('#memberNick').val()},
+            success: data => {
+            	console.log(data.result)
+               if(data.result == true){
                   $(".guide.ok").show()
                   $(".guide.error").hide();
                   $("#nickCheck").val("1");
@@ -774,6 +789,7 @@
             dataType:"json",
             data:{"memberEmail":email},
             success:function(data){
+            	console.log(data);
             	alert("이메일이 발송되었습니다. 인증번호를 적어주세요");
             	$('.auth-group').fadeIn(500);
             	$('.auth-group').css('display', 'flex');
@@ -783,34 +799,29 @@
    });
    
    //이메일 인증키 확인
-   $(".auth").hide();
-   $(() => {
-      $('#authCheck').on("click", ()=> {
-         var authKey=$("#authKey").val().trim();
-         $.ajax({
-            url:"${pageContext.request.contextPath}/member/authKey.do",
-            dataType:"json",
-            data:{"authKey":authKey},
-            success:function(data){
-               if(data==true){
-            	   $(".auth.error").hide();
-            	   $('.auth-group').fadeToggle(500);
-            	   $('.auth-input').css('border-bottom', '1px solid rgb(91, 180, 143)');
-            	   $('.auth-input').css('width', '100%');
-            	   $('.auth-btn').hide();
-            	   
-                }
-                else{
-                   $(".auth.error").show();
-                }
-            },
-            error:function(e){
-               console.log(e);
-            }
-            
-         });
-      });
-   });
+	$(".auth").hide();
+	$(() => {
+		$('#auth-ck-btn').on("click", ()=> {
+			const authKeyCk = $("#auth-ck").val().trim();
+			$.ajax({
+	            url:"${pageContext.request.contextPath}/member/authKey.do",
+	            dataType:"json",
+	            data:{"authKeyCk" : authKeyCk},
+	            success: data => {
+	               if(data == true){
+	            		$(".auth.error").hide();
+						$('.auth-group').fadeToggle(500);
+		           		$('.auth-input').css('border-bottom', '1px solid rgb(78, 173, 115)');
+		            	$('.auth-input').css('width', '100%');
+		            	$('.auth-btn').hide();        		   
+	                }
+	                else{
+	                   $(".auth.error").show();
+	               }
+	            }
+			});
+		});
+	});
    
    //모달 유저메뉴 링크 바인드
    	$(() => {
@@ -880,6 +891,7 @@
             });
          });
       });
+   
     //검색창 토글
     const searchBtn = $('.search-btn');
     const searchBar = $('.search-bar');
@@ -907,6 +919,7 @@
            }
         });
     });
+    
     //네비게이션 바 토글
     const nav = $('.nav');
     const categoryBtn = $('.category-btn');
@@ -970,19 +983,14 @@
         dots.on('click', e => {
             const indexGap = dots.index('.main-current-dot') - dots.index(e.currentTarget);
             if(indexGap == 0) return;
-            if(indexGap > 0)
-            {
+            
+            if(indexGap > 0) {
                 for(let i = 0 ; i < Math.abs(indexGap) ; i++)
-                {
                     moveSlidePrev(e, true);
-                }
             }
-            else
-            {
+            else {
                 for(let i = 0 ; i < Math.abs(indexGap) ; i++)
-                {
                     moveSlideNext(e, true);
-                }
             }
         });
     });
@@ -999,6 +1007,7 @@
             $(e.currentTarget).addClass('basic-btn-active');
         });
     });
+    
     //유저모달창 토글
     const userModal = $('.user-modal');
     const userBtn = $('.user-btn');
@@ -1019,13 +1028,12 @@
             userModal.animate({width: 'toggle'}, 300);
         });
     });
+    
     //유저모달창 내부 요소 Fade효과함수
     const fadeToggleUser = (time) => {
         userModalHeader.fadeToggle(time);
         userModalBody.fadeToggle(time);
     }
-    
-    
     
    //데이터생성 버튼
     const datagenBtn = $('.datagen-btn');
@@ -1040,52 +1048,43 @@
        });
     });
     
-    
-  //카카오 로그인 
-    Kakao.init('3936fbb46415d0ad3589f5b20380fa77');
-       // 카카오 로그인 버튼을 생성합니다.
-       Kakao.Auth.createLoginButton({
-         container: '#kakao-login-btn',
-         success: function(authObj) {
-           // 로그인 성공시, API를 호출합니다.
-           Kakao.API.request({
-             url: '/v1/user/me',
-             success: function(res) {
-                testajax(res);
-                loginModal.toggle();
-                modalOverlay.toggle();
-             },
-             fail: function(error) {
-               alert(JSON.stringify(error));
-             }
-           });
-         },
-         fail: function(err) {
-           alert(JSON.stringify(err));
-         }
-       });
-       
-       function testajax(res)
-       {
-           $.ajax({
-              url : "${pageContext.request.contextPath }/member/isKakao.do",
-              dataType:"json",
-              type:"post",
-            data : {id:res.id,"email":res.kaccount_email,profile:res.properties['profile_image'], nick:res.properties['nickname']}, 
-              success : function(data){
-                 if(data.val=="y"){
-                    location.href="${path}/";
-                 }
-                 else{
-                 }
-              },
-              error:function(re,msg)
-              {
-                 console.log(re);
-                 console.log(msg);
-              }
-          })
-       };
+  	//카카오 로그인 
+	Kakao.init('22dbe1f596fcb2b892f048cac8bcb014');	  		
+	$(() => {
+	  	$('#kakao-login-btn').on('click', () => {
+	  		Kakao.Auth.login({
+	  			success: authObj => {
+	  		  		Kakao.API.request({
+	  		  			url: '/v2/user/me',
+	  		  			success: res => {
+			  				subProcess(res);
+			  		        loginModal.toggle();
+			  		        modalOverlay.toggle();	  		  				
+	  		  			},
+	  		  	        fail: error => {
+	  		  	           alert(JSON.stringify(error));
+	  		  	        }
+	  		  		});
+	  			},
+	  	        fail: err => {
+	  	           alert(JSON.stringify(err));
+	  	        }
+	  		});
+	  	});
+	});
+	
+	const subProcess = res =>
+	{
+		$.ajax({
+			url : '${pageContext.request.contextPath }/member/kakaoLogin.do',
+            type: 'post',
+            data : {'kakaoId' : res.id, 'memberEmail' : res.kakao_account.email ,'memberProfile' : res.properties.profile_image, 'memberNick' : res.properties.nickname}, 
+            success : data => {
+                if(data.result = true) {location.reload();} 
+                else {alert('회원가입 중 오류가 발생하였습니다.');}
+			}
+		})
+	};
     
 </script>
 </html>

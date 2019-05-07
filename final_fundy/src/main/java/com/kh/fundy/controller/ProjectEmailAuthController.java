@@ -48,7 +48,7 @@ public class ProjectEmailAuthController {
 		 try {
 			 MailHandler sendMail = new MailHandler(mailSender);
 			 sendMail.setSubject("FUNDY  서비스 이메일 인증]");
-			 sendMail.setText(new StringBuffer().append("<h1>메일인증</h1><br><br><br>인증값: "+key).toString());
+			 sendMail.setText(new StringBuffer().append("<h1>메일인증</h1><br><br><br>인증값: " + key).toString());
 			 sendMail.setFrom("fundy@gmail.com", "Fundy ");       
 			 sendMail.setTo(projectEmail);
 			 sendMail.send();

@@ -21,31 +21,25 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Member login(Member m) {
-		return dao.login(m);
-	}
-
-	@Override
 	public int memberDeleteAll() {
 		return dao.memberDeleteAll();
 	}
-
+	
 	@Override
 	public int insertOne(Member m) {
 		return dao.insertOne(m);
+	}
+	
+	@Override
+	public Member selectOne(Member m) {
+		return dao.selectOne(m);
 	}
 
 	
 	public List<Member> selectList() {
 		return dao.selectList();
 	}
-
-	@Override
-	public Member selectOneKakao(Member m) {
-		return dao.selectOneKakao(m);
-	}
 	
-
 	@Override
 	public String selectCountUserAuth(String memberEmail) {
 		return dao.selectCountUserAuth(memberEmail);

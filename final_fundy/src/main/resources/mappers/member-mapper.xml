@@ -14,16 +14,16 @@
 		INSERT INTO MEMBER VALUES(#{memberEmail}, #{memberPw}, #{memberName}, #{memberNick}, #{memberProfile}, null, #{intro}, #{emailAuthKey}, #{phoneAuthKey}, #{lastLoggedIn}, #{enrollDate}, null, #{kakaoId})
 	</select>
 
-	<select id="login" parameterType="member" resultType="member">
-		select * from member where memberEmail=#{memberEmail} and memberquit is null
-	</select>
-	
-	<select id="kakao" parameterType="member" resultType="member">
-		select * from member where kakaoId=#{kakaoId} and memberquit is null
-	</select>
-	
 	<select id="selectOne" parameterType="member" resultType="member">
-		select * from member where kakaoId=#{kakaoId}
+		select * from member where memberquit is null and
+		<choose>
+			<when test="kakaoId == null or kakaoId == ''">
+				memberEmail = #{memberEmail}
+			</when>
+			<otherwise>
+				kakaoId = #{kakaoId}
+			</otherwise>
+		</choose>
 	</select>
 	
 	<select id="memberEmailCheck" parameterType="string" resultType="string">

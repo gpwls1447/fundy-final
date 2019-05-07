@@ -18,6 +18,7 @@
 <link href="${path }/resources/css/bootstrap.min.css" rel="stylesheet">
 <link href="${path }/resources/css/basic.css" rel="stylesheet">
 <link href="${path }/resources/css/header.css" rel="stylesheet">
+<script src="${path }/resources/js/naveridlogin_js_sdk_2.0.0.js"></script>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
 </head>
@@ -90,7 +91,7 @@
 			<div><a href="${path }/projectList/projectList.do?majorCode=${majorCode}"><img class="current-category" src="${path }/resources/midImages/all.jpg">전체보기</a></div>
 		    <c:forEach items="${midCList}" var="mc">
 				<c:if test="${mc.majorCode eq majorCode }">
-					<div><a href="${path }/projectList/projectList.do?midCode=${mc.midCode}"><img src="${path }/resources/midImages/${mc.midImage}">${mc.midName }</a></div>
+					<div><a href="${path }/projectList/projectList.do?midCode=${mc.midCode}&majorCode=${mc.majorCode}"><img src="${path }/resources/midImages/${mc.midImage}">${mc.midName }</a></div>
 		    	</c:if>
 		    </c:forEach>
     	</div>

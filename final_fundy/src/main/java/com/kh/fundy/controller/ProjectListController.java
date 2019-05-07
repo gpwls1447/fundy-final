@@ -65,7 +65,7 @@ public class ProjectListController {
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/projectList/projectListDetail.do")
-	public ModelAndView projectListDetail(int projectNo, String memberEmail)
+	public ModelAndView projectListDetail(int projectNo, String majorCode, String memberEmail)
 	{
 		ModelAndView mv = new ModelAndView();
 
@@ -77,6 +77,7 @@ public class ProjectListController {
 		Project p = pService.selectOne(map);
 		
 		mv.addObject("project", p);
+		mv.addObject("majorCode", majorCode);
 		mv.setViewName("projectList/projectListDetail");
 		
 		return mv;

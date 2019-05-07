@@ -58,6 +58,7 @@
 	{
 	    height: 310px;
 	    width: 100%;
+	    object-fit: fill;
 	}
 	
 	.progbar-container
@@ -387,7 +388,7 @@
             ${project.projectTitle }
         </div>
         <div class="proj-creator-brief">
-    <span class="creator">${project.memberNick }</span>
+    		<span class="creator">${project.memberNick }</span>
             <span class="divider">|</span>
             <span class="brief">${project.projectSumary }</span>
         </div>

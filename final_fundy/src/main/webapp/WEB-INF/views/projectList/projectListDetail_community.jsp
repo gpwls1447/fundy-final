@@ -324,7 +324,6 @@
 </div>
 ${pageBar }
 <script>
-
 	/* 페이지 바 함수 */
 	var fn_paging = cPage => {
 		location.href='${path}/projectList/projectListDetail_community?cPage='+cPage+'&projectNo='+${projectNo};

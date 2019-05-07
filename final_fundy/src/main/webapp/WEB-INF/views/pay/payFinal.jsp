@@ -5,6 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <style>
 	.option-header
@@ -356,7 +357,7 @@
                 </div>
                 <div class="addr-inputs">
                     <div class="addr-tag-row">
-                        <div>수취인</div>
+                        <div>배송지명</div>
                         <div>
                             <input type="text" name="shipAddrTag" id="addr-tag" value="${saList[0].shipAddrTag }">
                         </div>

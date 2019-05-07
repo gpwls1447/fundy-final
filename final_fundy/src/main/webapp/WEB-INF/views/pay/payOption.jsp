@@ -305,7 +305,7 @@
                 || $('.amount-input').index(e.target) > -1) return;
             if(options.is('.selected')) options.removeClass('selected');
             $(e.currentTarget).toggleClass('selected');
-            $('.total-price').text(parseInt($(e.currentTarget).find('.option-price').text())+parseInt($('#extra-input').val()));
+            fn_finalPrice();
         });
     });
     
@@ -314,7 +314,7 @@
     $(() => {
     	extraInput.on('blur', () => {
 			extraInput.val(Math.abs(Math.floor(extraInput.val()/10)*10));
-			$('.total-price').text(parseInt($('.selected').find('.option-price').text())+parseInt($('#extra-input').val()));
+			fn_finalPrice();
     	});
     });
     
@@ -331,13 +331,21 @@
             const targetInput = $(e.currentTarget).siblings('.amount-input');
             if(targetInput.val() == '10') return;
             targetInput.val(parseInt(targetInput.val())+1);
+            fn_finalPrice();
         });
 
         minusBtn.on('click', e => {
             const targetInput = $(e.currentTarget).siblings('.amount-input');
             if(targetInput.val() == '1') return;
             targetInput.val(parseInt(targetInput.val())-1);
+            fn_finalPrice();
         });
     });
+   	
+   	//최종 가격 출력 함수
+   	const fn_finalPrice = () => {
+   		$('.total-price').text(parseInt($('.selected').find('.option-price').text()) * $('.selected').find('.amount-input').val() + parseInt($('#extra-input').val()));
+   	}
+   	
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
