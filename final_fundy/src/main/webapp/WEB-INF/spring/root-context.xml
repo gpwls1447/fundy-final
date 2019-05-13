@@ -41,7 +41,6 @@
       <property name="port" value="587" />
       <property name="username" value="fundyprojectmanage@gmail.com" />
       <property name="password" value="ymrgcuhpyesnbchp" />
-    
 
       <!-- email 요청시는 SMTP -->
       <property name="javaMailProperties">
