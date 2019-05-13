@@ -717,15 +717,15 @@
 		$("#password").on("blur", () => {
 			if(pwInput.val().trim() == 0) return;
 			const pwVal = $("#password").val();
-			var num = pw.search(/[0-9]/g);
-			var eng = pw.search(/[a-z]/ig);
-			var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
-			if(pw.length<8||pw.length>20){
+			var num = pwVal.search(/[0-9]/g);
+			var eng = pwVal.search(/[a-z]/ig);
+			var spe = pwVal.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+			if(pwVal.length<8||pwVal.length>20){
 			  	alert("8자리 ~ 20자리 이내로 입력해주세요.");
 			  	$("#password").val("");
 			  	return false;
 			}
-			if(pw.search(/₩s/) != -1){
+			if(pwVal.search(/₩s/) != -1){
 			  	alert("비밀번호는 공백업이 입력해주세요.");
 			  	$("#password").val("");
 				return false;
@@ -1071,7 +1071,7 @@
               url : "${pageContext.request.contextPath }/member/isKakao.do",
               dataType:"json",
               type:"post",
-            data : {id:res.id,"email":res.kaccount_email,profile:res.properties['profile_image'], nick:res.properties['nickname']}, 
+              data : {id:res.id,"email":res.kaccount_email,profile:res.properties['profile_image'], nick:res.properties['nickname']}, 
               success : function(data){
                  if(data.val=="y"){
                     location.href="${path}/";
