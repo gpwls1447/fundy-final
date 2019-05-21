@@ -1,2 +1,2 @@
 # fundy-final
-![basic].(/images/basic.jpg)
+![basic].(/images/basic.png)
